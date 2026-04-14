@@ -86,6 +86,11 @@
     select.field-input {
       cursor: pointer;
       animation: pulse-glow-g 3.5s ease-in-out infinite;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3Cpath fill='%2300d082' d='M8 10L0 0h16z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      background-size: 0.7rem 0.45rem;
+      padding-right: 2.5rem;
     }
     select.field-input:focus { animation: none; }
     .field-input option { background: var(--navy-3); }
@@ -446,7 +451,7 @@
                   <option value="Other">Other</option>
                 </optgroup>
               </select>
-              <div class="field-hint"><a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit" target="_blank">View full topics &amp; deadlines calendar ↗</a></div>
+              <div class="field-hint" style="text-align:center"><a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit" target="_blank">View full topics &amp; deadlines calendar ↗</a></div>
             </div>
           </div>
 
@@ -679,7 +684,7 @@
 
 <!-- ═══ SCRIPTS ═══ -->
 <script>
-  var APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHpOFxV95VDWWb1tQYsjrDzm0bwKF9uvOnCDs-MQRqUT00GntTPeP_UrMQ8rOUzzhojw/exec';
   var selCat = '';
 
   /* Parallax */

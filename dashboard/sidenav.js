@@ -15,8 +15,10 @@
 
   /* ── Newsletter editions ─────────────────────────────────── */
   const EDITIONS = [
-    { href: 'newsletter-april-2026.html', label: 'April 2026',  theme: 'Courage', key: 'april-2026'  },
-    { href: 'newsletter-march-2026.html', label: 'March 2026',  theme: 'Hope',    key: 'march-2026'  },
+    { href: 'newsletter-april-2026.html',    label: 'April 2026',    theme: 'Courage', key: 'april-2026'    },
+    { href: 'newsletter-march-2026.html',    label: 'March 2026',    theme: 'Hope',    key: 'march-2026'    },
+    { href: 'newsletter-february-2026.html', label: 'February 2026', theme: 'Hope',    key: 'february-2026' },
+    { href: 'newsletter-january-2026.html',  label: 'January 2026',  theme: 'Honesty', key: 'january-2026'  },
   ];
 
   const currentEdition = window.CURRENT_EDITION || '';

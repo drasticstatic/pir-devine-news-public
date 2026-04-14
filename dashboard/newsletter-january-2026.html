@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Vine News — January 2026 | PIR®</title>
+  <meta name="description" content="De Vine News January 2026 — Honesty. The first issue of PIR®'s newsletter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Edition page layout ── */
+    .nl-hero {
+      position: relative; overflow: hidden; min-height: 420px;
+      display: flex; align-items: center;
+    }
+    .nl-hero-bg {
+      position: absolute; inset: -40px 0; z-index: 0;
+      background-image: url('assets/editions/jan-2026/snow-forest.jpg');
+      background-size: cover; background-position: center 40%;
+      will-change: transform;
+    }
+    .nl-hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to bottom, rgba(0,15,43,0.45) 0%, rgba(0,15,43,0.92) 85%);
+    }
+    .nl-hero-content {
+      position: relative; z-index: 2; width: 100%;
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 1.5rem 2.5rem;
+      display: flex; align-items: center; gap: 3rem;
+    }
+    .nl-hero-text { flex: 1; }
+    .nl-hero-art {
+      width: 320px; flex-shrink: 0; height: 300px;
+      border-radius: var(--radius-lg); overflow: hidden;
+      background: url('assets/pirlogoforbannerprinting/PIR_A.jpg') center center / contain no-repeat, rgba(5,18,40,0.85);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .nl-hero-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    @media (max-width: 800px) {
+      .nl-hero-content { flex-direction: column-reverse; gap: 1.5rem; }
+      .nl-hero-art { width: 100%; height: 200px; }
+      .nl-hero-desc { max-width: 100%; }
+    }
+    .nl-edition-label {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--green);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-edition-label::before { content:''; width:18px; height:1.5px; background:var(--green); }
+    .nl-hero-title {
+      font-size: clamp(2.2rem,6vw,3.6rem); font-weight: 800;
+      line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 0.6rem;
+    }
+    .nl-hero-title em { font-style:normal; color:var(--green); }
+    .nl-hero-theme {
+      font-size: 1.1rem; color: var(--cyan); font-weight: 700; margin-bottom: 0.75rem;
+    }
+    .nl-hero-desc {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.9rem; color: rgba(226,236,245,0.7); max-width: 500px; line-height: 1.8;
+    }
+
+    /* ── Content wrapper ── */
+    .nl-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+
+    /* ── Section anchors ── */
+    .nl-section { margin-bottom: 4rem; scroll-margin-top: 80px; }
+    .nl-section-eyebrow {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--green);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-section-eyebrow::before { content:''; width:3px; height:12px; background:var(--green); border-radius:2px; }
+
+    /* ── Article styles ── */
+    .nl-article-title {
+      font-size: clamp(1.4rem,4vw,2rem); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .nl-byline {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-3);
+      display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1.5rem;
+    }
+    .nl-byline::before { content:'—'; color:var(--green); }
+    .nl-prose {
+      font-family: var(--font-serif); font-size: 0.95rem; line-height: 1.9;
+      color: rgba(226,236,245,0.85);
+    }
+    .nl-prose p { margin-bottom: 1.1rem; }
+    .nl-prose p:first-child::first-letter {
+      font-size: 3.2em; font-weight: 700; float: left;
+      line-height: 0.72; margin: 0.05em 0.08em 0 0; color: var(--green);
+    }
+    .nl-prose blockquote {
+      border-left: 3px solid var(--purple); padding-left: 1.25rem;
+      margin: 1.5rem 0; color: rgba(226,236,245,0.7); font-style: italic;
+    }
+    .nl-prose h3 {
+      font-family: var(--font-body); font-size: 1.05rem; font-weight: 800;
+      color: var(--cyan); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
+    }
+    .nl-prose ul, .nl-prose ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .nl-prose li { margin-bottom: 0.4rem; }
+
+    /* ── Pull quote ── */
+    .pull-quote {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,208,130,0.15);
+      border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem; margin: 2rem 0;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 1.05rem; color: rgba(226,236,245,0.9); line-height: 1.7;
+    }
+
+    /* ── Image figure ── */
+    .nl-figure {
+      margin: 2rem 0; border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .nl-figure img { width: 100%; height: auto; display: block; }
+    .nl-figure figcaption {
+      font-size: 0.7rem; color: var(--text-3); padding: 0.5rem 0.75rem;
+      background: rgba(5,18,40,0.6); font-style: italic;
+    }
+
+    /* ── Committee report card ── */
+    .report-card {
+      background: rgba(5,18,40,0.58);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .report-card-title { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem; }
+    .report-card-sub { font-size: 0.75rem; color: var(--text-3); margin-bottom: 1rem; }
+
+    /* ── Service table ── */
+    .service-table { width: 100%; border-collapse: collapse; }
+    .service-table th {
+      font-family: var(--font-body); font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3);
+      padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border);
+      text-align: left; background: rgba(5,18,40,0.5);
+    }
+    .service-table td {
+      font-size: 0.82rem; color: var(--text-2); padding: 0.75rem 0.75rem;
+      border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55;
+    }
+    .service-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .service-table td strong { color: var(--text); }
+
+    /* ── Announce card ── */
+    .announce-card {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,208,130,0.15);
+      border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.5rem; margin-bottom: 1rem;
+    }
+    .announce-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .announce-body { font-size: 0.82rem; color: var(--text-2); line-height: 1.75; }
+
+    /* ── Divider ── */
+    .nl-rule { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    /* ── President / editor card ── */
+    .president-card {
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(155,81,224,0.2);
+      border-radius: var(--radius-lg); padding: 2rem;
+    }
+    .president-card .nl-prose p:first-child::first-letter { color: var(--purple); }
+
+    /* ── Print overrides ── */
+    @media print {
+      .nl-hero { min-height: 220px !important; }
+      .nl-section { page-break-inside: avoid; }
+      .report-card, .president-card, .pull-quote { break-inside: avoid; }
+      .nl-hero-content { padding-bottom: 1rem !important; }
+    }
+  </style>
+</head>
+<body class="page-edition">
+<script>window.CURRENT_EDITION = 'january-2026';</script>
+
+<!-- ═══ HERO ═══ -->
+<section class="nl-hero" id="cover" data-section="Cover">
+  <div class="nl-hero-bg" id="nl-hero-bg"></div>
+  <div class="nl-hero-overlay"></div>
+  <div class="nl-hero-content">
+    <div class="nl-hero-text">
+      <div class="nl-edition-label">De Vine News · January 2026 · Vol. 1 Issue 1</div>
+      <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
+      <div class="nl-hero-theme">Spiritual Principle: Honesty</div>
+      <p class="nl-hero-desc">
+        The first issue. A publication of the PR &amp; Literature Committee,
+        Psychedelics in Recovery™. For the fellowship, by the fellowship.
+      </p>
+      <div class="nl-hero-actions">
+        <button onclick="window.print()" class="btn btn-ghost btn-sm">🖨 Print / Save PDF</button>
+      </div>
+    </div>
+    <div class="nl-hero-art" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ═══ CONTENT ═══ -->
+<main class="nl-wrap">
+
+  <!-- President's Message -->
+  <section class="nl-section" id="president" data-section="Message from the President">
+    <div class="nl-section-eyebrow">From the President</div>
+    <h2 class="nl-article-title">A Message from the President</h2>
+    <div class="nl-byline">Kevin Franciotti · Co-founder &amp; Board President, PIR®</div>
+    <div class="president-card">
+      <div class="nl-prose">
+        <p>Welcome to the first issue of <em>De Vine</em>, Psychedelics in Recovery's newsletter. I'm grateful you're here.</p>
+        <h3>How do we talk honestly about recovery?</h3>
+        <p>PIR® was born from a simple but difficult question: How do we talk honestly about recovery in a world where psychedelics are increasingly visible, medicalized, politicized, and misunderstood—without losing our integrity or one another? Over the years, our fellowship has grown into a diverse, sometimes imperfect, and deeply committed community wrestling with that question together.</p>
+        <p>This newsletter is an extension of that effort. <em>De Vine</em> is not a platform for promotion, persuasion, or dogma. It is a space for reflection, accountability, service, and shared learning. You'll find reports from service bodies, creative work emerging from the fellowship, and thoughtful engagement with recovery, integration, and the responsibilities that come with both.</p>
+        <h3>Our task is not to eliminate disagreement</h3>
+        <p>Growth brings complexity. As PIR® expands across geographies, modalities, and viewpoints, we are continually challenged to balance openness with safety, innovation with humility, and individual experience with collective care. These tensions are not signs of failure; they are signs that something alive is being tended. Our task is not to eliminate disagreement, but to remain grounded in respect, transparency, and a shared commitment to recovery.</p>
+        <p>Whether you are new to PIR® or have been walking with us for years, I invite you to see this publication as a conversation rather than a conclusion. Read closely. Question thoughtfully. Serve where you are able. And remember that none of us carries this work alone.</p>
+        <p>Thank you to the PR Committee and all contributors who brought this first issue into being. I look forward to what we will continue to grow—together.</p>
+        <p style="font-style:normal;font-size:0.85rem;color:var(--text-3);margin-top:1.5rem">In service,<br /><strong style="color:var(--text)">Kevin Franciotti</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Letter from the Editor -->
+  <section class="nl-section" id="editor" data-section="Letter from the Editor">
+    <div class="nl-section-eyebrow">From the Editor</div>
+    <h2 class="nl-article-title">Letter from the Editor</h2>
+    <div class="nl-byline">Katherine E.</div>
+    <div class="nl-prose">
+      <p>I'm honored to present the first edition of <em>De Vine</em>, Psychedelics in Recovery's monthly newsletter. When I joined PIR® in Fall 2025, I volunteered to launch this newsletter despite knowing I'm a habitual procrastinator.</p>
+      <p>If you're reading this, I've chosen to overcome procrastination for this project because the opportunity to include my voice in the community of PIR at this foundational time is too unique to pass up.</p>
+      <p>I have found myself in PIR because my experiences of addiction and recovery no longer align with the traditional 12-step narrative. I learned quickly when I started attending 12-step meetings that I had to identify with the core tenants of the fellowship if I wanted to be included in the community, much less recover. I chose to interpret my substance abuse through their lens and act with their methods as long as this alleviated my addiction and loneliness.</p>
+      <p>It remained that I had sacrificed essential truths about myself to be a part of the traditional recovery community. I was stuck in a dangerous conundrum—if I could not be honest within my community, I could not recover with them. Yet alone, I lacked the power to recover at all.</p>
+      <p>Being true to myself today is taking on the challenging task of defining my own recovery. Thankfully, I have found a community of people, who like myself, have dared to start on this journey. No one knows how challenging it is to go outside of the trodden path until they have done so—and here, we find ourselves, as a group, somehow making room for each other on the road less traveled.</p>
+
+      <div class="pull-quote">
+        "This publication celebrates the freedom and safety of our members to define their own recovery. <em>De Vine</em> seeks to catalogue and honor the debates, projects, and goals of our service committees."
+      </div>
+
+      <p>There is a stark similarity between democratic communities that allow debate and the dialogic process that individuals undergo when recovering. Recovery itself is a challenging of thoughts, beliefs, and ideals that are no longer working. We need each other—and we need disagreement just as much as we need agreement—for our recovery process to adapt to the inevitable changes any community will face.</p>
+      <p>Thank you for joining me here—I hope you'll join the conversation.</p>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Step 1 -->
+  <section class="nl-section" id="step-1" data-section="Step 1: A Human Problem">
+    <div class="nl-section-eyebrow">Step Reflection · Step 1</div>
+    <h2 class="nl-article-title">Step 1: A Human Problem</h2>
+    <p style="font-size:0.82rem;color:var(--purple);font-weight:700;margin-bottom:1rem">
+      We admitted we were powerless over our patterns — that our lives had become unmanageable.
+    </p>
+    <div class="nl-byline">Written by Douglas N.</div>
+    <div class="nl-prose">
+      <p>Before the drink, before the scroll, before the affair, before the apology you half-meant and the promise you couldn't keep—there may lie a quieter ache.</p>
+      <blockquote>
+        I don't feel whole.<br />
+        I don't feel enough.<br />
+        I don't feel safe in my own skin.<br />
+        I don't feel okay.
+      </blockquote>
+      <p>And when "not okay" becomes home, we're liable to go to great lengths to change that.</p>
+      <h3>The Fix</h3>
+      <p>So we learn strategies. Some are chemical. Some are relational. Some are spiritual-looking. Some are impressively productive. Addiction says: Change my state. Control says: Change your state so I can breathe. Fawning says: Let me become what you want before you decide I'm not wanted. Perfection says: Let me earn my right to exist. Withdrawal says: Let me disappear until it's safe to be seen.</p>
+      <p>These aren't born from malice. They're born from urgency. They're homemade medicine. They work fast. They work short. They work—until they don't.</p>
+
+      <figure class="nl-figure">
+        <img src="assets/editions/jan-2026/artwork-crouching.jpg" alt="Charcoal drawing of a crouching figure" loading="lazy" />
+        <figcaption>Original artwork · KL290 Rob K.</figcaption>
+      </figure>
+
+      <h3>The Quiet Erosion</h3>
+      <p>Then comes the part no one plans for: We cross lines we once swore were uncrossable. Not with fireworks. With footnotes. Just this once. Just tonight. Just until the anxiety passes. And then we move the line to make room for the crossing.</p>
+      <p>That's when integrity starts to hurt. Not because we broke a rule—but because we broke contact with the person we wanted to be. Integrity isn't moral superiority. It's internal coherence. It's being in one piece. And this is the tragedy: the very thing we do to feel okay is what makes us feel less okay.</p>
+      <h3>Stop Negotiating</h3>
+      <p>Step One is not a scolding. It's not a courtroom. It's not a badge of shame. It's an opening. It's the moment we decide to stop negotiating with reality. Powerlessness doesn't mean helplessness. It means: this approach cannot deliver what it promises. Acceptance doesn't mean approval. It means: this is what is happening. Asking for help doesn't mean weakness. It means: I'm done pretending I can do this alone.</p>
+      <p>Step One is not "I am broken." It's: "My strategy for wholeness is breaking me."</p>
+      <h3>Unmanageability</h3>
+      <p>Unmanageability isn't always chaos on the outside. Sometimes it's a polished life with a private war inside it. It's the constant math: How much can I do before it costs me? It's the hidden bargaining, the countdown clocks, the secret rules, the exhausting maintenance of a self that can't rest. It's the way the world gets smaller as you try harder to keep it under control.</p>
+
+      <figure class="nl-figure">
+        <img src="assets/editions/jan-2026/artwork-hooded.jpg" alt="Pencil sketch of a hooded figure in contemplation" loading="lazy" />
+      </figure>
+
+      <h3>The Promise</h3>
+      <p>Step One does not make you small. It makes you real. And reality—as brutal as it can be—is the only ground that can hold transformation. This is the beginning of becoming whole: not by forcing yourself into perfection, but by ending the argument with what is.</p>
+
+      <div class="pull-quote">
+        Great Mystery,<br />
+        Help me admit what isn't working without turning it into shame.<br />
+        Show me where I rationalize, and give me the courage to stop calling it freedom.
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Book Review -->
+  <section class="nl-section" id="book-review" data-section="Book Review">
+    <div class="nl-section-eyebrow">Member Review</div>
+    <h2 class="nl-article-title">"Finding a Way Home"</h2>
+    <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.25rem;font-style:italic">
+      A review of Justin Smith-Ruiu's <em>On Drugs: Psychedelics, Philosophy, and the Nature of Reality</em>
+    </p>
+    <div class="nl-byline">Written by David M.</div>
+    <div class="nl-prose">
+      <p>"Is it me, the drugs, or God?" This seems a relatively common question in psychedelic communities, especially in psychedelic recovery communities. Do psychedelics inspire connection with spirit, connect us more deeply to ourselves, or just offer a transient high? Justin Smith-Ruiu's <em>On Drugs</em> explores this complex question through seven chapters using two primary lenses: personal experience and philosophical interrogation.</p>
+      <p>Ruiu's early chapters are a personal accounting of the depression and drinking that brought him "back" to psilocybin as medicine as opposed to recreational drug. This vignette is followed by a tour of the current psychedelic landscape, where the author posits interesting questions about everything from the pharmaceutical acquisition of psychedelics to whether microdosing actually misses the point by circumventing the awe of a "full" psychedelic experience.</p>
+
+      <figure class="nl-figure">
+        <img src="assets/editions/jan-2026/cherry-blossoms.jpg" alt="Japanese cherry blossom woodblock print" loading="lazy" />
+        <figcaption>Traditional Japanese woodblock art</figcaption>
+      </figure>
+
+      <p>The book is thorough, well-reasoned, and rational. Near the end, the author writes: "Psychedelic drugs…cannot provide a shortcut to enlightenment…Rather…they may provide…a valuable analogy of enlightenment." Smith-Ruiu's sentiments reveal that, possibly, he has found his way "home." Readers of Joseph Campbell, the PIR® homepage, and those who use plant medicines as tools for healing will feel a sense of camaraderie in the closing pages.</p>
+
+      <div class="pull-quote">
+        "The psychedelics themselves aren't the 'home,' merely one door that opens one path toward it."
+        <br /><br />— David M., reviewing <em>On Drugs</em>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Research -->
+  <section class="nl-section" id="research" data-section="Research">
+    <div class="nl-section-eyebrow">Fellowship Research</div>
+    <h2 class="nl-article-title">On Psychedelic Augmentation of 12-Step Engagement</h2>
+    <div class="nl-byline">PIR® Editorial</div>
+
+    <figure class="nl-figure">
+      <img src="assets/editions/jan-2026/mountain-road.jpg" alt="Mountain road stretching toward peaks" loading="lazy" />
+    </figure>
+
+    <div class="nl-prose">
+      <p>In November 2025, a peer-reviewed article was published in the <em>Journal of Psychoactive Drugs</em> examining a phenomenon that many in our community have been living for years: the intentional integration of psychedelic experiences with 12-Step recovery. Titled "Psychedelic Augmentation of 12-Step Engagement: A Novel, Accessible Approach to Enhance Community-Based Recovery from Substance Use Disorders," the study represents one of the first empirical efforts to document this emerging practice in real-world settings.</p>
+      <p>Importantly, this research did not emerge in a vacuum. Participants were intentionally recruited through a community partner with lived experience—members connected to Psychedelics in Recovery™ and adjacent 12-Step networks—underscoring a central truth: much of the innovation in recovery is happening outside of clinics, ahead of formal systems, and in response to unmet needs.</p>
+      <h3>Why This Study Matters</h3>
+      <p>The study was small by design. Due to federal research constraints, the final sample included eight individuals in remission from alcohol, opioid, and/or stimulant use disorders. The authors are explicit that the findings are exploratory and not generalizable. But what the study lacks in scale, it makes up for in depth.</p>
+      <p>Participants described using psychedelics such as psilocybin, ayahuasca, ibogaine, peyote, and others in conjunction with—not instead of—12-Step engagement. For some, psychedelics helped them finally engage with the Steps after repeated failed attempts. For others, they addressed persistent psychological distress that lingered despite long-term abstinence and diligent program participation.</p>
+      <h3>Psychedelics as a Catalyst, Not the Container</h3>
+      <p>One of the most compelling findings was how participants described the synergy between psychedelic experiences and specific 12-Step practices. Psychedelics appeared to facilitate openness to Step 2 (belief in a Higher Power), deepen moral inventory work in Step 4, and enrich contemplative practices aligned with Step 11. Several participants used vivid metaphors: psychedelics as the "engine," the Steps as the "transmission."</p>
+
+      <div class="pull-quote">
+        "Participants were clear that prior recreational psychedelic use—absent structure, intention, or integration—was largely described as ineffective for recovery."
+      </div>
+
+      <h3>Where PIR® Fits In</h3>
+      <p>Psychedelics in Recovery™ did not set out to prove a model. PIR® emerged to meet people where they already were—navigating recovery, curiosity, skepticism, hope, and risk in equal measure. This study validates that community-based wisdom deserves careful attention, not dismissal or romanticization.</p>
+      <p>The findings do not offer simple answers. They offer something more valuable: grounded questions for future research, policy, and community practice. As the authors conclude, further research is urgently needed. PIR® is proud to have contributed—carefully, ethically, and transparently—to that ongoing conversation.</p>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Service Positions -->
+  <section class="nl-section" id="service" data-section="Open Service Positions">
+    <div class="nl-section-eyebrow">Service Opportunities</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:0.5rem">Open Service Positions</h2>
+    <div style="background:rgba(5,18,40,0.62);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-lg);padding:1.5rem">
+      <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.25rem">
+        See Karen, chair of GSR, if you are interested in any of the positions.
+      </p>
+      <div style="overflow-x:auto">
+        <table class="service-table">
+          <thead>
+            <tr><th>Role</th><th>Group / Committee</th><th>Description</th><th>Schedule</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>WhatsApp Community Moderators</strong></td>
+              <td>PR Committee</td>
+              <td>Ensuring adherence to traditions in WhatsApp Chat</td>
+              <td>Ongoing</td>
+            </tr>
+            <tr>
+              <td><strong>GSR</strong></td>
+              <td>Saturday Ramen</td>
+              <td>Attend area; Lead group business meetings</td>
+              <td>Every Saturday 1600 PST / 0000 GMT</td>
+            </tr>
+            <tr>
+              <td><strong>Co-Chair</strong></td>
+              <td>Saturday Ramen</td>
+              <td>Tech co-host; monitor chats; provide reading materials</td>
+              <td>Every Saturday 1600 PST / 0000 GMT</td>
+            </tr>
+            <tr>
+              <td><strong>GSR</strong></td>
+              <td>Friday Night Topic / Discussion</td>
+              <td>Attend area; Lead group business meetings</td>
+              <td>Every Friday 1700 PST / 0100 GMT</td>
+            </tr>
+            <tr>
+              <td><strong>Tech-Host</strong></td>
+              <td>Friday Night Topic / Discussion</td>
+              <td>Tech co-host; monitor chats; provide reading materials</td>
+              <td>Every Friday 1700 PST / 0100 GMT</td>
+            </tr>
+            <tr>
+              <td><strong>Greeter</strong></td>
+              <td>Friday Night Topic / Discussion</td>
+              <td>Arrive 10 minutes early; Greet meeting attendees on Zoom</td>
+              <td>Every Friday 1700 PST / 0100 GMT</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Committee Reports -->
+  <section class="nl-section" id="pr-committee" data-section="PR Committee">
+    <div class="nl-section-eyebrow">Committee Report</div>
+    <div class="report-card">
+      <div class="report-card-title">PR Committee</div>
+      <div class="report-card-sub">Newsletter Launch · Integration Radio · Social Media</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>In the last three months, the PR Committee has been very active, focusing its efforts on two key projects: the Newsletter and the Podcast.</p>
+        <p>The Newsletter, edited by Katherine, has now launched and is the publication you are currently reading. It is designed to keep the fellowship informed, connected, and inspired, while sharing updates from across PIR® and the wider recovery and psychedelic integration community.</p>
+        <p>In parallel, the committee has been developing a new podcast, <strong>PIR® Integration Radio</strong>, hosted by Anne, which is due to launch later this month. The podcast will begin with a series of interviews titled <em>Journeys of Healing</em>, offering personal stories of recovery and integration.</p>
+        <p>Alongside these projects, the PR Committee has begun building PIR's social media presence. Accounts have now been created across all major platforms. If you are interested in supporting PIR's outreach and communications work, please get in touch at <a href="mailto:pr@psychedelicsinrecovery.org">pr@psychedelicsinrecovery.org</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="nl-section" id="literature-committee" data-section="Literature Committee">
+    <div class="nl-section-eyebrow">Committee Report</div>
+    <div class="report-card">
+      <div class="report-card-title">Literature Committee</div>
+      <div class="report-card-sub">Trademark Alignment · 2026 Goals</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>As Psychedelics in Recovery™ enters 2026, the Literature Committee (LitCom) is grateful to share an update on the work completed over the past year and the service we are continuing to build together.</p>
+        <p>We closed out 2025 with the successful publication of updated member materials and FAQs on PIR®'s newly launched website. Following PIR®'s newly registered trademark status, LitCom has begun the careful process of updating existing literature to reflect trademark alignment.</p>
+        <p>We are also excited to formally establish LitCom's presence on the new Service Page subdomain and within the Fellowship's newsletter. LitCom warmly welcomes volunteers who feel called to support this service—whether through reviewing drafts, offering feedback, or helping bridge communication between groups and committees. No special expertise is required—only a willingness to listen, collaborate, and serve with humility.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="nl-section" id="book-committee" data-section="Book Committee">
+    <div class="nl-section-eyebrow">Committee Report</div>
+    <div class="report-card">
+      <div class="report-card-title">Book Committee</div>
+      <div class="report-card-sub">Psychedelics in Recovery: Medicines, Sacraments and Catalysts</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>We are a project organized for the purpose of fulfilling the mission of editing and publishing PIR's first book. We changed from the "committee" model to a "project" model. We distributed the editor's edition of the book in .pdf format in October 2025. Due to complications in the publication process, we have been delayed in releasing the book in accessible formats to the fellowship it was written for.</p>
+        <p>As we are now in the final stages of editing the book, the Book Committee is no longer seeking volunteers. Email <a href="mailto:forapirbook@gmail.com">forapirbook@gmail.com</a> for information.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="nl-section" id="gsr-report" data-section="General Service">
+    <div class="nl-section-eyebrow">Committee Report</div>
+    <div class="report-card">
+      <div class="report-card-title">General Service</div>
+      <div class="report-card-sub">Tradition Discussions · Building Communication</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>A substantial portion of recent GSR meetings centered on Tradition-based discussions, with particular attention to Tradition 11, anonymity, and appropriate public representation of PIR. GSRs shared experiences from their meetings that reflected varying interpretations and concerns around privacy, safety, and language used in both in-meeting and public-facing contexts.</p>
+        <p>Recent meetings saw a noticeable increase in attendance, signaling heightened engagement and a strong desire from the groups to be heard and better informed. To improve transparency and information flow, the GSR Subcommittee voted to formally bring subcommittee reports back to the GSR body on a regular basis.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Announcements -->
+  <section class="nl-section" id="announcements" data-section="Announcements">
+    <div class="nl-section-eyebrow">Fellowship Notices</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:1.25rem">Announcements</h2>
+
+    <div class="announce-card">
+      <div class="announce-title">PIR® Step Study Meetings</div>
+      <div class="announce-body">Two active step-study meetings are currently reading the PIR Steps — Tuesdays 1pm PST and Wednesdays 4pm PST. Contact the 12-Step Committee for meeting links. All members welcome.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Integration Radio — Launching This Month</div>
+      <div class="announce-body">PIR®'s new podcast <strong>Integration Radio</strong> is set to launch, beginning with the <em>Journeys of Healing</em> interview series. Episodes will be available on the PIR® website and major podcast platforms.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Social Media Volunteers Needed</div>
+      <div class="announce-body">New PIR® accounts: Instagram @pirworldwide · TikTok @pir_worldwide · YouTube @psychedelicsinrecovery · LinkedIn @psychedelicsinrecovery. Volunteers to help manage and grow these channels are welcome. Contact <a href="mailto:pr@psychedelicsinrecovery.org">pr@psychedelicsinrecovery.org</a></div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Submit to the February Issue</div>
+      <div class="announce-body">The February 2026 theme is <strong>Hope</strong>. Share your experience, strength, and hope — writings, poetry, and reflections welcome. Visit the <a href="submit.html">Submit page</a> to contribute.</div>
+    </div>
+
+    <figure class="nl-figure" style="max-width:480px;margin:2rem auto">
+      <img src="assets/editions/jan-2026/birds-flight.jpg" alt="Flock of birds taking flight over a vast landscape" loading="lazy" />
+    </figure>
+  </section>
+
+</main>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+  const bg = document.getElementById('nl-hero-bg');
+  let tick = false;
+  window.addEventListener('scroll', function () {
+    if (!tick) {
+      requestAnimationFrame(function () {
+        bg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+        tick = false;
+      });
+      tick = true;
+    }
+  });
+</script>
+<script src="nav.js"></script>
+<script src="sidenav.js"></script>
+<script src="footer.js"></script>
+</body>
+</html>

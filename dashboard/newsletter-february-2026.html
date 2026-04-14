@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Vine News — February 2026 | PIR®</title>
+  <meta name="description" content="De Vine News February 2026 — Hope. PIR® 12-Step Fellowship newsletter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Edition page layout ── */
+    .nl-hero {
+      position: relative; overflow: hidden; min-height: 420px;
+      display: flex; align-items: center;
+    }
+    .nl-hero-bg {
+      position: absolute; inset: -40px 0; z-index: 0;
+      background-image: url('assets/editions/feb-2026/milky-way.jpg');
+      background-size: cover; background-position: center 50%;
+      will-change: transform;
+    }
+    .nl-hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to bottom, rgba(0,10,32,0.55) 0%, rgba(0,10,32,0.92) 85%);
+    }
+    .nl-hero-content {
+      position: relative; z-index: 2; width: 100%;
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 1.5rem 2.5rem;
+      display: flex; align-items: center; gap: 3rem;
+    }
+    .nl-hero-text { flex: 1; }
+    .nl-hero-art {
+      width: 320px; flex-shrink: 0; height: 300px;
+      border-radius: var(--radius-lg); overflow: hidden;
+      background: url('assets/editions/feb-2026/cover.jpg') center center / cover no-repeat, rgba(5,18,40,0.85);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .nl-hero-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    @media (max-width: 800px) {
+      .nl-hero-content { flex-direction: column-reverse; gap: 1.5rem; }
+      .nl-hero-art { width: 100%; height: 200px; }
+      .nl-hero-desc { max-width: 100%; }
+    }
+    .nl-edition-label {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--green);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-edition-label::before { content:''; width:18px; height:1.5px; background:var(--green); }
+    .nl-hero-title {
+      font-size: clamp(2.2rem,6vw,3.6rem); font-weight: 800;
+      line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 0.6rem;
+    }
+    .nl-hero-title em { font-style:normal; color:var(--green); }
+    .nl-hero-theme { font-size: 1.1rem; color: var(--cyan); font-weight: 700; margin-bottom: 0.75rem; }
+    .nl-hero-desc {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.9rem; color: rgba(226,236,245,0.7); max-width: 500px; line-height: 1.8;
+    }
+
+    /* ── Content wrapper ── */
+    .nl-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+
+    /* ── Section anchors ── */
+    .nl-section { margin-bottom: 4rem; scroll-margin-top: 80px; }
+    .nl-section-eyebrow {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--green);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-section-eyebrow::before { content:''; width:3px; height:12px; background:var(--green); border-radius:2px; }
+
+    /* ── Article styles ── */
+    .nl-article-title {
+      font-size: clamp(1.4rem,4vw,2rem); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 0.5rem; color: var(--text);
+    }
+    .nl-byline {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-3);
+      display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1.5rem;
+    }
+    .nl-byline::before { content:'—'; color:var(--green); }
+    .nl-prose {
+      font-family: var(--font-serif); font-size: 0.95rem; line-height: 1.9;
+      color: rgba(226,236,245,0.85);
+    }
+    .nl-prose p { margin-bottom: 1.1rem; }
+    .nl-prose p:first-child::first-letter {
+      font-size: 3.2em; font-weight: 700; float: left;
+      line-height: 0.72; margin: 0.05em 0.08em 0 0; color: var(--green);
+    }
+    .nl-prose blockquote {
+      border-left: 3px solid var(--purple); padding-left: 1.25rem;
+      margin: 1.5rem 0; color: rgba(226,236,245,0.7); font-style: italic;
+    }
+    .nl-prose h3 {
+      font-family: var(--font-body); font-size: 1.05rem; font-weight: 800;
+      color: var(--cyan); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
+    }
+    .nl-prose ul, .nl-prose ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .nl-prose li { margin-bottom: 0.4rem; }
+
+    /* ── Pull quote ── */
+    .pull-quote {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,208,130,0.15);
+      border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem; margin: 2rem 0;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 1.05rem; color: rgba(226,236,245,0.9); line-height: 1.7;
+    }
+
+    /* ── Image figure ── */
+    .nl-figure {
+      margin: 2rem 0; border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .nl-figure img { width: 100%; height: auto; display: block; }
+    .nl-figure figcaption {
+      font-size: 0.7rem; color: var(--text-3); padding: 0.5rem 0.75rem;
+      background: rgba(5,18,40,0.6); font-style: italic;
+    }
+
+    /* ── Committee report card ── */
+    .report-card {
+      background: rgba(5,18,40,0.58);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1.5rem;
+    }
+    .report-card-title { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem; }
+    .report-card-sub { font-size: 0.75rem; color: var(--text-3); margin-bottom: 1rem; }
+
+    /* ── Service table ── */
+    .service-table { width: 100%; border-collapse: collapse; }
+    .service-table th {
+      font-family: var(--font-body); font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3);
+      padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border);
+      text-align: left; background: rgba(5,18,40,0.5);
+    }
+    .service-table td {
+      font-size: 0.82rem; color: var(--text-2); padding: 0.75rem 0.75rem;
+      border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55;
+    }
+    .service-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .service-table td strong { color: var(--text); }
+
+    /* ── Announce card ── */
+    .announce-card {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,208,130,0.15);
+      border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.5rem; margin-bottom: 1rem;
+    }
+    .announce-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .announce-body { font-size: 0.82rem; color: var(--text-2); line-height: 1.75; }
+
+    /* ── Divider ── */
+    .nl-rule { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    /* ── Hope story header ── */
+    .story-card {
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(155,81,224,0.2);
+      border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 3rem;
+    }
+    .story-card .nl-prose p:first-child::first-letter { color: var(--purple); }
+
+    /* ── Print overrides ── */
+    @media print {
+      .nl-hero { min-height: 220px !important; }
+      .nl-section { page-break-inside: avoid; }
+      .report-card, .story-card, .pull-quote { break-inside: avoid; }
+      .nl-hero-content { padding-bottom: 1rem !important; }
+    }
+  </style>
+</head>
+<body class="page-edition">
+<script>window.CURRENT_EDITION = 'february-2026';</script>
+
+<!-- ═══ HERO ═══ -->
+<section class="nl-hero" id="cover" data-section="Cover">
+  <div class="nl-hero-bg" id="nl-hero-bg"></div>
+  <div class="nl-hero-overlay"></div>
+  <div class="nl-hero-content">
+    <div class="nl-hero-text">
+      <div class="nl-edition-label">De Vine News · February 2026 · Vol. 1 Issue 2</div>
+      <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
+      <div class="nl-hero-theme">Theme: Hope</div>
+      <p class="nl-hero-desc">
+        A publication of the PR &amp; Literature Committee, Psychedelics in Recovery™.
+        For the fellowship, by the fellowship.
+      </p>
+      <div class="nl-hero-actions">
+        <button onclick="window.print()" class="btn btn-ghost btn-sm">🖨 Print / Save PDF</button>
+      </div>
+    </div>
+    <div class="nl-hero-art" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ═══ CONTENT ═══ -->
+<main class="nl-wrap">
+
+  <!-- Step 2 Reflection -->
+  <section class="nl-section" id="step-2" data-section="Step 2: Hope">
+    <div class="nl-section-eyebrow">Step Reflection · Step 2</div>
+    <h2 class="nl-article-title">Some Thoughts on Step 2</h2>
+    <p style="font-size:0.82rem;color:var(--purple);font-weight:700;margin-bottom:1rem">
+      Came to believe that a Power greater than ourselves could restore us to sanity.
+    </p>
+    <div class="nl-byline">Written by Douglas N.</div>
+    <div class="nl-prose">
+      <p>We want to be well. We want to be whole. And still—we may find ourselves letting whatever is loudest decide, whatever is most urgent, whatever promises the quickest relief. One voice may say: hold it together. Another: burn it down. Another: just disappear for a while. And somewhere under all that, there might be something quieter—not competing, just waiting.</p>
+      <p>This is a particular insanity: not that we're broken, but that we're divided. That our inner life can feel like a committee and nobody is chairing the meeting.</p>
+
+      <figure class="nl-figure">
+        <img src="assets/editions/feb-2026/milky-way.jpg" alt="The Milky Way galaxy stretching across the night sky" loading="lazy" />
+        <figcaption>Vast sky, still center — the kind of perspective Step 2 offers</figcaption>
+      </figure>
+
+      <h3>Ache</h3>
+      <p>The ache may not be primarily for sobriety. It may be for coherence. To stop arguing with ourselves in the same old circles. To stop calling it "a slip" when it keeps becoming a pattern. To stop bargaining with consequences like we're still the exception.</p>
+      <p>We don't need to become perfect. We need to become one. An integrated inner sense that can hold. So Step Two offers a simple possibility: maybe we don't have to manage our way into wholeness. Maybe wholeness is something we could be restored to—if we can stop insisting we do it alone.</p>
+      <h3>Counterfeit</h3>
+      <p>And here's what many of us may run into: it might not be the idea of a Higher Power that's hard. It may be what we do with it. We might make "God" into a prop. A permission slip. A stamp of approval on what we already wanted.</p>
+      <p>Sometimes we may bypass: float above the mess, quote the right things, declare ourselves "good," while the real work waits downstairs, arms crossed, unimpressed. If our spirituality makes us less accountable, more defended, more performative—it might not be restoring sanity. It may only be medicating the division.</p>
+      <h3>Gathering</h3>
+      <p>Step Two doesn't have to be a theological debate. It may simply invite us to admit the obvious: whatever we've been using as our highest authority may not have been able to make us whole. So we can become willing—not to adopt a new belief, but to allow a new center.</p>
+      <p>A Power greater than ourselves can mean something greater than our wounded perspective alone, greater than our panic, greater than our cleverness. Maybe it's God. Maybe it's the wisdom of the fellowship. Maybe it's nature, time, truth, love, reality. Maybe it's the deeper Self beneath the survival strategies—the place in us that doesn't have to hustle for worth.</p>
+
+      <div class="pull-quote">
+        "Whatever name we use, the invitation may be the same: let something true begin to organize us. Let our insides stop being a tug-of-war and become a team."
+      </div>
+
+      <h3>Signs of Sanity</h3>
+      <p>Sanity may show up small at first. No drama—just signals. A pause where there used to be reflex. A phone call we don't want to make but make anyway. A truth spoken plainly, without dressing it up. Sanity can look like our values starting to sound like instructions, not decorations. It can be the moment we stop confusing emotion with direction. When we can feel shame without turning it into a verdict. When we can feel fear without worshiping it.</p>
+      <p>And maybe the clearest sign: we become teachable again. Beginner's mind. Less "we already know," more "show us."</p>
+
+      <div class="pull-quote">
+        Great Mystery—restore me to wholeness.<br />
+        Not to an image. Not to a performance.<br />
+        Not to the version of me that never needs help.<br />
+        Restore me to sanity: to alignment, to coherence,<br />
+        to a life where my words and actions can finally shake hands.
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Member Stories — Hope -->
+  <section class="nl-section" id="hope-stories" data-section="Hope — Member Stories">
+    <div class="nl-section-eyebrow">Member Stories · Hope</div>
+    <h2 class="nl-article-title" style="font-size:1.5rem;margin-bottom:1.5rem">Hope — Member Stories</h2>
+    <p style="font-size:0.85rem;color:var(--text-2);margin-bottom:2rem;font-family:var(--font-serif);font-style:italic">
+      Members share how the spiritual principle of Hope impacts their recovery in the past and present.
+    </p>
+
+    <!-- Story 1 -->
+    <div class="story-card">
+      <h3 style="font-family:var(--font-body);font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:0.25rem">Chasing Peace in Rainbows</h3>
+      <div class="nl-byline">Erin C.</div>
+      <div class="nl-prose">
+        <p>I have always been a dreamer, the kind of person chasing the sunrise and sunset. But the first real moment of hope I remember came after a relapse. I woke up in a van at the bay. It had rained all night. The air was damp and quiet, and everything felt washed out. And then I saw it.</p>
+        <p>The sun was rising through the leftover rain clouds—the most amazing rainbow stretched across the water. The raindrops were still hanging in the air, catching the light. The whole sky looked lit from underneath. That rainbow felt alive, like it had been placed there just for me.</p>
+        <p>That was my message. It felt divinely guided. A direct transmission from my Higher Power and my future self. The rainbow stretching across the bay felt like it was stretching into my recovery, into my future. The colors were vivid, layered, undeniable. Different perspectives held together in one arc of light. It reminded me that my life could hold contrast and still be whole. That beauty could exist after destruction. That something brighter was possible.</p>
+
+        <div class="pull-quote">
+          "No matter what happens in my life, the sun will rise and the sun will set. And no matter what happens inside of me, there is something at my core that does not change—my soul's identity and the deep love my Higher Power has for me."
+        </div>
+
+        <p>When I started my plant medicine journey, something started to change. Contentment did not come from accomplishing something new. It came from stopping the chase. Now, I don't feel like I am running toward the next place or the next version of myself. I still love the sunrise. I still wait for the sunset. But I am not using them to escape my life. They are reminders.</p>
+        <p>What I hope for now is deeper than goals. I hope for a calm nervous system. I hope for patterns of fear to soften. I hope for a deep love of myself. And more than hope, I trust that the next right thing will be placed in front of me, just as reliably as the sun appears every morning. For the first time in my life, I am not chasing the horizon; I am discovering contentment where I am.</p>
+      </div>
+    </div>
+
+    <!-- Story 2 -->
+    <div class="story-card">
+      <h3 style="font-family:var(--font-body);font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:0.25rem">On Hope, Creativity, and Dreaming Without Dope</h3>
+      <div class="nl-byline">Andria E-M · London, UK</div>
+      <div class="nl-prose">
+        <p>Hope is not just the cornerstone of survival. It is the very bedrock of life. Without it, one may as well shoot dope till death. Cranking up powders bought in the criminalized markets has its place; drugs protected me from pain so great.</p>
+        <p>Heroin comes from one of the creator's most beautiful poppies. I developed a profound "love" for it. Using heroin protected me from suicide. I found out that a lorry-load of hope and years without needling my body were not going to stop me from returning to daily heroin injections.</p>
+        <p>Thanks to the Getty Foundation, local drug workers, clinicians, and 12-step groups, I regained my strength enough to establish a charity to honor my life partner John M, who died from AIDS in March 1995, and to work to stay alive.</p>
+
+        <div class="pull-quote">
+          "In the words of Martin Luther King Jr.: 'I have a dream.' My dream is that WE will join hands in work and solidarity to end the legal punishments meted out to people who use drugs, when they are not harming others or their property."
+        </div>
+
+        <p>Ibogaine HCL improved my life recently—hugely. Without opiates, I struggle with sore lungs, joints, and hyperactivity. That's where Psychedelics in Recovery (PIR) comes into its own. PIR is a novel 12-step community that uses psychedelic medicine as well as listening and talk therapy. It's an extraordinary family where we all qualify because regardless of whether our addiction wears the mask of drugs, codependency, sex, food, and so on—at its core it is a loss of control of ourselves.</p>
+        <p>Without Community, Hope, and Creativity, I would not be alive.</p>
+      </div>
+    </div>
+
+    <!-- Story 3 -->
+    <div class="story-card">
+      <h3 style="font-family:var(--font-body);font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:0.25rem">Breaking the Silence: Psychedelic Therapy and Long-Term Recovery</h3>
+      <div class="nl-byline">Erick Z.</div>
+      <div class="nl-prose">
+        <p>I want to share my experience, strength, and hope to let others know that the therapeutic use of psychedelics is a viable path for recovery with tremendous benefits. I have been sober for over 19 years in AA.</p>
+        <p>In my 18th year of sobriety, I found myself at a psychic crossroads. I decided that I no longer wanted to take the duloxetine that I had used as a crutch against anxiety for well over a decade. I was an active member of my AA home group with a service position, a sponsor, and a sponsee, but I could not find the inner peace I thought I should have with almost 20 years of recovery.</p>
+        <p>I was interested in pursuing the use of psychedelics in a therapeutic setting, but it went against everything I'd learned in recovery. There was no way I was going to discuss trying psychedelics therapeutically in the rooms of AA. And thus, I found myself attending a Zoom meeting of Psychedelics in Recovery.</p>
+
+        <div class="pull-quote">
+          "The main benefit was that I finally experienced the idea of humility and being 'right sized' as discussed in the AA 12 &amp; 12. This means that the grand sum of my existence — the ups, downs, stresses, ruminations — are smaller than a grain of sand at the bottom of the ocean."
+        </div>
+
+        <p>Using psychedelics in a controlled, intentional setting has dramatically shifted my sobriety. My anxiety levels have dropped dramatically, and I maintain this through breathwork and other methods of self-care. Looking back, I wish I had done this years ago because it might've saved me years of feeling lost without knowing the reason why.</p>
+        <p>It's unfortunate that the rooms of AA seem shut off from the idea of using psychedelics in recovery. The Big Book of AA was written in the 1930s. Much has changed since that time. You could be short-changing yourself if you didn't at least examine other options.</p>
+      </div>
+    </div>
+
+    <!-- Story 4 -->
+    <div class="story-card">
+      <h3 style="font-family:var(--font-body);font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:0.25rem">Hope, Perfect Hope: Psychedelics and the Return to Self</h3>
+      <div class="nl-byline">Hannah</div>
+      <div class="nl-prose">
+        <p>When I first entered recovery, I'm not sure what I hoped to achieve. I felt so broken—at a low ebb, a bottom. But I knew intuitively I was in the right place. I began using psychedelics intentionally eight years ago, and since then, I have achieved a great deal. I feel like I've gotten to know myself—the real me without the constant trauma responses.</p>
+        <p>Hope is a huge word for me. Hope is the foundation upon which I exist. It is faith's sister. If I didn't have hope, I'm pretty sure I wouldn't be alive. I am in recovery, attending three fellowships, and they are all based on hope.</p>
+
+        <div class="pull-quote">
+          "It came through me whilst writing:<br /><br />
+          <em>What of that word Hope?<br />
+          As sure as the sun rises<br />
+          We can believe</em>"
+        </div>
+
+        <p>Through my deep recovery work with psychedelics, I know with an unwavering certainty that there is hope above all else. My life is part of a divine plan to help me return to source, in which we are all interconnected. So powerful a gift it was. Recovery helps me return to me. What a gift it has been.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Committee Reports -->
+  <section class="nl-section" id="committee-reports" data-section="Committee Reports">
+    <div class="nl-section-eyebrow">Committee Reports</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:1.5rem">Service Committee Updates</h2>
+
+    <div class="report-card">
+      <div class="report-card-title">12-Step Committee</div>
+      <div class="report-card-sub">Finalizing the PIR 12-Step Book</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>PIR®'s 12-Step Committee is finalizing a book that unpacks the Twelve Steps of Psychedelics in Recovery. Our fellowship is diverse—addiction, compulsion, codependency, over-functioning. Different outsides, similar insides. These steps are for anyone who's tired of cycles that cost integrity, peace, or a sense of self.</p>
+        <p>Two active step-study meetings are currently reading these steps — Tuesdays 1pm PST (Meeting ID: 835 3934 1211 · Passcode: 805679) and Wednesdays 4pm PST (Meeting ID: 836 9993 6187 · Password: 900897). Contact <a href="mailto:twelvesteps@psychedelicsinrecovery.org">twelvesteps@psychedelicsinrecovery.org</a> if you'd like to read and offer feedback.</p>
+      </div>
+    </div>
+
+    <div class="report-card">
+      <div class="report-card-title">PR Committee</div>
+      <div class="report-card-sub">Integration Radio Launched · Digital Artists Needed</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>This month, the PR Committee launched <strong>Integration Radio</strong>, releasing the first two episodes of the <em>Journey of Healing</em> series. Episode 3 has also now been released on Spotify, Apple Podcasts, and YouTube.</p>
+        <p>The committee is currently seeking a <strong>Digital Artist</strong> volunteer to join — interested individuals should reach out for more details on how to get involved.</p>
+        <figure class="nl-figure" style="margin-top:1.25rem">
+          <img src="assets/editions/feb-2026/integration-radio-ep3.jpg" alt="PIR Integration Radio Episode 3 Now Streaming announcement" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+
+    <div class="report-card">
+      <div class="report-card-title">General Service Committee</div>
+      <div class="report-card-sub">Unity and Transparency</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>The January GSR Meeting focused on strengthening unity across the fellowship, clarifying the relationship between the PIR fellowship and the nonprofit Board, and supporting greater transparency and communication throughout our service structure. The meeting welcomed Jason B., who shared a helpful presentation on PIR's service structure.</p>
+        <p>Key highlights from January: a Traveling GSR proposal to support unrepresented meetings; announcement of the <strong>PIR Convention in Denver, Oct 8–12, 2026</strong>; and the introduction of regular subcommittee reports at GSR meetings for improved communication flow.</p>
+        <p>We encourage all PIR meetings to have a GSR represented at the Subcommittee. If you know of a meeting without a GSR, consider this an opportunity to participate in service.</p>
+      </div>
+    </div>
+
+    <div class="report-card">
+      <div class="report-card-title">Literature Committee</div>
+      <div class="report-card-sub">Trademark Alignment · Digital Debut</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>LitCom has been continuing the careful process of updating existing literature to reflect trademark alignment following PIR®'s newly registered trademark status. LitCom is also excited to formally establish its presence on the new Service Page subdomain and within the fellowship's newsletter.</p>
+        <p>LitCom warmly welcomes volunteers—no special expertise required, only a willingness to listen, collaborate, and serve with humility.</p>
+      </div>
+    </div>
+
+    <div class="report-card">
+      <div class="report-card-title">Book Committee</div>
+      <div class="report-card-sub">Work Suspended Pending Board Meeting</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>All work and projects in the Book Committee have been suspended pending a meeting with the board in three months' time. For any information, please contact <a href="mailto:forapirbook@gmail.com">forapirbook@gmail.com</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Service Positions -->
+  <section class="nl-section" id="service" data-section="Open Service Positions">
+    <div class="nl-section-eyebrow">Service Opportunities</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:0.5rem">Open Service Positions</h2>
+    <div style="background:rgba(5,18,40,0.62);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-lg);padding:1.5rem">
+      <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.25rem">
+        Email <a href="mailto:newsletter@psychedelicsinrecovery.org">newsletter@psychedelicsinrecovery.org</a> to volunteer or request technical training.
+      </p>
+      <div style="overflow-x:auto">
+        <table class="service-table">
+          <thead>
+            <tr><th>Role</th><th>Committee / Group</th><th>Description</th><th>Schedule</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Digital Artist</strong></td>
+              <td>PR Committee</td>
+              <td>Create digital media content for PIR across multiple platforms including podcasts, website, newsletter, and literature.</td>
+              <td>Ongoing</td>
+            </tr>
+            <tr>
+              <td><strong>Copy Editor</strong></td>
+              <td>PR Committee – Newsletter</td>
+              <td>Edit member and committee contributions to <em>De Vine</em>; conduct interviews; assist with artwork and content choices.</td>
+              <td>Ongoing</td>
+            </tr>
+            <tr>
+              <td><strong>Readers</strong></td>
+              <td>12-Step Committee</td>
+              <td>Read content, provide direct feedback, and attend 12-step Book Committee meetings.</td>
+              <td>Ongoing</td>
+            </tr>
+            <tr>
+              <td><strong>Chairperson</strong></td>
+              <td>London In-Person Meeting</td>
+              <td>Lead Meeting</td>
+              <td>Friday 1700 PT / Sat 0100 UCT</td>
+            </tr>
+            <tr>
+              <td><strong>Chairperson</strong></td>
+              <td>Monday Entheon</td>
+              <td>Lead meeting</td>
+              <td>1700 PT / Tues 0100 UCT</td>
+            </tr>
+            <tr>
+              <td><strong>Chairperson</strong></td>
+              <td>Monday Meditation</td>
+              <td>Lead meeting</td>
+              <td>0400 PT / 1200 UCT</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Announcements -->
+  <section class="nl-section" id="announcements" data-section="Announcements">
+    <div class="nl-section-eyebrow">Fellowship Notices</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:1.25rem">Announcements</h2>
+
+    <div class="announce-card">
+      <div class="announce-title">PIR Convention — Denver, CO · Oct 8–12, 2026</div>
+      <div class="announce-body">Planning is underway for PIR's first General Service Convention. Focus: Education, dialogue, and unity. GSRs are gathering group input on themes and volunteer interest. Stay tuned for updates via the Service Calendar.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Traveling GSR Proposal — Fellowship Input Needed</div>
+      <div class="announce-body">The Traveling GSR proposal — to support meetings without representation — has been refined and will be revisited at the next GSR meeting. Bring this to your home meeting and share your group conscience with your GSR.</div>
+    </div>
+
+    <figure class="nl-figure">
+      <img src="assets/editions/feb-2026/magical-book.jpg" alt="Magical glowing open book with blue light swirling upward" loading="lazy" />
+      <figcaption>Readers Needed — email twelvesteps@psychedelicsinrecovery.org to offer feedback on the new PIR 12-Step book, one step at a time.</figcaption>
+    </figure>
+
+    <div class="announce-card">
+      <div class="announce-title">Submit to the March Issue</div>
+      <div class="announce-body">The March 2026 theme is <strong>Hope</strong> (Steps 2 &amp; 3). Share your experience, strength, and hope — writings, poetry, and reflections welcome. Visit the <a href="submit.html">Submit page</a> to contribute.</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+  const bg = document.getElementById('nl-hero-bg');
+  let tick = false;
+  window.addEventListener('scroll', function () {
+    if (!tick) {
+      requestAnimationFrame(function () {
+        bg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+        tick = false;
+      });
+      tick = true;
+    }
+  });
+</script>
+<script src="nav.js"></script>
+<script src="sidenav.js"></script>
+<script src="footer.js"></script>
+</body>
+</html>
