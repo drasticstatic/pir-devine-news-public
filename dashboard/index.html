@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devine News — Committee Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pir: {
+              deep:   '#1e0a3c',
+              purple: '#6d28d9',
+              violet: '#7c3aed',
+              teal:   '#0d9488',
+              sky:    '#0ea5e9',
+              amber:  '#f59e0b',
+              rose:   '#e11d48',
+              mist:   '#f5f3ff',
+            }
+          },
+          backgroundImage: {
+            'pir-gradient': 'linear-gradient(135deg, #1e0a3c 0%, #312e81 50%, #0d9488 100%)',
+            'card-gradient': 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #f5f3ff; }
+    .status-badge { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 9999px; }
+    .badge-incoming  { background: #dbeafe; color: #1d4ed8; }
+    .badge-review    { background: #fef3c7; color: #92400e; }
+    .badge-approved  { background: #d1fae5; color: #065f46; }
+    .badge-published { background: #ede9fe; color: #5b21b6; }
+    .badge-art       { background: #fce7f3; color: #9d174d; }
+    .shine { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); }
+    .card-hover { transition: transform 0.18s ease, box-shadow 0.18s ease; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(109,40,217,0.18); }
+  </style>
+</head>
+<body class="min-h-screen font-sans text-gray-800">
+
+  <!-- ═══════════════════ HEADER ═══════════════════ -->
+  <header class="bg-pir-gradient text-white shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 shine pointer-events-none"></div>
+    <div class="relative max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <p class="text-xs uppercase tracking-widest text-teal-300 mb-1">Psychedelics In Recovery · 12-Step Fellowship</p>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">🌀 Devine News</h1>
+        <p class="text-sm text-purple-200 mt-1">Newsletter Committee Portal</p>
+      </div>
+      <div class="flex flex-col items-end gap-2">
+        <a href="submit.html"
+           class="bg-pir-teal hover:bg-teal-500 text-white font-semibold px-5 py-2 rounded-full shadow transition">
+          ✍️ Submit Work
+        </a>
+        <a href="https://www.psychedelicsinrecovery.org" target="_blank"
+           class="text-xs text-purple-300 hover:text-white underline transition">
+          psychedelicsinrecovery.org ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ DEADLINE BANNER ═══════════════════ -->
+  <div id="deadline-banner" class="bg-amber-50 border-b border-amber-200 hidden">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3 text-amber-800">
+      <span class="text-lg">📅</span>
+      <div>
+        <span class="font-semibold">Next Topic: </span>
+        <span id="next-topic">—</span>
+        <span class="mx-2 text-amber-400">·</span>
+        <span class="font-semibold">Deadline: </span>
+        <span id="next-date">—</span>
+      </div>
+      <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
+         target="_blank"
+         class="ml-auto text-xs underline hover:text-amber-900 whitespace-nowrap">
+        View Topics Doc ↗
+      </a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ MAIN ═══════════════════ -->
+  <main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+    <!-- Stats row -->
+    <section id="stats-row" class="grid grid-cols-2 sm:grid-cols-4 gap-4 hidden">
+      <div class="bg-white rounded-2xl shadow p-4 text-center card-gradient">
+        <div id="stat-total" class="text-3xl font-extrabold text-pir-purple">0</div>
+        <div class="text-xs text-gray-500 mt-1">Total Submissions</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-4 text-center">
+        <div id="stat-review" class="text-3xl font-extrabold text-amber-500">0</div>
+        <div class="text-xs text-gray-500 mt-1">Needs Review</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-4 text-center">
+        <div id="stat-approved" class="text-3xl font-extrabold text-teal-600">0</div>
+        <div class="text-xs text-gray-500 mt-1">Approved</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-4 text-center">
+        <div id="stat-art" class="text-3xl font-extrabold text-pink-500">0</div>
+        <div class="text-xs text-gray-500 mt-1">Art Pieces</div>
+      </div>
+    </section>
+
+    <!-- Art Gallery -->
+    <section id="gallery-section" class="hidden">
+      <h2 class="text-xl font-bold text-pir-purple mb-4">🎨 Art Gallery</h2>
+      <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <!-- Thumbnails injected by JS -->
+      </div>
+    </section>
+
+    <!-- Submissions Table -->
+    <section>
+      <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <h2 class="text-xl font-bold text-pir-purple">📋 Submissions</h2>
+        <div class="flex items-center gap-3">
+          <span id="last-sync-label" class="text-xs text-gray-400">Last sync: —</span>
+          <button onclick="loadData()"
+                  class="text-xs bg-pir-violet hover:bg-purple-700 text-white px-4 py-1.5 rounded-full transition">
+            ↺ Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="bg-white rounded-2xl shadow p-12 text-center">
+        <div class="text-5xl mb-4">🌱</div>
+        <h3 class="text-lg font-semibold text-gray-600">No submissions yet</h3>
+        <p class="text-sm text-gray-400 mt-2 max-w-sm mx-auto">
+          Once the sync bot runs and committee members submit work, it will appear here automatically.
+        </p>
+        <a href="submit.html"
+           class="inline-block mt-6 bg-pir-gradient text-white font-semibold px-6 py-2.5 rounded-full shadow hover:opacity-90 transition">
+          Be the first to submit ✍️
+        </a>
+      </div>
+
+      <!-- Submissions list (hidden until data loads) -->
+      <div id="submissions-list" class="space-y-3 hidden"></div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="bg-pir-deep text-purple-300 text-center text-xs py-6 mt-12">
+    <p>Devine News Committee Hub · Psychedelics In Recovery</p>
+    <p class="mt-1 text-purple-500">
+      <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="hover:text-purple-300 underline transition">
+        psychedelicsinrecovery.org
+      </a>
+    </p>
+  </footer>
+
+  <!-- ═══════════════════ SCRIPT ═══════════════════ -->
+  <script>
+    const STATUS_MAP = {
+      'incoming':  { label: '📥 Incoming',        cls: 'badge-incoming'  },
+      'review':    { label: '🔍 Needs Review',    cls: 'badge-review'    },
+      'approved':  { label: '✅ Approved',         cls: 'badge-approved'  },
+      'published': { label: '🚀 Published',        cls: 'badge-published' },
+      'art':       { label: '🎨 Needs Art Review', cls: 'badge-art'       },
+    };
+
+    function badge(status) {
+      const s = STATUS_MAP[status] || { label: status, cls: 'badge-incoming' };
+      return `<span class="status-badge ${s.cls}">${s.label}</span>`;
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch('data.json?_=' + Date.now());
+        const data = await res.json();
+
+        // Deadline banner
+        if (data.nextDeadline && data.nextDeadline.topic && data.nextDeadline.topic !== 'TBD') {
+          document.getElementById('next-topic').textContent = data.nextDeadline.topic;
+          document.getElementById('next-date').textContent = data.nextDeadline.date;
+          document.getElementById('deadline-banner').classList.remove('hidden');
+        }
+
+        // Last sync
+        document.getElementById('last-sync-label').textContent =
+          'Last sync: ' + (data.lastSync || 'Never');
+
+        const subs = data.submissions || [];
+
+        if (subs.length === 0) {
+          document.getElementById('empty-state').classList.remove('hidden');
+          document.getElementById('submissions-list').classList.add('hidden');
+          return;
+        }
+
+        document.getElementById('empty-state').classList.add('hidden');
+        document.getElementById('submissions-list').classList.remove('hidden');
+        document.getElementById('stats-row').classList.remove('hidden');
+
+        // Stats
+        document.getElementById('stat-total').textContent = subs.length;
+        document.getElementById('stat-review').textContent =
+          subs.filter(s => s.status === 'review').length;
+        document.getElementById('stat-approved').textContent =
+          subs.filter(s => s.status === 'approved').length;
+        document.getElementById('stat-art').textContent =
+          subs.filter(s => s.type === 'art').length;
+
+        // Art gallery
+        const artWithThumbs = subs.filter(s => s.type === 'art' && s.thumbnail);
+        if (artWithThumbs.length > 0) {
+          document.getElementById('gallery-section').classList.remove('hidden');
+          document.getElementById('gallery-grid').innerHTML = artWithThumbs.map(s => `
+            <div class="card-hover rounded-xl overflow-hidden shadow bg-white">
+              <img src="../temp-gallery/${s.thumbnail}" alt="${s.title}"
+                   class="w-full h-36 object-cover" loading="lazy" />
+              <div class="p-2 text-xs text-gray-600 font-medium truncate">${s.title}</div>
+            </div>
+          `).join('');
+        }
+
+        // Submissions list
+        document.getElementById('submissions-list').innerHTML = subs.map(s => `
+          <div class="card-hover bg-white rounded-2xl shadow p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-semibold text-gray-800 truncate">${s.title || 'Untitled'}</span>
+                ${badge(s.status)}
+                ${s.type === 'art' ? badge('art') : ''}
+              </div>
+              ${s.author ? `<div class="text-xs text-gray-400 mt-0.5">by ${s.author}</div>` : ''}
+              ${s.topic  ? `<div class="text-xs text-purple-400 mt-0.5">Topic: ${s.topic}</div>` : ''}
+              ${s.snippet ? `<p class="text-sm text-gray-500 mt-1 line-clamp-2">${s.snippet}</p>` : ''}
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+              ${s.driveUrl ? `
+                <a href="${s.driveUrl}" target="_blank"
+                   class="bg-pir-gradient text-white text-xs font-semibold px-4 py-2 rounded-full hover:opacity-90 transition whitespace-nowrap">
+                  Open in Drive ↗
+                </a>` : ''}
+            </div>
+          </div>
+        `).join('');
+
+      } catch (err) {
+        console.error('Failed to load data.json:', err);
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

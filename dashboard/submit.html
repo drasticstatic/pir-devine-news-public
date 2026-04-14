@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Work — Devine News</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pir: {
+              deep:   '#1e0a3c',
+              purple: '#6d28d9',
+              violet: '#7c3aed',
+              teal:   '#0d9488',
+              sky:    '#0ea5e9',
+              amber:  '#f59e0b',
+              mist:   '#f5f3ff',
+            }
+          },
+          backgroundImage: {
+            'pir-gradient': 'linear-gradient(135deg, #1e0a3c 0%, #312e81 50%, #0d9488 100%)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #f5f3ff; }
+    .shine { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); }
+    .field-label { display: block; font-size: 0.85rem; font-weight: 600; color: #4c1d95; margin-bottom: 0.4rem; }
+    .field-input {
+      width: 100%; border: 1.5px solid #ddd6fe; border-radius: 0.75rem;
+      padding: 0.65rem 0.9rem; font-size: 0.95rem; outline: none;
+      transition: border-color 0.15s;
+    }
+    .field-input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
+    .field-input::placeholder { color: #a78bfa; }
+    .drop-zone {
+      border: 2px dashed #a78bfa; border-radius: 1rem;
+      padding: 2.5rem 1.5rem; text-align: center; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .drop-zone:hover, .drop-zone.drag-over { background: #ede9fe; border-color: #7c3aed; }
+    #success-panel { display: none; }
+    #form-panel    { display: block; }
+  </style>
+</head>
+<body class="min-h-screen font-sans text-gray-800">
+
+  <!-- ═══════════════════ HEADER ═══════════════════ -->
+  <header class="bg-pir-gradient text-white shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 shine pointer-events-none"></div>
+    <div class="relative max-w-2xl mx-auto px-4 py-7 flex items-center justify-between gap-4">
+      <div>
+        <p class="text-xs uppercase tracking-widest text-teal-300 mb-1">Psychedelics In Recovery</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">✍️ Submit Your Work</h1>
+        <p class="text-sm text-purple-200 mt-0.5">Devine News Newsletter</p>
+      </div>
+      <a href="index.html" class="text-xs text-purple-300 hover:text-white underline transition whitespace-nowrap">
+        ← Back to Portal
+      </a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ MAIN ═══════════════════ -->
+  <main class="max-w-2xl mx-auto px-4 py-10">
+
+    <!-- ── SUCCESS PANEL ── -->
+    <div id="success-panel" class="bg-white rounded-3xl shadow-lg p-10 text-center">
+      <div class="text-6xl mb-4">🌀</div>
+      <h2 class="text-2xl font-extrabold text-pir-purple">Submission Received!</h2>
+      <p class="text-gray-500 mt-3 max-w-sm mx-auto">
+        Thank you for contributing to the newsletter. A confirmation email is on its way.
+        The Literature Committee will review your work soon.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <button onclick="resetForm()"
+                class="bg-pir-gradient text-white font-semibold px-6 py-2.5 rounded-full shadow hover:opacity-90 transition">
+          Submit Another
+        </button>
+        <a href="index.html"
+           class="border border-pir-violet text-pir-violet font-semibold px-6 py-2.5 rounded-full hover:bg-purple-50 transition text-center">
+          Back to Portal
+        </a>
+      </div>
+    </div>
+
+    <!-- ── FORM PANEL ── -->
+    <div id="form-panel" class="bg-white rounded-3xl shadow-lg p-6 sm:p-10 space-y-6">
+
+      <div>
+        <h2 class="text-xl font-bold text-pir-purple">Share Your Voice</h2>
+        <p class="text-sm text-gray-500 mt-1">
+          Submit literature, artwork, or both. Everything goes straight to the committee's Google Drive
+          and shows up on the dashboard for review.
+        </p>
+      </div>
+
+      <form id="submission-form" novalidate>
+
+        <!-- ── CONTACT ── -->
+        <fieldset class="space-y-5 mb-6">
+          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">About You</legend>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="field-label" for="fullName">Full Name <span class="text-rose-400">*</span></label>
+              <input class="field-input" type="text" id="fullName" name="fullName"
+                     placeholder="Your name" autocomplete="name" required />
+            </div>
+            <div>
+              <label class="field-label" for="email">Email <span class="text-rose-400">*</span></label>
+              <input class="field-input" type="email" id="email" name="email"
+                     placeholder="you@example.com" autocomplete="email" required />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ── SUBMISSION TYPE ── -->
+        <fieldset class="space-y-5 mb-6">
+          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">Submission</legend>
+
+          <div>
+            <label class="field-label" for="category">Category <span class="text-rose-400">*</span></label>
+            <select class="field-input" id="category" name="category" required onchange="toggleSections()">
+              <option value="">— Select one —</option>
+              <option value="literature">✍️ Literature</option>
+              <option value="art">🎨 Artwork</option>
+              <option value="both">✍️🎨 Both</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="field-label" for="topic">Newsletter Topic</label>
+            <input class="field-input" type="text" id="topic" name="topic"
+                   placeholder="e.g. Step 4, Gratitude, Sponsorship…" />
+            <p class="text-xs text-gray-400 mt-1">
+              <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
+                 target="_blank" class="text-purple-400 hover:underline">
+                View current topics & deadlines ↗
+              </a>
+            </p>
+          </div>
+        </fieldset>
+
+        <!-- ── LITERATURE SECTION ── -->
+        <fieldset id="section-literature" class="space-y-5 mb-6 hidden">
+          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">Literature</legend>
+          <div>
+            <label class="field-label" for="litTitle">Title</label>
+            <input class="field-input" type="text" id="litTitle" name="litTitle"
+                   placeholder="Title of your piece" />
+          </div>
+          <div>
+            <label class="field-label" for="litText">Your Text <span class="text-rose-400">*</span></label>
+            <textarea class="field-input resize-y" id="litText" name="litText"
+                      rows="8" placeholder="Paste or type your submission here…"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- ── ART SECTION ── -->
+        <fieldset id="section-art" class="space-y-5 mb-6 hidden">
+          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">Artwork</legend>
+          <div>
+            <label class="field-label" for="artTitle">Artwork Title</label>
+            <input class="field-input" type="text" id="artTitle" name="artTitle"
+                   placeholder="What's the name of this piece?" />
+          </div>
+          <div>
+            <label class="field-label">Upload File <span class="text-rose-400">*</span></label>
+            <div class="drop-zone" id="drop-zone"
+                 ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)"
+                 onclick="document.getElementById('artFile').click()">
+              <input type="file" id="artFile" name="artFile" class="hidden"
+                     accept="image/png,image/jpeg,image/jpg,image/webp,application/pdf"
+                     onchange="onFileSelect(event)" />
+              <div id="drop-label">
+                <div class="text-4xl mb-2">🎨</div>
+                <p class="text-pir-violet font-semibold">Click to upload or drag &amp; drop</p>
+                <p class="text-xs text-gray-400 mt-1">PNG, JPG, WEBP, or PDF · Max 25 MB</p>
+              </div>
+              <div id="file-preview" class="hidden mt-2 text-sm font-medium text-teal-700"></div>
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="artNotes">Notes for the Editor</label>
+            <textarea class="field-input resize-y" id="artNotes" name="artNotes"
+                      rows="3" placeholder="Anything the committee should know about this piece…"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- ── ERROR ── -->
+        <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3"></div>
+
+        <!-- ── SUBMIT ── -->
+        <button type="submit" id="submit-btn"
+                class="w-full bg-pir-gradient text-white font-bold py-3 rounded-2xl shadow-lg hover:opacity-90 active:scale-[0.98] transition text-base">
+          Send to Committee 🚀
+        </button>
+
+        <p class="text-center text-xs text-gray-400 mt-3">
+          Submitting saves your work directly to the committee's Google Drive.
+          You'll receive a confirmation email after submission.
+        </p>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="bg-pir-deep text-purple-300 text-center text-xs py-6 mt-8">
+    <p>Devine News Committee Hub · Psychedelics In Recovery</p>
+    <p class="mt-1 text-purple-500">
+      <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="hover:text-purple-300 underline transition">
+        psychedelicsinrecovery.org
+      </a>
+    </p>
+  </footer>
+
+  <!-- ═══════════════════ SCRIPT ═══════════════════ -->
+  <script>
+    // ── Replace this URL with your deployed Google Apps Script Web App endpoint ──
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+    function toggleSections() {
+      const cat = document.getElementById('category').value;
+      const litEl  = document.getElementById('section-literature');
+      const artEl  = document.getElementById('section-art');
+      const litTxt = document.getElementById('litText');
+      const artFile = document.getElementById('artFile');
+
+      litEl.classList.toggle('hidden',  cat !== 'literature' && cat !== 'both');
+      artEl.classList.toggle('hidden',  cat !== 'art'        && cat !== 'both');
+      litTxt.required  = (cat === 'literature' || cat === 'both');
+      artFile.required = (cat === 'art'        || cat === 'both');
+    }
+
+    function onDragOver(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.add('drag-over');
+    }
+    function onDragLeave(e) {
+      document.getElementById('drop-zone').classList.remove('drag-over');
+    }
+    function onDrop(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) setFile(file);
+    }
+    function onFileSelect(e) {
+      if (e.target.files[0]) setFile(e.target.files[0]);
+    }
+    function setFile(file) {
+      document.getElementById('file-preview').textContent = '📎 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+      document.getElementById('drop-label').classList.add('hidden');
+      document.getElementById('file-preview').classList.remove('hidden');
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('form-error');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+    }
+    function clearError() {
+      document.getElementById('form-error').classList.add('hidden');
+    }
+
+    document.getElementById('submission-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      clearError();
+
+      const cat   = document.getElementById('category').value;
+      const name  = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!name || !email || !cat) {
+        showError('Please fill in your name, email, and category.');
+        return;
+      }
+      if ((cat === 'literature' || cat === 'both') && !document.getElementById('litText').value.trim()) {
+        showError('Please enter your literature text.');
+        return;
+      }
+      if ((cat === 'art' || cat === 'both') && !document.getElementById('artFile').files[0]) {
+        showError('Please select an art file to upload.');
+        return;
+      }
+
+      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+        // Demo mode — show success without actually posting
+        document.getElementById('form-panel').style.display = 'none';
+        document.getElementById('success-panel').style.display = 'block';
+        return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending… ⏳';
+
+      try {
+        const fd = new FormData(this);
+        const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd });
+        const json = await res.json();
+        if (json.status === 'ok') {
+          document.getElementById('form-panel').style.display = 'none';
+          document.getElementById('success-panel').style.display = 'block';
+        } else {
+          showError(json.message || 'Something went wrong. Please try again.');
+          btn.disabled = false;
+          btn.textContent = 'Send to Committee 🚀';
+        }
+      } catch (err) {
+        showError('Could not reach the submission server. Check your connection and try again.');
+        btn.disabled = false;
+        btn.textContent = 'Send to Committee 🚀';
+      }
+    });
+
+    function resetForm() {
+      document.getElementById('submission-form').reset();
+      document.getElementById('drop-label').classList.remove('hidden');
+      document.getElementById('file-preview').classList.add('hidden');
+      document.getElementById('section-literature').classList.add('hidden');
+      document.getElementById('section-art').classList.add('hidden');
+      clearError();
+      document.getElementById('form-panel').style.display = 'block';
+      document.getElementById('success-panel').style.display = 'none';
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('submit-btn').textContent = 'Send to Committee 🚀';
+    }
+  </script>
+</body>
+</html>
