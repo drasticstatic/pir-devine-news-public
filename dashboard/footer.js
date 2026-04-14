@@ -29,7 +29,7 @@
         <a href="index.html">🏠 Committee Portal</a>
         <a href="submit.html">✍️ Submit Work</a>
         <a href="newsletter-template.html">📰 Newsletter Template</a>
-        <a href="resources.html">📋 Resources &amp; Service</a>
+        <a href="bulletin.html">📋 De Vine Bulletin</a>
         <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
            target="_blank" rel="noopener">📅 Topics &amp; Deadlines</a>
       </div>

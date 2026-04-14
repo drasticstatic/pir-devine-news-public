@@ -3,706 +3,499 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>De Vine News — Newsletter Template | PIR®</title>
+  <title>De Vine News — Edition Template | PIR®</title>
+  <meta name="description" content="De Vine News edition template — all content categories shown as placeholders for committee editors and developers." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
   <style>
-    /* ============================================================
-       DEVINE NEWS — Print-Ready Newsletter Template
-       Based on the March 2026 "De Vine" newsletter design.
-       Instructions for committee editors:
-         1. Replace [MONTH YEAR] and the theme/topic throughout.
-         2. Paste approved article text into each <article> block.
-         3. Replace [AUTHOR NAME] with the approved byline.
-         4. Drop art images into .art-block img src attributes.
-         5. Print → Save as PDF  (use Chrome for best results,
-            File → Print → Destination: Save as PDF, Layout: A4).
-       ============================================================ */
-
-    :root {
-      --black:    #0d0d0d;
-      --ink:      #1a1a2e;
-      --ink-2:    #2c2c54;
-      --body-txt: #1c1c2e;
-      --muted:    #5a5a7a;
-      --green:    #00a366;
-      --green-lt: #00d082;
-      --cyan:     #0097a7;
-      --purple:   #6a0dad;
-      --purple-lt:#9b51e0;
-      --gold:     #b8860b;
-      --rule:     #d0d0e0;
-      --bg:       #ffffff;
-      --bg-2:     #f6f4fb;
-      --col-w:    170mm;  /* A4 content width */
+    /* ── Edition layout (matches March / April) ── */
+    .nl-hero {
+      position: relative; overflow: hidden; min-height: 460px;
+      display: flex; align-items: flex-end;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 10.5pt; }
-
-    body {
-      background: #e8e8e8;
-      font-family: 'Merriweather', Georgia, serif;
-      color: var(--body-txt);
-      line-height: 1.7;
-    }
-
-    /* ── Page ── */
-    .page {
-      width: 210mm; min-height: 297mm;
-      background: var(--bg);
-      margin: 0 auto;
-      position: relative;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-    }
-    .page + .page { margin-top: 2rem; }
-
-    /* ── Print rules ── */
-    @media print {
-      body { background: #fff; }
-      .page { box-shadow: none; margin: 0; page-break-after: always; }
-      .page:last-child { page-break-after: avoid; }
-      .no-print { display: none !important; }
-      @page { size: A4; margin: 0; }
-    }
-
-    /* ── Cover page ── */
-    .cover {
-      position: relative; overflow: hidden;
-      height: 297mm; display: flex; flex-direction: column;
-    }
-    .cover-bg {
-      position: absolute; inset: 0; z-index: 0;
+    .nl-hero-bg {
+      position: absolute; inset: -40px 0; z-index: 0;
       background-image: url('assets/bg.jpg');
-      background-size: cover; background-position: center 30%;
+      background-size: cover; background-position: center 25%;
+      will-change: transform;
     }
-    .cover-overlay {
+    .nl-hero-overlay {
       position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(
-        to bottom,
-        rgba(10,10,40,0.60) 0%,
-        rgba(10,10,40,0.50) 40%,
-        rgba(10,10,40,0.85) 75%,
-        rgba(10,10,40,0.97) 100%
-      );
+      background: linear-gradient(to bottom, rgba(0,15,43,0.45) 0%, rgba(0,15,43,0.92) 85%);
     }
-    .cover-content {
-      position: relative; z-index: 2;
-      flex: 1; display: flex; flex-direction: column;
-      padding: 14mm 16mm;
+    .nl-hero-content {
+      position: relative; z-index: 2; width: 100%;
+      max-width: 860px; margin: 0 auto;
+      padding: 3rem 1.5rem 2.5rem;
     }
-
-    /* Cover — logo hero layout */
-    .cover-top {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 0 0 0; margin-bottom: auto;
+    .nl-edition-label {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cyan);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
     }
-    .cover-issue-label {
-      font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:600;
-      text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.5);
+    .nl-edition-label::before { content:''; width:18px; height:1.5px; background:var(--cyan); }
+    .nl-hero-title {
+      font-size: clamp(2.2rem,6vw,3.6rem); font-weight: 800;
+      line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 0.6rem;
     }
-
-    /* Logo hero — centered on cover */
-    .cover-hero {
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center; margin: auto 0;
+    .nl-hero-title em { font-style:normal; color:var(--cyan); }
+    .nl-hero-theme { font-size: 1.1rem; color: var(--cyan); font-weight: 700; margin-bottom: 0.75rem; }
+    .nl-hero-desc {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.9rem; color: rgba(226,236,245,0.7); max-width: 500px; line-height: 1.8;
     }
-    .cover-hero-logo {
-      width: 52mm; height: 52mm; object-fit: contain;
-      filter: drop-shadow(0 0 12mm rgba(0,208,130,0.5));
-      margin-bottom: 6mm;
+    .nl-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .nl-section { margin-bottom: 4rem; scroll-margin-top: 80px; }
+    .nl-section-eyebrow {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--cyan);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
     }
-    .cover-title {
-      font-family:'Montserrat',sans-serif; font-size:46pt; font-weight:800;
-      color:#fff; line-height:0.92; letter-spacing:-0.03em;
-      margin-bottom: 2mm;
+    .nl-section-eyebrow::before { content:''; width:3px; height:12px; background:var(--cyan); border-radius:2px; }
+    .nl-article-title {
+      font-size: clamp(1.4rem,4vw,2rem); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 0.5rem; color: var(--text);
     }
-    .cover-title em { font-style:normal; color: var(--green-lt); }
-    .cover-mission {
-      font-family:'Merriweather',Georgia,serif; font-style:italic;
-      font-size:8.5pt; line-height:1.85; color:rgba(255,255,255,0.62);
-      max-width:130mm; margin: 5mm auto 0;
-      border-top: 1px solid rgba(0,208,130,0.25);
-      padding-top: 5mm;
+    .nl-byline {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-3);
+      display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1.5rem;
     }
-
-    /* Cover footer */
-    .cover-main { padding-bottom: 8mm; text-align: center; }
-    .cover-eyebrow {
-      font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:700;
-      text-transform:uppercase; letter-spacing:0.15em;
-      color: var(--green-lt); margin-bottom: 3mm;
-      display: flex; align-items: center; justify-content: center; gap: 3mm;
+    .nl-byline::before { content:'—'; color:var(--cyan); }
+    .nl-prose {
+      font-family: var(--font-serif); font-size: 0.95rem; line-height: 1.9;
+      color: rgba(226,236,245,0.85);
     }
-    .cover-eyebrow::before,
-    .cover-eyebrow::after { content:''; width:12mm; height:1px; background:var(--green-lt); }
-    .cover-subtitle {
-      font-family:'Montserrat',sans-serif; font-size:11pt; font-weight:600;
-      color: rgba(255,255,255,0.65); margin-bottom: 4mm; letter-spacing:0.02em;
+    .nl-prose p { margin-bottom: 1.1rem; }
+    .nl-prose p:first-child::first-letter {
+      font-size: 3.2em; font-weight: 700; float: left;
+      line-height: 0.72; margin: 0.05em 0.08em 0 0; color: var(--cyan);
     }
-    .cover-meta {
-      display:flex; align-items:center; justify-content: center; gap:5mm;
-      font-family:'Montserrat',sans-serif; font-size:7.5pt; font-weight:600;
-      color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em;
+    .nl-prose blockquote {
+      border-left: 3px solid var(--cyan); padding-left: 1.25rem;
+      margin: 1.5rem 0; color: rgba(226,236,245,0.7); font-style: italic;
     }
-    .cover-meta-dot { width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.3); }
-
-    /* ── Watermark on inner pages ── */
-    .page.watermark { position: relative; }
-    .page.watermark::before {
-      content: '';
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 110mm; height: 110mm;
-      background: url('assets/logo-dark.png') center / contain no-repeat;
-      opacity: 0.038;
-      pointer-events: none; z-index: 0;
-    }
-    .page.watermark > * { position: relative; z-index: 1; }
-
-    /* ── Inside pages ── */
-    .inner { padding: 16mm; }
-
-    /* Running header on inner pages */
-    .running-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-bottom: 4mm; margin-bottom: 8mm;
-      border-bottom: 1px solid var(--rule);
-      font-family:'Montserrat',sans-serif;
-    }
-    .rh-title { font-size:7.5pt; font-weight:800; color:var(--ink); letter-spacing:0.05em; }
-    .rh-issue { font-size:7pt; color:var(--muted); }
-    .rh-logo  { width: 8mm; opacity:0.35; }
-
-    /* Article */
-    article { margin-bottom: 12mm; }
-    .art-category {
-      font-family:'Montserrat',sans-serif; font-size:6.5pt; font-weight:700;
-      text-transform:uppercase; letter-spacing:0.14em; color:var(--purple-lt);
-      display:flex; align-items:center; gap:3mm; margin-bottom:3mm;
-    }
-    .art-category::before { content:''; width:8mm; height:1.5px; background:var(--purple-lt); }
-    .art-headline {
-      font-family:'Montserrat',sans-serif; font-size:17pt; font-weight:800;
-      color:var(--ink); line-height:1.15; letter-spacing:-0.02em;
-      margin-bottom:2mm;
-    }
-    .art-byline {
-      font-family:'Montserrat',sans-serif; font-size:7.5pt; font-weight:600;
-      color:var(--muted); margin-bottom:5mm;
-      display:flex; align-items:center; gap:2mm;
-    }
-    .art-byline::before { content:'—'; color:var(--green); }
-    .art-lede {
-      font-size:10.5pt; font-weight:400; line-height:1.75;
-      color:var(--ink); margin-bottom:4mm;
-    }
-    .art-lede strong { color:var(--green); }
-    .art-body {
-      font-size:9.5pt; line-height:1.80; color:var(--body-txt);
-      column-count:2; column-gap:8mm; column-rule:1px solid var(--rule);
-      orphans:3; widows:3;
-    }
-    .art-body p { margin-bottom:3mm; }
-    .art-body p:first-child::first-letter {
-      font-family:'Merriweather',Georgia,serif;
-      font-size:3.2em; font-weight:700; line-height:0.75;
-      float:left; margin:0.08em 0.08em 0 0; color:var(--green);
-    }
-    .art-body blockquote {
-      border-left:3px solid var(--purple-lt); padding-left:4mm;
-      margin:4mm 0; font-style:italic; color:var(--muted);
-      break-inside:avoid; column-span:none;
+    .nl-prose h3 {
+      font-family: var(--font-body); font-size: 1.05rem; font-weight: 800;
+      color: var(--cyan); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
     }
     .pull-quote {
-      column-span:all; text-align:center; padding:6mm 0;
-      font-size:12pt; font-style:italic; font-weight:700;
-      color:var(--ink-2); border-top:2px solid var(--green);
-      border-bottom:2px solid var(--green); margin:5mm 0;
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(74,234,220,0.2);
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem; margin: 2rem 0;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 1.05rem; color: rgba(226,236,245,0.9); line-height: 1.7;
+    }
+    .nl-rule { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    /* President card */
+    .president-card {
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(74,234,220,0.18);
+      border-radius: var(--radius-lg); padding: 2rem;
+    }
+    .president-card .nl-prose p:first-child::first-letter { color: var(--cyan); }
+
+    /* Report / committee card */
+    .report-card {
+      background: rgba(5,18,40,0.58);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .report-card-title { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem; }
+    .report-card-sub   { font-size: 0.75rem; color: var(--text-3); margin-bottom: 1rem; }
+
+    /* Poem card */
+    .poem-card {
+      background: rgba(74,234,220,0.05);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(74,234,220,0.18);
+      border-radius: var(--radius-lg); padding: 2rem 2.5rem;
+    }
+    .poem-text {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.95rem; line-height: 2.1; color: rgba(226,236,245,0.88);
+      white-space: pre-wrap;
+    }
+    .poem-stanza { display: block; margin-bottom: 1.25rem; }
+
+    /* Voice card */
+    .voice-card {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1.25rem;
+    }
+    .voice-prompt { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--cyan); margin-bottom: 0.5rem; }
+    .voice-question {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.88rem; color: var(--text-2); margin-bottom: 1rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .voice-response { font-family: var(--font-serif); font-size: 0.88rem; line-height: 1.85; color: rgba(226,236,245,0.82); }
+    .voice-attribution { font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
+      color: var(--text-3); margin-top: 1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Art feature card */
+    .art-card {
+      background: rgba(5,18,40,0.58);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(74,234,220,0.15);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;
+    }
+    .art-card-img {
+      flex-shrink: 0; width: 180px; height: 160px; object-fit: cover;
+      border-radius: var(--radius); background: var(--navy-4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: var(--text-3);
+    }
+    .art-card-body { flex: 1; min-width: 200px; }
+    .art-card-title { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem; }
+    .art-card-artist { font-size: 0.75rem; color: var(--text-3); margin-bottom: 0.85rem; }
+    .art-card-note { font-family: var(--font-serif); font-style: italic; font-size: 0.88rem; color: var(--text-2); line-height: 1.7; }
+
+    /* Service table */
+    .service-table { width: 100%; border-collapse: collapse; }
+    .service-table th {
+      font-family: var(--font-body); font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3);
+      padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border);
+      text-align: left; background: rgba(5,18,40,0.5);
+    }
+    .service-table td {
+      font-size: 0.82rem; color: var(--text-2); padding: 0.75rem 0.75rem;
+      border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55;
+    }
+    .service-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .service-table td strong { color: var(--text); }
+
+    /* Announce card */
+    .announce-card {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(74,234,220,0.15);
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.5rem; margin-bottom: 1rem;
+    }
+    .announce-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .announce-body  { font-size: 0.82rem; color: var(--text-2); line-height: 1.75; }
+
+    /* Template label badge */
+    .tmpl-badge {
+      display: inline-block; font-size: 0.6rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      background: rgba(74,234,220,0.12); border: 1px solid rgba(74,234,220,0.3);
+      color: var(--cyan); border-radius: 4px; padding: 0.1rem 0.4rem;
+      vertical-align: middle; margin-left: 0.4rem;
+    }
+    .tmpl-note {
+      font-size: 0.75rem; color: var(--text-3); font-style: italic;
+      background: rgba(5,18,40,0.5); border: 1px dashed var(--border-2);
+      border-radius: 8px; padding: 0.5rem 0.85rem; margin-bottom: 1rem; line-height: 1.6;
     }
 
-    /* Step reflection (single-column, highlighted) */
-    .step-section {
-      background:var(--bg-2);
-      border-left:4px solid var(--green);
-      border-radius:0 6px 6px 0;
-      padding:7mm; margin-bottom:12mm;
-    }
-    .step-section .art-category { margin-bottom:2mm; }
-    .step-section .art-headline { font-size:13pt; margin-bottom:2mm; }
-    .step-section .art-body { column-count:1; }
-
-    /* Art / photo block */
-    .art-block { margin-bottom:8mm; break-inside:avoid; }
-    .art-block img {
-      width:100%; display:block;
-      border-radius:6px; object-fit:cover;
-    }
-    .art-block-caption {
-      font-family:'Montserrat',sans-serif; font-size:7pt; font-style:italic;
-      color:var(--muted); margin-top:2mm; text-align:center;
-    }
-    .art-block-byline {
-      font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:700;
-      color:var(--green); text-align:center;
+    /* Watermark */
+    body::after {
+      content: '';
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90vmin; height: 90vmin;
+      background: url('assets/logo-white.png') no-repeat center / contain;
+      opacity: 0.025; pointer-events: none; z-index: -1;
     }
 
-    /* Full-width art spread */
-    .art-spread {
-      margin: 0 -16mm 10mm; overflow:hidden;
-    }
-    .art-spread img { width:100%; max-height:90mm; object-fit:cover; display:block; }
-    .art-spread-caption {
-      padding: 2mm 16mm; font-family:'Montserrat',sans-serif;
-      font-size:7pt; font-style:italic; color:var(--muted);
-      display:flex; align-items:center; justify-content:space-between;
-    }
-
-    /* Two-column feature layout */
-    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:8mm; margin-bottom:8mm; }
-    .two-col-wide { display:grid; grid-template-columns:2fr 1fr; gap:8mm; margin-bottom:8mm; }
-
-    /* Divider */
-    .rule { border:none; border-top:1px solid var(--rule); margin:8mm 0; }
-    .rule-thick { border:none; border-top:2px solid var(--green); margin:8mm 0; }
-
-    /* Back page */
-    .back-page {
-      min-height:297mm; display:flex; flex-direction:column;
-      padding:16mm;
-    }
-    .back-header {
-      text-align:center; padding-bottom:8mm;
-      border-bottom:1px solid var(--rule); margin-bottom:8mm;
-    }
-    .back-logo img { width:18mm; margin:0 auto 3mm; opacity:0.5; }
-    .back-tagline {
-      font-family:'Montserrat',sans-serif; font-size:7pt;
-      text-transform:uppercase; letter-spacing:0.12em; color:var(--muted);
-    }
-    .back-grid {
-      display:grid; grid-template-columns:1fr 1fr; gap:8mm;
-      flex:1;
-    }
-    .back-col h3 {
-      font-family:'Montserrat',sans-serif; font-size:8pt; font-weight:800;
-      text-transform:uppercase; letter-spacing:0.1em; color:var(--green);
-      margin-bottom:4mm; display:flex; align-items:center; gap:2mm;
-    }
-    .back-col h3::before { content:''; width:6mm; height:1.5px; background:var(--green); }
-    .back-col p { font-size:8.5pt; color:var(--body-txt); line-height:1.7; margin-bottom:3mm; }
-    .back-col ul { padding-left:5mm; font-size:8.5pt; color:var(--body-txt); line-height:1.7; }
-    .back-col li { margin-bottom:1.5mm; }
-    .back-footer {
-      text-align:center; padding-top:8mm; border-top:1px solid var(--rule);
-      font-family:'Montserrat',sans-serif; font-size:7pt; color:var(--muted);
-      line-height:1.8;
-    }
-
-    /* ── Editor toolbar (no-print) ── */
-    .editor-bar {
-      position:fixed; bottom:1.5rem; right:1.5rem; z-index:999;
-      display:flex; flex-direction:column; gap:0.6rem; align-items:flex-end;
-    }
-    .editor-btn {
-      background:#1a1a2e; color:#fff; border:1px solid #2c2c54;
-      border-radius:9999px; padding:0.5rem 1.1rem;
-      font-family:'Montserrat',sans-serif; font-size:0.78rem; font-weight:700;
-      cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.4);
-      transition:background 0.15s;
-    }
-    .editor-btn:hover { background:#2c2c54; }
-    .editor-btn.primary { background:var(--green); color:#000; border-color:var(--green); }
-    .editor-btn.primary:hover { background:#00e890; }
-    .editor-label {
-      font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700;
-      text-transform:uppercase; letter-spacing:0.1em;
-      color:#666; text-align:right;
+    /* Print */
+    @media print {
+      .pir-nav, .pir-sidenav, .pir-sidenav-toggle, .pir-footer { display: none !important; }
+      body { padding-top: 0 !important; padding-left: 0 !important; }
+      body.has-sidenav { padding-left: 0 !important; }
+      body::after { display: none !important; }
+      .nl-hero { min-height: 220px !important; }
+      .tmpl-badge, .tmpl-note { display: none !important; }
+      .nl-section { page-break-inside: avoid; }
+      .voice-card, .report-card, .president-card,
+      .poem-card, .art-card { break-inside: avoid; }
     }
   </style>
 </head>
 <body>
+<script>
+  window.CURRENT_PAGE    = 'template';
+</script>
 
-<!-- ═══════════════════════════════════════════════
-     EDITOR TOOLBAR  (hidden on print)
-     ═══════════════════════════════════════════════ -->
-<div class="editor-bar no-print">
-  <div class="editor-label">Newsletter Editor</div>
-  <button class="editor-btn primary" onclick="window.print()">🖨 Export PDF</button>
-  <button class="editor-btn" onclick="document.querySelector('.editable-field').focus()">✏️ Edit Mode</button>
-  <a href="index.html" class="editor-btn" style="text-decoration:none">← Portal</a>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     PAGE 1 — COVER
-     ═══════════════════════════════════════════════ -->
-<div class="page cover-page">
-  <div class="cover">
-    <div class="cover-bg"></div>
-    <div class="cover-overlay"></div>
-    <div class="cover-content">
-
-      <!-- Issue label top-right -->
-      <div class="cover-top">
-        <span></span>
-        <span class="cover-issue-label">[MONTH YEAR] · Issue [#]</span>
-      </div>
-
-      <!-- Logo hero — centered -->
-      <div class="cover-hero">
-        <img src="assets/logo-white.png" alt="PIR® Logo" class="cover-hero-logo" />
-        <div class="cover-title">De Vine<br /><em>News</em></div>
-        <p class="cover-mission">
-          Our mission is to provide a nurturing community and invaluable resources
-          to those seeking to harness the potential of psychedelics in their personal
-          recovery process. Our fellowship offers support to people with an interest
-          in psychedelics and plant medicines as an aid to recovery.
-        </p>
-      </div>
-
-      <!-- Cover footer -->
-      <div class="cover-main">
-        <div class="cover-eyebrow">[TOPIC] — Monthly Newsletter</div>
-        <div class="cover-subtitle">Psychedelics in Recovery™ · PIR® 12-Step Fellowship</div>
-        <div class="cover-meta">
-          <span>psychedelicsinrecovery.org</span>
-          <div class="cover-meta-dot"></div>
-          <span>pir.devine.news@gmail.com</span>
-        </div>
-      </div>
-
+<!-- ═══ HERO ═══ -->
+<section class="nl-hero" id="cover" data-section="Cover">
+  <div class="nl-hero-bg" id="nl-hero-bg"></div>
+  <div class="nl-hero-overlay"></div>
+  <div class="nl-hero-content">
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <img src="assets/logo-white.png" alt="PIR® Logo"
+           style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(74,234,220,0.65))" />
     </div>
+    <div class="nl-edition-label">De Vine News · [MONTH YEAR] · Vol. [X] Issue [N]</div>
+    <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
+    <div class="nl-hero-theme">Spiritual Principle: [THEME]</div>
+    <p class="nl-hero-desc">
+      A publication of the PR &amp; Literature Committee, Psychedelics in Recovery™.
+      [One sentence about this issue's theme or focus.]
+    </p>
   </div>
-</div>
+</section>
 
-<!-- ═══════════════════════════════════════════════
-     PAGE 2 — FEATURED ARTICLE
-     ═══════════════════════════════════════════════ -->
-<div class="page watermark">
-  <div class="inner">
-    <div class="running-header">
-      <span class="rh-title">De Vine News · [MONTH YEAR]</span>
-      <img src="assets/logo-dark.png" alt="" class="rh-logo" />
-      <span class="rh-issue">Issue [#] · psychedelicsinrecovery.org</span>
-    </div>
+<!-- ═══ CONTENT ═══ -->
+<main class="nl-wrap">
 
-    <article>
-      <div class="art-category">Featured Article</div>
-      <h2 class="art-headline">[Article Title — Click to Edit]</h2>
-      <div class="art-byline">[Author Name]</div>
-      <p class="art-lede">
-        [Opening paragraph — this is the "lede." Write 2–3 sentences that invite the reader in.
-        This paragraph will render slightly larger than the body text. <strong>Replace this entire block with the approved article text.</strong>]
-      </p>
-      <hr class="rule" />
-      <div class="art-body">
-        <p>
-          [Body text begins here. Paste the full approved article into this section.
-          The first letter of the first paragraph will automatically enlarge as a drop cap.
-          Continue replacing placeholder text with the real content.]
-        </p>
-        <p>
-          [Second paragraph. The two-column layout is automatic — text will flow naturally
-          from the left column into the right. You do not need to manage the columns manually.]
-        </p>
-        <blockquote>
-          "[A meaningful quote pulled from within the article, formatted as a blockquote.]"
-        </blockquote>
-        <p>
-          [Third paragraph continues here. Add as many paragraphs as needed — the page will
-          expand automatically. For very long articles, consider splitting across two pages
-          by duplicating the inner page template below.]
-        </p>
-        <div class="pull-quote">
-          "A powerful pull quote — one sentence from the article that captures the heart of the piece."
-        </div>
-        <p>
-          [Continue the article body after the pull quote. The pull quote spans both columns
-          automatically as a visual break point.]
-        </p>
-        <p>
-          [Final paragraph of the article. End with the author's closing thought.]
-        </p>
-      </div>
-    </article>
-
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     PAGE 3 — STEP REFLECTION + ART
-     ═══════════════════════════════════════════════ -->
-<div class="page watermark">
-  <div class="inner">
-    <div class="running-header">
-      <span class="rh-title">De Vine News · [MONTH YEAR]</span>
-      <img src="assets/logo-dark.png" alt="" class="rh-logo" />
-      <span class="rh-issue">Issue [#] · psychedelicsinrecovery.org</span>
-    </div>
-
-    <!-- Step reflection -->
-    <div class="step-section">
-      <div class="art-category">Step Reflection · [Step #]</div>
-      <h2 class="art-headline">[Step Reflection Title]</h2>
-      <div class="art-byline">[Author Name]</div>
-      <div class="art-body">
-        <p>
-          [Step reflection text. This section uses a highlighted background to visually
-          distinguish it from the main articles. Replace this placeholder with the approved
-          step reflection submission.]
-        </p>
-        <p>
-          [Continue the reflection here. These are typically 200–500 words — personal,
-          honest, and grounded in the step being explored this month.]
-        </p>
-        <blockquote>
-          "[A line from the reflection that captures surrender, insight, or gratitude.]"
-        </blockquote>
-        <p>[Concluding paragraph of the step reflection.]</p>
+  <!-- ── PRESIDENT'S MESSAGE ── -->
+  <section class="nl-section" id="president" data-section="President's Message">
+    <div class="nl-section-eyebrow">Welcome <span class="tmpl-badge">Category</span></div>
+    <div class="president-card">
+      <h2 class="nl-article-title" style="margin-bottom:0.35rem">A Message from the President</h2>
+      <div class="nl-byline">Kevin Franciotti · President, Psychedelics in Recovery™</div>
+      <div class="tmpl-note">Replace with the President's message for this issue. Typically 3–6 paragraphs, 250–500 words. Formal but warm tone. Often references the theme or a current fellowship development.</div>
+      <div class="nl-prose">
+        <p>[Opening paragraph. The President typically welcomes readers and connects to the issue theme or a moment in the fellowship's journey.]</p>
+        <p>[Middle paragraph. May reference committee milestones, challenges the fellowship is navigating, or an invitation to engage more deeply with the program.]</p>
+        <p>[Closing paragraph. Often ends with an expression of gratitude and a call to service or connection.]</p>
+        <p style="margin-top:1.5rem;font-style:normal;font-size:0.88rem;color:var(--text-2)">In service,<br /><strong style="color:var(--text)">Kevin Franciotti</strong><br /><span style="color:var(--text-3)">President, Psychedelics in Recovery™</span></p>
       </div>
     </div>
+  </section>
 
-    <hr class="rule" />
+  <hr class="nl-rule" />
 
-    <!-- Art feature -->
-    <div class="two-col-wide">
-      <div>
-        <div class="art-category">Member Artwork</div>
-        <h2 class="art-headline">[Artwork Title]</h2>
-        <div class="art-byline">[Artist Name or Anonymous]</div>
-        <p style="font-size:9pt;color:var(--body-txt);line-height:1.75;margin-top:3mm">
-          [Artist's note or committee description of the artwork. 2–4 sentences about the
-          piece, what it represents, or the artist's journey. Leave blank if the artist
-          chose not to include a note.]
-        </p>
+  <!-- ── OPENING POEM ── -->
+  <section class="nl-section" id="opening-poem" data-section="Opening Poem">
+    <div class="nl-section-eyebrow">Opening Poem <span class="tmpl-badge">Category</span></div>
+    <div class="poem-card">
+      <h2 style="font-family:var(--font-serif);font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:1.5rem">[Poem Title]</h2>
+      <div class="tmpl-note">Optional. A short poem (8–20 lines) on the issue theme, submitted by a member or written for the issue. Free verse works well. Leave this section out if no poem was submitted.</div>
+      <div class="poem-text"><span class="poem-stanza">[First stanza — 3 to 5 lines.
+Each line on its own line here.
+Captures the emotional core of the theme.]</span><span class="poem-stanza">[Second stanza — another 3 to 5 lines.
+The poem can be as short as two stanzas
+or continue for several more.]</span><span class="poem-stanza">[Closing stanza — landing on the theme
+with something that lingers in the mind
+after the reader moves on.]</span></div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- ── FEATURE ARTICLE ── -->
+  <section class="nl-section" id="feature-article" data-section="Feature Article">
+    <div class="nl-section-eyebrow">Feature Article <span class="tmpl-badge">Category</span></div>
+    <h2 class="nl-article-title">[Article Title — Descriptive, 4–8 Words]</h2>
+    <div class="nl-byline">[Author Name or "Fellowship Member"]</div>
+    <div class="tmpl-note">Main editorial or member-submitted article. Target 600–1,200 words. Can be personal story, editorial, or research-light reflection. Always aligns with the issue theme.</div>
+    <div class="nl-prose">
+      <p>[Opening paragraph. The drop-cap will automatically apply to the first letter of the first paragraph. Write a strong, compelling opening sentence that draws the reader in.]</p>
+      <p>[Second paragraph. Develop the central idea. This is where the author's voice comes through. Personal experience, reflection, or a question the article will explore.]</p>
+
+      <div class="pull-quote">
+        "[A resonant sentence pulled from the article body — ideally one that captures the core insight or emotional peak of the piece.]"
       </div>
-      <div class="art-block">
-        <img src="assets/hero-art.jpg" alt="[Artwork title]" style="height:80mm;object-fit:cover" />
-        <div class="art-block-caption">[Artwork title] — [medium, if known]</div>
-        <div class="art-block-byline">[Artist Name or "Anonymous"]</div>
+
+      <h3>[Sub-heading — Optional]</h3>
+      <p>[Continue the article. Sub-headings can be added when the article has distinct sections or moves through multiple ideas. Use sparingly.]</p>
+      <p>[Closing paragraph. Land on something that connects back to the opening, completes a thought, or leaves the reader with something to carry.]</p>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- ── STEP REFLECTION ── -->
+  <section class="nl-section" id="step-reflection" data-section="Step Reflection">
+    <div class="nl-section-eyebrow">Step Reflection · Step [N] <span class="tmpl-badge">Category</span></div>
+    <h2 class="nl-article-title">[Step Reflection Title]</h2>
+    <p style="font-size:0.82rem;color:var(--cyan);font-weight:700;margin-bottom:1rem">
+      Step [N]: [Full text of the step as PIR® phrases it.]
+    </p>
+    <div class="nl-byline">[Author Name or "Written for the committee"]</div>
+    <div class="tmpl-note">200–600 words. Contemplative, honest, grounded in the step. Can use "we" language or "I" language. Often structured around a theme — e.g. surrender, inventory, amends. Pull quotes work well here.</div>
+    <div class="nl-prose">
+      <p>[Opening reflection on the step. What does this step ask of us? What is the emotional texture of it?]</p>
+      <p>[Explore a misconception or common resistance to this step. What do people fear about it? What does it actually mean to practice it?]</p>
+
+      <div class="pull-quote">
+        "[A pull quote from within the step reflection. Something that reframes the step in a way that surprises or comforts.]"
       </div>
+
+      <h3>[Optional sub-heading — e.g. "A Practical Approach" or "What This Step Offers"]</h3>
+      <p>[Continue the reflection. Bring it back to the fellowship, to recovery, to everyday life.]</p>
+      <p>[Closing paragraph. End with something open-ended — an invitation rather than a conclusion.]</p>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- ── MEMBER VOICES ── -->
+  <section class="nl-section" id="member-voices" data-section="Member Voices">
+    <div class="nl-section-eyebrow">Fellowship Contributions <span class="tmpl-badge">Category</span></div>
+    <h2 class="nl-article-title" style="margin-bottom:0.5rem">Member Voices</h2>
+    <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.5rem">[Month Year] · [Theme] theme</p>
+    <div class="tmpl-note">Collected responses to the writing prompts from the Submit page. Each response is 50–300 words. Attribute anonymously unless the member requested a byline. Include 3–8 responses across 1–3 contributors.</div>
+
+    <div class="voice-card">
+      <div class="voice-prompt">Prompt [N] of [Total]</div>
+      <div class="voice-question">[The exact writing prompt as it appeared on the Submit page — copy it verbatim here for context.]</div>
+      <div class="voice-response">
+        <p>[Member response text. Paste the approved, edited response here. Preserve the member's voice — minimal editing, fix grammar/spelling only.]</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
     </div>
 
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     PAGE 4 — SECOND ARTICLE (if needed)
-     To skip: delete this page block entirely.
-     ═══════════════════════════════════════════════ -->
-<div class="page watermark">
-  <div class="inner">
-    <div class="running-header">
-      <span class="rh-title">De Vine News · [MONTH YEAR]</span>
-      <img src="assets/logo-dark.png" alt="" class="rh-logo" />
-      <span class="rh-issue">Issue [#] · psychedelicsinrecovery.org</span>
+    <div class="voice-card">
+      <div class="voice-prompt">Prompt [N] of [Total]</div>
+      <div class="voice-question">[Writing prompt text.]</div>
+      <div class="voice-response">
+        <p>[Second member response.]</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
     </div>
 
-    <!-- Full-width art spread (optional) -->
-    <div class="art-spread">
-      <img src="assets/bg.jpg" alt="[Photo description]" />
-      <div class="art-spread-caption">
-        <span>[Photo or artwork caption]</span>
-        <span>[Artist Name or "Anonymous"]</span>
+    <div class="voice-card">
+      <div class="voice-prompt">Prompt [N] of [Total] — A Second Voice</div>
+      <div class="voice-question">[Writing prompt text — may be the same prompt answered by a different member.]</div>
+      <div class="voice-response">
+        <p>[Different member's response to the same or different prompt. Differentiate with a subtitle like "A Second Voice" or "A Different Perspective".]</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- ── MEMBER ARTWORK ── -->
+  <section class="nl-section" id="member-artwork" data-section="Member Artwork">
+    <div class="nl-section-eyebrow">Member Artwork <span class="tmpl-badge">Category</span></div>
+    <div class="tmpl-note">Optional. Include when a member submits visual art. Add the compressed image to <code>temp-gallery/</code> (run pngquant first). Leave section out if no art was submitted this issue.</div>
+    <div class="art-card">
+      <div class="art-card-img">🎨</div>
+      <div class="art-card-body">
+        <div class="art-card-title">[Artwork Title or "Untitled"]</div>
+        <div class="art-card-artist">[Artist Name or "Anonymous"] · [Medium, if known — e.g. "Watercolor, 2026"]</div>
+        <p class="art-card-note">[Artist's note or committee description of the piece — 2 to 4 sentences. What does the work represent? What was the artist exploring? Leave blank if the artist did not provide a note.]</p>
       </div>
     </div>
+  </section>
 
-    <article>
-      <div class="art-category">Personal Story</div>
-      <h2 class="art-headline">[Second Article Title]</h2>
-      <div class="art-byline">[Author Name]</div>
-      <p class="art-lede">
-        [Opening lede paragraph for the second article. 2–3 sentences.]
-      </p>
-      <hr class="rule" />
-      <div class="art-body">
-        <p>[Second article body — first paragraph.]</p>
-        <p>[Second paragraph.]</p>
-        <p>[Third paragraph.]</p>
-        <p>[Continue as needed.]</p>
+  <hr class="nl-rule" />
+
+  <!-- ── GSR REPORT ── -->
+  <section class="nl-section" id="gsr-report" data-section="GSR Report">
+    <div class="nl-section-eyebrow">Service Report <span class="tmpl-badge">Category</span></div>
+    <div class="report-card">
+      <div class="report-card-title">GSR Report</div>
+      <div class="report-card-sub">[Month] PIR GSR Meeting</div>
+      <div class="tmpl-note">150–350 words. Written by or summarized from the GSR meeting notes. Covers Tradition reading, major agenda items, proposals sent to groups, and any votes or announcements. Neutral, factual tone.</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>[Opening: which meeting, which Tradition was read, tone of the meeting.]</p>
+        <p>[Main items: proposals discussed, votes taken, updates from service committees.]</p>
+        <p>[Closing: any action items sent back to groups, upcoming agenda, or invitations to members.]</p>
       </div>
-    </article>
-
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     PAGE 5 — SERVICE + ANNOUNCEMENTS
-     ═══════════════════════════════════════════════ -->
-<div class="page watermark">
-  <div class="inner">
-    <div class="running-header">
-      <span class="rh-title">De Vine News · [MONTH YEAR]</span>
-      <img src="assets/logo-dark.png" alt="" class="rh-logo" />
-      <span class="rh-issue">Issue [#] · psychedelicsinrecovery.org</span>
     </div>
+  </section>
 
-    <!-- Open Service Positions -->
-    <div style="margin-bottom:8mm">
-      <div class="art-category">Service Opportunities</div>
-      <h2 class="art-headline" style="font-size:14pt;margin-bottom:2mm">Open Service Positions</h2>
-      <p style="font-size:8.5pt;color:var(--muted);margin-bottom:3mm">
-        Email newsletter@psychedelicsinrecovery.org to volunteer or request training.
-      </p>
-      <table style="width:100%;border-collapse:collapse;font-size:8.5pt">
+  <!-- ── PR COMMITTEE REPORT ── -->
+  <section class="nl-section" id="pr-committee" data-section="PR Committee Report">
+    <div class="nl-section-eyebrow">Committee Report <span class="tmpl-badge">Category</span></div>
+    <div class="report-card">
+      <div class="report-card-title">PR Committee</div>
+      <div class="report-card-sub">[Current project or focus area]</div>
+      <div class="tmpl-note">75–200 words. Written by the PR Committee Chair or designated committee member. Covers what the committee is working on, upcoming releases, or calls for participation. Can also include LitCom or other committee reports.</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>[Current PR Committee activities — podcast episodes, social media, convention prep, newsletter production notes.]</p>
+        <p>[Any calls to action — volunteer opportunities, upcoming recording sessions, feedback requested from fellowship.]</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- ── OPEN SERVICE POSITIONS ── -->
+  <section class="nl-section" id="service" data-section="Open Service Positions">
+    <div class="nl-section-eyebrow">Service Opportunities <span class="tmpl-badge">Category</span></div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:0.5rem">Open Service Positions</h2>
+    <div style="background:rgba(5,18,40,0.62);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-lg);padding:1.5rem">
+    <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.25rem">
+      Email <a href="mailto:newsletter@psychedelicsinrecovery.org">newsletter@psychedelicsinrecovery.org</a> to volunteer or request training.
+    </p>
+    <div style="overflow-x:auto">
+      <table class="service-table">
         <thead>
-          <tr>
-            <th style="text-align:left;padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);color:var(--muted);font-size:7pt;text-transform:uppercase;letter-spacing:0.06em">Role</th>
-            <th style="text-align:left;padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);color:var(--muted);font-size:7pt;text-transform:uppercase;letter-spacing:0.06em">Committee</th>
-            <th style="text-align:left;padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);color:var(--muted);font-size:7pt;text-transform:uppercase;letter-spacing:0.06em">Description</th>
-            <th style="text-align:left;padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);color:var(--muted);font-size:7pt;text-transform:uppercase;letter-spacing:0.06em">Schedule</th>
-          </tr>
+          <tr><th>Role</th><th>Committee</th><th>Description</th><th>Schedule</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top"><strong>[Role]</strong></td>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top;color:var(--muted)">[Committee]</td>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top;color:var(--muted)">[Description of the position and its responsibilities.]</td>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top;color:var(--muted)">[Ongoing / Monthly]</td>
+            <td><strong>[Role Title]</strong></td>
+            <td>[Committee Name]</td>
+            <td>[Description of duties — 1–2 sentences.]</td>
+            <td>[Ongoing / Monthly / Quarterly]</td>
           </tr>
           <tr>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top"><strong>[Role]</strong></td>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top;color:var(--muted)">[Committee]</td>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top;color:var(--muted)">[Description.]</td>
-            <td style="padding:2mm 2.5mm;border-bottom:0.5pt solid var(--rule);vertical-align:top;color:var(--muted)">[Ongoing]</td>
+            <td><strong>[Role Title]</strong></td>
+            <td>[Committee Name]</td>
+            <td>[Description.]</td>
+            <td>[Schedule]</td>
           </tr>
         </tbody>
       </table>
     </div>
+    </div>
+  </section>
 
-    <hr class="rule" />
+  <hr class="nl-rule" />
 
-    <!-- Announcements -->
-    <div>
-      <div class="art-category">Fellowship Notices</div>
-      <h2 class="art-headline" style="font-size:14pt;margin-bottom:3mm">Announcements</h2>
-      <div style="display:flex;flex-direction:column;gap:2.5mm">
-        <div style="border-left:2.5pt solid var(--green);padding:2mm 3mm;background:var(--bg-2)">
-          <strong style="font-size:8.5pt">[Announcement Headline]</strong>
-          <p style="font-size:8pt;color:var(--muted);margin-top:0.5mm;line-height:1.6">[Announcement body text. One short paragraph — 2–3 sentences. Keep it factual and service-focused.]</p>
-        </div>
-        <div style="border-left:2.5pt solid var(--green);padding:2mm 3mm;background:var(--bg-2)">
-          <strong style="font-size:8.5pt">[Announcement Headline]</strong>
-          <p style="font-size:8pt;color:var(--muted);margin-top:0.5mm;line-height:1.6">[Body text.]</p>
-        </div>
-        <div style="border-left:2.5pt solid var(--green);padding:2mm 3mm;background:var(--bg-2)">
-          <strong style="font-size:8.5pt">Submit to the [NEXT MONTH] Issue</strong>
-          <p style="font-size:8pt;color:var(--muted);margin-top:0.5mm;line-height:1.6">The [NEXT MONTH] issue theme is <strong>[THEME]</strong>. Share your experience, strength, and hope — writings, poetry, and reflections welcome. Deadline: [DATE].</p>
-        </div>
-      </div>
+  <!-- ── ANNOUNCEMENTS ── -->
+  <section class="nl-section" id="announcements" data-section="Announcements">
+    <div class="nl-section-eyebrow">Fellowship Notices <span class="tmpl-badge">Category</span></div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:1.25rem">Announcements</h2>
+    <div class="tmpl-note">2–5 brief announcements. Each is 2–4 sentences. Factual, service-focused. No promotion of personal projects or outside ventures.</div>
+
+    <div class="announce-card">
+      <div class="announce-title">[Announcement Headline]</div>
+      <div class="announce-body">[Body text. One paragraph — 2–3 sentences. Keep it factual and action-oriented. Include a contact or URL if relevant.]</div>
     </div>
 
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     PAGE 6 — BACK PAGE
-     ═══════════════════════════════════════════════ -->
-<div class="page watermark">
-  <div class="back-page">
-
-    <div class="back-header">
-      <div class="back-logo">
-        <img src="assets/logo-dark.png" alt="PIR®" />
-      </div>
-      <div class="back-tagline">Psychedelics in Recovery™ · 12-Step Fellowship</div>
+    <div class="announce-card">
+      <div class="announce-title">[Announcement Headline]</div>
+      <div class="announce-body">[Body text.]</div>
     </div>
 
-    <div class="back-grid">
-
-      <div class="back-col">
-        <h3>About PIR®</h3>
-        <p>
-          Psychedelics in Recovery™ (PIR®) is a 12-step fellowship for people who embrace
-          psychedelics and other forms of healing as an aid to their recovery. We welcome
-          all who seek a mindful, ethical, and spiritually grounded path.
-        </p>
-        <p>
-          PIR® meetings are available worldwide — online and in person. All are welcome.
-        </p>
-        <h3 style="margin-top:6mm">Find a Meeting</h3>
-        <ul>
-          <li>Online meetings: psychedelicsinrecovery.org/online-meetings</li>
-          <li>In person: psychedelicsinrecovery.org/in-person-meetings</li>
-        </ul>
-      </div>
-
-      <div class="back-col">
-        <h3>Literature Committee</h3>
-        <p>
-          The Literature Committee (LitCom) develops, reviews, and disseminates written
-          materials for the PIR® Fellowship — including this newsletter, member guides,
-          FAQs, and the 12-step literature adapted for our community.
-        </p>
-        <p>
-          Volunteers are always welcome. No special expertise required — only a willingness
-          to listen, collaborate, and serve with humility.
-        </p>
-        <h3 style="margin-top:6mm">Submit to the Next Issue</h3>
-        <ul>
-          <li>Portal: [your GitHub Pages URL]/dashboard</li>
-          <li>Email: pir.devine.news@gmail.com</li>
-          <li>Deadline: [Next deadline date]</li>
-          <li>Theme: [Next month's theme]</li>
-        </ul>
-      </div>
-
-      <div class="back-col">
-        <h3>The 12 Steps of PIR®</h3>
-        <ul>
-          <li>1. Admitted powerlessness</li>
-          <li>2. Came to believe</li>
-          <li>3. Turned our will over</li>
-          <li>4. Made a searching inventory</li>
-          <li>5. Admitted the exact nature</li>
-          <li>6. Entirely ready</li>
-          <li>7. Humbly asked</li>
-          <li>8. Made a list of amends</li>
-          <li>9. Made direct amends</li>
-          <li>10. Continued personal inventory</li>
-          <li>11. Sought through prayer &amp; meditation</li>
-          <li>12. Carried the message</li>
-        </ul>
-      </div>
-
-      <div class="back-col">
-        <h3>Resources</h3>
-        <ul>
-          <li>Member Materials: psychedelicsinrecovery.org/member-materials</li>
-          <li>12 Steps: psychedelicsinrecovery.org/12-steps</li>
-          <li>Common Prayers: psychedelicsinrecovery.org/common-prayers</li>
-          <li>Library: psychedelicsinrecovery.org/library</li>
-          <li>Service: service.psychedelicsinrecovery.org</li>
-          <li>LitCom: service.psychedelicsinrecovery.org/literature</li>
-        </ul>
-        <h3 style="margin-top:6mm">Connect</h3>
-        <ul>
-          <li>Facebook: facebook.com/groups/psychedelicsinrecovery</li>
-          <li>Website: psychedelicsinrecovery.org</li>
-        </ul>
-      </div>
-
+    <div class="announce-card">
+      <div class="announce-title">Submit to the [NEXT MONTH] Issue</div>
+      <div class="announce-body">The [NEXT MONTH] issue theme is <strong>[THEME]</strong>. Writings, poetry, artwork, and reflections are welcome. Deadline: [DATE]. Visit the <a href="submit.html">Submit page</a> to contribute.</div>
     </div>
+  </section>
 
-    <div class="back-footer">
-      <strong>De Vine News</strong> · [MONTH YEAR] · Issue [#]<br />
-      ©[YEAR] Psychedelics in Recovery™ · PIR® · All Rights Reserved<br />
-      Submissions and member contact: pir.devine.news@gmail.com
-    </div>
+</main>
 
-  </div>
-</div>
-
-<div class="no-print" style="position:fixed;top:0.75rem;right:1rem;z-index:999;display:flex;gap:0.5rem">
-  <a href="index.html"
-     style="font-family:sans-serif;font-size:0.75rem;background:#00d082;color:#000f2b;padding:0.4rem 0.85rem;border-radius:9999px;text-decoration:none;font-weight:700">
-    ← Portal
-  </a>
-  <button onclick="window.print()"
-     style="font-family:sans-serif;font-size:0.75rem;background:#000f2b;color:#e2ecf5;border:1px solid #112140;padding:0.4rem 0.85rem;border-radius:9999px;cursor:pointer;font-weight:700">
-    🖨️ Print / Save PDF
-  </button>
-</div>
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+  const bg = document.getElementById('nl-hero-bg');
+  let tick = false;
+  window.addEventListener('scroll', function () {
+    if (!tick) {
+      requestAnimationFrame(function () {
+        bg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+        tick = false;
+      });
+      tick = true;
+    }
+  });
+</script>
+<script src="nav.js"></script>
+<script src="sidenav.js"></script>
+<script src="footer.js"></script>
 </body>
 </html>

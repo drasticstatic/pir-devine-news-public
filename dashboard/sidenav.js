@@ -48,7 +48,7 @@
     ${editionsHTML}
     <div class="sn-sep"></div>
     <a href="newsletter-template.html" class="sn-link sn-template">🖨️ Print Template</a>
-    <a href="resources.html" class="sn-link sn-template">📋 Resources</a>
+    <a href="bulletin.html" class="sn-link sn-template">📋 Bulletin</a>
     ${sectionsHTML}
   </div>
 </div>

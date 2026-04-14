@@ -108,20 +108,74 @@ You should see the account listed as authenticated.
 
 ## Step 6 — Create the Private Config File
 
-Create `data/committee/config.env` (this file is gitignored and never synced):
+This file tells the sync scripts which Google Drive folders to use and
+which account to operate as. It is gitignored and **never synced** to
+the public repo.
+
+**6a — Create the directory and file:**
+
+```bash
+mkdir -p data/committee
+touch data/committee/config.env
+```
+
+**6b — Open the file in any text editor and paste this template:**
 
 ```env
-SUBMISSIONS_FOLDER_ID=your_google_drive_folder_id_here
-TEMPLATES_FOLDER_ID=your_google_drive_folder_id_here
-APPROVED_FOLDER_ID=your_google_drive_folder_id_here
+# ── Google Drive folder IDs ─────────────────────────────────
+# Find a Folder ID in the Drive URL after /folders/
+# e.g. https://drive.google.com/drive/folders/1abc123XYZ
+#                                                ^^^^^^^^^^^ this part
+
+SUBMISSIONS_FOLDER_ID=your_submissions_folder_id_here
+TEMPLATES_FOLDER_ID=your_templates_folder_id_here
+APPROVED_FOLDER_ID=your_approved_folder_id_here
+PUBLISHED_FOLDER_ID=your_published_folder_id_here
+
+# ── Committee contacts ──────────────────────────────────────
 COMMITTEE_EMAILS_FILE=data/committee/emails.txt
 GOOGLE_ACCOUNT=pir.devine.news@gmail.com
 ```
 
-**Finding a Folder ID:** Open the Drive folder in your browser. The URL
-looks like:
-`https://drive.google.com/drive/folders/1abc123XYZ`
-Copy the string after `/folders/` — that is the Folder ID.
+**6c — Create the four Drive folders** (if they don't exist yet):
+
+1. Go to [drive.google.com](https://drive.google.com) and sign in as
+   `pir.devine.news@gmail.com`
+2. Create a Shared Drive named **"Devine News"** (or use an existing one)
+3. Inside it, create four folders:
+   - `Submissions` — raw incoming member work
+   - `Templates` — approved Google Doc templates
+   - `Approved` — pieces cleared for layout
+   - `Published` — archive of finalized editions
+4. Open each folder, copy the ID from the URL, and paste it into
+   `config.env` above
+
+**6d — Create the committee emails list:**
+
+```bash
+touch data/committee/emails.txt
+```
+
+Add one committee member email per line — the sync script uses this to
+send notifications. Example:
+
+```
+pir.devine.news@gmail.com
+editor@example.org
+```
+
+**6e — Verify the file is gitignored:**
+
+```bash
+git check-ignore -v data/committee/config.env
+```
+
+You should see a line confirming it is ignored. If nothing appears,
+add this to your `.gitignore`:
+
+```
+data/committee/
+```
 
 ---
 

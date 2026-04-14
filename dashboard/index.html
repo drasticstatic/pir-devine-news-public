@@ -160,8 +160,6 @@
           <button class="btn btn-ghost" onclick="openModal('modal-howto')">How It Works</button>
           <button class="btn btn-ghost" onclick="openModal('modal-president')"
                   data-tooltip="A message from Kevin Franciotti, PIR® President">From the President</button>
-          <button class="btn btn-ghost btn-sm" onclick="openModal('modal-setup')"
-                  data-tooltip="Tech chair: gws CLI setup guide">⚙️ Setup</button>
         </div>
       </div>
       <div class="hero-illustration">
@@ -312,45 +310,8 @@
       <p style="margin-top:1.25rem">In service,<br /><strong>Kevin Franciotti</strong><br /><span style="font-size:0.8em;color:var(--text-3)">President, Psychedelics in Recovery™</span></p>
     </div>
     <div class="modal-actions">
-      <a href="newsletter-march-2026.html" class="btn btn-primary">Read March Issue ↗</a>
+      <a href="bulletin.html" class="btn btn-primary">De Vine Bulletin ↗</a>
       <button class="btn btn-ghost" onclick="closeModal('modal-president')">Close</button>
-    </div>
-  </div>
-</div>
-
-<!-- Tech Setup Guide -->
-<div class="modal-overlay" id="modal-setup" role="dialog" aria-modal="true" aria-labelledby="setup-title">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-setup')" aria-label="Close">✕</button>
-    <div class="modal-eyebrow">⚙️ Tech Chair</div>
-    <h2 class="modal-title" id="setup-title">gws CLI Setup Guide</h2>
-    <div class="modal-body">
-      <p>The <strong>gws CLI</strong> connects the automation scripts to your Google Workspace account. Full step-by-step instructions are in <code>setup/GWS_SETUP.md</code> in the private repo. Here's the condensed version:</p>
-      <h3>1 — Google Cloud Console</h3>
-      <ul>
-        <li>Create a project → Enable <strong>Drive API</strong> + <strong>Gmail API</strong></li>
-        <li>Credentials → OAuth 2.0 Client ID → <strong>Desktop app</strong> type</li>
-        <li>Download JSON → save as <code>~/.config/gws/client_secret.json</code></li>
-      </ul>
-      <h3>2 — Authenticate</h3>
-      <pre>gws auth login</pre>
-      <p>Browser opens → sign in as <code>pir.devine.news@gmail.com</code> → grant Drive + Gmail access. Token stays local, never committed.</p>
-      <h3>3 — Create the private config</h3>
-      <p>Create <code>data/committee/config.env</code> (gitignored):</p>
-      <pre>SUBMISSIONS_FOLDER_ID=your_folder_id_here
-TEMPLATES_FOLDER_ID=your_folder_id_here
-APPROVED_FOLDER_ID=your_folder_id_here
-GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
-      <p>Find a folder ID in the Drive URL after <code>/folders/</code>.</p>
-      <h3>4 — Add the Drive URL to data.json</h3>
-      <p>Copy the Submissions folder URL → add to <code>dashboard/data.json</code> → <code>driveUrl</code>. The Drive panel activates on the next push.</p>
-      <h3>5 — Run the sync</h3>
-      <pre>./scripts/gws-sync.sh</pre>
-    </div>
-    <div class="modal-actions">
-      <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener"
-         class="btn btn-primary">View Public Repo ↗</a>
-      <button class="btn btn-ghost" onclick="closeModal('modal-setup')">Close</button>
     </div>
   </div>
 </div>
