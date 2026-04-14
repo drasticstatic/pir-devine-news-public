@@ -116,4 +116,59 @@
     });
   }
 
+  /* ── Edition hero art SVG injection ────────────────────────── */
+  /* Replaces .nl-hero-art photo background with animated SVG    */
+  const artPanels = document.querySelectorAll('.nl-hero-art');
+  if (artPanels.length) {
+    const svgHTML = [
+      '<svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" ',
+      'aria-hidden="true" style="width:100%;height:100%;display:block">',
+      '<defs><style>',
+      '.pir-hue{animation:pir-hue-s 18s linear infinite}',
+      '@keyframes pir-hue-s{to{filter:hue-rotate(360deg) brightness(1.18)}}',
+      '.pir-lp{animation:pir-lp-s 4.5s ease-in-out infinite}',
+      '@keyframes pir-lp-s{0%,100%{opacity:0.82}50%{opacity:1}}',
+      '</style></defs>',
+      '<rect width="320" height="300" fill="#000814"/>',
+      '<g class="pir-hue">',
+      /* outer diamond — CW 22s */
+      '<polygon points="160,26 274,148 160,270 46,148" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.55">',
+      '<animateTransform attributeName="transform" type="rotate" from="0 160 148" to="360 160 148" dur="22s" repeatCount="indefinite"/>',
+      '</polygon>',
+      /* mid diamond — CCW 15s */
+      '<polygon points="160,58 244,148 160,238 76,148" fill="none" stroke="#06b6d4" stroke-width="1.2" opacity="0.65">',
+      '<animateTransform attributeName="transform" type="rotate" from="0 160 148" to="-360 160 148" dur="15s" repeatCount="indefinite"/>',
+      '</polygon>',
+      /* inner diamond — CW 9s offset */
+      '<polygon points="160,92 212,148 160,204 108,148" fill="none" stroke="#a855f7" stroke-width="1" opacity="0.72">',
+      '<animateTransform attributeName="transform" type="rotate" from="20 160 148" to="380 160 148" dur="9s" repeatCount="indefinite"/>',
+      '</polygon>',
+      /* orbiting corner dots */
+      '<circle cx="160" cy="26" r="3" fill="#7c3aed" opacity="0.9">',
+      '<animateTransform attributeName="transform" type="rotate" from="0 160 148" to="360 160 148" dur="22s" repeatCount="indefinite"/>',
+      '</circle>',
+      '<circle cx="160" cy="58" r="2.5" fill="#06b6d4" opacity="0.85">',
+      '<animateTransform attributeName="transform" type="rotate" from="0 160 148" to="-360 160 148" dur="15s" repeatCount="indefinite"/>',
+      '</circle>',
+      '</g>',
+      /* PIR logo — not hue-rotated, gentle pulse */
+      '<image class="pir-lp" href="assets/pir-logo-vertical-white.png" x="120" y="100" width="80" height="96"/>',
+      '</svg>'
+    ].join('');
+
+    artPanels.forEach(function (panel) {
+      panel.style.background = '#000814';
+      panel.innerHTML        = svgHTML;
+    });
+  }
+
+  /* ── Print footer injection ──────────────────────────────────── */
+  /* A fixed-position bar repeated on every printed page           */
+  const printFooter = document.createElement('div');
+  printFooter.className = 'pir-print-header';
+  printFooter.innerHTML =
+    '<img src="assets/pir-logo-vertical-black.png" alt="PIR\u00AE" />' +
+    '<span>PIR\u00AE De Vine News &nbsp;\u00B7&nbsp; Psychedelics In Recovery\u2122</span>';
+  document.body.appendChild(printFooter);
+
 })();

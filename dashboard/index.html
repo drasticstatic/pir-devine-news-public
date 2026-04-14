@@ -38,15 +38,15 @@
     }
     .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
     .hero-illustration {
-      flex-shrink: 0; width: 340px;
+      flex-shrink: 0; width: 420px;
       border-radius: 22px; overflow: hidden;
       box-shadow: 0 24px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.07);
     }
-    .hero-illustration img { width: 100%; height: 380px; object-fit: cover; display: block; }
+    .hero-illustration img { width: 100%; height: auto; display: block; max-height: 520px; object-fit: contain; }
     @media (max-width: 900px) {
       .hero-inner { flex-direction: column-reverse; gap: 2rem; padding: 2.5rem 1.25rem 2.5rem; }
-      .hero-illustration { width: 100%; max-width: 460px; }
-      .hero-illustration img { height: 240px; }
+      .hero-illustration { width: 100%; max-width: 480px; }
+      .hero-illustration img { max-height: 360px; }
     }
 
     /* Stats */
@@ -193,7 +193,7 @@
         </div>
       </div>
       <div class="hero-illustration">
-        <img src="assets/hero-art.jpg" alt="Colorful psychedelic recovery illustration" />
+        <img src="assets/pir-fellowship-art.jpg" alt="PIR Fellowship — psychedelic recovery community gathering" />
       </div>
     </div>
   </div>

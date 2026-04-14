@@ -87,7 +87,7 @@ body::after {
 .nl-hero .nl-hero-title em,
 .parallax-hero .hero-eyebrow,
 .page-hero .page-hero-eyebrow {
-  animation: rainbow-hue 14s linear infinite;
+  animation: rainbow-hue 18s linear infinite;
   display: inline-block;
 }
 /* Hero title breathes */
@@ -648,29 +648,12 @@ body.has-sidenav { padding-left: 220px; }
   .pir-footer__links { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 }
 
+/* ── Print header — hidden on screen, appears every printed page ── */
+.pir-print-header { display: none; }
+
 /* ── Print / PDF export ─────────────────────────────────────── */
 @media print {
   @page { margin: 1.5cm; }
-
-  /* Print header — PIR vertical black logo + wordmark centred above content */
-  .nl-hero::before,
-  .page-hero::before {
-    content: '';
-    display: block;
-    width: 72px; height: 88px;
-    margin: 0 auto 0.5rem;
-    background: url('assets/pir-logo-vertical-black.png') center / contain no-repeat;
-  }
-  /* Decorative double rule beneath logo */
-  .nl-hero::after,
-  .page-hero::after {
-    content: '';
-    display: block;
-    width: 180px; margin: 0 auto 1.25rem;
-    border-top: 2.5px solid #000;
-    padding-top: 3px;
-    border-bottom: 1px solid #555;
-  }
 
   /* Nuclear reset — all dark backgrounds gone, all text black */
   *, *::before, *::after {
@@ -687,6 +670,53 @@ body.has-sidenav { padding-left: 220px; }
     font-family: Georgia, serif; font-size: 11pt; line-height: 1.6;
   }
   body::before, body::after { display: none !important; }
+
+  /* ── First-page logo — AFTER nuclear reset so !important wins ── */
+  .nl-hero::before,
+  .page-hero::before {
+    content: '' !important;
+    display: block !important;
+    width: 120px !important; height: 148px !important;
+    margin: 0 auto 0.75rem !important;
+    background-image: url('assets/pir-logo-vertical-black.png') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-color: transparent !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* Decorative double rule beneath logo */
+  .nl-hero::after,
+  .page-hero::after {
+    content: '' !important;
+    display: block !important;
+    width: 200px !important; margin: 0 auto 1.5rem !important;
+    border-top: 2.5px solid #000 !important;
+    padding-top: 3px !important;
+    border-bottom: 1px solid #555 !important;
+    background: transparent !important;
+  }
+
+  /* ── Per-page footer with small PIR icon ─── */
+  .pir-print-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    position: fixed !important;
+    bottom: 0 !important; left: 0 !important; right: 0 !important;
+    padding: 0.3rem 1.5cm !important;
+    border-top: 0.5px solid #bbb !important;
+    font-size: 8pt !important;
+    color: #555 !important;
+    background: transparent !important;
+  }
+  .pir-print-header img {
+    width: 14px !important; height: 17px !important;
+    object-fit: contain !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
   /* Hide chrome */
   .pir-nav, .pir-sidenav, .pir-sidenav-toggle, .pir-footer,
