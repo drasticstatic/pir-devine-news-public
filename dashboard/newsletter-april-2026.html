@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Vine News — April 2026 | PIR®</title>
+  <meta name="description" content="De Vine News April 2026 — Courage. PIR® 12-Step Fellowship newsletter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Edition page layout (shared with march edition) ── */
+    .nl-hero {
+      position: relative; overflow: hidden; min-height: 380px;
+      display: flex; align-items: flex-end;
+    }
+    .nl-hero-bg {
+      position: absolute; inset: -40px 0; z-index: 0;
+      background-image: url('assets/bg.jpg');
+      background-size: cover; background-position: center 25%;
+      will-change: transform;
+    }
+    .nl-hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to bottom, rgba(0,15,43,0.45) 0%, rgba(0,15,43,0.92) 85%);
+    }
+    .nl-hero-content {
+      position: relative; z-index: 2; width: 100%;
+      max-width: 860px; margin: 0 auto;
+      padding: 3rem 1.5rem 2.5rem;
+    }
+    .nl-edition-label {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--purple);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-edition-label::before { content:''; width:18px; height:1.5px; background:var(--purple); }
+    .nl-hero-title {
+      font-size: clamp(2.2rem,6vw,3.6rem); font-weight: 800;
+      line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 0.6rem;
+    }
+    .nl-hero-title em { font-style:normal; color:var(--purple); }
+    .nl-hero-theme { font-size: 1.1rem; color: var(--purple); font-weight: 700; margin-bottom: 0.75rem; }
+    .nl-hero-desc {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.9rem; color: rgba(226,236,245,0.7); max-width: 500px; line-height: 1.8;
+    }
+    .nl-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .nl-section { margin-bottom: 4rem; scroll-margin-top: 80px; }
+    .nl-section-eyebrow {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--purple);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-section-eyebrow::before { content:''; width:3px; height:12px; background:var(--purple); border-radius:2px; }
+    .nl-article-title {
+      font-size: clamp(1.4rem,4vw,2rem); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .nl-byline {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-3);
+      display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1.5rem;
+    }
+    .nl-byline::before { content:'—'; color:var(--purple); }
+    .nl-prose {
+      font-family: var(--font-serif); font-size: 0.95rem; line-height: 1.9;
+      color: rgba(226,236,245,0.85);
+    }
+    .nl-prose p { margin-bottom: 1.1rem; }
+    .nl-prose p:first-child::first-letter {
+      font-size: 3.2em; font-weight: 700; float: left;
+      line-height: 0.72; margin: 0.05em 0.08em 0 0; color: var(--purple);
+    }
+    .nl-prose blockquote {
+      border-left: 3px solid var(--purple); padding-left: 1.25rem;
+      margin: 1.5rem 0; color: rgba(226,236,245,0.7); font-style: italic;
+    }
+    .nl-prose h3 {
+      font-family: var(--font-body); font-size: 1.05rem; font-weight: 800;
+      color: var(--cyan); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
+    }
+    .pull-quote {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(155,81,224,0.2);
+      border-left: 4px solid var(--purple);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem; margin: 2rem 0;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 1.05rem; color: rgba(226,236,245,0.9); line-height: 1.7;
+    }
+    .nl-rule { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    /* ── Courage poem ── */
+    .poem-card {
+      background: rgba(155,81,224,0.07);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(155,81,224,0.2);
+      border-radius: var(--radius-lg); padding: 2rem 2.5rem;
+    }
+    .poem-text {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.95rem; line-height: 2.1; color: rgba(226,236,245,0.88);
+      white-space: pre-wrap;
+    }
+    .poem-stanza { display: block; margin-bottom: 1.25rem; }
+    .poem-stanza:last-child { margin-bottom: 0; }
+
+    /* ── Member voices ── */
+    .voice-card {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .voice-prompt {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--purple); margin-bottom: 0.5rem;
+    }
+    .voice-question {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.88rem; color: var(--text-2); margin-bottom: 1rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+    }
+    .voice-response {
+      font-family: var(--font-serif); font-size: 0.88rem;
+      line-height: 1.85; color: rgba(226,236,245,0.82);
+    }
+    .voice-response p { margin-bottom: 0.85rem; }
+    .voice-attribution {
+      font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
+      color: var(--text-3); margin-top: 1rem; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    /* ── Member voices grid header ── */
+    .voices-intro {
+      background: rgba(155,81,224,0.06);
+      border: 1px solid rgba(155,81,224,0.15);
+      border-radius: var(--radius); padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.88rem; color: var(--text-2); line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+<script>
+  window.CURRENT_PAGE     = 'template';
+  window.CURRENT_EDITION  = 'april-2026';
+</script>
+
+<!-- ═══ HERO ═══ -->
+<section class="nl-hero" id="cover" data-section="Cover">
+  <div class="nl-hero-bg" id="nl-hero-bg"></div>
+  <div class="nl-hero-overlay"></div>
+  <div class="nl-hero-content">
+    <div class="nl-edition-label">De Vine News · April 2026 · Vol. 1 Issue 2</div>
+    <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
+    <div class="nl-hero-theme">Spiritual Principle: Courage</div>
+    <p class="nl-hero-desc">
+      A publication of the PR &amp; Literature Committee, Psychedelics in Recovery™.
+      Steps 4 &amp; 5 — a searching and fearless inventory, and what we found.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ CONTENT ═══ -->
+<main class="nl-wrap">
+
+  <!-- Courage Poem -->
+  <section class="nl-section" id="courage-poem" data-section="Courage — Opening Poem">
+    <div class="nl-section-eyebrow">Opening Poem</div>
+    <div class="poem-card">
+      <h2 style="font-family:var(--font-serif);font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:1.5rem;letter-spacing:-0.01em">Courage</h2>
+      <div class="poem-text"><span class="poem-stanza">it requires courage
+to admit that things are out of control
+to realize that help is needed
+and to believe things can change</span><span class="poem-stanza">it requires courage
+to insist on healthy boundaries
+saying no to things
+that no longer fit</span><span class="poem-stanza">it requires courage
+to look deeper
+for fear of what is seen
+when not in alignment</span><span class="poem-stanza">it requires courage
+to not let shame, guilt, fear
+define yourself
+and instead embrace growth</span><span class="poem-stanza">it requires courage
+to pivot and become open minded
+to face adversity with strength
+and live a full, mindful life</span></div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Step 4 Article -->
+  <section class="nl-section" id="step-4" data-section="Step 4: Courage Is Fear, Held Gently">
+    <div class="nl-section-eyebrow">Step Reflection · Step 4</div>
+    <h2 class="nl-article-title">Courage Is Fear, Held Gently</h2>
+    <p style="font-size:0.82rem;color:var(--purple);font-weight:700;margin-bottom:1rem">
+      Step Four: Made a searching and fearless inventory of ourselves.
+    </p>
+    <div class="nl-byline">Thoughts on Step Four</div>
+    <div class="nl-prose">
+      <p>Step Four may sound severe. Searching. Fearless. Inventory. It could feel like an audit. A courtroom. A moral reckoning.</p>
+      <p>But perhaps it is simpler than that. Perhaps Step Four is an invitation to see without flinching and without condemning.</p>
+      <p>We may think this step is about finding what's wrong with us. Listing flaws. Cataloging damage. But maybe it is about noticing what we have learned to do to survive. Not sins, strategies. Not defects, defaults. Patterns we did not consciously choose but practiced until they felt like us.</p>
+      <p>Step Four may not be about becoming better. It might be about becoming honest.</p>
+      <p>This step asks for courage. But not the loud kind. Not the courage of conquest. Not the courage of performance. It may be the trembling kind. The kind that stays seated when everything inside says run.</p>
+
+      <div class="pull-quote">
+        We may discover that courage is fear held gently instead of crushed or obeyed. Because to look at ourselves without defense and without shame may require a steadier strength than we are used to.
+      </div>
+
+      <h3>The Patterns Beneath the Patterns</h3>
+      <p>When we slow down, we may begin to see that much of what has shaped our lives comes from three simple movements: To grasp, to reject, or to forget.</p>
+      <p>We grasp at what promises relief. We reject what threatens exposure. We forget what feels too heavy to carry.</p>
+      <p>These movements can show up in our thoughts, in our words, in our deeds. Comparison that whispers <em>not enough</em>. Contempt that shields us from feeling small. Avoidance that wraps us in a fog of distraction. Speech that performs instead of reveals. Silence that protects instead of connects. Control that disguises itself as strength.</p>
+      <p>These patterns may have once saved us. They may have kept us alive, included, protected. But now we might ask:</p>
+      <blockquote>How does this promise to get me what I want but cost me who I want to be?</blockquote>
+      <p>That question alone could begin the inventory.</p>
+
+      <h3>A Common Misunderstanding</h3>
+      <p>We may believe this step is about blame. About taking responsibility for everything that ever went wrong. But Step Four may not need to be about blame at all. It can be about agency. We cannot inventory the world. We cannot inventory other people. We can only inventory our responses — not to shame ourselves for having them, but to see them clearly enough to choose differently.</p>
+      <p>Some of us may err toward self-accusation. Others toward justification. This step might gently pull both toward accuracy. No more, no less.</p>
+
+      <h3>The Fear Beneath the Looking</h3>
+      <p>If we are honest, the fear may not be that we will find something ugly. The fear may be that what we find is permanent. That we are our anger. Our envy. Our manipulation. Our silence. That if we see it clearly, we will be trapped by it.</p>
+      <p>But perhaps the opposite is true. Perhaps what remains unseen is what keeps us captive. And what is named loses some of its power.</p>
+      <p>We may discover that we are not the pattern. We are the one who can see the pattern. And that subtle shift might be the beginning of freedom.</p>
+
+      <h3>Integration, Not Perfection</h3>
+      <p>Insight alone cannot change us. We may have had flashes of clarity before. Moments of awareness that faded by Tuesday afternoon.</p>
+      <p>Step Four may ask for something steadier. Not a breakthrough. A practice. To watch our thoughts as they form. To notice our words as they leave our mouths. To pause before our deeds become destiny. Not to police ourselves, but to remain in relationship with ourselves.</p>
+      <p><em>Searching</em> may simply mean paying attention. <em>Fearless</em> may simply mean staying. <em>Inventory</em> may simply mean telling the truth about what is.</p>
+
+      <h3>What Step Four Can Offer</h3>
+      <p>If we walk this step honestly, it might not give us certainty. It might not give us comfort. It can give us coherence. A sense that our inner world is no longer a battlefield but a landscape we are learning to map.</p>
+      <p>We may begin to see where we grasp and why. Where we reject and what we are protecting. Where we forget and what still aches beneath the fog. And instead of condemning those parts, we might meet them with curiosity.</p>
+      <p>Compassionate self-examination could become the doorway to transformation. Not because we fix ourselves. But because we finally understand what we have been trying to survive.</p>
+
+      <h3>An Invitation</h3>
+      <p>Step Four may not be asking: <em>What's wrong with me?</em> It might be asking:</p>
+      <blockquote>
+        What have I been protecting?<br />
+        What have I been chasing?<br />
+        What have I been avoiding?<br />
+        And what does it cost to keep doing it?
+      </blockquote>
+      <p>This is not a verdict. It is a mirror. We may not like everything we see. But perhaps we will also notice something steady behind the patterns. The one who is willing to look.</p>
+      <p>And that willingness may be the quiet beginning of becoming undivided. Not better, but more honest. Not flawless, but aligned. Not condemned, but awake. And that may be enough to take the next step.</p>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Member Voices -->
+  <section class="nl-section" id="member-voices" data-section="Member Voices">
+    <div class="nl-section-eyebrow">Fellowship Contributions</div>
+    <h2 class="nl-article-title" style="margin-bottom:0.5rem">Member Voices</h2>
+    <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.5rem">April 2026 · Courage theme</p>
+
+    <div class="voices-intro">
+      Fellowship members were invited to write 250–1,250 words, or share a painting, drawing, piece of music, or recorded meditation. The following responses reflect the spiritual principle of Courage and the Steps 4 &amp; 5 theme of this issue.
+    </div>
+
+    <!-- Contributor 1 -->
+    <div class="voice-card">
+      <div class="voice-prompt">Prompt 1 of 5</div>
+      <div class="voice-question">COURAGE is the Spiritual principle of the month. What does it mean to you? How has your recovery been shaped by courage? Do you have examples you are willing to talk about?</div>
+      <div class="voice-response">
+        <p>Courage means to follow through, it's having integrity in alignment with your values. To be courageous is to take action and show up for what you stand for. In my recovery, I'm learning to simply show up for all I say I will and keep my word. To me, it's that simple. Sure, many examples, sticking to my bottom lines, being a sponsor, getting out of isolation when my ego is scared to connect, etc.</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-prompt">Prompt 3 of 5</div>
+      <div class="voice-question">What is your definition of Recovery?</div>
+      <div class="voice-response">
+        <p>Recovery is restoration of our inherent worth, it is remembering our wholeness, revealed through supportive community. Recovery is wellbeing.</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-prompt">Prompt 4 of 5</div>
+      <div class="voice-question">How did you discover PIR? Psychedelics?</div>
+      <div class="voice-response">
+        <p>In November, I believe, I starting hearing about PIR but honestly I can't recall from where! Heaven sent! Psychedelics have been in my orbit since adolescence, searching for meaning in a materialistic-focused reality. I took a long hiatus between 17–35 because of "bad trip" traumatic experiences, and psilocybin with gentle people helped me learn that set and setting are VITAL to any journey.</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-prompt">Prompt 5 of 5</div>
+      <div class="voice-question">Tell us about your recovery tools outside your typical 12-step toolbox?</div>
+      <div class="voice-response">
+        <p>Stillness, prayer, dance and somatic movement, IFS, conscious community.</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card" style="border-color:rgba(155,81,224,0.2)">
+      <div class="voice-prompt">Prompt 2 of 5 — A Second Voice</div>
+      <div class="voice-question">What is Integration to you?</div>
+      <div class="voice-response">
+        <p>Integration means walking the talk, acting from the revelations, breaking out of old harmful patterns into new territory and creating new neural pathways for the highest and best good to all. Integration is ultimately best serving humanity, from a wider lens.</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <hr class="nl-rule" style="margin:1.5rem 0" />
+
+    <!-- Contributor 2 -->
+    <div class="voice-card">
+      <div class="voice-prompt">A Different Perspective on Courage</div>
+      <div class="voice-question">COURAGE is the Spiritual principle of the month. What does it mean to you?</div>
+      <div class="voice-response">
+        <p>Courage is the foresight, commitment, preparation, and undertaking of a scary or difficult task or other endeavor or mind-shift one has been frightened of. Bravery is "all that" in a burst of energy that "goes for it". Many of the best memories in my life were made possible by both courage and bravery; (including coming to Recovery...).</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-prompt">Recovery — A Second Definition</div>
+      <div class="voice-question">What is your definition of Recovery?</div>
+      <div class="voice-response">
+        <p>What I want it to be. That said, for me, it's "beyond clean &amp; sober" — (which I define myself to be)... it is also about being steeped in the 12-Step lingo, beliefs, and overall culture.</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-prompt">Discovering PIR</div>
+      <div class="voice-question">How did you discover PIR? Psychedelics?</div>
+      <div class="voice-response">
+        <p>A therapist in another country who had worked with iboga told me about PIR — in "the nick of time"!</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card">
+      <div class="voice-prompt">Tools Outside the Toolbox</div>
+      <div class="voice-question">Tell us about your recovery tools outside your typical 12-step toolbox?</div>
+      <div class="voice-response">
+        <p>Music; Poetry; Literature; Humour... general Creativity. "Post-iboga Prayer Practice" that's all my own and very intense and personal — with and without psychedelics. For me, having positive, safe, reciprocal friendships is key. Exercise is crucial; the public pool has been a lifesaver; the wooded park across the street, ditto.</p>
+        <p>Learning to eat in a non-detrimental, healthy way has made a massive difference in my recovery. Cognitive Behavioural therapy; Jungian dream therapy; Spiritually attuned freeform dancing is something I do at home to help "with recovery" when I cannot get out &amp; about.</p>
+        <p>Not "doing the same thing over and over and expecting different results" with two medical conditions I'm struggling to manage has been making a big difference in my outlook... I'm not accepting what the medical system has thrown my way; I'm leaning into the part of a part of meetings we all know so well: The Serenity Prayer — "the Courage to change the things I can."</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+    <div class="voice-card" style="border-color:rgba(155,81,224,0.2)">
+      <div class="voice-prompt">Integration — A Second Perspective</div>
+      <div class="voice-question">What is Integration to you?</div>
+      <div class="voice-response">
+        <p>Being able to share "what it was like, what happened, what it's like now" from our psychedelic experiences is imperative to gleaning the most from these therapeutic experiences. My ibogaine and iboga flood journeys were so profound... having no one that could even begin to understand (after I had done the journeys) led to feeling more isolated, led to me being shunned by local AA members when I tried to speak — sparingly — about how iboga helped me, and ultimately led to me "having healed in a vacuum."</p>
+        <p>Finding PIR was like, honestly, finding water in the desert.</p>
+      </div>
+      <div class="voice-attribution">Fellowship Member · Anonymous</div>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+  const bg = document.getElementById('nl-hero-bg');
+  let tick = false;
+  window.addEventListener('scroll', function () {
+    if (!tick) {
+      requestAnimationFrame(function () {
+        bg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+        tick = false;
+      });
+      tick = true;
+    }
+  });
+</script>
+<script src="nav.js"></script>
+<script src="sidenav.js"></script>
+<script src="footer.js"></script>
+</body>
+</html>

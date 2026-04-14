@@ -9,13 +9,13 @@
 (function () {
   /* ── Primary links ────────────────────────────────────────── */
   const NAV_PRIMARY = [
-    { href: 'index.html',               label: 'Portal',   icon: '🏠', internal: true },
-    { href: 'newsletter-template.html', label: 'Template', icon: '📰', internal: true },
-    { href: 'submit.html',              label: 'Submit',   icon: '✍️', internal: true, cta: true },
+    { href: 'index.html',  label: 'Portal', icon: '🏠', internal: true },
+    { href: 'submit.html', label: 'Submit', icon: '✍️', internal: true, cta: true },
   ];
 
   /* ── "More" dropdown links ────────────────────────────────── */
   const NAV_MORE = [
+    { href: 'newsletter-template.html',  label: 'Print Template',   icon: '🖨️', internal: true, tooltip: 'Print-ready A4 newsletter layout' },
     { href: 'https://www.psychedelicsinrecovery.org/member-materials/', label: 'Member Materials', icon: '📚', tooltip: 'PIR® member resources & literature' },
     { href: 'https://www.psychedelicsinrecovery.org',            label: 'PIR® Main',        icon: '🌐', tooltip: 'Main Psychedelics In Recovery website' },
     { href: 'https://service.psychedelicsinrecovery.org',        label: 'Service',          icon: '⚙️', tooltip: 'PIR® Service Subdomain — committee resources' },

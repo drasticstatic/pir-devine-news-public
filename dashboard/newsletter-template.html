@@ -93,46 +93,73 @@
       padding: 14mm 16mm;
     }
 
-    /* Cover header */
-    .cover-logo {
-      display: flex; align-items: center; gap: 5mm;
-      margin-bottom: auto;
+    /* Cover — logo hero layout */
+    .cover-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 0 0 0; margin-bottom: auto;
     }
-    .cover-logo img { width: 14mm; filter: invert(1) hue-rotate(120deg) saturate(2); }
-    .cover-logo-text { color: rgba(255,255,255,0.9); }
-    .cover-logo-title { font-family:'Montserrat',sans-serif; font-size:9pt; font-weight:800; letter-spacing:0.04em; }
-    .cover-logo-sub { font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:500; opacity:0.65; text-transform:uppercase; letter-spacing:0.1em; }
+    .cover-issue-label {
+      font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:600;
+      text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.5);
+    }
 
-    /* Cover main text */
-    .cover-main { margin-top: auto; padding-bottom: 6mm; }
+    /* Logo hero — centered on cover */
+    .cover-hero {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin: auto 0;
+    }
+    .cover-hero-logo {
+      width: 52mm; height: 52mm; object-fit: contain;
+      filter: drop-shadow(0 0 12mm rgba(0,208,130,0.5));
+      margin-bottom: 6mm;
+    }
+    .cover-title {
+      font-family:'Montserrat',sans-serif; font-size:46pt; font-weight:800;
+      color:#fff; line-height:0.92; letter-spacing:-0.03em;
+      margin-bottom: 2mm;
+    }
+    .cover-title em { font-style:normal; color: var(--green-lt); }
+    .cover-mission {
+      font-family:'Merriweather',Georgia,serif; font-style:italic;
+      font-size:8.5pt; line-height:1.85; color:rgba(255,255,255,0.62);
+      max-width:130mm; margin: 5mm auto 0;
+      border-top: 1px solid rgba(0,208,130,0.25);
+      padding-top: 5mm;
+    }
+
+    /* Cover footer */
+    .cover-main { padding-bottom: 8mm; text-align: center; }
     .cover-eyebrow {
       font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:700;
       text-transform:uppercase; letter-spacing:0.15em;
       color: var(--green-lt); margin-bottom: 3mm;
-      display: flex; align-items: center; gap: 3mm;
+      display: flex; align-items: center; justify-content: center; gap: 3mm;
     }
-    .cover-eyebrow::before { content:''; width:12mm; height:1px; background:var(--green-lt); }
-    .cover-title {
-      font-family:'Montserrat',sans-serif; font-size:42pt; font-weight:800;
-      color:#fff; line-height:0.95; letter-spacing:-0.03em;
-      margin-bottom: 2mm;
-    }
-    .cover-title em { font-style:normal; color: var(--green-lt); }
+    .cover-eyebrow::before,
+    .cover-eyebrow::after { content:''; width:12mm; height:1px; background:var(--green-lt); }
     .cover-subtitle {
-      font-family:'Montserrat',sans-serif; font-size:13pt; font-weight:600;
-      color: rgba(255,255,255,0.75); margin-bottom: 6mm; letter-spacing:0.02em;
-    }
-    .cover-quote {
-      font-style:italic; font-size:9.5pt; line-height:1.75;
-      color:rgba(255,255,255,0.65); max-width:120mm; border-left:2px solid var(--green-lt);
-      padding-left:5mm; margin-bottom:8mm;
+      font-family:'Montserrat',sans-serif; font-size:11pt; font-weight:600;
+      color: rgba(255,255,255,0.65); margin-bottom: 4mm; letter-spacing:0.02em;
     }
     .cover-meta {
-      display:flex; align-items:center; gap:5mm;
+      display:flex; align-items:center; justify-content: center; gap:5mm;
       font-family:'Montserrat',sans-serif; font-size:7.5pt; font-weight:600;
-      color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.08em;
+      color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em;
     }
     .cover-meta-dot { width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.3); }
+
+    /* ── Watermark on inner pages ── */
+    .page.watermark { position: relative; }
+    .page.watermark::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 110mm; height: 110mm;
+      background: url('assets/logo-dark.png') center / contain no-repeat;
+      opacity: 0.038;
+      pointer-events: none; z-index: 0;
+    }
+    .page.watermark > * { position: relative; z-index: 1; }
 
     /* ── Inside pages ── */
     .inner { padding: 16mm; }
@@ -310,37 +337,38 @@
 <!-- ═══════════════════════════════════════════════
      PAGE 1 — COVER
      ═══════════════════════════════════════════════ -->
-<div class="page">
+<div class="page cover-page">
   <div class="cover">
     <div class="cover-bg"></div>
     <div class="cover-overlay"></div>
     <div class="cover-content">
 
-      <!-- Logo mark -->
-      <div class="cover-logo">
-        <img src="assets/logo-white.png" alt="PIR® Logo" />
-        <div class="cover-logo-text">
-          <div class="cover-logo-title">Psychedelics in Recovery™</div>
-          <div class="cover-logo-sub">12-Step Fellowship · PIR®</div>
-        </div>
+      <!-- Issue label top-right -->
+      <div class="cover-top">
+        <span></span>
+        <span class="cover-issue-label">[MONTH YEAR] · Issue [#]</span>
       </div>
 
-      <!-- Main cover text -->
-      <div class="cover-main">
-        <div class="cover-eyebrow">Monthly Newsletter</div>
+      <!-- Logo hero — centered -->
+      <div class="cover-hero">
+        <img src="assets/logo-white.png" alt="PIR® Logo" class="cover-hero-logo" />
         <div class="cover-title">De Vine<br /><em>News</em></div>
-        <div class="cover-subtitle">[MONTH YEAR] · Issue [#]</div>
-        <div class="cover-quote">
-          "By tending carefully to our written materials, we help support coherence
-          across groups while honoring the diversity of experience within PIR®."
-          <br /><br />— Literature Committee, January 2026
-        </div>
+        <p class="cover-mission">
+          Our mission is to provide a nurturing community and invaluable resources
+          to those seeking to harness the potential of psychedelics in their personal
+          recovery process. Our fellowship offers support to people with an interest
+          in psychedelics and plant medicines as an aid to recovery.
+        </p>
+      </div>
+
+      <!-- Cover footer -->
+      <div class="cover-main">
+        <div class="cover-eyebrow">[TOPIC] — Monthly Newsletter</div>
+        <div class="cover-subtitle">Psychedelics in Recovery™ · PIR® 12-Step Fellowship</div>
         <div class="cover-meta">
-          <span>This Month: [TOPIC]</span>
-          <div class="cover-meta-dot"></div>
-          <span>Psychedelics In Recovery™</span>
-          <div class="cover-meta-dot"></div>
           <span>psychedelicsinrecovery.org</span>
+          <div class="cover-meta-dot"></div>
+          <span>pir.devine.news@gmail.com</span>
         </div>
       </div>
 
@@ -351,7 +379,7 @@
 <!-- ═══════════════════════════════════════════════
      PAGE 2 — FEATURED ARTICLE
      ═══════════════════════════════════════════════ -->
-<div class="page">
+<div class="page watermark">
   <div class="inner">
     <div class="running-header">
       <span class="rh-title">De Vine News · [MONTH YEAR]</span>
@@ -405,7 +433,7 @@
 <!-- ═══════════════════════════════════════════════
      PAGE 3 — STEP REFLECTION + ART
      ═══════════════════════════════════════════════ -->
-<div class="page">
+<div class="page watermark">
   <div class="inner">
     <div class="running-header">
       <span class="rh-title">De Vine News · [MONTH YEAR]</span>
@@ -463,7 +491,7 @@
      PAGE 4 — SECOND ARTICLE (if needed)
      To skip: delete this page block entirely.
      ═══════════════════════════════════════════════ -->
-<div class="page">
+<div class="page watermark">
   <div class="inner">
     <div class="running-header">
       <span class="rh-title">De Vine News · [MONTH YEAR]</span>
@@ -502,7 +530,7 @@
 <!-- ═══════════════════════════════════════════════
      PAGE 5 — BACK PAGE
      ═══════════════════════════════════════════════ -->
-<div class="page">
+<div class="page watermark">
   <div class="back-page">
 
     <div class="back-header">
@@ -597,5 +625,15 @@
   </div>
 </div>
 
+<div class="no-print" style="position:fixed;top:0.75rem;right:1rem;z-index:999;display:flex;gap:0.5rem">
+  <a href="index.html"
+     style="font-family:sans-serif;font-size:0.75rem;background:#00d082;color:#000f2b;padding:0.4rem 0.85rem;border-radius:9999px;text-decoration:none;font-weight:700">
+    ← Portal
+  </a>
+  <button onclick="window.print()"
+     style="font-family:sans-serif;font-size:0.75rem;background:#000f2b;color:#e2ecf5;border:1px solid #112140;padding:0.4rem 0.85rem;border-radius:9999px;cursor:pointer;font-weight:700">
+    🖨️ Print / Save PDF
+  </button>
+</div>
 </body>
 </html>

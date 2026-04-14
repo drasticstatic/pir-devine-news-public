@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Vine News — March 2026 | PIR®</title>
+  <meta name="description" content="De Vine News March 2026 — Hope. PIR® 12-Step Fellowship newsletter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Edition page layout ── */
+    .nl-hero {
+      position: relative; overflow: hidden; min-height: 380px;
+      display: flex; align-items: flex-end;
+    }
+    .nl-hero-bg {
+      position: absolute; inset: -40px 0; z-index: 0;
+      background-image: url('assets/bg.jpg');
+      background-size: cover; background-position: center 25%;
+      will-change: transform;
+    }
+    .nl-hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to bottom, rgba(0,15,43,0.45) 0%, rgba(0,15,43,0.92) 85%);
+    }
+    .nl-hero-content {
+      position: relative; z-index: 2; width: 100%;
+      max-width: 860px; margin: 0 auto;
+      padding: 3rem 1.5rem 2.5rem;
+    }
+    .nl-edition-label {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--green);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-edition-label::before { content:''; width:18px; height:1.5px; background:var(--green); }
+    .nl-hero-title {
+      font-size: clamp(2.2rem,6vw,3.6rem); font-weight: 800;
+      line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 0.6rem;
+    }
+    .nl-hero-title em { font-style:normal; color:var(--green); }
+    .nl-hero-theme {
+      font-size: 1.1rem; color: var(--cyan); font-weight: 700; margin-bottom: 0.75rem;
+    }
+    .nl-hero-desc {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.9rem; color: rgba(226,236,245,0.7); max-width: 500px; line-height: 1.8;
+    }
+
+    /* ── Content wrapper ── */
+    .nl-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+
+    /* ── Section anchors ── */
+    .nl-section {
+      margin-bottom: 4rem; scroll-margin-top: 80px;
+    }
+    .nl-section-eyebrow {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--green);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .nl-section-eyebrow::before { content:''; width:3px; height:12px; background:var(--green); border-radius:2px; }
+
+    /* ── Article styles ── */
+    .nl-article-title {
+      font-size: clamp(1.4rem,4vw,2rem); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .nl-byline {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-3);
+      display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1.5rem;
+    }
+    .nl-byline::before { content:'—'; color:var(--green); }
+    .nl-prose {
+      font-family: var(--font-serif); font-size: 0.95rem; line-height: 1.9;
+      color: rgba(226,236,245,0.85);
+    }
+    .nl-prose p { margin-bottom: 1.1rem; }
+    .nl-prose p:first-child::first-letter {
+      font-size: 3.2em; font-weight: 700; float: left;
+      line-height: 0.72; margin: 0.05em 0.08em 0 0; color: var(--green);
+    }
+    .nl-prose blockquote {
+      border-left: 3px solid var(--purple); padding-left: 1.25rem;
+      margin: 1.5rem 0; color: rgba(226,236,245,0.7);
+      font-style: italic;
+    }
+    .nl-prose h3 {
+      font-family: var(--font-body); font-size: 1.05rem; font-weight: 800;
+      color: var(--cyan); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
+    }
+    .nl-prose ul, .nl-prose ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .nl-prose li { margin-bottom: 0.4rem; }
+
+    /* ── Pull quote ── */
+    .pull-quote {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,208,130,0.15);
+      border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem; margin: 2rem 0;
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 1.05rem; color: rgba(226,236,245,0.9); line-height: 1.7;
+    }
+
+    /* ── Committee report card ── */
+    .report-card {
+      background: rgba(5,18,40,0.58);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .report-card-title {
+      font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem;
+    }
+    .report-card-sub { font-size: 0.75rem; color: var(--text-3); margin-bottom: 1rem; }
+
+    /* ── Service table ── */
+    .service-table { width: 100%; border-collapse: collapse; }
+    .service-table th {
+      font-family: var(--font-body); font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3);
+      padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border);
+      text-align: left; background: rgba(5,18,40,0.5);
+    }
+    .service-table td {
+      font-size: 0.82rem; color: var(--text-2); padding: 0.75rem 0.75rem;
+      border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55;
+    }
+    .service-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .service-table td strong { color: var(--text); }
+
+    /* ── President message card ── */
+    .president-card {
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(155,81,224,0.2);
+      border-radius: var(--radius-lg); padding: 2rem;
+    }
+    .president-card .nl-prose p:first-child::first-letter { color: var(--purple); }
+
+    /* ── Divider ── */
+    .nl-rule {
+      border: none; border-top: 1px solid var(--border); margin: 3rem 0;
+    }
+
+    /* ── Continued label ── */
+    .continued {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .continued::before { content:''; flex:1; height:1px; background:var(--border); }
+    .continued::after  { content:''; flex:1; height:1px; background:var(--border); }
+  </style>
+</head>
+<body>
+<script>
+  window.CURRENT_PAGE     = 'template';
+  window.CURRENT_EDITION  = 'march-2026';
+</script>
+
+<!-- ═══ HERO ═══ -->
+<section class="nl-hero" id="cover" data-section="Cover">
+  <div class="nl-hero-bg" id="nl-hero-bg"></div>
+  <div class="nl-hero-overlay"></div>
+  <div class="nl-hero-content">
+    <div class="nl-edition-label">De Vine News · March 2026 · Vol. 1 Issue 1</div>
+    <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
+    <div class="nl-hero-theme">Theme: Hope</div>
+    <p class="nl-hero-desc">
+      A publication of the PR &amp; Literature Committee, Psychedelics in Recovery™.
+      For the fellowship, by the fellowship.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ CONTENT ═══ -->
+<main class="nl-wrap">
+
+  <!-- President's Message -->
+  <section class="nl-section" id="president" data-section="President's Message">
+    <div class="nl-section-eyebrow">Welcome</div>
+    <div class="president-card">
+      <h2 class="nl-article-title" style="margin-bottom:0.35rem">A Message from the President</h2>
+      <div class="nl-byline">Kevin Franciotti · President, Psychedelics in Recovery™</div>
+      <div class="nl-prose">
+        <p>Welcome to <em>de Vine</em>, Psychedelics in Recovery's newsletter. I'm grateful you're here.</p>
+        <p>PIR was born from a simple but difficult question: How do we talk honestly about recovery in a world where psychedelics are increasingly visible, medicalized, politicized, and misunderstood — without losing our integrity or one another? Over the years, our fellowship has grown into a diverse, sometimes imperfect, and deeply committed community wrestling with that question together.</p>
+        <p>This newsletter is an extension of that effort. <em>de Vine</em> is not a platform for promotion, persuasion, or dogma. It is a space for reflection, accountability, service, and shared learning. You'll find reports from service bodies, creative work emerging from the fellowship, and thoughtful engagement with recovery, integration, and the responsibilities that come with both.</p>
+        <p>Growth brings complexity. As PIR expands across geographies, modalities, and viewpoints, we are continually challenged to balance openness with safety, innovation with humility, and individual experience with collective care. These tensions are not signs of failure; they are signs that something alive is being tended. Our task is not to eliminate disagreement, but to remain grounded in respect, transparency, and a shared commitment to recovery.</p>
+        <p>Whether you are new to PIR or have been walking with us for years, I invite you to see this publication as a conversation rather than a conclusion. Read closely. Question thoughtfully. Serve where you are able. And remember that none of us carries this work alone.</p>
+        <p>Thank you to the PR Committee and all contributors who brought this first issue into being. I look forward to what we will continue to grow — together.</p>
+        <p style="margin-top:1.5rem;font-style:normal;font-size:0.88rem;color:var(--text-2)">In service,<br /><strong style="color:var(--text)">Kevin Franciotti</strong><br /><span style="color:var(--text-3)">President, Psychedelics in Recovery™</span></p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Article 1 -->
+  <section class="nl-section" id="power-of-psychedelics" data-section="The Power of Psychedelics">
+    <div class="nl-section-eyebrow">Feature Article</div>
+    <h2 class="nl-article-title">The Power of Psychedelics: An Alternative Approach to Recovery</h2>
+    <div class="nl-byline">Written by James S.</div>
+    <div class="nl-prose">
+      <p>I would like to ask the Scottish government a question – but I'm asking for a friend, of course. This friend has been experimenting with psychedelics and studying religious plant use in all faiths. Unfortunately, historic records are hard to come by – we burned our witches, and the Romans drove our traditional practices of worship with plants underground. The only places that my friend can draw on for inspiration are other cultures that have preserved methods of connecting with the divine through plants.</p>
+      <p>In this country, the law is clear about this form of spirituality – it's illegal. But my friend identifies with a "remembering" form of neo-shamanism, so why is he not extended the protection of Scotland's Hate Crime Act? His religious identity is persecuted by the state rather than being protected.</p>
+      <p>My friend views plants with reverence, treating them as a sacrament. Ceremony and ritual are methods used to hold these beautiful plants within a spiritual context. What threat does he pose to society by worshipping nature, or occasionally eating some mushrooms foraged locally to then pray, sing, dance, chant and cry?</p>
+      <p>This approach is in stark contrast to Scotland's more common drink and drugs "sesh" culture: a culture that is often an escape into a spectacle of excess. Joining in with a sesh can lead to unmindful choices, often adding to the emotional baggage that we already carry. Plant medicine ceremonies encourage the opposite – unpacking your baggage, inviting those brave enough to be like the bison who charges headfirst into the storm, knowing that it will be first out the other side.</p>
+
+      <div class="pull-quote">
+        "Plant medicine ceremonies encourage unpacking your baggage, inviting those brave enough to be like the bison who charges headfirst into the storm, knowing that it will be first out the other side."
+      </div>
+
+      <p>The prevalent culture of the sesh has left my friend with a graveyard full of amazing friends gone too soon. Like in the movie <em>Scarface</em>, illusion interacts with our need to get smashed to escape the stark realities around us. Sadly, that illusion is often shattered by addiction and even violent state control.</p>
+      <p>Because of my friend's experience, I want to make a case for reclaiming nature's medicine as something we do to enrich community, rather than staying with the status quo, which perpetuates Hunger Games-like narratives for the proceeds of crime. All that achieves is dirtier drugs, more death, violence and corruption, and more non-violent offenders filling our already overflowing prison system.</p>
+
+      <div class="continued">Continued</div>
+
+      <p>Further, we currently have a system of individualised medicine managing the alienation of individualism. Causation and feeling the pain behind suffering has been lost to underfunding, replaced by CBT, RBT and other acronym therapies and medication. Alternatives to 10-minute appointments to discuss how the sedatives are sedating are needed. For my friend, a part of that solution is plant medicine in community.</p>
+      <p>Dr Anna Ross, lecturer at Edinburgh University and co-founder of the Scottish Psychedelic Research Group, has put forward a vision to that end. "I would like to see a network of churches and community centres right across Scotland offering ceremony using the liberty cap mushroom," she says. "This form of collective healing could help restore interconnectedness to our communities and nature."</p>
+      <p>One of the oldest treatment methods for substance addiction is the 12-step programme of Alcoholics Anonymous. This model was founded by Bill Wilson and Dr Bob Smith, but a little-known fact is that Wilson used belladonna treatment to get sober — a treatment made from the belladonna or deadly nightshade flower. The plant contains the psychoactive alkaloids atropine and scopolamine.</p>
+      <p>This plant medicine facilitated Wilson's spiritual experience, enabling him to create Alcoholics Anonymous. When Wilson hit troubles in his recovery, falling into depression, he was in communication with the writer Aldous Huxley, who in turn suggested LSD. Wilson found the LSD experience incredibly helpful and suggested integrating LSD into the 12-step programme. His suggestion was shot down on the grounds that it would be admitting that the programme doesn't work entirely by itself.</p>
+      <p>This fork in the road has recently been revisited with the creation of the Psychedelics in Recovery (PIR) network. My friend attended Cocaine Anonymous in the past only to leave feeling dejected by the view that abstinence is the only path to progression. PIR helped him to heal that hurt and make peace with a programme that has had a massively positive impact on his life.</p>
+
+      <div class="pull-quote">
+        "Psychedelics in Recovery offers a vital bridge for people who are working to maintain or deepen their sobriety while exploring these powerful tools in a mindful, ethical, and spiritually grounded way."
+        <br /><br />— Kevin Franciotti, Co-founder &amp; Board President, PIR
+      </div>
+
+      <p>For those who aren't in recovery from addiction, there are also in-person groups supporting psychedelic integration in both Edinburgh and Glasgow.</p>
+      <p>My friend and I weren't always friends. If I'm honest, we spent over a decade trying to kill each other. Now, when we pass each other in a window or a mirror, we meet each other with a look of acceptance that recognises the pain of the struggle to be here today, sometimes even with a smile. We thank plant medicine every day for its part in allowing us to be able to feel that smile.</p>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Step 3 -->
+  <section class="nl-section" id="step-3" data-section="Step 3: Daring to Let Go">
+    <div class="nl-section-eyebrow">Step Reflection · Step 3</div>
+    <h2 class="nl-article-title">Step 3: Daring to Let Go</h2>
+    <p style="font-size:0.82rem;color:var(--purple);font-weight:700;margin-bottom:1rem">
+      Made a decision to turn our will and our lives over to the care of a Higher Power of our own understanding.
+    </p>
+    <div class="nl-byline">Written by Douglas N.</div>
+    <div class="nl-prose">
+      <p>Faith may begin where grasping ends.</p>
+      <p>We may not lack willpower. We may have plenty. What we may lack is rest. And guidance. And the ability to stop treating fear like a manager.</p>
+      <p>Perhaps we work harder. Push. Tighten. Plan. Perform. Try to control what we can't and call it "discipline," or "being responsible," or "just getting through."</p>
+      <p>But if we're honest, our will may not be leading. Our will may be getting hijacked.</p>
+
+      <h3>Surrender — A New Meaning</h3>
+      <p>Surrender doesn't have to mean collapse. Nor disappearance. Nor letting life run us over. It may be as simple as a decision to stop pretending we're qualified to run the whole universe from inside our heads.</p>
+      <p>It can look like loosening the fist. Unclenching the jaw. Letting "we have to" become "we can choose."</p>
+      <p>Surrender isn't always weakness. It might just be strength that no longer needs to dominate.</p>
+
+      <h3>Letting Go — Alignment of Will</h3>
+      <p>Step Three does not ask us to kill the will. It offers to reassign it.</p>
+      <p>Willpower can be a beautiful tool, until fear grabs the steering wheel and calls it leadership. Hijacked willpower can say things like:</p>
+      <blockquote>
+        Make it stop. Make them change. Make us feel okay right now.<br />
+        Force certainty out of uncertainty. Grip harder until life cooperates.
+      </blockquote>
+      <p>On the other hand, reclaimed willpower can say:</p>
+      <blockquote>
+        Align. Tell the truth. Do the next right thing.<br />
+        Release the outcome. Ask for help. Stay in relationship with something bigger than panic.
+      </blockquote>
+      <p>This is not passive. This is willpower, used by something wiser than survival.</p>
+
+      <h3>From Self-Will to Spiritual Alignment</h3>
+      <p>A lot of what looks like selfishness may be fear wearing confidence. A lot of what looks like control may be trying to stay ahead of pain. A lot of what looks like "I've got this" may really mean "I can't risk needing anyone."</p>
+      <p>Step Three can be the moment we stop worshipping our own nervous systems. Not because our instincts are evil, but because they may not be the same thing as truth. Not because we're broken, but because we may be tired of being our only plan.</p>
+      <p>So we can practice a new posture: We can act, and not demand.</p>
+
+      <h3>A Dynamic Balance</h3>
+      <p>Here's a middle path: <strong>Own the action. Surrender the outcome.</strong></p>
+      <p>Some days, "own the action" can mean: make the amends call, tell the truth, get to the meeting, eat, sleep, hydrate, ask for support, do the thing we're avoiding.</p>
+      <p>Some days, "surrender the outcome" can mean: stop rehearsing the conversation, stop checking the phone, stop trying to win the moment, stop trying to guarantee we won't feel pain, stop bargaining with reality.</p>
+      <p>And the balance is alive. It changes hour to hour. Because recovery is not a pose. It's a practice.</p>
+      <p><em>Where do I need to surrender? Where do I need to take responsibility?</em></p>
+
+      <h3>A Simple Practice</h3>
+      <p>When the hijack is happening — the urgency, the tightness, the tunnel vision — we can try to pause. Breathe like we're returning to our own bodies. Name what's happening without shaming it:</p>
+      <blockquote>
+        Fear may be trying to drive.<br />
+        Control may be trying to help.<br />
+        Urgency may be trying to protect us.
+      </blockquote>
+      <p>Then we can choose a new assignment for our will: Release the need to control. Ask to be guided. Commit to the next right action. Let the rest be the rest.</p>
+
+      <div class="pull-quote">
+        Great Mystery,<br />
+        I release my need to control.<br />
+        May I be led by something deeper than instinct or fear —<br />
+        aligned with a presence wiser than my wounded will.<br />
+        May I know I need not walk alone.<br />
+        May I act not just for relief, but in service of healing.<br />
+        May I be shaped in integrity by compassion.<br />
+        May I be used for good. May I be free.
+      </div>
+
+      <h3>The Rhythm — An Ongoing Decision</h3>
+      <p>Step Three can be where we stop circling and start moving — not because we're certain, but because we are willing.</p>
+      <p>Some days surrender may feel like relief. Some days it may feel like death. And each time we choose it, we can remember: We are not alone. We are not in charge of everything. And we do not have to be.</p>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- GSR Report -->
+  <section class="nl-section" id="gsr-report" data-section="GSR Report">
+    <div class="nl-section-eyebrow">Service Report</div>
+    <div class="report-card">
+      <div class="report-card-title">GSR Report</div>
+      <div class="report-card-sub">February PIR GSR Meeting</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>At the February PIR GSR Meeting, we opened with Tradition 2, reflecting on the principle that loving-kindness — expressed through our collective group conscience — is the guiding authority in our fellowship. The meeting included thoughtful conversations about service, unity, and how we continue strengthening connection across our meetings.</p>
+        <p>GSRs heard updates from service committees and explored ways to deepen fellowship communication, including discussion of the <strong>Traveling GSR Proposal</strong>, which has now been sent back to meetings for discussion and a group conscience vote.</p>
+        <p>GSRs were also asked to gather interest and programming ideas for the upcoming <strong>PIR Convention</strong>, and to share the link to Aidan's research study with their meetings so members who are interested can learn more.</p>
+        <p>Additionally, Erin B shared about safety awareness and optional chair training, and GSRs were invited to gauge whether their meetings have interest in additional safety guidance or resources.</p>
+        <p>As always, the GSR process serves as a living bridge — carrying the voice of our meetings to the fellowship and bringing the fellowship's conversations back to the Subcommittee — all in the spirit of unity, recovery, and service.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PR Committee Report -->
+  <section class="nl-section" id="pr-committee" data-section="PR Committee Report">
+    <div class="nl-section-eyebrow">Committee Report</div>
+    <div class="report-card">
+      <div class="report-card-title">PR Committee</div>
+      <div class="report-card-sub">Integration Radio · Convention Communications</div>
+      <div class="nl-prose" style="font-size:0.88rem">
+        <p>The PR Committee has been working on selecting new speakers for the podcast and will start the recording of a new batch of episodes for Season 1 of <strong>Integration Radio</strong>. We are also getting ready to help the Convention Committee with its communication efforts.</p>
+        <p>Stay tuned for new episodes of Integration Radio, featuring members sharing their experiences of integrating psychedelics within a 12-step recovery framework.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Service Positions -->
+  <section class="nl-section" id="service" data-section="Open Service Positions">
+    <div class="nl-section-eyebrow">Service Opportunities</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:0.5rem">Open Service Positions</h2>
+    <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.5rem">
+      Email <a href="mailto:newsletter@psychedelicsinrecovery.org">newsletter@psychedelicsinrecovery.org</a> to volunteer or request technical training.
+    </p>
+    <div style="overflow-x:auto">
+      <table class="service-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Committee</th>
+            <th>Description</th>
+            <th>Schedule</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Digital Artist</strong></td>
+            <td>PR Committee</td>
+            <td>Create digital media content for PIR across multiple platforms including podcasts, website, newsletter, and literature.</td>
+            <td>Ongoing</td>
+          </tr>
+          <tr>
+            <td><strong>Copy Editor</strong></td>
+            <td>PR Committee – Newsletter</td>
+            <td>Edit member and committee contributions to <em>De Vine</em>; conduct interviews; assist with artwork and content choices.</td>
+            <td>Ongoing</td>
+          </tr>
+          <tr>
+            <td><strong>Readers</strong></td>
+            <td>12-Step Committee</td>
+            <td>Read content, provide direct feedback, and attend 12-Step Book Committee meetings.</td>
+            <td>Ongoing — contact committee for dates &amp; times</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+  const bg = document.getElementById('nl-hero-bg');
+  let tick = false;
+  window.addEventListener('scroll', function () {
+    if (!tick) {
+      requestAnimationFrame(function () {
+        bg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+        tick = false;
+      });
+      tick = true;
+    }
+  });
+</script>
+<script src="nav.js"></script>
+<script src="sidenav.js"></script>
+<script src="footer.js"></script>
+</body>
+</html>

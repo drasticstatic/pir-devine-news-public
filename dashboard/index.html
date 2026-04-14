@@ -158,8 +158,10 @@
         <div class="hero-actions">
           <a href="submit.html" class="btn btn-primary">✍️ Submit Work</a>
           <button class="btn btn-ghost" onclick="openModal('modal-howto')">How It Works</button>
+          <button class="btn btn-ghost" onclick="openModal('modal-president')"
+                  data-tooltip="A message from Kevin Franciotti, PIR® President">From the President</button>
           <button class="btn btn-ghost btn-sm" onclick="openModal('modal-setup')"
-                  data-tooltip="Tech chair: gws CLI setup guide">⚙️ Setup Guide</button>
+                  data-tooltip="Tech chair: gws CLI setup guide">⚙️ Setup</button>
         </div>
       </div>
       <div class="hero-illustration">
@@ -290,6 +292,28 @@
     <div class="modal-actions">
       <a href="submit.html" class="btn btn-primary">Submit Work ✍️</a>
       <button class="btn btn-ghost" onclick="closeModal('modal-howto')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- President's Message -->
+<div class="modal-overlay" id="modal-president" role="dialog" aria-modal="true" aria-labelledby="president-title">
+  <div class="modal" style="max-width:640px">
+    <button class="modal-close" onclick="closeModal('modal-president')" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">🌀 Vol. 1 Issue 1 · March 2026</div>
+    <h2 class="modal-title" id="president-title">A Message from the President</h2>
+    <div class="modal-body">
+      <p>Welcome to <em>de Vine</em>, Psychedelics in Recovery's newsletter. I'm grateful you're here.</p>
+      <p>PIR was born from a simple but difficult question: How do we talk honestly about recovery in a world where psychedelics are increasingly visible, medicalized, politicized, and misunderstood — without losing our integrity or one another? Over the years, our fellowship has grown into a diverse, sometimes imperfect, and deeply committed community wrestling with that question together.</p>
+      <p>This newsletter is an extension of that effort. <em>de Vine</em> is not a platform for promotion, persuasion, or dogma. It is a space for reflection, accountability, service, and shared learning. You'll find reports from service bodies, creative work emerging from the fellowship, and thoughtful engagement with recovery, integration, and the responsibilities that come with both.</p>
+      <p>Growth brings complexity. As PIR expands across geographies, modalities, and viewpoints, we are continually challenged to balance openness with safety, innovation with humility, and individual experience with collective care. These tensions are not signs of failure; they are signs that something alive is being tended. Our task is not to eliminate disagreement, but to remain grounded in respect, transparency, and a shared commitment to recovery.</p>
+      <p>Whether you are new to PIR or have been walking with us for years, I invite you to see this publication as a conversation rather than a conclusion. Read closely. Question thoughtfully. Serve where you are able. And remember that none of us carries this work alone.</p>
+      <p>Thank you to the PR Committee and all contributors who brought this first issue into being. I look forward to what we will continue to grow — together.</p>
+      <p style="margin-top:1.25rem">In service,<br /><strong>Kevin Franciotti</strong><br /><span style="font-size:0.8em;color:var(--text-3)">President, Psychedelics in Recovery™</span></p>
+    </div>
+    <div class="modal-actions">
+      <a href="newsletter-march-2026.html" class="btn btn-primary">Read March Issue ↗</a>
+      <button class="btn btn-ghost" onclick="closeModal('modal-president')">Close</button>
     </div>
   </div>
 </div>
@@ -443,6 +467,7 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
   loadData();
 </script>
 <script src="nav.js"></script>
+<script src="sidenav.js"></script>
 <script src="footer.js"></script>
 </body>
 </html>
