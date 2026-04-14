@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Vine News — Newsletter Template | PIR®</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       DEVINE NEWS — Print-Ready Newsletter Template
+       Based on the March 2026 "De Vine" newsletter design.
+       Instructions for committee editors:
+         1. Replace [MONTH YEAR] and the theme/topic throughout.
+         2. Paste approved article text into each <article> block.
+         3. Replace [AUTHOR NAME] with the approved byline.
+         4. Drop art images into .art-block img src attributes.
+         5. Print → Save as PDF  (use Chrome for best results,
+            File → Print → Destination: Save as PDF, Layout: A4).
+       ============================================================ */
+
+    :root {
+      --black:    #0d0d0d;
+      --ink:      #1a1a2e;
+      --ink-2:    #2c2c54;
+      --body-txt: #1c1c2e;
+      --muted:    #5a5a7a;
+      --green:    #00a366;
+      --green-lt: #00d082;
+      --cyan:     #0097a7;
+      --purple:   #6a0dad;
+      --purple-lt:#9b51e0;
+      --gold:     #b8860b;
+      --rule:     #d0d0e0;
+      --bg:       #ffffff;
+      --bg-2:     #f6f4fb;
+      --col-w:    170mm;  /* A4 content width */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 10.5pt; }
+
+    body {
+      background: #e8e8e8;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--body-txt);
+      line-height: 1.7;
+    }
+
+    /* ── Page ── */
+    .page {
+      width: 210mm; min-height: 297mm;
+      background: var(--bg);
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    }
+    .page + .page { margin-top: 2rem; }
+
+    /* ── Print rules ── */
+    @media print {
+      body { background: #fff; }
+      .page { box-shadow: none; margin: 0; page-break-after: always; }
+      .page:last-child { page-break-after: avoid; }
+      .no-print { display: none !important; }
+      @page { size: A4; margin: 0; }
+    }
+
+    /* ── Cover page ── */
+    .cover {
+      position: relative; overflow: hidden;
+      height: 297mm; display: flex; flex-direction: column;
+    }
+    .cover-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('assets/bg.jpg');
+      background-size: cover; background-position: center 30%;
+    }
+    .cover-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,10,40,0.60) 0%,
+        rgba(10,10,40,0.50) 40%,
+        rgba(10,10,40,0.85) 75%,
+        rgba(10,10,40,0.97) 100%
+      );
+    }
+    .cover-content {
+      position: relative; z-index: 2;
+      flex: 1; display: flex; flex-direction: column;
+      padding: 14mm 16mm;
+    }
+
+    /* Cover header */
+    .cover-logo {
+      display: flex; align-items: center; gap: 5mm;
+      margin-bottom: auto;
+    }
+    .cover-logo img { width: 14mm; filter: invert(1) hue-rotate(120deg) saturate(2); }
+    .cover-logo-text { color: rgba(255,255,255,0.9); }
+    .cover-logo-title { font-family:'Montserrat',sans-serif; font-size:9pt; font-weight:800; letter-spacing:0.04em; }
+    .cover-logo-sub { font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:500; opacity:0.65; text-transform:uppercase; letter-spacing:0.1em; }
+
+    /* Cover main text */
+    .cover-main { margin-top: auto; padding-bottom: 6mm; }
+    .cover-eyebrow {
+      font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.15em;
+      color: var(--green-lt); margin-bottom: 3mm;
+      display: flex; align-items: center; gap: 3mm;
+    }
+    .cover-eyebrow::before { content:''; width:12mm; height:1px; background:var(--green-lt); }
+    .cover-title {
+      font-family:'Montserrat',sans-serif; font-size:42pt; font-weight:800;
+      color:#fff; line-height:0.95; letter-spacing:-0.03em;
+      margin-bottom: 2mm;
+    }
+    .cover-title em { font-style:normal; color: var(--green-lt); }
+    .cover-subtitle {
+      font-family:'Montserrat',sans-serif; font-size:13pt; font-weight:600;
+      color: rgba(255,255,255,0.75); margin-bottom: 6mm; letter-spacing:0.02em;
+    }
+    .cover-quote {
+      font-style:italic; font-size:9.5pt; line-height:1.75;
+      color:rgba(255,255,255,0.65); max-width:120mm; border-left:2px solid var(--green-lt);
+      padding-left:5mm; margin-bottom:8mm;
+    }
+    .cover-meta {
+      display:flex; align-items:center; gap:5mm;
+      font-family:'Montserrat',sans-serif; font-size:7.5pt; font-weight:600;
+      color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.08em;
+    }
+    .cover-meta-dot { width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.3); }
+
+    /* ── Inside pages ── */
+    .inner { padding: 16mm; }
+
+    /* Running header on inner pages */
+    .running-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 4mm; margin-bottom: 8mm;
+      border-bottom: 1px solid var(--rule);
+      font-family:'Montserrat',sans-serif;
+    }
+    .rh-title { font-size:7.5pt; font-weight:800; color:var(--ink); letter-spacing:0.05em; }
+    .rh-issue { font-size:7pt; color:var(--muted); }
+    .rh-logo  { width: 8mm; opacity:0.35; }
+
+    /* Article */
+    article { margin-bottom: 12mm; }
+    .art-category {
+      font-family:'Montserrat',sans-serif; font-size:6.5pt; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.14em; color:var(--purple-lt);
+      display:flex; align-items:center; gap:3mm; margin-bottom:3mm;
+    }
+    .art-category::before { content:''; width:8mm; height:1.5px; background:var(--purple-lt); }
+    .art-headline {
+      font-family:'Montserrat',sans-serif; font-size:17pt; font-weight:800;
+      color:var(--ink); line-height:1.15; letter-spacing:-0.02em;
+      margin-bottom:2mm;
+    }
+    .art-byline {
+      font-family:'Montserrat',sans-serif; font-size:7.5pt; font-weight:600;
+      color:var(--muted); margin-bottom:5mm;
+      display:flex; align-items:center; gap:2mm;
+    }
+    .art-byline::before { content:'—'; color:var(--green); }
+    .art-lede {
+      font-size:10.5pt; font-weight:400; line-height:1.75;
+      color:var(--ink); margin-bottom:4mm;
+    }
+    .art-lede strong { color:var(--green); }
+    .art-body {
+      font-size:9.5pt; line-height:1.80; color:var(--body-txt);
+      column-count:2; column-gap:8mm; column-rule:1px solid var(--rule);
+      orphans:3; widows:3;
+    }
+    .art-body p { margin-bottom:3mm; }
+    .art-body p:first-child::first-letter {
+      font-family:'Merriweather',Georgia,serif;
+      font-size:3.2em; font-weight:700; line-height:0.75;
+      float:left; margin:0.08em 0.08em 0 0; color:var(--green);
+    }
+    .art-body blockquote {
+      border-left:3px solid var(--purple-lt); padding-left:4mm;
+      margin:4mm 0; font-style:italic; color:var(--muted);
+      break-inside:avoid; column-span:none;
+    }
+    .pull-quote {
+      column-span:all; text-align:center; padding:6mm 0;
+      font-size:12pt; font-style:italic; font-weight:700;
+      color:var(--ink-2); border-top:2px solid var(--green);
+      border-bottom:2px solid var(--green); margin:5mm 0;
+    }
+
+    /* Step reflection (single-column, highlighted) */
+    .step-section {
+      background:var(--bg-2);
+      border-left:4px solid var(--green);
+      border-radius:0 6px 6px 0;
+      padding:7mm; margin-bottom:12mm;
+    }
+    .step-section .art-category { margin-bottom:2mm; }
+    .step-section .art-headline { font-size:13pt; margin-bottom:2mm; }
+    .step-section .art-body { column-count:1; }
+
+    /* Art / photo block */
+    .art-block { margin-bottom:8mm; break-inside:avoid; }
+    .art-block img {
+      width:100%; display:block;
+      border-radius:6px; object-fit:cover;
+    }
+    .art-block-caption {
+      font-family:'Montserrat',sans-serif; font-size:7pt; font-style:italic;
+      color:var(--muted); margin-top:2mm; text-align:center;
+    }
+    .art-block-byline {
+      font-family:'Montserrat',sans-serif; font-size:7pt; font-weight:700;
+      color:var(--green); text-align:center;
+    }
+
+    /* Full-width art spread */
+    .art-spread {
+      margin: 0 -16mm 10mm; overflow:hidden;
+    }
+    .art-spread img { width:100%; max-height:90mm; object-fit:cover; display:block; }
+    .art-spread-caption {
+      padding: 2mm 16mm; font-family:'Montserrat',sans-serif;
+      font-size:7pt; font-style:italic; color:var(--muted);
+      display:flex; align-items:center; justify-content:space-between;
+    }
+
+    /* Two-column feature layout */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:8mm; margin-bottom:8mm; }
+    .two-col-wide { display:grid; grid-template-columns:2fr 1fr; gap:8mm; margin-bottom:8mm; }
+
+    /* Divider */
+    .rule { border:none; border-top:1px solid var(--rule); margin:8mm 0; }
+    .rule-thick { border:none; border-top:2px solid var(--green); margin:8mm 0; }
+
+    /* Back page */
+    .back-page {
+      min-height:297mm; display:flex; flex-direction:column;
+      padding:16mm;
+    }
+    .back-header {
+      text-align:center; padding-bottom:8mm;
+      border-bottom:1px solid var(--rule); margin-bottom:8mm;
+    }
+    .back-logo img { width:18mm; margin:0 auto 3mm; opacity:0.5; }
+    .back-tagline {
+      font-family:'Montserrat',sans-serif; font-size:7pt;
+      text-transform:uppercase; letter-spacing:0.12em; color:var(--muted);
+    }
+    .back-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:8mm;
+      flex:1;
+    }
+    .back-col h3 {
+      font-family:'Montserrat',sans-serif; font-size:8pt; font-weight:800;
+      text-transform:uppercase; letter-spacing:0.1em; color:var(--green);
+      margin-bottom:4mm; display:flex; align-items:center; gap:2mm;
+    }
+    .back-col h3::before { content:''; width:6mm; height:1.5px; background:var(--green); }
+    .back-col p { font-size:8.5pt; color:var(--body-txt); line-height:1.7; margin-bottom:3mm; }
+    .back-col ul { padding-left:5mm; font-size:8.5pt; color:var(--body-txt); line-height:1.7; }
+    .back-col li { margin-bottom:1.5mm; }
+    .back-footer {
+      text-align:center; padding-top:8mm; border-top:1px solid var(--rule);
+      font-family:'Montserrat',sans-serif; font-size:7pt; color:var(--muted);
+      line-height:1.8;
+    }
+
+    /* ── Editor toolbar (no-print) ── */
+    .editor-bar {
+      position:fixed; bottom:1.5rem; right:1.5rem; z-index:999;
+      display:flex; flex-direction:column; gap:0.6rem; align-items:flex-end;
+    }
+    .editor-btn {
+      background:#1a1a2e; color:#fff; border:1px solid #2c2c54;
+      border-radius:9999px; padding:0.5rem 1.1rem;
+      font-family:'Montserrat',sans-serif; font-size:0.78rem; font-weight:700;
+      cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.4);
+      transition:background 0.15s;
+    }
+    .editor-btn:hover { background:#2c2c54; }
+    .editor-btn.primary { background:var(--green); color:#000; border-color:var(--green); }
+    .editor-btn.primary:hover { background:#00e890; }
+    .editor-label {
+      font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.1em;
+      color:#666; text-align:right;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     EDITOR TOOLBAR  (hidden on print)
+     ═══════════════════════════════════════════════ -->
+<div class="editor-bar no-print">
+  <div class="editor-label">Newsletter Editor</div>
+  <button class="editor-btn primary" onclick="window.print()">🖨 Export PDF</button>
+  <button class="editor-btn" onclick="document.querySelector('.editable-field').focus()">✏️ Edit Mode</button>
+  <a href="index.html" class="editor-btn" style="text-decoration:none">← Portal</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 1 — COVER
+     ═══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-bg"></div>
+    <div class="cover-overlay"></div>
+    <div class="cover-content">
+
+      <!-- Logo mark -->
+      <div class="cover-logo">
+        <img src="assets/logo-white.png" alt="PIR® Logo" />
+        <div class="cover-logo-text">
+          <div class="cover-logo-title">Psychedelics in Recovery™</div>
+          <div class="cover-logo-sub">12-Step Fellowship · PIR®</div>
+        </div>
+      </div>
+
+      <!-- Main cover text -->
+      <div class="cover-main">
+        <div class="cover-eyebrow">Monthly Newsletter</div>
+        <div class="cover-title">De Vine<br /><em>News</em></div>
+        <div class="cover-subtitle">[MONTH YEAR] · Issue [#]</div>
+        <div class="cover-quote">
+          "By tending carefully to our written materials, we help support coherence
+          across groups while honoring the diversity of experience within PIR®."
+          <br /><br />— Literature Committee, January 2026
+        </div>
+        <div class="cover-meta">
+          <span>This Month: [TOPIC]</span>
+          <div class="cover-meta-dot"></div>
+          <span>Psychedelics In Recovery™</span>
+          <div class="cover-meta-dot"></div>
+          <span>psychedelicsinrecovery.org</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 2 — FEATURED ARTICLE
+     ═══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="running-header">
+      <span class="rh-title">De Vine News · [MONTH YEAR]</span>
+      <img src="assets/logo-dark.png" alt="" class="rh-logo" />
+      <span class="rh-issue">Issue [#] · psychedelicsinrecovery.org</span>
+    </div>
+
+    <article>
+      <div class="art-category">Featured Article</div>
+      <h2 class="art-headline">[Article Title — Click to Edit]</h2>
+      <div class="art-byline">[Author Name]</div>
+      <p class="art-lede">
+        [Opening paragraph — this is the "lede." Write 2–3 sentences that invite the reader in.
+        This paragraph will render slightly larger than the body text. <strong>Replace this entire block with the approved article text.</strong>]
+      </p>
+      <hr class="rule" />
+      <div class="art-body">
+        <p>
+          [Body text begins here. Paste the full approved article into this section.
+          The first letter of the first paragraph will automatically enlarge as a drop cap.
+          Continue replacing placeholder text with the real content.]
+        </p>
+        <p>
+          [Second paragraph. The two-column layout is automatic — text will flow naturally
+          from the left column into the right. You do not need to manage the columns manually.]
+        </p>
+        <blockquote>
+          "[A meaningful quote pulled from within the article, formatted as a blockquote.]"
+        </blockquote>
+        <p>
+          [Third paragraph continues here. Add as many paragraphs as needed — the page will
+          expand automatically. For very long articles, consider splitting across two pages
+          by duplicating the inner page template below.]
+        </p>
+        <div class="pull-quote">
+          "A powerful pull quote — one sentence from the article that captures the heart of the piece."
+        </div>
+        <p>
+          [Continue the article body after the pull quote. The pull quote spans both columns
+          automatically as a visual break point.]
+        </p>
+        <p>
+          [Final paragraph of the article. End with the author's closing thought.]
+        </p>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 3 — STEP REFLECTION + ART
+     ═══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="running-header">
+      <span class="rh-title">De Vine News · [MONTH YEAR]</span>
+      <img src="assets/logo-dark.png" alt="" class="rh-logo" />
+      <span class="rh-issue">Issue [#] · psychedelicsinrecovery.org</span>
+    </div>
+
+    <!-- Step reflection -->
+    <div class="step-section">
+      <div class="art-category">Step Reflection · [Step #]</div>
+      <h2 class="art-headline">[Step Reflection Title]</h2>
+      <div class="art-byline">[Author Name]</div>
+      <div class="art-body">
+        <p>
+          [Step reflection text. This section uses a highlighted background to visually
+          distinguish it from the main articles. Replace this placeholder with the approved
+          step reflection submission.]
+        </p>
+        <p>
+          [Continue the reflection here. These are typically 200–500 words — personal,
+          honest, and grounded in the step being explored this month.]
+        </p>
+        <blockquote>
+          "[A line from the reflection that captures surrender, insight, or gratitude.]"
+        </blockquote>
+        <p>[Concluding paragraph of the step reflection.]</p>
+      </div>
+    </div>
+
+    <hr class="rule" />
+
+    <!-- Art feature -->
+    <div class="two-col-wide">
+      <div>
+        <div class="art-category">Member Artwork</div>
+        <h2 class="art-headline">[Artwork Title]</h2>
+        <div class="art-byline">[Artist Name or Anonymous]</div>
+        <p style="font-size:9pt;color:var(--body-txt);line-height:1.75;margin-top:3mm">
+          [Artist's note or committee description of the artwork. 2–4 sentences about the
+          piece, what it represents, or the artist's journey. Leave blank if the artist
+          chose not to include a note.]
+        </p>
+      </div>
+      <div class="art-block">
+        <img src="assets/hero-art.jpg" alt="[Artwork title]" style="height:80mm;object-fit:cover" />
+        <div class="art-block-caption">[Artwork title] — [medium, if known]</div>
+        <div class="art-block-byline">[Artist Name or "Anonymous"]</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 4 — SECOND ARTICLE (if needed)
+     To skip: delete this page block entirely.
+     ═══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="running-header">
+      <span class="rh-title">De Vine News · [MONTH YEAR]</span>
+      <img src="assets/logo-dark.png" alt="" class="rh-logo" />
+      <span class="rh-issue">Issue [#] · psychedelicsinrecovery.org</span>
+    </div>
+
+    <!-- Full-width art spread (optional) -->
+    <div class="art-spread">
+      <img src="assets/bg.jpg" alt="[Photo description]" />
+      <div class="art-spread-caption">
+        <span>[Photo or artwork caption]</span>
+        <span>[Artist Name or "Anonymous"]</span>
+      </div>
+    </div>
+
+    <article>
+      <div class="art-category">Personal Story</div>
+      <h2 class="art-headline">[Second Article Title]</h2>
+      <div class="art-byline">[Author Name]</div>
+      <p class="art-lede">
+        [Opening lede paragraph for the second article. 2–3 sentences.]
+      </p>
+      <hr class="rule" />
+      <div class="art-body">
+        <p>[Second article body — first paragraph.]</p>
+        <p>[Second paragraph.]</p>
+        <p>[Third paragraph.]</p>
+        <p>[Continue as needed.]</p>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 5 — BACK PAGE
+     ═══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="back-page">
+
+    <div class="back-header">
+      <div class="back-logo">
+        <img src="assets/logo-dark.png" alt="PIR®" />
+      </div>
+      <div class="back-tagline">Psychedelics in Recovery™ · 12-Step Fellowship</div>
+    </div>
+
+    <div class="back-grid">
+
+      <div class="back-col">
+        <h3>About PIR®</h3>
+        <p>
+          Psychedelics in Recovery™ (PIR®) is a 12-step fellowship for people who embrace
+          psychedelics and other forms of healing as an aid to their recovery. We welcome
+          all who seek a mindful, ethical, and spiritually grounded path.
+        </p>
+        <p>
+          PIR® meetings are available worldwide — online and in person. All are welcome.
+        </p>
+        <h3 style="margin-top:6mm">Find a Meeting</h3>
+        <ul>
+          <li>Online meetings: psychedelicsinrecovery.org/online-meetings</li>
+          <li>In person: psychedelicsinrecovery.org/in-person-meetings</li>
+        </ul>
+      </div>
+
+      <div class="back-col">
+        <h3>Literature Committee</h3>
+        <p>
+          The Literature Committee (LitCom) develops, reviews, and disseminates written
+          materials for the PIR® Fellowship — including this newsletter, member guides,
+          FAQs, and the 12-step literature adapted for our community.
+        </p>
+        <p>
+          Volunteers are always welcome. No special expertise required — only a willingness
+          to listen, collaborate, and serve with humility.
+        </p>
+        <h3 style="margin-top:6mm">Submit to the Next Issue</h3>
+        <ul>
+          <li>Portal: [your GitHub Pages URL]/dashboard</li>
+          <li>Email: pir.devine.news@gmail.com</li>
+          <li>Deadline: [Next deadline date]</li>
+          <li>Theme: [Next month's theme]</li>
+        </ul>
+      </div>
+
+      <div class="back-col">
+        <h3>The 12 Steps of PIR®</h3>
+        <ul>
+          <li>1. Admitted powerlessness</li>
+          <li>2. Came to believe</li>
+          <li>3. Turned our will over</li>
+          <li>4. Made a searching inventory</li>
+          <li>5. Admitted the exact nature</li>
+          <li>6. Entirely ready</li>
+          <li>7. Humbly asked</li>
+          <li>8. Made a list of amends</li>
+          <li>9. Made direct amends</li>
+          <li>10. Continued personal inventory</li>
+          <li>11. Sought through prayer &amp; meditation</li>
+          <li>12. Carried the message</li>
+        </ul>
+      </div>
+
+      <div class="back-col">
+        <h3>Resources</h3>
+        <ul>
+          <li>Member Materials: psychedelicsinrecovery.org/member-materials</li>
+          <li>12 Steps: psychedelicsinrecovery.org/12-steps</li>
+          <li>Common Prayers: psychedelicsinrecovery.org/common-prayers</li>
+          <li>Library: psychedelicsinrecovery.org/library</li>
+          <li>Service: service.psychedelicsinrecovery.org</li>
+          <li>LitCom: service.psychedelicsinrecovery.org/literature</li>
+        </ul>
+        <h3 style="margin-top:6mm">Connect</h3>
+        <ul>
+          <li>Facebook: facebook.com/groups/psychedelicsinrecovery</li>
+          <li>Website: psychedelicsinrecovery.org</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="back-footer">
+      <strong>De Vine News</strong> · [MONTH YEAR] · Issue [#]<br />
+      ©[YEAR] Psychedelics in Recovery™ · PIR® · All Rights Reserved<br />
+      Submissions and member contact: pir.devine.news@gmail.com
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -4,596 +4,413 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Devine News — Committee Portal | PIR®</title>
+  <meta name="description" content="Internal committee portal for the Devine News newsletter — Psychedelics In Recovery 12-Step Fellowship." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --navy:      #000f2b;
-      --navy-2:    #051428;
-      --navy-3:    #091e3a;
-      --navy-4:    #0d2548;
-      --green:     #00d082;
-      --green-dim: #00a366;
-      --cyan:      #4aeadc;
-      --purple:    #9b51e0;
-      --blue:      #2874fc;
-      --blue-lt:   #4aeadc;
-      --text:      #e2ecf5;
-      --text-2:    #8fafc8;
-      --text-3:    #4a6a84;
-      --border:    #112140;
-      --border-2:  #1a3050;
-      --glow-g:    rgba(0, 208, 130, 0.18);
-      --glow-p:    rgba(155, 81, 224, 0.18);
-    }
-
-    html { font-size: 16px; }
-    body {
-      background: var(--navy);
-      color: var(--text);
-      font-family: 'Montserrat', system-ui, sans-serif;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
-
-    a { color: var(--green); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--navy-2); }
-    ::-webkit-scrollbar-thumb { background: var(--navy-4); border-radius: 3px; }
-
-    /* ── Header ── */
-    .site-header {
-      background: var(--navy-2);
-      border-bottom: 1px solid var(--border);
-      padding: 0 1.5rem;
-      position: sticky; top: 0; z-index: 50;
-    }
-    .header-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; height: 64px;
-    }
-    .header-brand {
-      display: flex; align-items: center; gap: 0.75rem;
-    }
-    .brand-logo {
-      width: 36px; height: 36px;
-      background: conic-gradient(from 0deg, var(--green), var(--cyan), var(--purple), var(--blue), var(--green));
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0;
-      box-shadow: 0 0 16px var(--glow-g);
-    }
-    .brand-title {
-      font-size: 1.1rem; font-weight: 800;
-      letter-spacing: -0.02em; color: var(--text);
-    }
-    .brand-title span { color: var(--green); }
-    .brand-sub {
-      font-size: 0.65rem; font-weight: 500;
-      color: var(--text-2); letter-spacing: 0.06em;
-      text-transform: uppercase; margin-top: -2px;
-    }
-    .header-nav {
-      display: flex; align-items: center; gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      font-family: inherit; font-size: 0.8rem; font-weight: 600;
-      padding: 0.45rem 1rem; border-radius: 9999px;
-      border: none; cursor: pointer; transition: all 0.18s; white-space: nowrap;
-      text-decoration: none;
-    }
-    .btn-primary {
-      background: var(--green); color: var(--navy);
-      box-shadow: 0 0 12px var(--glow-g);
-    }
-    .btn-primary:hover { background: #00e890; box-shadow: 0 0 20px var(--glow-g); text-decoration: none; }
-    .btn-ghost {
-      background: transparent; color: var(--text-2);
-      border: 1px solid var(--border-2);
-    }
-    .btn-ghost:hover { color: var(--text); border-color: var(--green); background: var(--navy-3); text-decoration: none; }
-
-    /* ── Hero ── */
-    .hero {
-      background:
-        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(155,81,224,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 60% at 10% 80%, rgba(0,208,130,0.10) 0%, transparent 60%),
-        var(--navy-2);
-      border-bottom: 1px solid var(--border);
-      padding: 3.5rem 1.5rem 3rem;
-    }
-    .hero-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; flex-direction: column; gap: 1rem;
-    }
+    /* ── Page-specific styles ── */
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 4rem 1.25rem 3.5rem; }
     .hero-eyebrow {
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--green); display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--green);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
     }
-    .hero-eyebrow::before {
-      content: ''; width: 20px; height: 1.5px; background: var(--green);
-    }
+    .hero-eyebrow::before { content:''; width:20px; height:1.5px; background:var(--green); }
     .hero-headline {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+      font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 1rem;
     }
     .hero-headline em {
       font-style: normal;
       background: linear-gradient(90deg, var(--green), var(--cyan));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hero-desc {
-      font-family: 'Merriweather', Georgia, serif;
-      font-size: 0.95rem; font-style: italic;
-      color: var(--text-2); max-width: 540px; line-height: 1.8;
+    .hero-quote {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: 0.95rem; color: rgba(226,236,245,0.7);
+      max-width: 500px; line-height: 1.8; margin-bottom: 1.75rem;
     }
-    .hero-links {
-      display: flex; flex-wrap: wrap; gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-    .hero-link {
-      font-size: 0.78rem; font-weight: 600;
-      color: var(--text-2); display: flex; align-items: center; gap: 0.35rem;
-      padding: 0.3rem 0;
-    }
-    .hero-link:hover { color: var(--green); text-decoration: none; }
-    .hero-link-dot {
-      width: 4px; height: 4px; border-radius: 50%;
-      background: var(--border-2);
-    }
+    .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
-    /* ── Main layout ── */
-    .main-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-    /* ── Deadline banner ── */
-    .deadline-banner {
-      background: linear-gradient(90deg, rgba(74,234,220,0.08), rgba(155,81,224,0.08));
-      border: 1px solid rgba(74,234,220,0.2);
-      border-radius: 12px; padding: 0.9rem 1.25rem;
-      display: none; align-items: center; gap: 0.75rem;
-      margin-bottom: 2rem; flex-wrap: wrap;
+    /* Stats */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1rem; margin-bottom: 2.5rem;
     }
-    .deadline-banner.show { display: flex; }
-    .deadline-icon { font-size: 1.1rem; }
-    .deadline-text { font-size: 0.85rem; color: var(--text-2); flex: 1; }
-    .deadline-text strong { color: var(--cyan); }
-    .deadline-cta {
-      font-size: 0.75rem; font-weight: 600;
-      color: var(--cyan); white-space: nowrap;
-    }
-    .deadline-cta:hover { text-decoration: underline; }
-
-    /* ── Stats ── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem; margin-bottom: 2rem; display: none;
-    }
-    .stats-grid.show { display: grid; }
     .stat-card {
-      background: var(--navy-3);
-      border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.2rem 1rem;
-      text-align: center;
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.15rem 1rem; text-align: center;
     }
     .stat-num { font-size: 2rem; font-weight: 800; line-height: 1; }
-    .stat-num.green  { color: var(--green); }
-    .stat-num.cyan   { color: var(--cyan); }
-    .stat-num.purple { color: var(--purple); }
-    .stat-num.blue   { color: var(--blue); }
-    .stat-label { font-size: 0.72rem; font-weight: 500; color: var(--text-3); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-label { font-size: 0.68rem; font-weight: 600; color: var(--text-3); margin-top: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
-    /* ── Section heading ── */
-    .section-head {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+    /* Deadline banner */
+    .deadline-banner {
+      background: linear-gradient(90deg,rgba(74,234,220,0.07),rgba(155,81,224,0.07));
+      border: 1px solid rgba(74,234,220,0.18);
+      border-radius: var(--radius); padding: 0.85rem 1.25rem;
+      display: flex; align-items: center; gap: 0.85rem;
+      margin-bottom: 2rem; flex-wrap: wrap;
     }
-    .section-title {
-      font-size: 0.75rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--text-2); display: flex; align-items: center; gap: 0.5rem;
-    }
-    .section-title::before {
-      content: ''; width: 3px; height: 14px;
-      background: var(--green); border-radius: 2px;
-    }
-    .section-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .deadline-text { font-size: 0.85rem; color: var(--text-2); flex: 1; min-width: 200px; }
+    .deadline-text strong { color: var(--cyan); }
+
+    /* Section row */
+    .section-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
     .sync-label { font-size: 0.72rem; color: var(--text-3); }
 
-    /* ── Gallery ── */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 0.75rem; margin-bottom: 2.5rem;
-    }
-    .gallery-card {
-      background: var(--navy-3);
-      border: 1px solid var(--border);
-      border-radius: 12px; overflow: hidden;
-      transition: transform 0.18s, border-color 0.18s;
-    }
+    /* Gallery */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
+    .gallery-card { background: var(--navy-3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform 0.18s, border-color 0.18s; }
     .gallery-card:hover { transform: translateY(-3px); border-color: var(--border-2); }
-    .gallery-card img { width: 100%; height: 140px; object-fit: cover; display: block; }
-    .gallery-card-label {
-      padding: 0.5rem 0.65rem;
-      font-size: 0.72rem; font-weight: 600; color: var(--text-2);
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
+    .gallery-card img { width: 100%; height: 130px; object-fit: cover; }
+    .gallery-caption { padding: 0.45rem 0.65rem; font-size: 0.7rem; font-weight: 600; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    /* ── Empty state ── */
+    /* Empty state */
     .empty-state {
-      background: var(--navy-3);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 4rem 2rem; text-align: center;
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 4.5rem 2rem; text-align: center;
     }
     .empty-icon { font-size: 3.5rem; margin-bottom: 1.25rem; }
-    .empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
-    .empty-desc { font-size: 0.875rem; color: var(--text-2); max-width: 380px; margin: 0 auto 1.75rem; line-height: 1.7; }
+    .empty-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .empty-desc { font-size: 0.875rem; color: var(--text-2); max-width: 380px; margin: 0 auto 2rem; line-height: 1.7; }
 
-    /* ── Submission cards ── */
-    .submission-card {
-      background: var(--navy-3);
-      border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.1rem 1.25rem;
-      display: flex; align-items: flex-start; gap: 1rem;
-      transition: border-color 0.18s;
-      margin-bottom: 0.65rem;
+    /* Submission cards */
+    .sub-card {
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.15rem;
+      display: flex; align-items: flex-start; gap: 0.9rem;
+      transition: border-color 0.18s; margin-bottom: 0.6rem;
     }
-    .submission-card:hover { border-color: var(--border-2); }
-    .submission-type-icon {
-      width: 38px; height: 38px; flex-shrink: 0;
-      background: var(--navy-4); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
+    .sub-card:hover { border-color: var(--border-2); }
+    .sub-type-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--navy-4); border-radius: 9px;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
     }
-    .submission-body { flex: 1; min-width: 0; }
-    .submission-row1 { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
-    .submission-title { font-size: 0.95rem; font-weight: 700; color: var(--text); }
-    .submission-meta { font-size: 0.75rem; color: var(--text-3); margin-top: 0.15rem; }
-    .submission-snippet { font-size: 0.82rem; color: var(--text-2); margin-top: 0.4rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .submission-cta { flex-shrink: 0; align-self: center; }
+    .sub-body { flex: 1; min-width: 0; }
+    .sub-title-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.15rem; }
+    .sub-title { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+    .sub-meta { font-size: 0.73rem; color: var(--text-3); }
+    .sub-snippet { font-size: 0.8rem; color: var(--text-2); margin-top: 0.35rem; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .sub-action { flex-shrink: 0; align-self: center; }
 
-    /* ── Badges ── */
-    .badge {
-      display: inline-flex; align-items: center; gap: 0.25rem;
-      font-size: 0.68rem; font-weight: 700;
-      padding: 0.18rem 0.6rem; border-radius: 9999px;
-      white-space: nowrap; letter-spacing: 0.03em;
-    }
-    .badge-incoming  { background: rgba(40,116,252,0.18); color: #6fa3fc; border: 1px solid rgba(40,116,252,0.3); }
-    .badge-review    { background: rgba(245,158,11,0.18);  color: #f5a623; border: 1px solid rgba(245,158,11,0.3); }
-    .badge-approved  { background: rgba(0,208,130,0.18);   color: var(--green); border: 1px solid rgba(0,208,130,0.3); }
-    .badge-published { background: rgba(155,81,224,0.18);  color: #c084fc; border: 1px solid rgba(155,81,224,0.3); }
-    .badge-art       { background: rgba(74,234,220,0.12);  color: var(--cyan); border: 1px solid rgba(74,234,220,0.25); }
-
-    /* ── Drive access panel ── */
+    /* Drive panel */
     .drive-panel {
-      background: linear-gradient(135deg, rgba(155,81,224,0.10), rgba(0,208,130,0.08));
-      border: 1px solid var(--border-2);
-      border-radius: 14px; padding: 1.5rem;
-      display: flex; align-items: center; gap: 1.25rem;
+      background: linear-gradient(135deg, rgba(155,81,224,0.09), rgba(0,208,130,0.07));
+      border: 1px solid var(--border-2); border-radius: var(--radius-lg);
+      padding: 1.4rem; display: flex; align-items: center; gap: 1.1rem;
       margin-top: 2.5rem; flex-wrap: wrap;
     }
-    .drive-icon {
-      width: 48px; height: 48px; flex-shrink: 0;
-      background: var(--navy-4); border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
+    .drive-icon-wrap {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: var(--navy-4); border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
     }
     .drive-text { flex: 1; min-width: 200px; }
-    .drive-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
-    .drive-desc  { font-size: 0.78rem; color: var(--text-2); line-height: 1.6; }
+    .drive-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .drive-desc { font-size: 0.78rem; color: var(--text-2); line-height: 1.6; }
     .drive-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-
-    /* ── Footer ── */
-    .site-footer {
-      background: var(--navy-2);
-      border-top: 1px solid var(--border);
-      padding: 2rem 1.5rem;
-    }
-    .footer-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 0.75rem; text-align: center;
-    }
-    .footer-logo { font-size: 1.2rem; font-weight: 800; color: var(--green); }
-    .footer-tagline {
-      font-family: 'Merriweather', Georgia, serif;
-      font-size: 0.78rem; font-style: italic; color: var(--text-3);
-    }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center; }
-    .footer-link { font-size: 0.75rem; color: var(--text-3); }
-    .footer-link:hover { color: var(--green); }
-    .footer-copy { font-size: 0.7rem; color: var(--text-3); }
-
-    @media (max-width: 600px) {
-      .hero { padding: 2rem 1rem 1.75rem; }
-      .main-wrap { padding: 1.5rem 1rem 3rem; }
-      .header-nav .btn-ghost { display: none; }
-    }
   </style>
 </head>
 <body>
+<script>window.CURRENT_PAGE = 'index';</script>
 
-  <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="index.html" class="header-brand" style="text-decoration:none">
-        <div class="brand-logo">🌀</div>
-        <div>
-          <div class="brand-title">De Vine <span>News</span></div>
-          <div class="brand-sub">PIR® Newsletter Committee</div>
-        </div>
-      </a>
-      <nav class="header-nav">
-        <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="btn btn-ghost">
-          PIR® Site ↗
-        </a>
-        <a href="https://service.psychedelicsinrecovery.org" target="_blank" class="btn btn-ghost">
-          Service ↗
-        </a>
-        <a href="submit.html" class="btn btn-primary">
-          ✍️ Submit Work
-        </a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
-  <section class="hero">
+<!-- ═══════════════ PARALLAX HERO ═══════════════ -->
+<section class="parallax-hero" id="hero">
+  <div class="parallax-bg" id="parallax-bg"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
     <div class="hero-inner">
       <div class="hero-eyebrow">Psychedelics in Recovery™ · 12-Step Fellowship</div>
-      <h1 class="hero-headline">
-        Committee Portal<br /><em>Devine News</em>
-      </h1>
-      <p class="hero-desc">
+      <h1 class="hero-headline">Committee Portal<br /><em>Devine News</em></h1>
+      <p class="hero-quote">
         "By tending carefully to our written materials, we help support coherence across groups
         while honoring the diversity of experience within PIR®."
+        <br />— LitCom, January 2026
       </p>
-      <div class="hero-links">
-        <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" class="hero-link">
-          🗓 Meetings
-        </a>
-        <div class="hero-link-dot"></div>
-        <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit" target="_blank" class="hero-link">
-          📋 Topics &amp; Deadlines
-        </a>
-        <div class="hero-link-dot"></div>
-        <a href="https://service.psychedelicsinrecovery.org/literature" target="_blank" class="hero-link">
-          📖 LitCom Page
-        </a>
-        <div class="hero-link-dot"></div>
-        <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" class="hero-link">
-          📚 Member Materials
-        </a>
+      <div class="hero-actions">
+        <a href="submit.html" class="btn btn-primary">✍️ Submit Work</a>
+        <button class="btn btn-ghost" onclick="openModal('modal-howto')">How It Works</button>
+        <button class="btn btn-ghost btn-sm" onclick="openModal('modal-setup')"
+                data-tooltip="Tech chair: gws CLI setup guide">⚙️ Setup Guide</button>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main class="page-wrap">
+
+  <!-- Deadline banner -->
+  <div class="deadline-banner hidden" id="deadline-banner">
+    <span style="font-size:1.1rem">📅</span>
+    <div class="deadline-text">
+      <strong>Current Topic: <span id="next-topic">—</span></strong>
+      &nbsp;·&nbsp; Deadline: <span id="next-date">—</span>
+    </div>
+    <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
+       target="_blank" rel="noopener"
+       class="btn btn-ghost btn-sm">Full schedule ↗</a>
+  </div>
+
+  <!-- Stats (hidden until submissions exist) -->
+  <div class="stats-row hidden" id="stats-row">
+    <div class="stat-card">
+      <div class="stat-num text-green" id="stat-total">0</div>
+      <div class="stat-label">Submissions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--amber)" id="stat-review">0</div>
+      <div class="stat-label">Needs Review</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num text-green" id="stat-approved">0</div>
+      <div class="stat-label">Approved</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num text-cyan" id="stat-art">0</div>
+      <div class="stat-label">Art Pieces</div>
+    </div>
+  </div>
+
+  <!-- Art Gallery -->
+  <section id="gallery-section" class="hidden" style="margin-bottom:2.5rem">
+    <div class="section-row">
+      <span class="section-label">🎨 Art Gallery</span>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
   </section>
 
-  <!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
-  <main class="main-wrap">
-
-    <!-- Deadline banner (shown when data.json has a deadline) -->
-    <div class="deadline-banner" id="deadline-banner">
-      <span class="deadline-icon">📅</span>
-      <div class="deadline-text">
-        <strong>Current Topic: <span id="next-topic">—</span></strong>
-        &nbsp;·&nbsp; Deadline: <span id="next-date">—</span>
-      </div>
-      <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
-         target="_blank" class="deadline-cta">View full schedule ↗</a>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats-grid" id="stats-grid">
-      <div class="stat-card">
-        <div class="stat-num green" id="stat-total">0</div>
-        <div class="stat-label">Total Submissions</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" style="color: #f5a623" id="stat-review">0</div>
-        <div class="stat-label">Needs Review</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num green" id="stat-approved">0</div>
-        <div class="stat-label">Approved</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num cyan" id="stat-art">0</div>
-        <div class="stat-label">Art Pieces</div>
+  <!-- Submissions -->
+  <section>
+    <div class="section-row">
+      <span class="section-label">📋 Submissions</span>
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span class="sync-label" id="last-sync-label">Last sync: —</span>
+        <button class="btn btn-ghost btn-sm" onclick="loadData()">↺ Refresh</button>
       </div>
     </div>
 
-    <!-- Art Gallery -->
-    <section id="gallery-section" style="display:none; margin-bottom: 2.5rem;">
-      <div class="section-head">
-        <div class="section-title">🎨 Art Gallery</div>
-      </div>
-      <div class="gallery-grid" id="gallery-grid"></div>
-    </section>
-
-    <!-- Submissions -->
-    <section>
-      <div class="section-head">
-        <div class="section-title">📋 Submissions</div>
-        <div class="section-actions">
-          <span class="sync-label" id="last-sync-label">Last sync: —</span>
-          <button class="btn btn-ghost" onclick="loadData()" style="padding: 0.35rem 0.85rem; font-size:0.75rem;">
-            ↺ Refresh
-          </button>
-        </div>
-      </div>
-
-      <!-- Empty state -->
-      <div class="empty-state" id="empty-state">
-        <div class="empty-icon">🌱</div>
-        <h2 class="empty-title">No submissions yet</h2>
-        <p class="empty-desc">
-          Once committee members submit work through the portal, each piece will appear here
-          automatically after the next sync. The bot checks for new submissions every hour.
-        </p>
-        <a href="submit.html" class="btn btn-primary" style="font-size:0.9rem; padding: 0.65rem 1.5rem;">
-          Share Your Experience ✍️
-        </a>
-      </div>
-
-      <!-- Submissions list -->
-      <div id="submissions-list"></div>
-    </section>
-
-    <!-- Google Drive Access Panel -->
-    <div class="drive-panel" id="drive-panel">
-      <div class="drive-icon">☁️</div>
-      <div class="drive-text">
-        <div class="drive-title">Committee Google Drive</div>
-        <div class="drive-desc">
-          All submissions land here automatically. Committee members with approved access can
-          review, edit, and collaborate directly in Google Drive.
-        </div>
-      </div>
-      <div class="drive-actions">
-        <a href="DRIVE_FOLDER_URL" id="drive-open-btn" target="_blank" class="btn btn-primary" style="font-size:0.78rem;">
-          Open Drive ↗
-        </a>
-        <a href="DRIVE_REQUEST_URL" id="drive-request-btn" target="_blank" class="btn btn-ghost" style="font-size:0.78rem;">
-          Request Access
-        </a>
-      </div>
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">🌱</div>
+      <h2 class="empty-title">No submissions yet</h2>
+      <p class="empty-desc">
+        Once members submit work and the sync bot runs, each piece appears here automatically.
+        The bot checks for new submissions every hour — or use the GitHub Actions manual trigger.
+      </p>
+      <a href="submit.html" class="btn btn-primary">Be the first to submit ✍️</a>
     </div>
 
-  </main>
+    <div id="submissions-list"></div>
+  </section>
 
-  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-logo">🌀 Devine News</div>
-      <div class="footer-tagline">
-        "Literature is not merely informational — it is connective."
+  <!-- Google Drive panel -->
+  <div class="drive-panel hidden" id="drive-panel">
+    <div class="drive-icon-wrap">☁️</div>
+    <div class="drive-text">
+      <div class="drive-title">Committee Google Drive</div>
+      <div class="drive-desc">
+        All submissions land here automatically after each sync. Committee members with
+        approved access can review and edit directly in Google Docs.
       </div>
-      <div class="footer-links">
-        <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="footer-link">psychedelicsinrecovery.org</a>
-        <a href="https://service.psychedelicsinrecovery.org" target="_blank" class="footer-link">service subdomain</a>
-        <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" class="footer-link">find a meeting</a>
-        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" class="footer-link">12 steps</a>
-        <a href="submit.html" class="footer-link">submit work</a>
-      </div>
-      <div class="footer-copy">©2026 Psychedelics in Recovery™ · PIR® · All Rights Reserved</div>
     </div>
-  </footer>
+    <div class="drive-actions">
+      <a href="#" id="drive-open-btn" target="_blank" rel="noopener"
+         class="btn btn-primary btn-sm" data-tooltip="Open the committee Shared Drive">
+        Open Drive ↗
+      </a>
+      <a href="#" id="drive-request-btn" target="_blank" rel="noopener"
+         class="btn btn-ghost btn-sm" data-tooltip="Request editor access from the tech chair">
+        Request Access
+      </a>
+    </div>
+  </div>
 
-  <!-- ═══════════════════════════ SCRIPT ═══════════════════════════ -->
-  <script>
-    const STATUS_MAP = {
-      incoming:  { label: '📥 Incoming',        cls: 'badge-incoming'  },
-      review:    { label: '🔍 Needs Review',     cls: 'badge-review'    },
-      approved:  { label: '✅ Approved',          cls: 'badge-approved'  },
-      published: { label: '🚀 Published',         cls: 'badge-published' },
-    };
+</main>
 
-    function badge(status) {
-      const s = STATUS_MAP[status] || { label: status, cls: 'badge-incoming' };
-      return `<span class="badge ${s.cls}">${s.label}</span>`;
+<!-- ═══════════════ MODALS ═══════════════ -->
+
+<!-- How It Works -->
+<div class="modal-overlay" id="modal-howto" role="dialog" aria-modal="true" aria-labelledby="howto-title">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-howto')" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">🌀 Welcome</div>
+    <h2 class="modal-title" id="howto-title">How the Devine News Hub Works</h2>
+    <div class="modal-body">
+      <p>Think of this system as an automated assistant that does the filing for us — so the committee can focus on the content, not the coordination.</p>
+      <h3>For Members — Submitting</h3>
+      <ul>
+        <li>Click <strong>Submit Work</strong> to share literature, artwork, or both.</li>
+        <li>Your piece goes directly into the committee's Google Drive, correctly named and filed.</li>
+        <li>You'll receive a <strong>Thank You email</strong> immediately with our current meeting schedule.</li>
+      </ul>
+      <h3>For Committee — Reviewing</h3>
+      <ul>
+        <li>Every hour (or on demand), the sync bot checks Drive for new submissions.</li>
+        <li>Each new piece appears here with a <strong>status badge</strong> — Incoming → Needs Review → Approved → Published.</li>
+        <li>Click <strong>Open in Drive</strong> on any submission to edit it in Google Docs.</li>
+        <li>Art thumbnails appear in the gallery above for quick visual review.</li>
+      </ul>
+      <h3>Do I Need to Know GitHub?</h3>
+      <p>No. Members only need to use this portal and their regular Gmail/Google Drive. The technical automation runs quietly in the background.</p>
+      <h3>What if a Submission Doesn't Appear?</h3>
+      <p>The sync runs every hour. If you're in a rush, contact the Tech Chair to trigger a manual sync from the GitHub Actions tab.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="submit.html" class="btn btn-primary">Submit Work ✍️</a>
+      <button class="btn btn-ghost" onclick="closeModal('modal-howto')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tech Setup Guide -->
+<div class="modal-overlay" id="modal-setup" role="dialog" aria-modal="true" aria-labelledby="setup-title">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-setup')" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">⚙️ Tech Chair</div>
+    <h2 class="modal-title" id="setup-title">gws CLI Setup Guide</h2>
+    <div class="modal-body">
+      <p>The <strong>gws CLI</strong> connects the automation scripts to your Google Workspace account. You only need to do this once.</p>
+      <h3>1 — Install</h3>
+      <pre>npm install -g @googleworkspace/cli</pre>
+      <h3>2 — Authenticate</h3>
+      <pre>gws auth login --account pir.devine.news@gmail.com</pre>
+      <p>Follow the browser prompt to grant access. Your credentials are stored locally and never committed to the repo.</p>
+      <h3>3 — Create the private config</h3>
+      <p>Create <code>data/committee/config.env</code> with these variables (values come from your Google Drive URLs):</p>
+      <pre>SUBMISSIONS_FOLDER_ID=your_folder_id_here
+TEMPLATES_FOLDER_ID=your_folder_id_here
+APPROVED_FOLDER_ID=your_folder_id_here
+COMMITTEE_EMAILS_FILE=data/committee/emails.txt
+GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
+      <h3>4 — Add the Drive link to data.json</h3>
+      <p>Once your Submissions folder is created, copy its URL from Google Drive and add it to <code>dashboard/data.json</code> → <code>driveUrl</code>. The Drive panel on this portal will activate automatically on the next push.</p>
+      <h3>5 — Run the sync</h3>
+      <pre>./scripts/gws-sync.sh</pre>
+      <p>Or use the <strong>Run Now</strong> button in the GitHub Actions tab to trigger a manual sync.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener"
+         class="btn btn-primary">View Public Repo ↗</a>
+      <button class="btn btn-ghost" onclick="closeModal('modal-setup')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+  /* ── Parallax ── */
+  const pbg = document.getElementById('parallax-bg');
+  let ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(function () {
+        const y = window.scrollY;
+        pbg.style.transform = 'translateY(' + (y * 0.35) + 'px)';
+        ticking = false;
+      });
+      ticking = true;
     }
+  });
 
-    function setDriveLinks(data) {
-      const openBtn    = document.getElementById('drive-open-btn');
-      const requestBtn = document.getElementById('drive-request-btn');
-      if (data.driveUrl)        openBtn.href    = data.driveUrl;
-      if (data.driveRequestUrl) requestBtn.href = data.driveRequestUrl;
-      if (!data.driveUrl && !data.driveRequestUrl) {
-        document.getElementById('drive-panel').style.display = 'none';
+  /* ── Modal helpers ── */
+  function openModal(id) {
+    const el = document.getElementById(id);
+    el.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(o) {
+    o.addEventListener('click', function(e) {
+      if (e.target === o) closeModal(o.id);
+    });
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.is-open').forEach(function(o) {
+        closeModal(o.id);
+      });
+    }
+  });
+
+  /* ── Status badge map ── */
+  var STATUS = {
+    incoming:  { label:'📥 Incoming',      cls:'badge-incoming'  },
+    review:    { label:'🔍 Needs Review',   cls:'badge-review'    },
+    approved:  { label:'✅ Approved',        cls:'badge-approved'  },
+    published: { label:'🚀 Published',       cls:'badge-published' },
+  };
+  function badge(s) {
+    var b = STATUS[s] || { label: s, cls: 'badge-incoming' };
+    return '<span class="badge ' + b.cls + '">' + b.label + '</span>';
+  }
+
+  /* ── Load data.json ── */
+  async function loadData() {
+    try {
+      var res  = await fetch('data.json?_=' + Date.now());
+      var data = await res.json();
+
+      /* Deadline banner */
+      if (data.nextDeadline && data.nextDeadline.topic && data.nextDeadline.topic !== 'TBD') {
+        document.getElementById('next-topic').textContent = data.nextDeadline.topic;
+        document.getElementById('next-date').textContent  = data.nextDeadline.date;
+        document.getElementById('deadline-banner').classList.remove('hidden');
       }
-    }
 
-    async function loadData() {
-      try {
-        const res  = await fetch('data.json?_=' + Date.now());
-        const data = await res.json();
+      /* Sync label */
+      document.getElementById('last-sync-label').textContent = 'Last sync: ' + (data.lastSync || 'Never');
 
-        // Drive links
-        setDriveLinks(data);
-
-        // Deadline banner
-        if (data.nextDeadline && data.nextDeadline.topic && data.nextDeadline.topic !== 'TBD') {
-          document.getElementById('next-topic').textContent = data.nextDeadline.topic;
-          document.getElementById('next-date').textContent  = data.nextDeadline.date;
-          document.getElementById('deadline-banner').classList.add('show');
-        }
-
-        document.getElementById('last-sync-label').textContent =
-          'Last sync: ' + (data.lastSync || 'Never');
-
-        const subs = data.submissions || [];
-
-        if (subs.length === 0) {
-          document.getElementById('empty-state').style.display = 'block';
-          return;
-        }
-
-        document.getElementById('empty-state').style.display = 'none';
-        document.getElementById('stats-grid').classList.add('show');
-
-        // Stats
-        document.getElementById('stat-total').textContent    = subs.length;
-        document.getElementById('stat-review').textContent   = subs.filter(s => s.status === 'review').length;
-        document.getElementById('stat-approved').textContent = subs.filter(s => s.status === 'approved').length;
-        document.getElementById('stat-art').textContent      = subs.filter(s => s.type === 'art').length;
-
-        // Art gallery
-        const artWithThumbs = subs.filter(s => s.type === 'art' && s.thumbnail);
-        if (artWithThumbs.length > 0) {
-          document.getElementById('gallery-section').style.display = 'block';
-          document.getElementById('gallery-grid').innerHTML = artWithThumbs.map(s => `
-            <div class="gallery-card">
-              <img src="../temp-gallery/${s.thumbnail}" alt="${s.title}" loading="lazy" />
-              <div class="gallery-card-label">${s.title}</div>
-            </div>
-          `).join('');
-        }
-
-        // Submissions list
-        document.getElementById('submissions-list').innerHTML = subs.map(s => `
-          <div class="submission-card">
-            <div class="submission-type-icon">${s.type === 'art' ? '🎨' : '📄'}</div>
-            <div class="submission-body">
-              <div class="submission-row1">
-                <span class="submission-title">${s.title || 'Untitled'}</span>
-                ${badge(s.status)}
-                ${s.type === 'art' ? '<span class="badge badge-art">🎨 Art</span>' : ''}
-              </div>
-              <div class="submission-meta">
-                ${s.author ? `by ${s.author}` : ''}
-                ${s.author && s.topic ? ' · ' : ''}
-                ${s.topic ? `Topic: ${s.topic}` : ''}
-              </div>
-              ${s.snippet ? `<p class="submission-snippet">${s.snippet}</p>` : ''}
-            </div>
-            ${s.driveUrl ? `
-              <div class="submission-cta">
-                <a href="${s.driveUrl}" target="_blank" class="btn btn-ghost" style="font-size:0.75rem;">
-                  Open in Drive ↗
-                </a>
-              </div>` : ''}
-          </div>
-        `).join('');
-
-      } catch (err) {
-        console.error('data.json load failed:', err);
+      /* Drive panel */
+      if (data.driveUrl) {
+        document.getElementById('drive-open-btn').href    = data.driveUrl;
+        document.getElementById('drive-request-btn').href = data.driveRequestUrl || data.driveUrl;
+        document.getElementById('drive-panel').classList.remove('hidden');
       }
-    }
 
-    loadData();
-  </script>
+      var subs = data.submissions || [];
+      if (subs.length === 0) return;
+
+      document.getElementById('empty-state').classList.add('hidden');
+      document.getElementById('stats-row').classList.remove('hidden');
+
+      document.getElementById('stat-total').textContent    = subs.length;
+      document.getElementById('stat-review').textContent   = subs.filter(function(s){return s.status==='review';}).length;
+      document.getElementById('stat-approved').textContent = subs.filter(function(s){return s.status==='approved';}).length;
+      document.getElementById('stat-art').textContent      = subs.filter(function(s){return s.type==='art';}).length;
+
+      /* Art gallery */
+      var art = subs.filter(function(s){return s.type==='art' && s.thumbnail;});
+      if (art.length) {
+        document.getElementById('gallery-section').classList.remove('hidden');
+        document.getElementById('gallery-grid').innerHTML = art.map(function(s){
+          return '<div class="gallery-card"><img src="../temp-gallery/'+s.thumbnail+'" alt="'+s.title+'" loading="lazy"/><div class="gallery-caption">'+s.title+'</div></div>';
+        }).join('');
+      }
+
+      /* Submissions list */
+      document.getElementById('submissions-list').innerHTML = subs.map(function(s){
+        return '<div class="sub-card">'
+          + '<div class="sub-type-icon">'+(s.type==='art'?'🎨':'📄')+'</div>'
+          + '<div class="sub-body">'
+          +   '<div class="sub-title-row"><span class="sub-title">'+(s.title||'Untitled')+'</span>'+badge(s.status)+(s.type==='art'?'<span class="badge badge-art">🎨 Art</span>':'')+'</div>'
+          +   '<div class="sub-meta">'+(s.author?'by '+s.author:'')+(s.author&&s.topic?' · ':'')+(s.topic?'Topic: '+s.topic:'')+'</div>'
+          +   (s.snippet?'<p class="sub-snippet">'+s.snippet+'</p>':'')
+          + '</div>'
+          + (s.driveUrl?'<div class="sub-action"><a href="'+s.driveUrl+'" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Open in Drive ↗</a></div>':'')
+          + '</div>';
+      }).join('');
+
+    } catch(e) { console.error('data.json load failed:', e); }
+  }
+  loadData();
+</script>
+<script src="nav.js"></script>
 </body>
 </html>
