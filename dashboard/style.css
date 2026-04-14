@@ -167,6 +167,7 @@ body.page-edition .nl-wrap,
 body.page-edition .res-wrap {
   background: rgba(0,8,22,0.45);
   border-radius: var(--radius-lg);
+  padding-top: 2.5rem;
 }
 
 a { color: var(--green); text-decoration: none; }
@@ -623,7 +624,7 @@ body.has-sidenav { padding-left: 220px; }
     display: block;
     width: 120px; height: 120px;
     margin: 0 auto 1rem;
-    background: url('assets/PIR_A.jpg') center / contain no-repeat;
+    background: url('assets/pirlogoforbannerprinting/PIR_A.jpg') center / contain no-repeat;
   }
 
   /* Nuclear reset — all dark backgrounds gone, all text black */

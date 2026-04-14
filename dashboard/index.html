@@ -75,24 +75,35 @@
     .deadline-text { font-size: 0.85rem; color: var(--text-2); flex: 1; min-width: 200px; }
     .deadline-text strong { color: var(--cyan); }
 
-    /* This Month's Theme card */
+    /* Combined Current + Next Theme card */
     .theme-card {
       background: rgba(5,18,40,0.60);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(0,208,130,0.22);
       border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
-      display: flex; align-items: center; gap: 1.25rem;
+      display: flex; align-items: stretch; gap: 0;
       margin-bottom: 2rem; flex-wrap: wrap;
     }
-    .theme-card-icon { font-size: 2rem; flex-shrink: 0; }
-    .theme-card-body { flex: 1; min-width: 200px; }
+    .theme-col {
+      flex: 1; min-width: 180px; padding: 0.25rem 1.25rem 0.25rem 0;
+    }
+    .theme-col--next {
+      padding-left: 1.25rem; padding-right: 0;
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
     .theme-card-label {
       font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.1em; color: var(--green); margin-bottom: 0.2rem;
     }
+    .theme-col--next .theme-card-label { color: var(--purple); }
     .theme-card-title { font-size: 1.05rem; font-weight: 800; color: var(--text); }
-    .theme-card-sub { font-size: 0.78rem; color: var(--text-2); margin-top: 0.2rem; }
-    .theme-card-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+    .theme-card-sub { font-size: 0.75rem; color: var(--text-2); margin-top: 0.2rem; }
+    .theme-card-actions {
+      width: 100%; display: flex; gap: 0.6rem;
+      flex-wrap: wrap; align-items: center;
+      padding-top: 1rem; margin-top: 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
 
     /* Section row */
     .section-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
@@ -191,29 +202,23 @@
 <!-- ═══════════════ MAIN ═══════════════ -->
 <main class="page-wrap">
 
-  <!-- Deadline banner -->
-  <div class="deadline-banner hidden" id="deadline-banner">
-    <span style="font-size:1.1rem">📅</span>
-    <div class="deadline-text">
-      <strong>Current Topic: <span id="next-topic">—</span></strong>
-      &nbsp;·&nbsp; Deadline: <span id="next-date">—</span>
-    </div>
-    <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
-       target="_blank" rel="noopener"
-       class="btn btn-ghost btn-sm">Full schedule ↗</a>
-  </div>
-
-  <!-- Next Month's Theme -->
+  <!-- Current + Next Theme combined card -->
   <div class="theme-card">
-    <div class="theme-card-icon">🌀</div>
-    <div class="theme-card-body">
-      <div class="theme-card-label">Next Month's Theme · June 2026 · Vol. 1 Issue 6</div>
+    <div class="theme-col theme-col--current">
+      <div class="theme-card-label">✨ Submitting Now · May 2026 · Issue 5</div>
+      <div class="theme-card-title">Willingness — Steps 6 &amp; 7</div>
+      <div class="theme-card-sub">Spiritual Principle: Willingness · Deadline: May 30, 2026</div>
+    </div>
+    <div class="theme-col theme-col--next">
+      <div class="theme-card-label">⏭ Coming Up · June 2026 · Issue 6</div>
       <div class="theme-card-title">Amends — Steps 8 &amp; 9</div>
-      <div class="theme-card-sub">Spiritual Principle: Love · Deadline: May 30, 2026</div>
+      <div class="theme-card-sub">Spiritual Principle: Love · Deadline: June 30, 2026</div>
     </div>
     <div class="theme-card-actions">
-      <a href="newsletter-april-2026.html" class="btn btn-ghost btn-sm">📖 <strong>Read</strong> April Edition →</a>
-      <a href="submit.html" class="btn btn-primary btn-sm">✍️ Submit</a>
+      <a href="newsletter-april-2026.html" class="btn btn-ghost btn-sm">📖 Read April Edition →</a>
+      <a href="submit.html" class="btn btn-primary btn-sm">✍️ Submit Now</a>
+      <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
+         target="_blank" rel="noopener" class="btn btn-ghost btn-sm">📅 Full Schedule ↗</a>
     </div>
   </div>
 
@@ -406,12 +411,7 @@
       var res  = await fetch('data.json?_=' + Date.now());
       var data = await res.json();
 
-      /* Deadline banner */
-      if (data.nextDeadline && data.nextDeadline.topic && data.nextDeadline.topic !== 'TBD') {
-        document.getElementById('next-topic').textContent = data.nextDeadline.topic;
-        document.getElementById('next-date').textContent  = data.nextDeadline.date;
-        document.getElementById('deadline-banner').classList.remove('hidden');
-      }
+      /* Deadline banner removed — theme card now hardcoded in HTML */
 
       /* Sync label */
       document.getElementById('last-sync-label').textContent = 'Last sync: ' + (data.lastSync || 'Never');
