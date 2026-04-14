@@ -49,6 +49,121 @@ body::before {
   background-image: url('assets/bg.jpg');
   background-size: cover; background-position: center 30%;
 }
+/* Global watermark — ghost PIR® logo centred on every page */
+body::after {
+  content: '';
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 115vmin; height: 115vmin;
+  background: url('assets/logo-white.png') no-repeat center / contain;
+  opacity: 0.022; pointer-events: none; z-index: -1;
+  animation: wm-breathe 8s ease-in-out infinite;
+}
+@keyframes wm-breathe {
+  0%, 100% { opacity: 0.022; transform: translate(-50%,-50%) scale(1); }
+  50%       { opacity: 0.038; transform: translate(-50%,-50%) scale(1.04); }
+}
+
+/* ── Psychedelic motion system ─────────────────────────────── */
+@keyframes breathe-g {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(0,208,130,0.08), 0 0 6px rgba(0,208,130,0); }
+  50%       { box-shadow: 0 0 0 2px rgba(0,208,130,0.22), 0 0 20px rgba(0,208,130,0.18); }
+}
+@keyframes breathe-p {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(155,81,224,0.08), 0 0 6px rgba(155,81,224,0); }
+  50%       { box-shadow: 0 0 0 2px rgba(155,81,224,0.22), 0 0 20px rgba(155,81,224,0.18); }
+}
+@keyframes breathe-c {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(74,234,220,0.08), 0 0 6px rgba(74,234,220,0); }
+  50%       { box-shadow: 0 0 0 2px rgba(74,234,220,0.22), 0 0 20px rgba(74,234,220,0.18); }
+}
+@keyframes aurora-cta {
+  0%   { box-shadow: 0 0 12px 0 rgba(0,208,130,0.4), 0 0 0 0 rgba(155,81,224,0); }
+  33%  { box-shadow: 0 0 20px 2px rgba(74,234,220,0.35), 0 0 8px 0 rgba(155,81,224,0.2); }
+  66%  { box-shadow: 0 0 20px 2px rgba(155,81,224,0.35), 0 0 8px 0 rgba(0,208,130,0.15); }
+  100% { box-shadow: 0 0 12px 0 rgba(0,208,130,0.4), 0 0 0 0 rgba(155,81,224,0); }
+}
+@keyframes rainbow-border {
+  0%   { border-color: rgba(0,208,130,0.55); }
+  25%  { border-color: rgba(74,234,220,0.55); }
+  50%  { border-color: rgba(155,81,224,0.55); }
+  75%  { border-color: rgba(40,116,252,0.55); }
+  100% { border-color: rgba(0,208,130,0.55); }
+}
+@keyframes shimmer-iridescent {
+  0%   { background-position: -300% center; }
+  100% { background-position:  300% center; }
+}
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+@keyframes setup-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(74,234,220,0), 0 0 8px rgba(74,234,220,0.2);
+    border-color: rgba(74,234,220,0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(74,234,220,0.1), 0 0 18px rgba(74,234,220,0.4);
+    border-color: rgba(74,234,220,0.8);
+  }
+}
+@keyframes wormhole-hover {
+  0%   { box-shadow: 0 0 0 0 rgba(0,208,130,0.6), 0 4px 20px rgba(0,208,130,0.3); }
+  50%  { box-shadow: 0 0 0 6px rgba(0,208,130,0.05), 0 4px 30px rgba(155,81,224,0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(0,208,130,0.6), 0 4px 20px rgba(0,208,130,0.3); }
+}
+@keyframes nav-cta-breathe {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,208,130,0.35); background: var(--green); }
+  50%       { box-shadow: 0 0 22px rgba(0,208,130,0.65), 0 0 40px rgba(74,234,220,0.2); background: #00e890; }
+}
+
+/* ── Psychedelic animation applications ────────────────────── */
+
+/* Primary CTA buttons: aurora aura cycling  */
+.btn-primary { animation: aurora-cta 4.5s ease-in-out infinite; }
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  text-decoration: none;
+}
+
+/* Ghost buttons: slow green breathe */
+.btn-ghost { animation: breathe-g 5s ease-in-out infinite; }
+.btn-ghost:hover { transform: translateY(-1px); text-decoration: none; }
+
+/* Nav CTA: breathing green glow */
+.nav-link.nav-cta { animation: nav-cta-breathe 3.5s ease-in-out infinite; }
+
+/* Setup nav button: distinctive cyan pulse */
+.nav-link.nav-setup-btn {
+  border: 1px solid rgba(74,234,220,0.45) !important;
+  background: rgba(74,234,220,0.07) !important;
+  color: var(--cyan) !important;
+  border-radius: 8px !important;
+  animation: setup-pulse 3.5s ease-in-out infinite;
+  font-weight: 700 !important;
+}
+.nav-link.nav-setup-btn:hover {
+  background: rgba(74,234,220,0.16) !important;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+/* Nav active link: subtle cyan breathe */
+.nav-link.nav-active { animation: breathe-c 5s ease-in-out infinite; }
+
+/* Sidenav: green breathe on active, float on hover */
+.sn-link.sn-active { animation: breathe-g 4s ease-in-out infinite; }
+.sn-link:hover { transform: translateX(2px); }
+
+/* Global anchor hover: subtle green glow */
+a:not(.btn):not(.nav-link):not(.sn-link):not(.pir-footer__group a):not([class*="pir-"]):hover {
+  text-shadow: 0 0 10px rgba(0,208,130,0.45);
+}
+
+/* Edition translucency override — body slightly more transparent on content pages */
+body.page-edition { background: rgba(0,10,28,0.72); }
+
 a { color: var(--green); text-decoration: none; }
 a:hover { text-decoration: underline; }
 img { display: block; max-width: 100%; }
@@ -176,9 +291,10 @@ img { display: block; max-width: 100%; }
 .modal-overlay.is-open { opacity: 1; pointer-events: all; }
 .modal {
   background: var(--navy-3); border: 1px solid var(--border-2);
-  border-radius: 20px; padding: 2rem;
+  border-radius: 20px; padding: 2rem 2rem 0;
   max-width: 560px; width: 100%;
-  max-height: 85vh; overflow-y: auto;
+  max-height: 85vh; overflow: hidden;
+  display: flex; flex-direction: column;
   transform: translateY(12px); transition: transform 0.2s;
   position: relative;
 }
@@ -197,7 +313,11 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.1em; color: var(--green); margin-bottom: 0.5rem;
 }
 .modal-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.75rem; }
-.modal-body { font-size: 0.875rem; color: var(--text-2); line-height: 1.75; }
+.modal-body {
+  font-size: 0.875rem; color: var(--text-2); line-height: 1.75;
+  overflow-y: auto; flex: 1; min-height: 0;
+  padding-bottom: 1rem;
+}
 .modal-body p + p { margin-top: 0.85rem; }
 .modal-body h3 { font-size: 0.82rem; font-weight: 700; color: var(--cyan); margin: 1.1rem 0 0.3rem; text-transform: uppercase; letter-spacing: 0.06em; }
 .modal-body ul { padding-left: 1.25rem; }
@@ -213,7 +333,14 @@ img { display: block; max-width: 100%; }
   font-size: 0.78rem; color: var(--cyan);
   overflow-x: auto; margin-top: 0.5rem; font-family: monospace; line-height: 1.55;
 }
-.modal-actions { display: flex; gap: 0.65rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.modal-actions {
+  display: flex; gap: 0.65rem; flex-wrap: wrap;
+  flex-shrink: 0; margin-top: 0;
+  border-top: 1px solid var(--border);
+  padding: 1.1rem 0 1.5rem;
+  background: linear-gradient(to bottom, transparent 0%, rgba(9,30,58,0.6) 100%);
+  position: sticky; bottom: 0;
+}
 
 /* ── Shared button styles ──────────────────────────────────── */
 .btn {
@@ -472,4 +599,59 @@ body.has-sidenav { padding-left: 220px; }
 @media (max-width: 760px) {
   .pir-footer__inner { grid-template-columns: 1fr; gap: 2rem; padding-bottom: 1.5rem; }
   .pir-footer__links { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+}
+
+/* ── Print / PDF export ─────────────────────────────────────── */
+@media print {
+  * { animation: none !important; transition: none !important; }
+  body {
+    background: #fff !important; color: #000 !important;
+    padding: 0 !important; margin: 0 !important;
+    font-family: Georgia, serif;
+  }
+  body::before, body::after { display: none !important; }
+  .pir-nav, .pir-sidenav, .pir-sidenav-toggle,
+  .pir-footer, .modal-overlay, .parallax-bg,
+  .parallax-overlay { display: none !important; }
+  body.has-sidenav { padding-left: 0 !important; }
+  .page-wrap { max-width: 100%; padding: 0; margin: 0; }
+
+  /* Edition / template content */
+  .ed-hero, .parallax-hero {
+    min-height: auto !important; padding: 1.5rem 0 0.5rem !important;
+    background: none !important;
+  }
+  .ed-section, .tmpl-section {
+    background: none !important; border: none !important;
+    backdrop-filter: none !important;
+    padding: 0 0 1.5rem !important; margin-bottom: 1.5rem !important;
+    page-break-inside: avoid;
+    border-bottom: 1px solid #ccc !important;
+  }
+  .glass-card, .card {
+    background: none !important; border: 1px solid #ddd !important;
+    backdrop-filter: none !important;
+  }
+  h1, h2, h3, h4 { color: #000 !important; page-break-after: avoid; }
+  p, li { color: #222 !important; }
+  .text-muted, .text-dim, .text-green, .text-cyan, .text-purple {
+    color: #333 !important;
+  }
+  a { color: #000 !important; text-decoration: underline; }
+  .btn, .badge, .tmpl-badge, .section-label { display: none !important; }
+  .tmpl-note {
+    color: #555 !important; border: 1px dashed #aaa !important;
+    background: #f9f9f9 !important; padding: 0.4rem !important;
+    font-size: 0.75rem !important;
+  }
+  /* Service / open positions tables */
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    border: 1px solid #bbb !important; padding: 0.35rem 0.6rem !important;
+    color: #000 !important; font-size: 0.8rem !important;
+    background: none !important;
+  }
+  th { background: #eee !important; font-weight: 700 !important; }
+  /* Watermark: hidden in print */
+  .wm-override { display: none !important; }
 }

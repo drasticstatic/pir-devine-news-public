@@ -172,28 +172,17 @@
     }
     .announce-body { font-size: 0.82rem; color: var(--text-2); line-height: 1.75; }
 
-    /* ── Watermark ── */
-    body::after {
-      content: '';
-      position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90vmin; height: 90vmin;
-      background: url('assets/logo-white.png') no-repeat center / contain;
-      opacity: 0.028; pointer-events: none; z-index: -1;
-    }
-
-    /* ── Print ── */
+    /* ── Print (edition-specific overrides; global @media print in style.css) ── */
     @media print {
-      .pir-nav, .pir-sidenav, .pir-sidenav-toggle, .pir-footer { display: none !important; }
-      body { padding-top: 0 !important; padding-left: 0 !important; }
-      body.has-sidenav { padding-left: 0 !important; }
       .nl-hero { min-height: 220px !important; }
       .nl-section { page-break-inside: avoid; }
-      .report-card, .president-card, .pull-quote { break-inside: avoid; }
+      .report-card, .president-card, .pull-quote,
+      .voice-card, .poem-card { break-inside: avoid; }
+      .nl-hero-content { padding-bottom: 1rem !important; }
     }
   </style>
 </head>
-<body>
+<body class="page-edition">
 <script>
   window.CURRENT_EDITION  = 'march-2026';
 </script>

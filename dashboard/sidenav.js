@@ -44,11 +44,11 @@
   const sidenavHTML = `
 <div class="pir-sidenav" id="pir-sidenav" aria-label="Side navigation">
   <div class="sn-inner">
+    <a href="newsletter-template.html" class="sn-link sn-template">📰 Master Template</a>
+    <a href="bulletin.html" class="sn-link sn-template">📋 Bulletin</a>
+    <div class="sn-sep"></div>
     <div class="sn-group-title">Editions</div>
     ${editionsHTML}
-    <div class="sn-sep"></div>
-    <a href="newsletter-template.html" class="sn-link sn-template">🖨️ Print Template</a>
-    <a href="bulletin.html" class="sn-link sn-template">📋 Bulletin</a>
     ${sectionsHTML}
   </div>
 </div>

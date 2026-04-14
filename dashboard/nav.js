@@ -26,7 +26,7 @@
     { href: 'https://service.psychedelicsinrecovery.org/literature', label: 'LitCom',       icon: '📖', tooltip: 'Literature Committee page' },
     { href: 'https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit', label: 'Topics & Deadlines', icon: '📅', tooltip: 'Monthly topics & submission deadlines' },
     { href: 'https://www.psychedelicsinrecovery.org/meetings/',  label: 'Meetings',         icon: '🗓', tooltip: 'Find an in-person or online PIR® meeting' },
-    { href: 'https://www.psychedelicsinrecovery.org/12-steps/',  label: '12 Steps',         icon: '📋', tooltip: 'PIR® 12 Steps' },
+    { href: 'https://www.psychedelicsinrecovery.org/12-steps/',  label: '12 Steps',         icon: '📜', tooltip: 'PIR® 12 Steps' },
     { href: 'https://github.com/drasticstatic/pir-devine-news-public', label: 'GitHub',     icon: '💻', tooltip: 'Public repo — dashboard source & release notes' },
     { href: '#drive', label: 'Google Drive', icon: '☁️', tooltip: 'Committee Google Drive — set up after gws CLI init', driveLink: true },
   ];
@@ -39,7 +39,8 @@
     /* Modal trigger — render as styled button */
     if (link.modal) {
       const tip = (!inDropdown && link.tooltip) ? ` data-tooltip="${link.tooltip}"` : '';
-      return `<button class="nav-link" onclick="openModal('${link.modal}')"${tip}>${link.icon} ${link.label}</button>`;
+      const setupCls = link.modal === 'modal-nav-setup' ? ' nav-setup-btn' : '';
+      return `<button class="nav-link${setupCls}" onclick="openModal('${link.modal}')"${tip}>${link.icon} ${link.label}</button>`;
     }
     const isActive = link.internal && (
       (link.href === 'index.html'               && (page === 'index' || page === '')) ||
@@ -123,7 +124,7 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
     </div>
     <div class="modal-actions">
       <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/GWS_SETUP.md"
-         target="_blank" rel="noopener" class="btn btn-primary">View GWS_SETUP.md ↗</a>
+         target="_blank" rel="noopener" class="btn btn-primary">☁️ View GWS_SETUP.md ↗</a>
       <button class="btn btn-ghost" onclick="closeModal('modal-nav-setup')">Close</button>
     </div>
   </div>
