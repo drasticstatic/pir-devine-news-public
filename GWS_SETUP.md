@@ -181,17 +181,64 @@ data/committee/
 
 ## Step 7 — Add the Drive Link to the Portal
 
-Once your Submissions folder exists in Drive, copy its URL and add it to
-`dashboard/data.json`:
+The portal's Drive button stays dormant until a real URL is wired into
+`dashboard/data.json`. This step activates it.
+
+**7a — Get the Submissions folder URL:**
+
+1. Go to [drive.google.com](https://drive.google.com) and sign in as
+   `pir.devine.news@gmail.com`
+2. Open the **Submissions** folder you created in Step 6c
+3. Copy the URL from the browser address bar — it will look like:
+   `https://drive.google.com/drive/folders/1AbCdEfGhIjKlMnOpQrStUvWx`
+4. The long string after `/folders/` is your **folder ID** —
+   it should match `SUBMISSIONS_FOLDER_ID` in `data/committee/config.env`
+
+**7b — Update `dashboard/data.json`:**
+
+Open the file and replace the empty `driveUrl` and `driveRequestUrl` values:
 
 ```json
 {
-  "driveUrl": "https://drive.google.com/drive/folders/YOUR_FOLDER_ID",
-  "driveRequestUrl": "https://drive.google.com/drive/folders/YOUR_FOLDER_ID?usp=sharing"
+  "lastSync": "Never",
+  "nextDeadline": {
+    "topic": "Steps 4 & 5",
+    "date": "April 30, 2026"
+  },
+  "driveUrl": "https://drive.google.com/drive/folders/YOUR_SUBMISSIONS_FOLDER_ID",
+  "driveRequestUrl": "https://drive.google.com/drive/folders/YOUR_SUBMISSIONS_FOLDER_ID?usp=sharing",
+  "submissions": []
 }
 ```
 
-Commit and push — the Drive panel on the portal activates on next sync.
+Replace `YOUR_SUBMISSIONS_FOLDER_ID` with the real ID from Step 7a.
+
+> `driveUrl` is used by the nav "Google Drive" link (opens Drive directly).
+> `driveRequestUrl` is used by the portal's Drive panel CTA (shared link
+> that lets submitters request access if they don't already have it).
+
+**7c — Commit and push:**
+
+```bash
+git add dashboard/data.json
+git commit -m "config: add Google Drive folder URL to portal"
+git push origin main
+```
+
+The Drive button in the nav and the Drive panel on the portal will activate
+on the next GitHub Pages deployment (usually under 2 minutes).
+
+**7d — Verify it works:**
+
+1. Open the live portal at `https://drasticstatic.github.io/pir-devine-news-public/`
+2. Click **Links ▾ → Google Drive** in the nav — it should open the
+   Submissions folder
+3. The Drive panel on the index page should now show a live link instead
+   of a placeholder
+
+> **Note:** `data.json` is public (synced to the public repo). It contains
+> only the Drive folder URL — never folder IDs from `config.env` or any
+> other private data.
 
 ---
 
