@@ -242,7 +242,61 @@ on the next GitHub Pages deployment (usually under 2 minutes).
 
 ---
 
-## Step 8 — Run the Sync
+## Step 8 — Deploy the Submission Form Back-End
+
+The submission form (`submit.html`) POSTs data to a Google Apps Script web app
+that saves responses to a Google Sheet and emails the committee.
+
+**8a — Open Google Apps Script:**
+
+1. Go to [script.google.com](https://script.google.com)
+2. Sign in as `pir.devine.news@gmail.com`
+3. Click **+ New project** → name it `Devine News Form Handler`
+
+**8b — Paste the script:**
+
+The script is in `scripts/apps-script-form.gs` in this repo.
+Copy the entire file contents and paste it into the Apps Script editor,
+replacing the default `myFunction()` stub.
+
+**8c — Set the Sheet ID:**
+
+1. Create a new Google Sheet at [sheets.google.com](https://sheets.google.com)
+   signed in as `pir.devine.news@gmail.com` — name it `Devine News Submissions`
+2. Copy the Sheet ID from the URL:
+   `https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit`
+3. In the Apps Script editor, find this line near the top:
+   ```js
+   const SHEET_ID = 'YOUR_SHEET_ID_HERE';
+   ```
+   Replace `YOUR_SHEET_ID_HERE` with your real Sheet ID.
+
+**8d — Deploy as a web app:**
+
+1. Click **Deploy → New deployment**
+2. Click the gear icon next to "Type" → select **Web app**
+3. Settings:
+   - Description: `Devine News Form v1`
+   - Execute as: **Me** (`pir.devine.news@gmail.com`)
+   - Who has access: **Anyone**
+4. Click **Deploy** → copy the **Web app URL**
+
+**8e — Wire the URL into the submit form:**
+
+Open `dashboard/submit.html` and find:
+```js
+var APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+```
+Replace the placeholder with the URL from Step 8d. Commit and push.
+
+**8f — Test a submission:**
+
+Open the live portal → Submit page. Fill out a test submission and hit send.
+Check the Google Sheet — a new row should appear within seconds.
+
+---
+
+## Step 9 — Run the Sync
 
 ```bash
 ./scripts/gws-sync.sh

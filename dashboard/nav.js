@@ -98,9 +98,6 @@
     <button class="modal-close" onclick="closeModal('modal-nav-setup')" aria-label="Close">✕</button>
     <div class="modal-eyebrow">⚙️ Tech Chair</div>
     <h2 class="modal-title" id="nav-setup-title">gws CLI Setup Guide</h2>
-    <div class="modal-scroll-nav" id="modal-nav-setup-scrollnav">
-      <button class="modal-scroll-btn" id="modal-nav-setup-to-bottom" title="Jump to actions">↓ Skip to actions</button>
-    </div>
     <div class="modal-body" id="modal-nav-setup-body">
       <p>The <strong>gws CLI</strong> connects the automation scripts to your Google Workspace account. Full step-by-step instructions are in <code>GWS_SETUP.md</code> in the public repo. Here's the condensed version:</p>
       <h3>1 — Google Cloud Console</h3>
@@ -126,7 +123,6 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
       <pre>./scripts/gws-sync.sh</pre>
     </div>
     <div class="modal-actions">
-      <button class="modal-scroll-btn modal-scroll-btn--up" id="modal-nav-setup-to-top" title="Back to top">↑ Top</button>
       <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/GWS_SETUP.md"
          target="_blank" rel="noopener" class="btn btn-primary">☁️ View GWS_SETUP.md ↗</a>
       <button class="btn btn-ghost" onclick="closeModal('modal-nav-setup')">Close</button>
@@ -237,24 +233,54 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
   }
   updateDriveLinks();
 
-  /* ── Modal scroll nav (setup modal) ─────────────────────── */
-  function wireModalScrollNav() {
-    const body   = document.getElementById('modal-nav-setup-body');
-    const toBot  = document.getElementById('modal-nav-setup-to-bottom');
-    const toTop  = document.getElementById('modal-nav-setup-to-top');
-    if (!body || !toBot || !toTop) return;
-    toBot.addEventListener('click', function () {
-      body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
-    });
-    toTop.addEventListener('click', function () {
-      body.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    body.addEventListener('scroll', function () {
-      const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 20;
-      toBot.style.opacity = atBottom ? '0.3' : '1';
-      toBot.style.pointerEvents = atBottom ? 'none' : 'auto';
+  /* ── Global modal scroll nav — injected into every .modal ── */
+  function initAllModalScrollNav() {
+    document.querySelectorAll('.modal').forEach(function (modal) {
+      const body = modal.querySelector('.modal-body');
+      const actions = modal.querySelector('.modal-actions');
+      if (!body) return;
+
+      /* Inject scroll-nav bar above modal-body if not already present */
+      if (!modal.querySelector('.modal-scroll-nav')) {
+        const nav = document.createElement('div');
+        nav.className = 'modal-scroll-nav';
+        const btn = document.createElement('button');
+        btn.className = 'modal-scroll-btn';
+        btn.setAttribute('title', 'Toggle scroll position');
+        btn.textContent = '↓ Jump to bottom';
+        nav.appendChild(btn);
+        body.parentNode.insertBefore(nav, body);
+
+        /* Toggle between jump-to-bottom and back-to-top */
+        let atBottom = false;
+        btn.addEventListener('click', function () {
+          if (atBottom) {
+            body.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
+          }
+        });
+        body.addEventListener('scroll', function () {
+          atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 24;
+          btn.textContent = atBottom ? '↑ Back to top' : '↓ Jump to bottom';
+          btn.classList.toggle('modal-scroll-btn--up', atBottom);
+        });
+      }
+
+      /* Wire ↑ Top button in modal-actions if present (setup modal only) */
+      const toTop = modal.querySelector('#modal-nav-setup-to-top');
+      if (toTop) {
+        toTop.addEventListener('click', function () {
+          body.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
     });
   }
-  wireModalScrollNav();
+  /* Run after DOM ready — catches both injected and page-native modals */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllModalScrollNav);
+  } else {
+    initAllModalScrollNav();
+  }
 
 })();

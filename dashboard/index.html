@@ -75,6 +75,25 @@
     .deadline-text { font-size: 0.85rem; color: var(--text-2); flex: 1; min-width: 200px; }
     .deadline-text strong { color: var(--cyan); }
 
+    /* This Month's Theme card */
+    .theme-card {
+      background: rgba(5,18,40,0.60);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,208,130,0.22);
+      border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: 1.25rem;
+      margin-bottom: 2rem; flex-wrap: wrap;
+    }
+    .theme-card-icon { font-size: 2rem; flex-shrink: 0; }
+    .theme-card-body { flex: 1; min-width: 200px; }
+    .theme-card-label {
+      font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--green); margin-bottom: 0.2rem;
+    }
+    .theme-card-title { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+    .theme-card-sub { font-size: 0.78rem; color: var(--text-2); margin-top: 0.2rem; }
+    .theme-card-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+
     /* Section row */
     .section-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
     .sync-label { font-size: 0.72rem; color: var(--text-3); }
@@ -182,6 +201,20 @@
     <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
        target="_blank" rel="noopener"
        class="btn btn-ghost btn-sm">Full schedule ↗</a>
+  </div>
+
+  <!-- This Month's Theme -->
+  <div class="theme-card">
+    <div class="theme-card-icon">🌀</div>
+    <div class="theme-card-body">
+      <div class="theme-card-label">This Month's Theme · May 2026 · Vol. 1 Issue 5</div>
+      <div class="theme-card-title">Willingness — Steps 6 &amp; 7</div>
+      <div class="theme-card-sub">Spiritual Principle: Willingness · Deadline: May 30, 2026</div>
+    </div>
+    <div class="theme-card-actions">
+      <a href="newsletter-april-2026.html" class="btn btn-ghost btn-sm">📖 <strong>Read</strong> April Edition →</a>
+      <a href="submit.html" class="btn btn-primary btn-sm">✍️ Submit</a>
+    </div>
   </div>
 
   <!-- Stats (hidden until submissions exist) -->
