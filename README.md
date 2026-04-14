@@ -21,17 +21,18 @@ The hub automates the journey from member submission to published newsletter:
 |----------|-----|
 | 🏠 **Committee Portal** | [View Portal](https://drasticstatic.github.io/pir-devine-news-public/dashboard/) |
 | ✍️ **Submit Work** | [Submit Form](https://drasticstatic.github.io/pir-devine-news-public/dashboard/submit.html) |
-| 📋 **Newsletter Template** | [Open Template](https://drasticstatic.github.io/pir-devine-news-public/dashboard/newsletter-template.html) |
+| 📰 **Newsletter Template** | [Open Template](https://drasticstatic.github.io/pir-devine-news-public/dashboard/newsletter-template.html) |
+| 📋 **Bulletin** | [Open Bulletin](https://drasticstatic.github.io/pir-devine-news-public/dashboard/bulletin.html) |
 | 📅 **Topics & Deadlines** | [Google Doc](https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit) |
 | 🌐 **PIR® Main Site** | [psychedelicsinrecovery.org](https://www.psychedelicsinrecovery.org) |
-| ⚙️ **Service Subdomain** | [service.psychedelicsinrecovery.org](https://service.psychedelicsinrecovery.org) |
+| 🔧 **Service Subdomain** | [service.psychedelicsinrecovery.org](https://service.psychedelicsinrecovery.org) |
 | 👥 **Public Relations Page** | [service.../pr-committee](https://service.psychedelicsinrecovery.org/pr-committee/) |
 | 📖 **LitCom Page** | [service.../literature](https://service.psychedelicsinrecovery.org/literature) |
 | 📚 **Member Materials** | [psychedelicsinrecovery.org/member-materials/](https://www.psychedelicsinrecovery.org/member-materials/) |
 | 💻 **Public Repo** | [drasticstatic/pir-devine-news-public](https://github.com/drasticstatic/pir-devine-news-public) |
 | ☁️ **Google Drive** | Set `driveUrl` in `dashboard/data.json` once folder is created |
 | 🗓 **Find a Meeting** | [psychedelicsinrecovery.org/meetings/](https://www.psychedelicsinrecovery.org/meetings/) |
-| 📋 **The 12 Steps** | [psychedelicsinrecovery.org/12-steps/](https://www.psychedelicsinrecovery.org/12-steps/) |
+| 📜 **The 12 Steps** | [psychedelicsinrecovery.org/12-steps/](https://www.psychedelicsinrecovery.org/12-steps/) |
 
 ---
 

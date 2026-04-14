@@ -39,7 +39,7 @@
         <a href="https://www.psychedelicsinrecovery.org" target="_blank" rel="noopener">🌐 Main Site</a>
         <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" rel="noopener">📚 Member Materials</a>
         <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" rel="noopener">🗓 Find a Meeting</a>
-        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener">📋 The 12 Steps</a>
+        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener">📜 The 12 Steps</a>
       </div>
 
       <div class="pir-footer__group">
