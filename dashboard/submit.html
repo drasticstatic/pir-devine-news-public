@@ -124,16 +124,34 @@
     .anon-label { font-size: 0.82rem; font-weight: 700; color: var(--text); }
     .anon-sub   { font-size: 0.7rem; color: var(--text-3); margin-top: 0.1rem; }
 
+    /* Theme CTA pill */
+    .theme-cta {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; font-weight: 700; color: var(--purple);
+      background: rgba(155,81,224,0.1); border: 1px solid rgba(155,81,224,0.25);
+      border-radius: 9999px; padding: 0.3rem 0.8rem;
+      text-decoration: none; margin-bottom: 1rem; margin-top: 0.25rem;
+      transition: all 0.15s;
+    }
+    .theme-cta:hover {
+      background: rgba(155,81,224,0.18); border-color: var(--purple);
+      text-decoration: none; color: #c084fc;
+    }
+
     /* Writing prompts accordion */
     .prompts-toggle {
-      width: 100%; background: rgba(155,81,224,0.08);
-      border: 1px solid rgba(155,81,224,0.2); border-radius: 9px;
-      padding: 0.65rem 0.9rem; cursor: pointer;
+      width: 100%; background: rgba(155,81,224,0.10);
+      border: 1px solid rgba(155,81,224,0.3); border-radius: 10px;
+      padding: 0.85rem 1.1rem; cursor: pointer;
       display: flex; align-items: center; justify-content: space-between;
-      font-family: var(--font-body); font-size: 0.8rem; font-weight: 700;
+      font-family: var(--font-body); font-size: 0.85rem; font-weight: 700;
       color: var(--purple); margin-bottom: 0.5rem; transition: all 0.17s;
+      box-shadow: 0 0 0 0 rgba(155,81,224,0);
     }
-    .prompts-toggle:hover { background: rgba(155,81,224,0.14); }
+    .prompts-toggle:hover {
+      background: rgba(155,81,224,0.17);
+      box-shadow: 0 0 12px rgba(155,81,224,0.2);
+    }
     .prompts-toggle .arrow { transition: transform 0.2s; }
     .prompts-toggle.is-open .arrow { transform: rotate(180deg); }
     .prompts-body { display: none; }
@@ -312,6 +330,9 @@
           <!-- Submission type -->
           <div class="form-sec">
             <div class="form-sec-title">Submission Type</div>
+            <a href="newsletter-april-2026.html" class="theme-cta">
+              📖 April theme: <strong>Courage</strong> — Steps 4 &amp; 5 &nbsp;→ read this month's edition
+            </a>
             <div class="field">
               <label class="field-label">Category <span class="req">*</span></label>
               <div class="cat-row">
@@ -376,7 +397,7 @@
             <div class="field">
               <button type="button" class="prompts-toggle" id="prompts-toggle"
                       onclick="togglePrompts()">
-                <span>✨ Need inspiration? See this month's writing prompts</span>
+                <span>✨ Need inspiration? See this month's writing prompts →</span>
                 <span class="arrow">▾</span>
               </button>
               <div class="prompts-body" id="prompts-body">

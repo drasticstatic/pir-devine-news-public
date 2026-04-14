@@ -74,7 +74,7 @@ img { display: block; max-width: 100%; }
   flex-shrink: 0; text-decoration: none;
 }
 .pir-nav__logo {
-  width: 44px; height: 44px; object-fit: contain;
+  width: 52px; height: 52px; object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(0,208,130,0.45));
 }
 .pir-nav__title {
@@ -432,7 +432,7 @@ body.has-sidenav { padding-left: 220px; }
 }
 .pir-footer__brand { display: flex; flex-direction: column; gap: 0.9rem; }
 .pir-footer__logo {
-  width: 52px; height: 52px; object-fit: contain;
+  width: 62px; height: 62px; object-fit: contain;
   filter: drop-shadow(0 0 10px rgba(0,208,130,0.4));
 }
 .pir-footer__title {

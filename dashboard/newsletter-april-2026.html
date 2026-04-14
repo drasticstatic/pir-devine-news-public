@@ -144,11 +144,59 @@
       font-family: var(--font-serif); font-style: italic;
       font-size: 0.88rem; color: var(--text-2); line-height: 1.7;
     }
+
+    /* ── Service table ── */
+    .service-table { width: 100%; border-collapse: collapse; }
+    .service-table th {
+      font-family: var(--font-body); font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3);
+      padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border);
+      text-align: left; background: rgba(5,18,40,0.5);
+    }
+    .service-table td {
+      font-size: 0.82rem; color: var(--text-2); padding: 0.75rem 0.75rem;
+      border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55;
+    }
+    .service-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .service-table td strong { color: var(--text); }
+
+    /* ── Announcement card ── */
+    .announce-card {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(155,81,224,0.15);
+      border-left: 4px solid var(--purple);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.5rem; margin-bottom: 1rem;
+    }
+    .announce-title {
+      font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem;
+    }
+    .announce-body { font-size: 0.82rem; color: var(--text-2); line-height: 1.75; }
+
+    /* ── Watermark ── */
+    body::after {
+      content: '';
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60vmin; height: 60vmin;
+      background: url('assets/logo-white.png') no-repeat center / contain;
+      opacity: 0.028; pointer-events: none; z-index: -1;
+    }
+
+    /* ── Print ── */
+    @media print {
+      .pir-nav, .pir-sidenav, .pir-sidenav-toggle, .pir-footer { display: none !important; }
+      body { padding-top: 0 !important; padding-left: 0 !important; }
+      body.has-sidenav { padding-left: 0 !important; }
+      .nl-hero { min-height: 220px !important; }
+      .nl-section { page-break-inside: avoid; }
+      .voice-card, .poem-card { break-inside: avoid; }
+    }
   </style>
 </head>
 <body>
 <script>
-  window.CURRENT_PAGE     = 'template';
   window.CURRENT_EDITION  = 'april-2026';
 </script>
 
@@ -157,6 +205,10 @@
   <div class="nl-hero-bg" id="nl-hero-bg"></div>
   <div class="nl-hero-overlay"></div>
   <div class="nl-hero-content">
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <img src="assets/logo-white.png" alt="PIR® Logo"
+           style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(155,81,224,0.7))" />
+    </div>
     <div class="nl-edition-label">De Vine News · April 2026 · Vol. 1 Issue 2</div>
     <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
     <div class="nl-hero-theme">Spiritual Principle: Courage</div>
@@ -364,6 +416,77 @@ and live a full, mindful life</span></div>
       <div class="voice-attribution">Fellowship Member · Anonymous</div>
     </div>
 
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Open Service Positions -->
+  <section class="nl-section" id="service" data-section="Open Service Positions">
+    <div class="nl-section-eyebrow">Service Opportunities</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:0.5rem">Open Service Positions</h2>
+    <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:1.5rem">
+      Email <a href="mailto:newsletter@psychedelicsinrecovery.org">newsletter@psychedelicsinrecovery.org</a> to volunteer or request technical training.
+    </p>
+    <div style="overflow-x:auto">
+      <table class="service-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Committee</th>
+            <th>Description</th>
+            <th>Schedule</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Digital Artist</strong></td>
+            <td>PR Committee</td>
+            <td>Create digital media content for PIR across multiple platforms including podcasts, website, newsletter, and literature.</td>
+            <td>Ongoing</td>
+          </tr>
+          <tr>
+            <td><strong>Copy Editor</strong></td>
+            <td>PR Committee – Newsletter</td>
+            <td>Edit member and committee contributions to <em>De Vine</em>; conduct interviews; assist with artwork and content choices.</td>
+            <td>Ongoing</td>
+          </tr>
+          <tr>
+            <td><strong>Readers</strong></td>
+            <td>12-Step Committee</td>
+            <td>Read content, provide direct feedback, and attend 12-Step Book Committee meetings.</td>
+            <td>Ongoing — contact committee for dates &amp; times</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Announcements -->
+  <section class="nl-section" id="announcements" data-section="Announcements">
+    <div class="nl-section-eyebrow">Fellowship Notices</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:1.25rem">Announcements</h2>
+
+    <div class="announce-card">
+      <div class="announce-title">PIR Convention — Save the Date</div>
+      <div class="announce-body">The PIR Convention Committee is gathering interest and programming ideas for our upcoming convention. If your meeting has ideas to contribute, please share them with your GSR for the next GSR meeting.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Integration Radio — New Episodes Coming</div>
+      <div class="announce-body">The PR Committee is recording a new batch of Season 1 episodes of <strong>Integration Radio</strong>. New speakers are being selected now. Stay tuned for episodes featuring members sharing their experiences integrating psychedelics within a 12-step recovery framework.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Research Study — Share With Your Meeting</div>
+      <div class="announce-body">Aidan's research study is open to PIR members who are interested in participating. GSRs have the link and can share it with their meetings. Please reach out to your GSR or meeting coordinator for details.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Submit to the May Issue</div>
+      <div class="announce-body">The May 2026 issue is now accepting submissions. Share your experience, strength, and hope — writings, poetry, artwork, and reflections are welcome. Visit the <a href="submit.html">Submit page</a> to contribute.</div>
+    </div>
   </section>
 
 </main>

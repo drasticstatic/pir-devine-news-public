@@ -157,11 +157,44 @@
     }
     .continued::before { content:''; flex:1; height:1px; background:var(--border); }
     .continued::after  { content:''; flex:1; height:1px; background:var(--border); }
+
+    /* ── Announcement card ── */
+    .announce-card {
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,208,130,0.15);
+      border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.5rem; margin-bottom: 1rem;
+    }
+    .announce-title {
+      font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem;
+    }
+    .announce-body { font-size: 0.82rem; color: var(--text-2); line-height: 1.75; }
+
+    /* ── Watermark ── */
+    body::after {
+      content: '';
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60vmin; height: 60vmin;
+      background: url('assets/logo-white.png') no-repeat center / contain;
+      opacity: 0.028; pointer-events: none; z-index: -1;
+    }
+
+    /* ── Print ── */
+    @media print {
+      .pir-nav, .pir-sidenav, .pir-sidenav-toggle, .pir-footer { display: none !important; }
+      body { padding-top: 0 !important; padding-left: 0 !important; }
+      body.has-sidenav { padding-left: 0 !important; }
+      .nl-hero { min-height: 220px !important; }
+      .nl-section { page-break-inside: avoid; }
+      .report-card, .president-card, .pull-quote { break-inside: avoid; }
+    }
   </style>
 </head>
 <body>
 <script>
-  window.CURRENT_PAGE     = 'template';
   window.CURRENT_EDITION  = 'march-2026';
 </script>
 
@@ -170,6 +203,10 @@
   <div class="nl-hero-bg" id="nl-hero-bg"></div>
   <div class="nl-hero-overlay"></div>
   <div class="nl-hero-content">
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <img src="assets/logo-white.png" alt="PIR® Logo"
+           style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(0,208,130,0.7))" />
+    </div>
     <div class="nl-edition-label">De Vine News · March 2026 · Vol. 1 Issue 1</div>
     <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
     <div class="nl-hero-theme">Theme: Hope</div>
@@ -383,6 +420,39 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <hr class="nl-rule" />
+
+  <!-- Announcements -->
+  <section class="nl-section" id="announcements" data-section="Announcements">
+    <div class="nl-section-eyebrow">Fellowship Notices</div>
+    <h2 class="nl-article-title" style="font-size:1.3rem;margin-bottom:1.25rem">Announcements</h2>
+
+    <div class="announce-card">
+      <div class="announce-title">Traveling GSR Proposal — Group Conscience Vote</div>
+      <div class="announce-body">The Traveling GSR Proposal has been sent back to all meetings for discussion and a group conscience vote. Please bring this topic to your home meeting and report back through your GSR.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">PIR Convention — Programming Ideas Wanted</div>
+      <div class="announce-body">GSRs have been asked to gather interest and programming ideas for the upcoming PIR Convention. If you have ideas to contribute, please share them with your GSR for the next GSR meeting.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Integration Radio — Season 1 Coming Soon</div>
+      <div class="announce-body">The PR Committee is selecting new speakers for <strong>Integration Radio</strong> and will begin recording a new batch of Season 1 episodes. Stay tuned for members sharing their integration experiences within a 12-step framework.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Research Study — Participate &amp; Share</div>
+      <div class="announce-body">Aidan's research study is open to interested PIR members. GSRs have the link and can share it with their meetings. Reach out to your GSR or meeting coordinator for more information.</div>
+    </div>
+
+    <div class="announce-card">
+      <div class="announce-title">Submit to the April Issue</div>
+      <div class="announce-body">The April 2026 issue theme is <strong>Courage</strong>, with a focus on Steps 4 &amp; 5. Share your experience, strength, and hope — writings, poetry, and reflections welcome. Visit the <a href="submit.html">Submit page</a> to contribute.</div>
     </div>
   </section>
 

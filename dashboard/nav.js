@@ -11,11 +11,13 @@
   const NAV_PRIMARY = [
     { href: 'index.html',  label: 'Portal', icon: '🏠', internal: true },
     { href: 'submit.html', label: 'Submit', icon: '✍️', internal: true, cta: true },
+    { href: '../GWS_SETUP.md', label: 'Setup', icon: '⚙️', tooltip: 'gws CLI setup guide — connect Google Drive to GitHub' },
   ];
 
   /* ── "More" dropdown links ────────────────────────────────── */
   const NAV_MORE = [
     { href: 'newsletter-template.html',  label: 'Print Template',   icon: '🖨️', internal: true, tooltip: 'Print-ready A4 newsletter layout' },
+    { href: 'resources.html',            label: 'Resources',         icon: '📋', internal: true, tooltip: 'Open service positions &amp; fellowship announcements' },
     { href: 'https://www.psychedelicsinrecovery.org/member-materials/', label: 'Member Materials', icon: '📚', tooltip: 'PIR® member resources & literature' },
     { href: 'https://www.psychedelicsinrecovery.org',            label: 'PIR® Main',        icon: '🌐', tooltip: 'Main Psychedelics In Recovery website' },
     { href: 'https://service.psychedelicsinrecovery.org',        label: 'Service',          icon: '⚙️', tooltip: 'PIR® Service Subdomain — committee resources' },
@@ -36,7 +38,8 @@
     const isActive = link.internal && (
       (link.href === 'index.html'               && (page === 'index' || page === '')) ||
       (link.href === 'submit.html'              && page === 'submit') ||
-      (link.href === 'newsletter-template.html' && page === 'template')
+      (link.href === 'newsletter-template.html' && page === 'template') ||
+      (link.href === 'resources.html'           && page === 'resources')
     );
     const ext   = !link.internal ? ' target="_blank" rel="noopener"' : '';
     const tip   = (!inDropdown && link.tooltip) ? ` data-tooltip="${link.tooltip}"` : '';
