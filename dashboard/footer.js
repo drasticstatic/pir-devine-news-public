@@ -44,7 +44,7 @@
 
       <div class="pir-footer__group">
         <span class="pir-footer__group-title">Committee</span>
-        <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener">⚙️ Service Subdomain</a>
+        <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener">🔧 Service Subdomain</a>
         <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener">👥 PR Committee</a>
         <a href="https://service.psychedelicsinrecovery.org/literature" target="_blank" rel="noopener">📖 Literature Committee</a>
       </div>
