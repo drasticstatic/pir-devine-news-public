@@ -41,6 +41,7 @@
       position: relative; z-index: 2;
       max-width: 1000px; margin: 0 auto; width: 100%;
       padding: 2rem 1.25rem 1.75rem;
+      text-align: center;
     }
     .page-hero-eyebrow {
       font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em;
@@ -50,7 +51,11 @@
     .page-hero-title em { font-style:normal; color: var(--green); }
 
     /* Form card */
-    .form-card { background: var(--navy-3); border: 1px solid var(--border); border-radius: var(--radius-lg); }
+    .form-card {
+      background: rgba(5,18,40,0.65);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg);
+    }
     .form-card-head { padding: 1.75rem 1.75rem 0; }
     .form-card-desc {
       font-family: var(--font-serif); font-style: italic;
@@ -119,6 +124,32 @@
     .anon-label { font-size: 0.82rem; font-weight: 700; color: var(--text); }
     .anon-sub   { font-size: 0.7rem; color: var(--text-3); margin-top: 0.1rem; }
 
+    /* Writing prompts accordion */
+    .prompts-toggle {
+      width: 100%; background: rgba(155,81,224,0.08);
+      border: 1px solid rgba(155,81,224,0.2); border-radius: 9px;
+      padding: 0.65rem 0.9rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-body); font-size: 0.8rem; font-weight: 700;
+      color: var(--purple); margin-bottom: 0.5rem; transition: all 0.17s;
+    }
+    .prompts-toggle:hover { background: rgba(155,81,224,0.14); }
+    .prompts-toggle .arrow { transition: transform 0.2s; }
+    .prompts-toggle.is-open .arrow { transform: rotate(180deg); }
+    .prompts-body { display: none; }
+    .prompts-body.is-open { display: block; }
+    .prompt-item {
+      background: rgba(155,81,224,0.06); border: 1px solid rgba(155,81,224,0.15);
+      border-radius: 9px; padding: 0.75rem 0.9rem; margin-bottom: 0.5rem;
+    }
+    .prompt-num { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--purple); margin-bottom: 0.25rem; }
+    .prompt-q { font-size: 0.82rem; color: var(--text-2); line-height: 1.6; font-family: var(--font-serif); font-style: italic; }
+    .prompt-hint { font-size: 0.7rem; color: var(--text-3); margin-top: 0.25rem; }
+    .prompt-note {
+      font-size: 0.72rem; color: var(--text-3); border: 1px dashed var(--border-2);
+      border-radius: 8px; padding: 0.55rem 0.75rem; margin-bottom: 0.75rem; line-height: 1.6;
+    }
+
     /* Drop zone */
     .drop-zone {
       background: var(--navy-4); border: 2px dashed var(--border-2);
@@ -154,7 +185,11 @@
 
     /* Sidebar */
     .sidebar { display: flex; flex-direction: column; gap: 1.1rem; }
-    .sb-card { background: var(--navy-3); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.3rem; }
+    .sb-card {
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-lg); padding: 1.3rem;
+    }
     .sb-title {
       font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.08em; color: var(--text-3);
@@ -336,6 +371,46 @@
               <label class="field-label" for="litTitle">Title</label>
               <input class="field-input" type="text" id="litTitle" name="litTitle" placeholder="Title of your piece (or leave blank for untitled)" />
             </div>
+
+            <!-- Writing prompts accordion -->
+            <div class="field">
+              <button type="button" class="prompts-toggle" id="prompts-toggle"
+                      onclick="togglePrompts()">
+                <span>✨ Need inspiration? See this month's writing prompts</span>
+                <span class="arrow">▾</span>
+              </button>
+              <div class="prompts-body" id="prompts-body">
+                <div class="prompt-note">
+                  These prompts come from the PIR® Google Form for the current Hope theme.
+                  You're welcome to respond to one, several, or all — or ignore them entirely
+                  and write freely. There is no word count limit.
+                </div>
+                <div class="prompt-item">
+                  <div class="prompt-num">Prompt 1 — Hope Then &amp; Now</div>
+                  <div class="prompt-q">What did you hope to achieve in recovery when you first entered it, versus what do you hope for now?</div>
+                </div>
+                <div class="prompt-item">
+                  <div class="prompt-num">Prompt 2 — Goals &amp; Growth</div>
+                  <div class="prompt-q">What goals have you achieved in recovery, and what did achieving them teach you? Has reaching these goals fulfilled what you hoped for, or has it changed what you truly desire?</div>
+                </div>
+                <div class="prompt-item">
+                  <div class="prompt-num">Prompt 3 — Free Flow</div>
+                  <div class="prompt-q">Free Flow Writing on Hope (Max 1000 words)</div>
+                  <div class="prompt-hint">Poetry, prose, reflection — whatever arises. No editing required.</div>
+                </div>
+                <div class="prompt-item">
+                  <div class="prompt-num">Prompt 4 — Publication Hold</div>
+                  <div class="prompt-q">Do you want to hold publication of your contribution until you have approved the final version?</div>
+                  <div class="prompt-hint">If yes, mention it in your submission and include your preferred contact method below.</div>
+                </div>
+                <div class="prompt-item">
+                  <div class="prompt-num">Prompt 5 — Contact Preference</div>
+                  <div class="prompt-q">Do you prefer to be contacted by phone or email? Please provide either below.</div>
+                  <div class="prompt-hint">Only used if the editor needs to reach you for minor clarifications.</div>
+                </div>
+              </div>
+            </div>
+
             <div class="field">
               <label class="field-label" for="litText">Your Text <span class="req">*</span></label>
               <textarea class="field-input" id="litText" name="litText" rows="10"
@@ -460,13 +535,17 @@
     <div class="sb-card">
       <div class="sb-title">Quick Links</div>
       <div class="sb-links">
+        <a href="index.html" class="sb-link">🏠 Committee Portal <span>→</span></a>
+        <a href="newsletter-template.html" class="sb-link">📰 Newsletter Template <span>→</span></a>
+        <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" rel="noopener" class="sb-link">📚 Member Materials <span>↗</span></a>
+        <a href="#drive" class="sb-link" id="sb-drive-link">☁️ Google Drive <span>↗</span></a>
         <a href="https://www.psychedelicsinrecovery.org"           target="_blank" rel="noopener" class="sb-link">🌐 PIR® Main Site <span>↗</span></a>
-        <a href="https://service.psychedelicsinrecovery.org"       target="_blank" rel="noopener" class="sb-link">⚙️ Service Subdomain <span>↗</span></a>
+        <a href="https://service.psychedelicsinrecovery.org"       target="_blank" rel="noopener" class="sb-link">⚙️ Service <span>↗</span></a>
+        <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener" class="sb-link">👥 PR Committee <span>↗</span></a>
         <a href="https://service.psychedelicsinrecovery.org/literature" target="_blank" rel="noopener" class="sb-link">📖 LitCom Page <span>↗</span></a>
         <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" rel="noopener" class="sb-link">🗓 Find a Meeting <span>↗</span></a>
         <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener" class="sb-link">📋 The 12 Steps <span>↗</span></a>
         <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener" class="sb-link">💻 GitHub (Public) <span>↗</span></a>
-        <a href="index.html" class="sb-link">🏠 Committee Portal <span>→</span></a>
       </div>
     </div>
 
@@ -599,7 +678,28 @@
     var btn=document.getElementById('submit-btn'); btn.disabled=false; btn.textContent='Send to the Literature Committee 🌀';
     window.scrollTo({top:0,behavior:'smooth'});
   }
+
+  /* Writing prompts accordion */
+  function togglePrompts() {
+    var btn  = document.getElementById('prompts-toggle');
+    var body = document.getElementById('prompts-body');
+    var open = body.classList.toggle('is-open');
+    btn.classList.toggle('is-open', open);
+  }
+
+  /* Drive link in sidebar */
+  (async function() {
+    try {
+      var res  = await fetch('data.json?_=' + Date.now());
+      var data = await res.json();
+      if (data.driveUrl) {
+        var el = document.getElementById('sb-drive-link');
+        if (el) { el.href = data.driveUrl; el.setAttribute('target','_blank'); el.setAttribute('rel','noopener'); }
+      }
+    } catch(_) {}
+  })();
 </script>
 <script src="nav.js"></script>
+<script src="footer.js"></script>
 </body>
 </html>

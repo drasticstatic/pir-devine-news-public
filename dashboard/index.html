@@ -11,7 +11,11 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ── Page-specific styles ── */
-    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 4rem 1.25rem 3.5rem; }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto; padding: 4rem 1.25rem 3.5rem;
+      display: flex; align-items: center; gap: 3rem; justify-content: center;
+    }
+    .hero-text { flex: 1; max-width: 560px; }
     .hero-eyebrow {
       font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--green);
@@ -33,6 +37,17 @@
       max-width: 500px; line-height: 1.8; margin-bottom: 1.75rem;
     }
     .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .hero-illustration {
+      flex-shrink: 0; width: 340px;
+      border-radius: 22px; overflow: hidden;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.07);
+    }
+    .hero-illustration img { width: 100%; height: 380px; object-fit: cover; display: block; }
+    @media (max-width: 900px) {
+      .hero-inner { flex-direction: column-reverse; gap: 2rem; padding: 2.5rem 1.25rem 2.5rem; }
+      .hero-illustration { width: 100%; max-width: 460px; }
+      .hero-illustration img { height: 240px; }
+    }
 
     /* Stats */
     .stats-row {
@@ -40,7 +55,9 @@
       gap: 1rem; margin-bottom: 2.5rem;
     }
     .stat-card {
-      background: var(--navy-3); border: 1px solid var(--border);
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--radius); padding: 1.15rem 1rem; text-align: center;
     }
     .stat-num { font-size: 2rem; font-weight: 800; line-height: 1; }
@@ -48,7 +65,8 @@
 
     /* Deadline banner */
     .deadline-banner {
-      background: linear-gradient(90deg,rgba(74,234,220,0.07),rgba(155,81,224,0.07));
+      background: rgba(5,18,40,0.55);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(74,234,220,0.18);
       border-radius: var(--radius); padding: 0.85rem 1.25rem;
       display: flex; align-items: center; gap: 0.85rem;
@@ -70,7 +88,9 @@
 
     /* Empty state */
     .empty-state {
-      background: var(--navy-3); border: 1px solid var(--border);
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--radius-lg); padding: 4.5rem 2rem; text-align: center;
     }
     .empty-icon { font-size: 3.5rem; margin-bottom: 1.25rem; }
@@ -79,7 +99,9 @@
 
     /* Submission cards */
     .sub-card {
-      background: var(--navy-3); border: 1px solid var(--border);
+      background: rgba(5,18,40,0.58);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--radius); padding: 1rem 1.15rem;
       display: flex; align-items: flex-start; gap: 0.9rem;
       transition: border-color 0.18s; margin-bottom: 0.6rem;
@@ -99,8 +121,9 @@
 
     /* Drive panel */
     .drive-panel {
-      background: linear-gradient(135deg, rgba(155,81,224,0.09), rgba(0,208,130,0.07));
-      border: 1px solid var(--border-2); border-radius: var(--radius-lg);
+      background: rgba(5,18,40,0.62);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(155,81,224,0.25); border-radius: var(--radius-lg);
       padding: 1.4rem; display: flex; align-items: center; gap: 1.1rem;
       margin-top: 2.5rem; flex-wrap: wrap;
     }
@@ -124,18 +147,23 @@
   <div class="parallax-overlay"></div>
   <div class="parallax-content">
     <div class="hero-inner">
-      <div class="hero-eyebrow">Psychedelics in Recovery™ · 12-Step Fellowship</div>
-      <h1 class="hero-headline">Committee Portal<br /><em>Devine News</em></h1>
-      <p class="hero-quote">
-        "By tending carefully to our written materials, we help support coherence across groups
-        while honoring the diversity of experience within PIR®."
-        <br />— LitCom, January 2026
-      </p>
-      <div class="hero-actions">
-        <a href="submit.html" class="btn btn-primary">✍️ Submit Work</a>
-        <button class="btn btn-ghost" onclick="openModal('modal-howto')">How It Works</button>
-        <button class="btn btn-ghost btn-sm" onclick="openModal('modal-setup')"
-                data-tooltip="Tech chair: gws CLI setup guide">⚙️ Setup Guide</button>
+      <div class="hero-text">
+        <div class="hero-eyebrow">Psychedelics in Recovery™ · 12-Step Fellowship</div>
+        <h1 class="hero-headline">Committee Portal<br /><em>Devine News</em></h1>
+        <p class="hero-quote">
+          "By tending carefully to our written materials, we help support coherence across groups
+          while honoring the diversity of experience within PIR®."
+          <br />— LitCom, January 2026
+        </p>
+        <div class="hero-actions">
+          <a href="submit.html" class="btn btn-primary">✍️ Submit Work</a>
+          <button class="btn btn-ghost" onclick="openModal('modal-howto')">How It Works</button>
+          <button class="btn btn-ghost btn-sm" onclick="openModal('modal-setup')"
+                  data-tooltip="Tech chair: gws CLI setup guide">⚙️ Setup Guide</button>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        <img src="assets/hero-art.jpg" alt="Colorful psychedelic recovery illustration" />
       </div>
     </div>
   </div>
@@ -273,24 +301,27 @@
     <div class="modal-eyebrow">⚙️ Tech Chair</div>
     <h2 class="modal-title" id="setup-title">gws CLI Setup Guide</h2>
     <div class="modal-body">
-      <p>The <strong>gws CLI</strong> connects the automation scripts to your Google Workspace account. You only need to do this once.</p>
-      <h3>1 — Install</h3>
-      <pre>npm install -g @googleworkspace/cli</pre>
+      <p>The <strong>gws CLI</strong> connects the automation scripts to your Google Workspace account. Full step-by-step instructions are in <code>setup/GWS_SETUP.md</code> in the private repo. Here's the condensed version:</p>
+      <h3>1 — Google Cloud Console</h3>
+      <ul>
+        <li>Create a project → Enable <strong>Drive API</strong> + <strong>Gmail API</strong></li>
+        <li>Credentials → OAuth 2.0 Client ID → <strong>Desktop app</strong> type</li>
+        <li>Download JSON → save as <code>~/.config/gws/client_secret.json</code></li>
+      </ul>
       <h3>2 — Authenticate</h3>
-      <pre>gws auth login --account pir.devine.news@gmail.com</pre>
-      <p>Follow the browser prompt to grant access. Your credentials are stored locally and never committed to the repo.</p>
+      <pre>gws auth login</pre>
+      <p>Browser opens → sign in as <code>pir.devine.news@gmail.com</code> → grant Drive + Gmail access. Token stays local, never committed.</p>
       <h3>3 — Create the private config</h3>
-      <p>Create <code>data/committee/config.env</code> with these variables (values come from your Google Drive URLs):</p>
+      <p>Create <code>data/committee/config.env</code> (gitignored):</p>
       <pre>SUBMISSIONS_FOLDER_ID=your_folder_id_here
 TEMPLATES_FOLDER_ID=your_folder_id_here
 APPROVED_FOLDER_ID=your_folder_id_here
-COMMITTEE_EMAILS_FILE=data/committee/emails.txt
 GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
-      <h3>4 — Add the Drive link to data.json</h3>
-      <p>Once your Submissions folder is created, copy its URL from Google Drive and add it to <code>dashboard/data.json</code> → <code>driveUrl</code>. The Drive panel on this portal will activate automatically on the next push.</p>
+      <p>Find a folder ID in the Drive URL after <code>/folders/</code>.</p>
+      <h3>4 — Add the Drive URL to data.json</h3>
+      <p>Copy the Submissions folder URL → add to <code>dashboard/data.json</code> → <code>driveUrl</code>. The Drive panel activates on the next push.</p>
       <h3>5 — Run the sync</h3>
       <pre>./scripts/gws-sync.sh</pre>
-      <p>Or use the <strong>Run Now</strong> button in the GitHub Actions tab to trigger a manual sync.</p>
     </div>
     <div class="modal-actions">
       <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener"
@@ -412,5 +443,6 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
   loadData();
 </script>
 <script src="nav.js"></script>
+<script src="footer.js"></script>
 </body>
 </html>
