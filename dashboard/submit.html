@@ -3,296 +3,741 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Submit Work — Devine News</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            pir: {
-              deep:   '#1e0a3c',
-              purple: '#6d28d9',
-              violet: '#7c3aed',
-              teal:   '#0d9488',
-              sky:    '#0ea5e9',
-              amber:  '#f59e0b',
-              mist:   '#f5f3ff',
-            }
-          },
-          backgroundImage: {
-            'pir-gradient': 'linear-gradient(135deg, #1e0a3c 0%, #312e81 50%, #0d9488 100%)',
-          }
-        }
-      }
-    }
-  </script>
+  <title>Submit Your Work — Devine News | PIR®</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;1,300&display=swap" rel="stylesheet" />
   <style>
-    body { background: #f5f3ff; }
-    .shine { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); }
-    .field-label { display: block; font-size: 0.85rem; font-weight: 600; color: #4c1d95; margin-bottom: 0.4rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #000f2b;
+      --navy-2:    #051428;
+      --navy-3:    #091e3a;
+      --navy-4:    #0d2548;
+      --navy-5:    #112040;
+      --green:     #00d082;
+      --green-dim: #00a366;
+      --cyan:      #4aeadc;
+      --purple:    #9b51e0;
+      --blue:      #2874fc;
+      --amber:     #f5a623;
+      --red:       #f87171;
+      --text:      #e2ecf5;
+      --text-2:    #8fafc8;
+      --text-3:    #4a6a84;
+      --border:    #112140;
+      --border-2:  #1a3050;
+      --glow-g:    rgba(0, 208, 130, 0.18);
+      --glow-p:    rgba(155, 81, 224, 0.18);
+    }
+
+    html { font-size: 16px; }
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'Montserrat', system-ui, sans-serif;
+      min-height: 100vh; line-height: 1.6;
+    }
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy-2); }
+    ::-webkit-scrollbar-thumb { background: var(--navy-4); border-radius: 3px; }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--navy-2); border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem; position: sticky; top: 0; z-index: 50;
+    }
+    .header-inner {
+      max-width: 860px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; height: 64px;
+    }
+    .header-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .brand-logo {
+      width: 34px; height: 34px; flex-shrink: 0;
+      background: conic-gradient(from 0deg, var(--green), var(--cyan), var(--purple), var(--blue), var(--green));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; box-shadow: 0 0 14px var(--glow-g);
+    }
+    .brand-title { font-size: 1rem; font-weight: 800; color: var(--text); }
+    .brand-title span { color: var(--green); }
+    .brand-sub { font-size: 0.62rem; font-weight: 500; color: var(--text-2); letter-spacing: 0.06em; text-transform: uppercase; margin-top: -2px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-family: inherit; font-size: 0.8rem; font-weight: 600;
+      padding: 0.45rem 1rem; border-radius: 9999px;
+      border: none; cursor: pointer; transition: all 0.18s; white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn-ghost { background: transparent; color: var(--text-2); border: 1px solid var(--border-2); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--green); background: var(--navy-3); text-decoration: none; }
+    .btn-primary { background: var(--green); color: var(--navy); box-shadow: 0 0 12px var(--glow-g); }
+    .btn-primary:hover { background: #00e890; box-shadow: 0 0 20px var(--glow-g); text-decoration: none; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Page layout ── */
+    .page-wrap {
+      max-width: 860px; margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2rem; align-items: start;
+    }
+    @media (max-width: 780px) {
+      .page-wrap { grid-template-columns: 1fr; padding: 1.5rem 1rem 4rem; }
+      .sidebar { order: -1; }
+    }
+
+    /* ── Form card ── */
+    .form-card {
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+    }
+    .form-card-header {
+      padding: 1.75rem 1.75rem 0;
+    }
+    .form-card-eyebrow {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green);
+      display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem;
+    }
+    .form-card-eyebrow::before { content: ''; width: 16px; height: 1.5px; background: var(--green); }
+    .form-card-title { font-size: 1.4rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.5rem; }
+    .form-card-desc {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 0.82rem; font-style: italic;
+      color: var(--text-2); line-height: 1.75; margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+    }
+    .form-body { padding: 1.5rem 1.75rem 1.75rem; }
+
+    /* ── Fields ── */
+    .field { margin-bottom: 1.25rem; }
+    .field-label {
+      display: block; font-size: 0.78rem; font-weight: 700;
+      color: var(--text-2); margin-bottom: 0.45rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .field-label .req { color: var(--red); margin-left: 2px; }
     .field-input {
-      width: 100%; border: 1.5px solid #ddd6fe; border-radius: 0.75rem;
-      padding: 0.65rem 0.9rem; font-size: 0.95rem; outline: none;
-      transition: border-color 0.15s;
+      width: 100%;
+      background: var(--navy-4);
+      border: 1.5px solid var(--border-2);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      font-family: inherit; font-size: 0.9rem;
+      color: var(--text); outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none; -webkit-appearance: none;
     }
-    .field-input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
-    .field-input::placeholder { color: #a78bfa; }
+    .field-input::placeholder { color: var(--text-3); }
+    .field-input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(0,208,130,0.12);
+    }
+    .field-input option { background: var(--navy-3); }
+    textarea.field-input { resize: vertical; min-height: 160px; line-height: 1.65; }
+    .field-hint { font-size: 0.72rem; color: var(--text-3); margin-top: 0.4rem; }
+
+    /* ── Fieldset divider ── */
+    .form-section {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section-title {
+      font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--text-3); margin-bottom: 1.1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .form-section-title::before { content: ''; width: 3px; height: 12px; background: var(--purple); border-radius: 2px; }
+
+    /* ── Two-col grid ── */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
+
+    /* ── Category toggle ── */
+    .category-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0; }
+    .cat-btn {
+      flex: 1; min-width: 120px;
+      background: var(--navy-4); border: 1.5px solid var(--border-2);
+      border-radius: 10px; padding: 0.75rem 1rem;
+      font-family: inherit; font-size: 0.82rem; font-weight: 600;
+      color: var(--text-2); cursor: pointer; text-align: center;
+      transition: all 0.18s;
+    }
+    .cat-btn:hover { border-color: var(--border-2); color: var(--text); }
+    .cat-btn.active {
+      background: rgba(0,208,130,0.12);
+      border-color: var(--green); color: var(--green);
+      box-shadow: 0 0 10px rgba(0,208,130,0.10);
+    }
+    .cat-btn .cat-icon { display: block; font-size: 1.4rem; margin-bottom: 0.25rem; }
+
+    /* ── Drop zone ── */
     .drop-zone {
-      border: 2px dashed #a78bfa; border-radius: 1rem;
-      padding: 2.5rem 1.5rem; text-align: center; cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
+      background: var(--navy-4);
+      border: 2px dashed var(--border-2);
+      border-radius: 12px; padding: 2.25rem 1.5rem;
+      text-align: center; cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
     }
-    .drop-zone:hover, .drop-zone.drag-over { background: #ede9fe; border-color: #7c3aed; }
-    #success-panel { display: none; }
-    #form-panel    { display: block; }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--green);
+      background: rgba(0,208,130,0.05);
+    }
+    .drop-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .drop-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+    .drop-sub { font-size: 0.72rem; color: var(--text-3); margin-top: 0.25rem; }
+    .drop-file-name { font-size: 0.82rem; font-weight: 600; color: var(--green); margin-top: 0.5rem; }
+
+    /* ── Anonymity selector ── */
+    .anon-row { display: flex; flex-direction: column; gap: 0.5rem; }
+    .anon-opt { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.6rem 0.8rem; border-radius: 8px; border: 1.5px solid var(--border-2); background: var(--navy-4); transition: all 0.15s; }
+    .anon-opt:hover, .anon-opt:has(input:checked) { border-color: var(--green); background: rgba(0,208,130,0.06); }
+    .anon-opt input { accent-color: var(--green); width: 16px; height: 16px; flex-shrink: 0; }
+    .anon-opt-label { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+    .anon-opt-sub { font-size: 0.72rem; color: var(--text-3); margin-top: 0.1rem; }
+
+    /* ── Error ── */
+    .form-error {
+      background: rgba(248,113,113,0.10);
+      border: 1px solid rgba(248,113,113,0.3);
+      color: var(--red); font-size: 0.82rem;
+      border-radius: 10px; padding: 0.75rem 1rem;
+      margin-bottom: 1rem; display: none;
+    }
+
+    /* ── Submit btn ── */
+    .submit-btn {
+      width: 100%; padding: 0.85rem 1rem;
+      font-size: 0.95rem; font-weight: 800;
+      letter-spacing: 0.02em; border-radius: 12px;
+      border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      color: var(--navy);
+      box-shadow: 0 0 20px rgba(0,208,130,0.2);
+      transition: all 0.18s; font-family: inherit;
+    }
+    .submit-btn:hover { box-shadow: 0 0 30px rgba(0,208,130,0.35); transform: translateY(-1px); }
+    .submit-btn:active { transform: none; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .submit-note { text-align: center; font-size: 0.72rem; color: var(--text-3); margin-top: 0.75rem; line-height: 1.6; }
+
+    /* ── Sidebar ── */
+    .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+    .sidebar-card {
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem;
+    }
+    .sidebar-card-title {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-3); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .sidebar-card-title::before { content: ''; width: 3px; height: 12px; background: var(--cyan); border-radius: 2px; }
+
+    .guideline { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+    .guideline:last-child { margin-bottom: 0; }
+    .guideline-icon { font-size: 1.1rem; flex-shrink: 0; padding-top: 1px; }
+    .guideline-text h4 { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .guideline-text p { font-size: 0.77rem; color: var(--text-2); line-height: 1.65; }
+
+    .next-step { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem; border-radius: 10px; background: var(--navy-4); margin-bottom: 0.6rem; }
+    .next-step:last-child { margin-bottom: 0; }
+    .next-step-num {
+      width: 24px; height: 24px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 800; color: var(--navy);
+    }
+    .next-step-text h4 { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+    .next-step-text p { font-size: 0.75rem; color: var(--text-2); line-height: 1.55; margin-top: 0.15rem; }
+
+    .topic-badge {
+      background: rgba(155,81,224,0.15);
+      border: 1px solid rgba(155,81,224,0.3);
+      border-radius: 10px; padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .topic-badge-month { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--purple); }
+    .topic-badge-theme { font-size: 0.95rem; font-weight: 800; color: var(--text); margin-top: 0.2rem; }
+    .topic-badge-sub { font-size: 0.75rem; color: var(--text-2); margin-top: 0.2rem; }
+
+    .sidebar-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.55rem 0.8rem; border-radius: 8px;
+      background: var(--navy-4); border: 1px solid var(--border);
+      font-size: 0.78rem; font-weight: 600; color: var(--text-2);
+      transition: all 0.15s; text-decoration: none;
+    }
+    .sidebar-link:hover { border-color: var(--green); color: var(--text); text-decoration: none; }
+    .sidebar-link span { font-size: 0.72rem; color: var(--text-3); }
+
+    /* ── Success panel ── */
+    .success-panel {
+      display: none;
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: 20px; padding: 3.5rem 2rem; text-align: center;
+    }
+    .success-icon { font-size: 4rem; margin-bottom: 1.25rem; }
+    .success-title { font-size: 1.6rem; font-weight: 800; color: var(--green); margin-bottom: 0.75rem; }
+    .success-desc {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 0.875rem; font-style: italic;
+      color: var(--text-2); max-width: 400px; margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+    .success-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy-2); border-top: 1px solid var(--border);
+      padding: 1.75rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: 860px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.65rem; text-align: center;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 800; color: var(--green); }
+    .footer-tagline { font-family: 'Merriweather', Georgia, serif; font-size: 0.75rem; font-style: italic; color: var(--text-3); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .footer-link { font-size: 0.72rem; color: var(--text-3); }
+    .footer-link:hover { color: var(--green); }
+    .footer-copy { font-size: 0.68rem; color: var(--text-3); }
   </style>
 </head>
-<body class="min-h-screen font-sans text-gray-800">
+<body>
 
-  <!-- ═══════════════════ HEADER ═══════════════════ -->
-  <header class="bg-pir-gradient text-white shadow-xl relative overflow-hidden">
-    <div class="absolute inset-0 shine pointer-events-none"></div>
-    <div class="relative max-w-2xl mx-auto px-4 py-7 flex items-center justify-between gap-4">
-      <div>
-        <p class="text-xs uppercase tracking-widest text-teal-300 mb-1">Psychedelics In Recovery</p>
-        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">✍️ Submit Your Work</h1>
-        <p class="text-sm text-purple-200 mt-0.5">Devine News Newsletter</p>
-      </div>
-      <a href="index.html" class="text-xs text-purple-300 hover:text-white underline transition whitespace-nowrap">
-        ← Back to Portal
+  <!-- ═══════ HEADER ═══════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <div class="brand-logo">🌀</div>
+        <div>
+          <div class="brand-title">De Vine <span>News</span></div>
+          <div class="brand-sub">PIR® Newsletter</div>
+        </div>
       </a>
+      <nav style="display:flex; gap:0.5rem; align-items:center;">
+        <a href="https://service.psychedelicsinrecovery.org" target="_blank" class="btn btn-ghost">Service ↗</a>
+        <a href="index.html" class="btn btn-ghost">← Portal</a>
+      </nav>
     </div>
   </header>
 
-  <!-- ═══════════════════ MAIN ═══════════════════ -->
-  <main class="max-w-2xl mx-auto px-4 py-10">
+  <!-- ═══════ MAIN ═══════ -->
+  <div class="page-wrap">
 
-    <!-- ── SUCCESS PANEL ── -->
-    <div id="success-panel" class="bg-white rounded-3xl shadow-lg p-10 text-center">
-      <div class="text-6xl mb-4">🌀</div>
-      <h2 class="text-2xl font-extrabold text-pir-purple">Submission Received!</h2>
-      <p class="text-gray-500 mt-3 max-w-sm mx-auto">
-        Thank you for contributing to the newsletter. A confirmation email is on its way.
-        The Literature Committee will review your work soon.
-      </p>
-      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-        <button onclick="resetForm()"
-                class="bg-pir-gradient text-white font-semibold px-6 py-2.5 rounded-full shadow hover:opacity-90 transition">
-          Submit Another
-        </button>
-        <a href="index.html"
-           class="border border-pir-violet text-pir-violet font-semibold px-6 py-2.5 rounded-full hover:bg-purple-50 transition text-center">
-          Back to Portal
+    <!-- ─── FORM COLUMN ─── -->
+    <div>
+
+      <!-- Success panel (hidden until submit) -->
+      <div class="success-panel" id="success-panel">
+        <div class="success-icon">🌀</div>
+        <h2 class="success-title">Submission Received!</h2>
+        <p class="success-desc">
+          Thank you for sharing your experience, strength, and hope.<br />
+          A confirmation email with our current meeting schedule is on its way.
+          The Literature Committee will review your work for the upcoming issue.
+        </p>
+        <div class="success-actions">
+          <button onclick="resetForm()" class="btn btn-primary" style="font-size:0.9rem; padding:0.65rem 1.5rem;">
+            Submit Another ✍️
+          </button>
+          <a href="index.html" class="btn btn-ghost" style="font-size:0.9rem; padding:0.65rem 1.5rem;">
+            Back to Portal
+          </a>
+        </div>
+      </div>
+
+      <!-- Form card -->
+      <div class="form-card" id="form-card">
+        <div class="form-card-header">
+          <div class="form-card-eyebrow">Devine News · PIR® Newsletter</div>
+          <h1 class="form-card-title">Share Your Experience,<br />Strength &amp; Hope</h1>
+          <p class="form-card-desc">
+            Your contributions carry the message to our fellow members. Whether you're sharing
+            a Step reflection, a personal story of recovery, or artwork that speaks where words
+            can't — this is your space.
+          </p>
+        </div>
+
+        <div class="form-body">
+          <form id="submission-form" novalidate>
+
+            <!-- ── Contact ── -->
+            <div class="form-section">
+              <div class="form-section-title">About You</div>
+              <div class="field-row">
+                <div class="field">
+                  <label class="field-label" for="fullName">Full Name <span class="req">*</span></label>
+                  <input class="field-input" type="text" id="fullName" name="fullName"
+                         placeholder="Your name" autocomplete="name" required />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="email">Email <span class="req">*</span></label>
+                  <input class="field-input" type="email" id="email" name="email"
+                         placeholder="you@example.com" autocomplete="email" required />
+                  <div class="field-hint">For your confirmation receipt only.</div>
+                </div>
+              </div>
+
+              <!-- Byline preference -->
+              <div class="field">
+                <label class="field-label">How should we credit you?</label>
+                <div class="anon-row">
+                  <label class="anon-opt">
+                    <input type="radio" name="byline" value="fullname" checked />
+                    <div>
+                      <div class="anon-opt-label">Full name</div>
+                      <div class="anon-opt-sub">Published exactly as entered above</div>
+                    </div>
+                  </label>
+                  <label class="anon-opt">
+                    <input type="radio" name="byline" value="firstlast" />
+                    <div>
+                      <div class="anon-opt-label">First name &amp; last initial</div>
+                      <div class="anon-opt-sub">e.g. "Written by Sarah M."</div>
+                    </div>
+                  </label>
+                  <label class="anon-opt">
+                    <input type="radio" name="byline" value="anonymous" />
+                    <div>
+                      <div class="anon-opt-label">Anonymous</div>
+                      <div class="anon-opt-sub">No name appears in the published newsletter</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Submission type ── -->
+            <div class="form-section">
+              <div class="form-section-title">Submission Type</div>
+              <div class="field">
+                <label class="field-label">Category <span class="req">*</span></label>
+                <div class="category-row">
+                  <button type="button" class="cat-btn" data-cat="literature" onclick="selectCategory('literature', this)">
+                    <span class="cat-icon">✍️</span>Literature
+                  </button>
+                  <button type="button" class="cat-btn" data-cat="art" onclick="selectCategory('art', this)">
+                    <span class="cat-icon">🎨</span>Artwork
+                  </button>
+                  <button type="button" class="cat-btn" data-cat="both" onclick="selectCategory('both', this)">
+                    <span class="cat-icon">✨</span>Both
+                  </button>
+                </div>
+                <input type="hidden" id="category" name="category" required />
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="topic">Newsletter Topic</label>
+                <select class="field-input" id="topic" name="topic">
+                  <option value="">— Select this month's theme (optional) —</option>
+                  <optgroup label="April 2026 — Current">
+                    <option value="Steps 4 &amp; 5 — April 2026" selected>✨ Steps 4 &amp; 5 (This Month's Theme)</option>
+                  </optgroup>
+                  <optgroup label="Recovery &amp; Steps">
+                    <option value="Step 1 — Powerlessness">Step 1 — Powerlessness &amp; Unmanageability</option>
+                    <option value="Step 2 — Came to Believe">Step 2 — Came to Believe</option>
+                    <option value="Step 3 — Turning It Over">Step 3 — Turning It Over</option>
+                    <option value="Step 4 — Inventory">Step 4 — Searching &amp; Fearless Inventory</option>
+                    <option value="Step 5 — Admitted">Step 5 — Admitted to God, Ourselves &amp; Another</option>
+                    <option value="Step 6 — Entirely Ready">Step 6 — Entirely Ready</option>
+                    <option value="Step 7 — Humbly Asked">Step 7 — Humbly Asked</option>
+                    <option value="Step 8 — Made a List">Step 8 — Made a List</option>
+                    <option value="Step 9 — Made Amends">Step 9 — Made Amends</option>
+                    <option value="Step 10 — Continued">Step 10 — Continued Personal Inventory</option>
+                    <option value="Step 11 — Prayer &amp; Meditation">Step 11 — Prayer &amp; Meditation</option>
+                    <option value="Step 12 — Carrying the Message">Step 12 — Carrying the Message</option>
+                  </optgroup>
+                  <optgroup label="Recovery Themes">
+                    <option value="Gratitude">Gratitude</option>
+                    <option value="Surrender">Surrender</option>
+                    <option value="Sponsorship">Sponsorship</option>
+                    <option value="Service">Service &amp; Fellowship</option>
+                    <option value="Integration">Psychedelic Integration</option>
+                    <option value="Plant Medicine">Plant Medicine &amp; Ceremony</option>
+                    <option value="Harm Reduction">Harm Reduction</option>
+                    <option value="Traditions">PIR® Traditions</option>
+                    <option value="Personal Story">Personal Story</option>
+                    <option value="Other">Other</option>
+                  </optgroup>
+                </select>
+                <div class="field-hint">
+                  <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit" target="_blank">
+                    View full topics &amp; deadlines calendar ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Literature section ── -->
+            <div class="form-section" id="section-literature" style="display:none;">
+              <div class="form-section-title">Your Writing</div>
+              <div class="field">
+                <label class="field-label" for="litTitle">Title of Your Piece</label>
+                <input class="field-input" type="text" id="litTitle" name="litTitle"
+                       placeholder="Give your piece a title (or leave blank for untitled)" />
+              </div>
+              <div class="field">
+                <label class="field-label" for="litText">Your Text <span class="req">*</span></label>
+                <textarea class="field-input" id="litText" name="litText" rows="10"
+                          placeholder="Paste or type your poem, article, Step reflection, or personal story here…
+
+There is no word count limit. Please ensure your sharing aligns with the PIR® 12 Traditions."></textarea>
+                <div class="field-hint">Poetry, articles, 12-step reflections, and personal stories are all welcome.</div>
+              </div>
+            </div>
+
+            <!-- ── Art section ── -->
+            <div class="form-section" id="section-art" style="display:none;">
+              <div class="form-section-title">Your Artwork</div>
+              <div class="field">
+                <label class="field-label" for="artTitle">Artwork Title</label>
+                <input class="field-input" type="text" id="artTitle" name="artTitle"
+                       placeholder="What's the name of this piece?" />
+              </div>
+              <div class="field">
+                <label class="field-label">Upload File <span class="req">*</span></label>
+                <div class="drop-zone" id="drop-zone"
+                     ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)"
+                     onclick="document.getElementById('artFile').click()">
+                  <input type="file" id="artFile" name="artFile" style="display:none"
+                         accept="image/png,image/jpeg,image/jpg,image/webp,application/pdf"
+                         onchange="onFileSelect(event)" />
+                  <div id="drop-default">
+                    <div class="drop-icon">🎨</div>
+                    <div class="drop-title">Click or drag &amp; drop your file here</div>
+                    <div class="drop-sub">High-resolution JPG, PNG, WEBP · Max 25 MB · Reflects your journey of recovery</div>
+                  </div>
+                  <div id="drop-selected" style="display:none;">
+                    <div class="drop-icon">✅</div>
+                    <div class="drop-file-name" id="drop-file-name"></div>
+                    <div class="drop-sub" style="margin-top:0.25rem;">Click to change</div>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label" for="artNotes">Artist's Note <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+                <textarea class="field-input" id="artNotes" name="artNotes" rows="3"
+                          placeholder="Any context, materials used, or message behind the piece that you'd like the committee to know…"></textarea>
+              </div>
+            </div>
+
+            <!-- ── Error ── -->
+            <div class="form-error" id="form-error"></div>
+
+            <!-- ── Submit ── -->
+            <button type="submit" class="submit-btn" id="submit-btn">
+              Send to the Literature Committee 🌀
+            </button>
+            <p class="submit-note">
+              Your work goes directly to the committee's Google Drive.<br />
+              A Thank You email with our current meeting schedule arrives immediately.
+            </p>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SIDEBAR ─── -->
+    <aside class="sidebar">
+
+      <!-- Current month topic -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">This Month's Theme</div>
+        <div class="topic-badge">
+          <div class="topic-badge-month">April 2026</div>
+          <div class="topic-badge-theme">Steps 4 &amp; 5</div>
+          <div class="topic-badge-sub">Searching and fearless moral inventory — and sharing what we found.</div>
+        </div>
+        <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
+           target="_blank" class="btn btn-ghost" style="font-size:0.75rem; width:100%; justify-content:center;">
+          Full Topics &amp; Deadlines ↗
         </a>
       </div>
-    </div>
 
-    <!-- ── FORM PANEL ── -->
-    <div id="form-panel" class="bg-white rounded-3xl shadow-lg p-6 sm:p-10 space-y-6">
-
-      <div>
-        <h2 class="text-xl font-bold text-pir-purple">Share Your Voice</h2>
-        <p class="text-sm text-gray-500 mt-1">
-          Submit literature, artwork, or both. Everything goes straight to the committee's Google Drive
-          and shows up on the dashboard for review.
-        </p>
+      <!-- Submission guidelines -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Submission Guidelines</div>
+        <div class="guideline">
+          <div class="guideline-icon">✍️</div>
+          <div class="guideline-text">
+            <h4>Literature</h4>
+            <p>Poetry, articles, and 12-step reflections. No word count limit. Please ensure your sharing aligns with the PIR® 12 Traditions.</p>
+          </div>
+        </div>
+        <div class="guideline">
+          <div class="guideline-icon">🎨</div>
+          <div class="guideline-text">
+            <h4>Art &amp; Photography</h4>
+            <p>High-resolution images (JPG or PNG) that reflect your journey of recovery. Our team will resize for the template.</p>
+          </div>
+        </div>
+        <div class="guideline">
+          <div class="guideline-icon">🔏</div>
+          <div class="guideline-text">
+            <h4>Anonymous or Credited</h4>
+            <p>Choose full name, first name &amp; last initial, or remain completely anonymous in the published newsletter.</p>
+          </div>
+        </div>
       </div>
 
-      <form id="submission-form" novalidate>
-
-        <!-- ── CONTACT ── -->
-        <fieldset class="space-y-5 mb-6">
-          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">About You</legend>
-          <div class="grid sm:grid-cols-2 gap-5">
-            <div>
-              <label class="field-label" for="fullName">Full Name <span class="text-rose-400">*</span></label>
-              <input class="field-input" type="text" id="fullName" name="fullName"
-                     placeholder="Your name" autocomplete="name" required />
-            </div>
-            <div>
-              <label class="field-label" for="email">Email <span class="text-rose-400">*</span></label>
-              <input class="field-input" type="email" id="email" name="email"
-                     placeholder="you@example.com" autocomplete="email" required />
-            </div>
+      <!-- What happens next -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">What Happens Next</div>
+        <div class="next-step">
+          <div class="next-step-num">1</div>
+          <div class="next-step-text">
+            <h4>Instant Receipt</h4>
+            <p>You'll receive a Thank You email immediately with our current meeting schedule attached.</p>
           </div>
-        </fieldset>
-
-        <!-- ── SUBMISSION TYPE ── -->
-        <fieldset class="space-y-5 mb-6">
-          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">Submission</legend>
-
-          <div>
-            <label class="field-label" for="category">Category <span class="text-rose-400">*</span></label>
-            <select class="field-input" id="category" name="category" required onchange="toggleSections()">
-              <option value="">— Select one —</option>
-              <option value="literature">✍️ Literature</option>
-              <option value="art">🎨 Artwork</option>
-              <option value="both">✍️🎨 Both</option>
-            </select>
+        </div>
+        <div class="next-step">
+          <div class="next-step-num">2</div>
+          <div class="next-step-text">
+            <h4>Committee Review</h4>
+            <p>Our Literature Committee reviews your submission for the upcoming issue.</p>
           </div>
-
-          <div>
-            <label class="field-label" for="topic">Newsletter Topic</label>
-            <input class="field-input" type="text" id="topic" name="topic"
-                   placeholder="e.g. Step 4, Gratitude, Sponsorship…" />
-            <p class="text-xs text-gray-400 mt-1">
-              <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
-                 target="_blank" class="text-purple-400 hover:underline">
-                View current topics & deadlines ↗
-              </a>
-            </p>
+        </div>
+        <div class="next-step">
+          <div class="next-step-num">3</div>
+          <div class="next-step-text">
+            <h4>Collaborative Editing</h4>
+            <p>If your piece is selected, an editor may reach out with minor suggestions via the email you provided.</p>
           </div>
-        </fieldset>
+        </div>
+      </div>
 
-        <!-- ── LITERATURE SECTION ── -->
-        <fieldset id="section-literature" class="space-y-5 mb-6 hidden">
-          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">Literature</legend>
-          <div>
-            <label class="field-label" for="litTitle">Title</label>
-            <input class="field-input" type="text" id="litTitle" name="litTitle"
-                   placeholder="Title of your piece" />
-          </div>
-          <div>
-            <label class="field-label" for="litText">Your Text <span class="text-rose-400">*</span></label>
-            <textarea class="field-input resize-y" id="litText" name="litText"
-                      rows="8" placeholder="Paste or type your submission here…"></textarea>
-          </div>
-        </fieldset>
+      <!-- Quick links -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Helpful Links</div>
+        <div class="sidebar-links">
+          <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="sidebar-link">
+            🌐 PIR® Main Site <span>↗</span>
+          </a>
+          <a href="https://service.psychedelicsinrecovery.org" target="_blank" class="sidebar-link">
+            ⚙️ Service Subdomain <span>↗</span>
+          </a>
+          <a href="https://service.psychedelicsinrecovery.org/literature" target="_blank" class="sidebar-link">
+            📖 LitCom Page <span>↗</span>
+          </a>
+          <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" class="sidebar-link">
+            🗓 Find a Meeting <span>↗</span>
+          </a>
+          <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" class="sidebar-link">
+            📋 The 12 Steps <span>↗</span>
+          </a>
+          <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" class="sidebar-link">
+            📚 Member Materials <span>↗</span>
+          </a>
+          <a href="index.html" class="sidebar-link">
+            🏠 Committee Portal <span>→</span>
+          </a>
+        </div>
+      </div>
 
-        <!-- ── ART SECTION ── -->
-        <fieldset id="section-art" class="space-y-5 mb-6 hidden">
-          <legend class="text-sm font-bold uppercase tracking-widest text-purple-400 mb-2">Artwork</legend>
-          <div>
-            <label class="field-label" for="artTitle">Artwork Title</label>
-            <input class="field-input" type="text" id="artTitle" name="artTitle"
-                   placeholder="What's the name of this piece?" />
-          </div>
-          <div>
-            <label class="field-label">Upload File <span class="text-rose-400">*</span></label>
-            <div class="drop-zone" id="drop-zone"
-                 ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)"
-                 onclick="document.getElementById('artFile').click()">
-              <input type="file" id="artFile" name="artFile" class="hidden"
-                     accept="image/png,image/jpeg,image/jpg,image/webp,application/pdf"
-                     onchange="onFileSelect(event)" />
-              <div id="drop-label">
-                <div class="text-4xl mb-2">🎨</div>
-                <p class="text-pir-violet font-semibold">Click to upload or drag &amp; drop</p>
-                <p class="text-xs text-gray-400 mt-1">PNG, JPG, WEBP, or PDF · Max 25 MB</p>
-              </div>
-              <div id="file-preview" class="hidden mt-2 text-sm font-medium text-teal-700"></div>
-            </div>
-          </div>
-          <div>
-            <label class="field-label" for="artNotes">Notes for the Editor</label>
-            <textarea class="field-input resize-y" id="artNotes" name="artNotes"
-                      rows="3" placeholder="Anything the committee should know about this piece…"></textarea>
-          </div>
-        </fieldset>
+    </aside>
+  </div>
 
-        <!-- ── ERROR ── -->
-        <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3"></div>
-
-        <!-- ── SUBMIT ── -->
-        <button type="submit" id="submit-btn"
-                class="w-full bg-pir-gradient text-white font-bold py-3 rounded-2xl shadow-lg hover:opacity-90 active:scale-[0.98] transition text-base">
-          Send to Committee 🚀
-        </button>
-
-        <p class="text-center text-xs text-gray-400 mt-3">
-          Submitting saves your work directly to the committee's Google Drive.
-          You'll receive a confirmation email after submission.
-        </p>
-      </form>
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">🌀 Devine News</div>
+      <div class="footer-tagline">"Literature is not merely informational — it is connective."</div>
+      <div class="footer-links">
+        <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="footer-link">psychedelicsinrecovery.org</a>
+        <a href="https://service.psychedelicsinrecovery.org" target="_blank" class="footer-link">service subdomain</a>
+        <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" class="footer-link">find a meeting</a>
+        <a href="index.html" class="footer-link">committee portal</a>
+      </div>
+      <div class="footer-copy">©2026 Psychedelics in Recovery™ · PIR® · All Rights Reserved</div>
     </div>
-
-  </main>
-
-  <!-- ═══════════════════ FOOTER ═══════════════════ -->
-  <footer class="bg-pir-deep text-purple-300 text-center text-xs py-6 mt-8">
-    <p>Devine News Committee Hub · Psychedelics In Recovery</p>
-    <p class="mt-1 text-purple-500">
-      <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="hover:text-purple-300 underline transition">
-        psychedelicsinrecovery.org
-      </a>
-    </p>
   </footer>
 
-  <!-- ═══════════════════ SCRIPT ═══════════════════ -->
+  <!-- ═══════ SCRIPT ═══════ -->
   <script>
-    // ── Replace this URL with your deployed Google Apps Script Web App endpoint ──
+    // ── Replace with deployed Google Apps Script Web App URL ──
     const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
-    function toggleSections() {
-      const cat = document.getElementById('category').value;
-      const litEl  = document.getElementById('section-literature');
-      const artEl  = document.getElementById('section-art');
-      const litTxt = document.getElementById('litText');
+    let selectedCategory = '';
+
+    function selectCategory(cat, btn) {
+      selectedCategory = cat;
+      document.getElementById('category').value = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const litSec  = document.getElementById('section-literature');
+      const artSec  = document.getElementById('section-art');
+      const litText = document.getElementById('litText');
       const artFile = document.getElementById('artFile');
 
-      litEl.classList.toggle('hidden',  cat !== 'literature' && cat !== 'both');
-      artEl.classList.toggle('hidden',  cat !== 'art'        && cat !== 'both');
-      litTxt.required  = (cat === 'literature' || cat === 'both');
+      litSec.style.display = (cat === 'literature' || cat === 'both') ? 'block' : 'none';
+      artSec.style.display = (cat === 'art'        || cat === 'both') ? 'block' : 'none';
+      litText.required = (cat === 'literature' || cat === 'both');
       artFile.required = (cat === 'art'        || cat === 'both');
     }
 
-    function onDragOver(e) {
-      e.preventDefault();
-      document.getElementById('drop-zone').classList.add('drag-over');
-    }
-    function onDragLeave(e) {
-      document.getElementById('drop-zone').classList.remove('drag-over');
-    }
+    function onDragOver(e)  { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
+    function onDragLeave(e) { document.getElementById('drop-zone').classList.remove('drag-over'); }
     function onDrop(e) {
       e.preventDefault();
       document.getElementById('drop-zone').classList.remove('drag-over');
-      const file = e.dataTransfer.files[0];
-      if (file) setFile(file);
+      if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
     }
-    function onFileSelect(e) {
-      if (e.target.files[0]) setFile(e.target.files[0]);
-    }
+    function onFileSelect(e) { if (e.target.files[0]) setFile(e.target.files[0]); }
     function setFile(file) {
-      document.getElementById('file-preview').textContent = '📎 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
-      document.getElementById('drop-label').classList.add('hidden');
-      document.getElementById('file-preview').classList.remove('hidden');
+      const mb = (file.size / 1024 / 1024).toFixed(2);
+      document.getElementById('drop-file-name').textContent = `${file.name} (${mb} MB)`;
+      document.getElementById('drop-default').style.display = 'none';
+      document.getElementById('drop-selected').style.display = 'block';
     }
 
     function showError(msg) {
       const el = document.getElementById('form-error');
-      el.textContent = msg;
-      el.classList.remove('hidden');
+      el.textContent = msg; el.style.display = 'block';
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-    function clearError() {
-      document.getElementById('form-error').classList.add('hidden');
-    }
+    function clearError() { document.getElementById('form-error').style.display = 'none'; }
 
     document.getElementById('submission-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       clearError();
 
-      const cat   = document.getElementById('category').value;
       const name  = document.getElementById('fullName').value.trim();
       const email = document.getElementById('email').value.trim();
+      const cat   = document.getElementById('category').value;
 
       if (!name || !email || !cat) {
-        showError('Please fill in your name, email, and category.');
+        showError('Please fill in your name, email address, and choose a submission category.');
         return;
       }
       if ((cat === 'literature' || cat === 'both') && !document.getElementById('litText').value.trim()) {
-        showError('Please enter your literature text.');
+        showError('Please enter your literature text before submitting.');
         return;
       }
       if ((cat === 'art' || cat === 'both') && !document.getElementById('artFile').files[0]) {
-        showError('Please select an art file to upload.');
+        showError('Please select an artwork file before submitting.');
         return;
       }
 
       if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
-        // Demo mode — show success without actually posting
-        document.getElementById('form-panel').style.display = 'none';
+        // Demo mode — show success screen
+        document.getElementById('form-card').style.display    = 'none';
         document.getElementById('success-panel').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
@@ -301,35 +746,39 @@
       btn.textContent = 'Sending… ⏳';
 
       try {
-        const fd = new FormData(this);
-        const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd });
+        const fd  = new FormData(this);
+        const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd });
         const json = await res.json();
         if (json.status === 'ok') {
-          document.getElementById('form-panel').style.display = 'none';
+          document.getElementById('form-card').style.display    = 'none';
           document.getElementById('success-panel').style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           showError(json.message || 'Something went wrong. Please try again.');
           btn.disabled = false;
-          btn.textContent = 'Send to Committee 🚀';
+          btn.textContent = 'Send to the Literature Committee 🌀';
         }
       } catch (err) {
         showError('Could not reach the submission server. Check your connection and try again.');
         btn.disabled = false;
-        btn.textContent = 'Send to Committee 🚀';
+        btn.textContent = 'Send to the Literature Committee 🌀';
       }
     });
 
     function resetForm() {
       document.getElementById('submission-form').reset();
-      document.getElementById('drop-label').classList.remove('hidden');
-      document.getElementById('file-preview').classList.add('hidden');
-      document.getElementById('section-literature').classList.add('hidden');
-      document.getElementById('section-art').classList.add('hidden');
+      selectedCategory = '';
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('section-literature').style.display = 'none';
+      document.getElementById('section-art').style.display        = 'none';
+      document.getElementById('drop-default').style.display       = 'block';
+      document.getElementById('drop-selected').style.display      = 'none';
       clearError();
-      document.getElementById('form-panel').style.display = 'block';
+      document.getElementById('form-card').style.display    = 'block';
       document.getElementById('success-panel').style.display = 'none';
       document.getElementById('submit-btn').disabled = false;
-      document.getElementById('submit-btn').textContent = 'Send to Committee 🚀';
+      document.getElementById('submit-btn').textContent = 'Send to the Literature Committee 🌀';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>

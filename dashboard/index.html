@@ -3,251 +3,593 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Devine News — Committee Portal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            pir: {
-              deep:   '#1e0a3c',
-              purple: '#6d28d9',
-              violet: '#7c3aed',
-              teal:   '#0d9488',
-              sky:    '#0ea5e9',
-              amber:  '#f59e0b',
-              rose:   '#e11d48',
-              mist:   '#f5f3ff',
-            }
-          },
-          backgroundImage: {
-            'pir-gradient': 'linear-gradient(135deg, #1e0a3c 0%, #312e81 50%, #0d9488 100%)',
-            'card-gradient': 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)',
-          }
-        }
-      }
-    }
-  </script>
+  <title>Devine News — Committee Portal | PIR®</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;1,300&display=swap" rel="stylesheet" />
   <style>
-    body { background: #f5f3ff; }
-    .status-badge { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 9999px; }
-    .badge-incoming  { background: #dbeafe; color: #1d4ed8; }
-    .badge-review    { background: #fef3c7; color: #92400e; }
-    .badge-approved  { background: #d1fae5; color: #065f46; }
-    .badge-published { background: #ede9fe; color: #5b21b6; }
-    .badge-art       { background: #fce7f3; color: #9d174d; }
-    .shine { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); }
-    .card-hover { transition: transform 0.18s ease, box-shadow 0.18s ease; }
-    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(109,40,217,0.18); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #000f2b;
+      --navy-2:    #051428;
+      --navy-3:    #091e3a;
+      --navy-4:    #0d2548;
+      --green:     #00d082;
+      --green-dim: #00a366;
+      --cyan:      #4aeadc;
+      --purple:    #9b51e0;
+      --blue:      #2874fc;
+      --blue-lt:   #4aeadc;
+      --text:      #e2ecf5;
+      --text-2:    #8fafc8;
+      --text-3:    #4a6a84;
+      --border:    #112140;
+      --border-2:  #1a3050;
+      --glow-g:    rgba(0, 208, 130, 0.18);
+      --glow-p:    rgba(155, 81, 224, 0.18);
+    }
+
+    html { font-size: 16px; }
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'Montserrat', system-ui, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy-2); }
+    ::-webkit-scrollbar-thumb { background: var(--navy-4); border-radius: 3px; }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--navy-2);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; height: 64px;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .brand-logo {
+      width: 36px; height: 36px;
+      background: conic-gradient(from 0deg, var(--green), var(--cyan), var(--purple), var(--blue), var(--green));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+      box-shadow: 0 0 16px var(--glow-g);
+    }
+    .brand-title {
+      font-size: 1.1rem; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+    }
+    .brand-title span { color: var(--green); }
+    .brand-sub {
+      font-size: 0.65rem; font-weight: 500;
+      color: var(--text-2); letter-spacing: 0.06em;
+      text-transform: uppercase; margin-top: -2px;
+    }
+    .header-nav {
+      display: flex; align-items: center; gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-family: inherit; font-size: 0.8rem; font-weight: 600;
+      padding: 0.45rem 1rem; border-radius: 9999px;
+      border: none; cursor: pointer; transition: all 0.18s; white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--green); color: var(--navy);
+      box-shadow: 0 0 12px var(--glow-g);
+    }
+    .btn-primary:hover { background: #00e890; box-shadow: 0 0 20px var(--glow-g); text-decoration: none; }
+    .btn-ghost {
+      background: transparent; color: var(--text-2);
+      border: 1px solid var(--border-2);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: var(--green); background: var(--navy-3); text-decoration: none; }
+
+    /* ── Hero ── */
+    .hero {
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(155,81,224,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 10% 80%, rgba(0,208,130,0.10) 0%, transparent 60%),
+        var(--navy-2);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 1.5rem 3rem;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green); display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 20px; height: 1.5px; background: var(--green);
+    }
+    .hero-headline {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+    }
+    .hero-headline em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 0.95rem; font-style: italic;
+      color: var(--text-2); max-width: 540px; line-height: 1.8;
+    }
+    .hero-links {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .hero-link {
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--text-2); display: flex; align-items: center; gap: 0.35rem;
+      padding: 0.3rem 0;
+    }
+    .hero-link:hover { color: var(--green); text-decoration: none; }
+    .hero-link-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--border-2);
+    }
+
+    /* ── Main layout ── */
+    .main-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    /* ── Deadline banner ── */
+    .deadline-banner {
+      background: linear-gradient(90deg, rgba(74,234,220,0.08), rgba(155,81,224,0.08));
+      border: 1px solid rgba(74,234,220,0.2);
+      border-radius: 12px; padding: 0.9rem 1.25rem;
+      display: none; align-items: center; gap: 0.75rem;
+      margin-bottom: 2rem; flex-wrap: wrap;
+    }
+    .deadline-banner.show { display: flex; }
+    .deadline-icon { font-size: 1.1rem; }
+    .deadline-text { font-size: 0.85rem; color: var(--text-2); flex: 1; }
+    .deadline-text strong { color: var(--cyan); }
+    .deadline-cta {
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--cyan); white-space: nowrap;
+    }
+    .deadline-cta:hover { text-decoration: underline; }
+
+    /* ── Stats ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem; margin-bottom: 2rem; display: none;
+    }
+    .stats-grid.show { display: grid; }
+    .stat-card {
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .stat-num { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .stat-num.green  { color: var(--green); }
+    .stat-num.cyan   { color: var(--cyan); }
+    .stat-num.purple { color: var(--purple); }
+    .stat-num.blue   { color: var(--blue); }
+    .stat-label { font-size: 0.72rem; font-weight: 500; color: var(--text-3); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ── Section heading ── */
+    .section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+    }
+    .section-title {
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--text-2); display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-title::before {
+      content: ''; width: 3px; height: 14px;
+      background: var(--green); border-radius: 2px;
+    }
+    .section-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .sync-label { font-size: 0.72rem; color: var(--text-3); }
+
+    /* ── Gallery ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.75rem; margin-bottom: 2.5rem;
+    }
+    .gallery-card {
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: transform 0.18s, border-color 0.18s;
+    }
+    .gallery-card:hover { transform: translateY(-3px); border-color: var(--border-2); }
+    .gallery-card img { width: 100%; height: 140px; object-fit: cover; display: block; }
+    .gallery-card-label {
+      padding: 0.5rem 0.65rem;
+      font-size: 0.72rem; font-weight: 600; color: var(--text-2);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 4rem 2rem; text-align: center;
+    }
+    .empty-icon { font-size: 3.5rem; margin-bottom: 1.25rem; }
+    .empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .empty-desc { font-size: 0.875rem; color: var(--text-2); max-width: 380px; margin: 0 auto 1.75rem; line-height: 1.7; }
+
+    /* ── Submission cards ── */
+    .submission-card {
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.1rem 1.25rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+      transition: border-color 0.18s;
+      margin-bottom: 0.65rem;
+    }
+    .submission-card:hover { border-color: var(--border-2); }
+    .submission-type-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: var(--navy-4); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .submission-body { flex: 1; min-width: 0; }
+    .submission-row1 { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+    .submission-title { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .submission-meta { font-size: 0.75rem; color: var(--text-3); margin-top: 0.15rem; }
+    .submission-snippet { font-size: 0.82rem; color: var(--text-2); margin-top: 0.4rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .submission-cta { flex-shrink: 0; align-self: center; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-size: 0.68rem; font-weight: 700;
+      padding: 0.18rem 0.6rem; border-radius: 9999px;
+      white-space: nowrap; letter-spacing: 0.03em;
+    }
+    .badge-incoming  { background: rgba(40,116,252,0.18); color: #6fa3fc; border: 1px solid rgba(40,116,252,0.3); }
+    .badge-review    { background: rgba(245,158,11,0.18);  color: #f5a623; border: 1px solid rgba(245,158,11,0.3); }
+    .badge-approved  { background: rgba(0,208,130,0.18);   color: var(--green); border: 1px solid rgba(0,208,130,0.3); }
+    .badge-published { background: rgba(155,81,224,0.18);  color: #c084fc; border: 1px solid rgba(155,81,224,0.3); }
+    .badge-art       { background: rgba(74,234,220,0.12);  color: var(--cyan); border: 1px solid rgba(74,234,220,0.25); }
+
+    /* ── Drive access panel ── */
+    .drive-panel {
+      background: linear-gradient(135deg, rgba(155,81,224,0.10), rgba(0,208,130,0.08));
+      border: 1px solid var(--border-2);
+      border-radius: 14px; padding: 1.5rem;
+      display: flex; align-items: center; gap: 1.25rem;
+      margin-top: 2.5rem; flex-wrap: wrap;
+    }
+    .drive-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: var(--navy-4); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .drive-text { flex: 1; min-width: 200px; }
+    .drive-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .drive-desc  { font-size: 0.78rem; color: var(--text-2); line-height: 1.6; }
+    .drive-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy-2);
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.75rem; text-align: center;
+    }
+    .footer-logo { font-size: 1.2rem; font-weight: 800; color: var(--green); }
+    .footer-tagline {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 0.78rem; font-style: italic; color: var(--text-3);
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center; }
+    .footer-link { font-size: 0.75rem; color: var(--text-3); }
+    .footer-link:hover { color: var(--green); }
+    .footer-copy { font-size: 0.7rem; color: var(--text-3); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 2rem 1rem 1.75rem; }
+      .main-wrap { padding: 1.5rem 1rem 3rem; }
+      .header-nav .btn-ghost { display: none; }
+    }
   </style>
 </head>
-<body class="min-h-screen font-sans text-gray-800">
+<body>
 
-  <!-- ═══════════════════ HEADER ═══════════════════ -->
-  <header class="bg-pir-gradient text-white shadow-xl relative overflow-hidden">
-    <div class="absolute inset-0 shine pointer-events-none"></div>
-    <div class="relative max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>
-        <p class="text-xs uppercase tracking-widest text-teal-300 mb-1">Psychedelics In Recovery · 12-Step Fellowship</p>
-        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">🌀 Devine News</h1>
-        <p class="text-sm text-purple-200 mt-1">Newsletter Committee Portal</p>
-      </div>
-      <div class="flex flex-col items-end gap-2">
-        <a href="submit.html"
-           class="bg-pir-teal hover:bg-teal-500 text-white font-semibold px-5 py-2 rounded-full shadow transition">
+  <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="header-brand" style="text-decoration:none">
+        <div class="brand-logo">🌀</div>
+        <div>
+          <div class="brand-title">De Vine <span>News</span></div>
+          <div class="brand-sub">PIR® Newsletter Committee</div>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="btn btn-ghost">
+          PIR® Site ↗
+        </a>
+        <a href="https://service.psychedelicsinrecovery.org" target="_blank" class="btn btn-ghost">
+          Service ↗
+        </a>
+        <a href="submit.html" class="btn btn-primary">
           ✍️ Submit Work
         </a>
-        <a href="https://www.psychedelicsinrecovery.org" target="_blank"
-           class="text-xs text-purple-300 hover:text-white underline transition">
-          psychedelicsinrecovery.org ↗
-        </a>
-      </div>
+      </nav>
     </div>
   </header>
 
-  <!-- ═══════════════════ DEADLINE BANNER ═══════════════════ -->
-  <div id="deadline-banner" class="bg-amber-50 border-b border-amber-200 hidden">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3 text-amber-800">
-      <span class="text-lg">📅</span>
-      <div>
-        <span class="font-semibold">Next Topic: </span>
-        <span id="next-topic">—</span>
-        <span class="mx-2 text-amber-400">·</span>
-        <span class="font-semibold">Deadline: </span>
-        <span id="next-date">—</span>
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Psychedelics in Recovery™ · 12-Step Fellowship</div>
+      <h1 class="hero-headline">
+        Committee Portal<br /><em>Devine News</em>
+      </h1>
+      <p class="hero-desc">
+        "By tending carefully to our written materials, we help support coherence across groups
+        while honoring the diversity of experience within PIR®."
+      </p>
+      <div class="hero-links">
+        <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" class="hero-link">
+          🗓 Meetings
+        </a>
+        <div class="hero-link-dot"></div>
+        <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit" target="_blank" class="hero-link">
+          📋 Topics &amp; Deadlines
+        </a>
+        <div class="hero-link-dot"></div>
+        <a href="https://service.psychedelicsinrecovery.org/literature" target="_blank" class="hero-link">
+          📖 LitCom Page
+        </a>
+        <div class="hero-link-dot"></div>
+        <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" class="hero-link">
+          📚 Member Materials
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+  <main class="main-wrap">
+
+    <!-- Deadline banner (shown when data.json has a deadline) -->
+    <div class="deadline-banner" id="deadline-banner">
+      <span class="deadline-icon">📅</span>
+      <div class="deadline-text">
+        <strong>Current Topic: <span id="next-topic">—</span></strong>
+        &nbsp;·&nbsp; Deadline: <span id="next-date">—</span>
       </div>
       <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
-         target="_blank"
-         class="ml-auto text-xs underline hover:text-amber-900 whitespace-nowrap">
-        View Topics Doc ↗
-      </a>
+         target="_blank" class="deadline-cta">View full schedule ↗</a>
     </div>
-  </div>
 
-  <!-- ═══════════════════ MAIN ═══════════════════ -->
-  <main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
-
-    <!-- Stats row -->
-    <section id="stats-row" class="grid grid-cols-2 sm:grid-cols-4 gap-4 hidden">
-      <div class="bg-white rounded-2xl shadow p-4 text-center card-gradient">
-        <div id="stat-total" class="text-3xl font-extrabold text-pir-purple">0</div>
-        <div class="text-xs text-gray-500 mt-1">Total Submissions</div>
+    <!-- Stats -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num green" id="stat-total">0</div>
+        <div class="stat-label">Total Submissions</div>
       </div>
-      <div class="bg-white rounded-2xl shadow p-4 text-center">
-        <div id="stat-review" class="text-3xl font-extrabold text-amber-500">0</div>
-        <div class="text-xs text-gray-500 mt-1">Needs Review</div>
+      <div class="stat-card">
+        <div class="stat-num" style="color: #f5a623" id="stat-review">0</div>
+        <div class="stat-label">Needs Review</div>
       </div>
-      <div class="bg-white rounded-2xl shadow p-4 text-center">
-        <div id="stat-approved" class="text-3xl font-extrabold text-teal-600">0</div>
-        <div class="text-xs text-gray-500 mt-1">Approved</div>
+      <div class="stat-card">
+        <div class="stat-num green" id="stat-approved">0</div>
+        <div class="stat-label">Approved</div>
       </div>
-      <div class="bg-white rounded-2xl shadow p-4 text-center">
-        <div id="stat-art" class="text-3xl font-extrabold text-pink-500">0</div>
-        <div class="text-xs text-gray-500 mt-1">Art Pieces</div>
+      <div class="stat-card">
+        <div class="stat-num cyan" id="stat-art">0</div>
+        <div class="stat-label">Art Pieces</div>
       </div>
-    </section>
+    </div>
 
     <!-- Art Gallery -->
-    <section id="gallery-section" class="hidden">
-      <h2 class="text-xl font-bold text-pir-purple mb-4">🎨 Art Gallery</h2>
-      <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        <!-- Thumbnails injected by JS -->
+    <section id="gallery-section" style="display:none; margin-bottom: 2.5rem;">
+      <div class="section-head">
+        <div class="section-title">🎨 Art Gallery</div>
       </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
     </section>
 
-    <!-- Submissions Table -->
+    <!-- Submissions -->
     <section>
-      <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
-        <h2 class="text-xl font-bold text-pir-purple">📋 Submissions</h2>
-        <div class="flex items-center gap-3">
-          <span id="last-sync-label" class="text-xs text-gray-400">Last sync: —</span>
-          <button onclick="loadData()"
-                  class="text-xs bg-pir-violet hover:bg-purple-700 text-white px-4 py-1.5 rounded-full transition">
+      <div class="section-head">
+        <div class="section-title">📋 Submissions</div>
+        <div class="section-actions">
+          <span class="sync-label" id="last-sync-label">Last sync: —</span>
+          <button class="btn btn-ghost" onclick="loadData()" style="padding: 0.35rem 0.85rem; font-size:0.75rem;">
             ↺ Refresh
           </button>
         </div>
       </div>
 
       <!-- Empty state -->
-      <div id="empty-state" class="bg-white rounded-2xl shadow p-12 text-center">
-        <div class="text-5xl mb-4">🌱</div>
-        <h3 class="text-lg font-semibold text-gray-600">No submissions yet</h3>
-        <p class="text-sm text-gray-400 mt-2 max-w-sm mx-auto">
-          Once the sync bot runs and committee members submit work, it will appear here automatically.
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">🌱</div>
+        <h2 class="empty-title">No submissions yet</h2>
+        <p class="empty-desc">
+          Once committee members submit work through the portal, each piece will appear here
+          automatically after the next sync. The bot checks for new submissions every hour.
         </p>
-        <a href="submit.html"
-           class="inline-block mt-6 bg-pir-gradient text-white font-semibold px-6 py-2.5 rounded-full shadow hover:opacity-90 transition">
-          Be the first to submit ✍️
+        <a href="submit.html" class="btn btn-primary" style="font-size:0.9rem; padding: 0.65rem 1.5rem;">
+          Share Your Experience ✍️
         </a>
       </div>
 
-      <!-- Submissions list (hidden until data loads) -->
-      <div id="submissions-list" class="space-y-3 hidden"></div>
+      <!-- Submissions list -->
+      <div id="submissions-list"></div>
     </section>
+
+    <!-- Google Drive Access Panel -->
+    <div class="drive-panel" id="drive-panel">
+      <div class="drive-icon">☁️</div>
+      <div class="drive-text">
+        <div class="drive-title">Committee Google Drive</div>
+        <div class="drive-desc">
+          All submissions land here automatically. Committee members with approved access can
+          review, edit, and collaborate directly in Google Drive.
+        </div>
+      </div>
+      <div class="drive-actions">
+        <a href="DRIVE_FOLDER_URL" id="drive-open-btn" target="_blank" class="btn btn-primary" style="font-size:0.78rem;">
+          Open Drive ↗
+        </a>
+        <a href="DRIVE_REQUEST_URL" id="drive-request-btn" target="_blank" class="btn btn-ghost" style="font-size:0.78rem;">
+          Request Access
+        </a>
+      </div>
+    </div>
 
   </main>
 
-  <!-- ═══════════════════ FOOTER ═══════════════════ -->
-  <footer class="bg-pir-deep text-purple-300 text-center text-xs py-6 mt-12">
-    <p>Devine News Committee Hub · Psychedelics In Recovery</p>
-    <p class="mt-1 text-purple-500">
-      <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="hover:text-purple-300 underline transition">
-        psychedelicsinrecovery.org
-      </a>
-    </p>
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">🌀 Devine News</div>
+      <div class="footer-tagline">
+        "Literature is not merely informational — it is connective."
+      </div>
+      <div class="footer-links">
+        <a href="https://www.psychedelicsinrecovery.org" target="_blank" class="footer-link">psychedelicsinrecovery.org</a>
+        <a href="https://service.psychedelicsinrecovery.org" target="_blank" class="footer-link">service subdomain</a>
+        <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" class="footer-link">find a meeting</a>
+        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" class="footer-link">12 steps</a>
+        <a href="submit.html" class="footer-link">submit work</a>
+      </div>
+      <div class="footer-copy">©2026 Psychedelics in Recovery™ · PIR® · All Rights Reserved</div>
+    </div>
   </footer>
 
-  <!-- ═══════════════════ SCRIPT ═══════════════════ -->
+  <!-- ═══════════════════════════ SCRIPT ═══════════════════════════ -->
   <script>
     const STATUS_MAP = {
-      'incoming':  { label: '📥 Incoming',        cls: 'badge-incoming'  },
-      'review':    { label: '🔍 Needs Review',    cls: 'badge-review'    },
-      'approved':  { label: '✅ Approved',         cls: 'badge-approved'  },
-      'published': { label: '🚀 Published',        cls: 'badge-published' },
-      'art':       { label: '🎨 Needs Art Review', cls: 'badge-art'       },
+      incoming:  { label: '📥 Incoming',        cls: 'badge-incoming'  },
+      review:    { label: '🔍 Needs Review',     cls: 'badge-review'    },
+      approved:  { label: '✅ Approved',          cls: 'badge-approved'  },
+      published: { label: '🚀 Published',         cls: 'badge-published' },
     };
 
     function badge(status) {
       const s = STATUS_MAP[status] || { label: status, cls: 'badge-incoming' };
-      return `<span class="status-badge ${s.cls}">${s.label}</span>`;
+      return `<span class="badge ${s.cls}">${s.label}</span>`;
+    }
+
+    function setDriveLinks(data) {
+      const openBtn    = document.getElementById('drive-open-btn');
+      const requestBtn = document.getElementById('drive-request-btn');
+      if (data.driveUrl)        openBtn.href    = data.driveUrl;
+      if (data.driveRequestUrl) requestBtn.href = data.driveRequestUrl;
+      if (!data.driveUrl && !data.driveRequestUrl) {
+        document.getElementById('drive-panel').style.display = 'none';
+      }
     }
 
     async function loadData() {
       try {
-        const res = await fetch('data.json?_=' + Date.now());
+        const res  = await fetch('data.json?_=' + Date.now());
         const data = await res.json();
+
+        // Drive links
+        setDriveLinks(data);
 
         // Deadline banner
         if (data.nextDeadline && data.nextDeadline.topic && data.nextDeadline.topic !== 'TBD') {
           document.getElementById('next-topic').textContent = data.nextDeadline.topic;
-          document.getElementById('next-date').textContent = data.nextDeadline.date;
-          document.getElementById('deadline-banner').classList.remove('hidden');
+          document.getElementById('next-date').textContent  = data.nextDeadline.date;
+          document.getElementById('deadline-banner').classList.add('show');
         }
 
-        // Last sync
         document.getElementById('last-sync-label').textContent =
           'Last sync: ' + (data.lastSync || 'Never');
 
         const subs = data.submissions || [];
 
         if (subs.length === 0) {
-          document.getElementById('empty-state').classList.remove('hidden');
-          document.getElementById('submissions-list').classList.add('hidden');
+          document.getElementById('empty-state').style.display = 'block';
           return;
         }
 
-        document.getElementById('empty-state').classList.add('hidden');
-        document.getElementById('submissions-list').classList.remove('hidden');
-        document.getElementById('stats-row').classList.remove('hidden');
+        document.getElementById('empty-state').style.display = 'none';
+        document.getElementById('stats-grid').classList.add('show');
 
         // Stats
-        document.getElementById('stat-total').textContent = subs.length;
-        document.getElementById('stat-review').textContent =
-          subs.filter(s => s.status === 'review').length;
-        document.getElementById('stat-approved').textContent =
-          subs.filter(s => s.status === 'approved').length;
-        document.getElementById('stat-art').textContent =
-          subs.filter(s => s.type === 'art').length;
+        document.getElementById('stat-total').textContent    = subs.length;
+        document.getElementById('stat-review').textContent   = subs.filter(s => s.status === 'review').length;
+        document.getElementById('stat-approved').textContent = subs.filter(s => s.status === 'approved').length;
+        document.getElementById('stat-art').textContent      = subs.filter(s => s.type === 'art').length;
 
         // Art gallery
         const artWithThumbs = subs.filter(s => s.type === 'art' && s.thumbnail);
         if (artWithThumbs.length > 0) {
-          document.getElementById('gallery-section').classList.remove('hidden');
+          document.getElementById('gallery-section').style.display = 'block';
           document.getElementById('gallery-grid').innerHTML = artWithThumbs.map(s => `
-            <div class="card-hover rounded-xl overflow-hidden shadow bg-white">
-              <img src="../temp-gallery/${s.thumbnail}" alt="${s.title}"
-                   class="w-full h-36 object-cover" loading="lazy" />
-              <div class="p-2 text-xs text-gray-600 font-medium truncate">${s.title}</div>
+            <div class="gallery-card">
+              <img src="../temp-gallery/${s.thumbnail}" alt="${s.title}" loading="lazy" />
+              <div class="gallery-card-label">${s.title}</div>
             </div>
           `).join('');
         }
 
         // Submissions list
         document.getElementById('submissions-list').innerHTML = subs.map(s => `
-          <div class="card-hover bg-white rounded-2xl shadow p-4 flex flex-col sm:flex-row sm:items-center gap-3">
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 flex-wrap">
-                <span class="font-semibold text-gray-800 truncate">${s.title || 'Untitled'}</span>
+          <div class="submission-card">
+            <div class="submission-type-icon">${s.type === 'art' ? '🎨' : '📄'}</div>
+            <div class="submission-body">
+              <div class="submission-row1">
+                <span class="submission-title">${s.title || 'Untitled'}</span>
                 ${badge(s.status)}
-                ${s.type === 'art' ? badge('art') : ''}
+                ${s.type === 'art' ? '<span class="badge badge-art">🎨 Art</span>' : ''}
               </div>
-              ${s.author ? `<div class="text-xs text-gray-400 mt-0.5">by ${s.author}</div>` : ''}
-              ${s.topic  ? `<div class="text-xs text-purple-400 mt-0.5">Topic: ${s.topic}</div>` : ''}
-              ${s.snippet ? `<p class="text-sm text-gray-500 mt-1 line-clamp-2">${s.snippet}</p>` : ''}
+              <div class="submission-meta">
+                ${s.author ? `by ${s.author}` : ''}
+                ${s.author && s.topic ? ' · ' : ''}
+                ${s.topic ? `Topic: ${s.topic}` : ''}
+              </div>
+              ${s.snippet ? `<p class="submission-snippet">${s.snippet}</p>` : ''}
             </div>
-            <div class="flex items-center gap-2 flex-shrink-0">
-              ${s.driveUrl ? `
-                <a href="${s.driveUrl}" target="_blank"
-                   class="bg-pir-gradient text-white text-xs font-semibold px-4 py-2 rounded-full hover:opacity-90 transition whitespace-nowrap">
+            ${s.driveUrl ? `
+              <div class="submission-cta">
+                <a href="${s.driveUrl}" target="_blank" class="btn btn-ghost" style="font-size:0.75rem;">
                   Open in Drive ↗
-                </a>` : ''}
-            </div>
+                </a>
+              </div>` : ''}
           </div>
         `).join('');
 
       } catch (err) {
-        console.error('Failed to load data.json:', err);
+        console.error('data.json load failed:', err);
       }
     }
 
