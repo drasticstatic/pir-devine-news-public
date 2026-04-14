@@ -98,7 +98,10 @@
     <button class="modal-close" onclick="closeModal('modal-nav-setup')" aria-label="Close">✕</button>
     <div class="modal-eyebrow">⚙️ Tech Chair</div>
     <h2 class="modal-title" id="nav-setup-title">gws CLI Setup Guide</h2>
-    <div class="modal-body">
+    <div class="modal-scroll-nav" id="modal-nav-setup-scrollnav">
+      <button class="modal-scroll-btn" id="modal-nav-setup-to-bottom" title="Jump to actions">↓ Skip to actions</button>
+    </div>
+    <div class="modal-body" id="modal-nav-setup-body">
       <p>The <strong>gws CLI</strong> connects the automation scripts to your Google Workspace account. Full step-by-step instructions are in <code>GWS_SETUP.md</code> in the public repo. Here's the condensed version:</p>
       <h3>1 — Google Cloud Console</h3>
       <ul>
@@ -123,6 +126,7 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
       <pre>./scripts/gws-sync.sh</pre>
     </div>
     <div class="modal-actions">
+      <button class="modal-scroll-btn modal-scroll-btn--up" id="modal-nav-setup-to-top" title="Back to top">↑ Top</button>
       <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/GWS_SETUP.md"
          target="_blank" rel="noopener" class="btn btn-primary">☁️ View GWS_SETUP.md ↗</a>
       <button class="btn btn-ghost" onclick="closeModal('modal-nav-setup')">Close</button>
@@ -232,5 +236,25 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
     } catch (_) { /* silent */ }
   }
   updateDriveLinks();
+
+  /* ── Modal scroll nav (setup modal) ─────────────────────── */
+  function wireModalScrollNav() {
+    const body   = document.getElementById('modal-nav-setup-body');
+    const toBot  = document.getElementById('modal-nav-setup-to-bottom');
+    const toTop  = document.getElementById('modal-nav-setup-to-top');
+    if (!body || !toBot || !toTop) return;
+    toBot.addEventListener('click', function () {
+      body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
+    });
+    toTop.addEventListener('click', function () {
+      body.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    body.addEventListener('scroll', function () {
+      const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 20;
+      toBot.style.opacity = atBottom ? '0.3' : '1';
+      toBot.style.pointerEvents = atBottom ? 'none' : 'auto';
+    });
+  }
+  wireModalScrollNav();
 
 })();

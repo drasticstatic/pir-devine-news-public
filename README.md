@@ -30,7 +30,7 @@ The hub automates the journey from member submission to published newsletter:
 | 📖 **LitCom Page** | [service.../literature](https://service.psychedelicsinrecovery.org/literature) |
 | 📚 **Member Materials** | [psychedelicsinrecovery.org/member-materials/](https://www.psychedelicsinrecovery.org/member-materials/) |
 | 💻 **Public Repo** | [drasticstatic/pir-devine-news-public](https://github.com/drasticstatic/pir-devine-news-public) |
-| ☁️ **Google Drive** | Set `driveUrl` in `dashboard/data.json` once folder is created |
+| ☁️ **Google Drive** | [Submissions Folder](https://drive.google.com/drive/folders/1O4HY9tP7TFv2YpucClgm_wKIKGlqBaYY) |
 | 🗓 **Find a Meeting** | [psychedelicsinrecovery.org/meetings/](https://www.psychedelicsinrecovery.org/meetings/) |
 | 📜 **The 12 Steps** | [psychedelicsinrecovery.org/12-steps/](https://www.psychedelicsinrecovery.org/12-steps/) |
 

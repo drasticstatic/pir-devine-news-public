@@ -12,8 +12,8 @@
   <style>
     /* ── Edition layout (matches March / April) ── */
     .nl-hero {
-      position: relative; overflow: hidden; min-height: 460px;
-      display: flex; align-items: flex-end;
+      position: relative; overflow: hidden; min-height: 420px;
+      display: flex; align-items: center;
     }
     .nl-hero-bg {
       position: absolute; inset: -40px 0; z-index: 0;
@@ -27,8 +27,23 @@
     }
     .nl-hero-content {
       position: relative; z-index: 2; width: 100%;
-      max-width: 860px; margin: 0 auto;
+      max-width: 1100px; margin: 0 auto;
       padding: 3rem 1.5rem 2.5rem;
+      display: flex; align-items: center; gap: 3rem;
+    }
+    .nl-hero-text { flex: 1; }
+    .nl-hero-art {
+      width: 320px; flex-shrink: 0; height: 300px;
+      border-radius: var(--radius-lg); overflow: hidden;
+      background: url('assets/bg.jpg') center 25% / cover;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(74,234,220,0.18);
+    }
+    .nl-hero-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    @media (max-width: 800px) {
+      .nl-hero-content { flex-direction: column-reverse; gap: 1.5rem; }
+      .nl-hero-art { width: 100%; height: 200px; }
+      .nl-hero-desc { max-width: 100%; }
     }
     .nl-edition-label {
       font-size: 0.67rem; font-weight: 700; letter-spacing: 0.14em;
@@ -225,40 +240,24 @@
   <div class="nl-hero-bg" id="nl-hero-bg"></div>
   <div class="nl-hero-overlay"></div>
   <div class="nl-hero-content">
-    <div style="text-align:center;margin-bottom:2.5rem">
-      <img src="assets/logo-white.png" alt="PIR® Logo"
-           style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(74,234,220,0.65))" />
+    <div class="nl-hero-text">
+      <div class="nl-edition-label">De Vine News · [MONTH YEAR] · Vol. [X] Issue [N]</div>
+      <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
+      <div class="nl-hero-theme">Spiritual Principle: [THEME]</div>
+      <p class="nl-hero-desc">
+        A publication of the PR &amp; Literature Committee, Psychedelics in Recovery™.
+        [One sentence about this issue's theme or focus.]
+      </p>
+      <div class="nl-hero-actions">
+        <button onclick="window.print()" class="btn btn-ghost btn-sm">🖨 Print / Save PDF</button>
+      </div>
     </div>
-    <div class="nl-edition-label">De Vine News · [MONTH YEAR] · Vol. [X] Issue [N]</div>
-    <h1 class="nl-hero-title">De Vine<br /><em>News</em></h1>
-    <div class="nl-hero-theme">Spiritual Principle: [THEME]</div>
-    <p class="nl-hero-desc">
-      A publication of the PR &amp; Literature Committee, Psychedelics in Recovery™.
-      [One sentence about this issue's theme or focus.]
-    </p>
+    <div class="nl-hero-art" aria-hidden="true"></div>
   </div>
 </section>
 
 <!-- ═══ CONTENT ═══ -->
 <main class="nl-wrap">
-
-  <!-- ── PRESIDENT'S MESSAGE ── -->
-  <section class="nl-section" id="president" data-section="President's Message">
-    <div class="nl-section-eyebrow">Welcome <span class="tmpl-badge">Category</span></div>
-    <div class="president-card">
-      <h2 class="nl-article-title" style="margin-bottom:0.35rem">💌 A Message from the President</h2>
-      <div class="nl-byline">Kevin Franciotti · President, Psychedelics in Recovery™</div>
-      <div class="tmpl-note">Replace with the President's message for this issue. Typically 3–6 paragraphs, 250–500 words. Formal but warm tone. Often references the theme or a current fellowship development.</div>
-      <div class="nl-prose">
-        <p>[Opening paragraph. The President typically welcomes readers and connects to the issue theme or a moment in the fellowship's journey.]</p>
-        <p>[Middle paragraph. May reference committee milestones, challenges the fellowship is navigating, or an invitation to engage more deeply with the program.]</p>
-        <p>[Closing paragraph. Often ends with an expression of gratitude and a call to service or connection.]</p>
-        <p style="margin-top:1.5rem;font-style:normal;font-size:0.88rem;color:var(--text-2)">In service,<br /><strong style="color:var(--text)">Kevin Franciotti</strong><br /><span style="color:var(--text-3)">President, Psychedelics in Recovery™</span></p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="nl-rule" />
 
   <!-- ── OPENING POEM ── -->
   <section class="nl-section" id="opening-poem" data-section="Opening Poem">

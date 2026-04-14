@@ -35,7 +35,7 @@
 
 html { font-size: 16px; scroll-behavior: smooth; }
 body {
-  background: rgba(0,10,28,0.84);
+  background: rgba(0,10,28,0.62);
   color: var(--text);
   font-family: var(--font-body);
   min-height: 100vh;
@@ -56,12 +56,12 @@ body::after {
   transform: translate(-50%, -50%);
   width: 115vmin; height: 115vmin;
   background: url('assets/logo-white.png') no-repeat center / contain;
-  opacity: 0.022; pointer-events: none; z-index: -1;
+  opacity: 0.055; pointer-events: none; z-index: -1;
   animation: wm-breathe 8s ease-in-out infinite;
 }
 @keyframes wm-breathe {
-  0%, 100% { opacity: 0.022; transform: translate(-50%,-50%) scale(1); }
-  50%       { opacity: 0.038; transform: translate(-50%,-50%) scale(1.04); }
+  0%, 100% { opacity: 0.055; transform: translate(-50%,-50%) scale(1); }
+  50%       { opacity: 0.085; transform: translate(-50%,-50%) scale(1.04); }
 }
 
 /* ── Psychedelic motion system ─────────────────────────────── */
@@ -161,8 +161,8 @@ a:not(.btn):not(.nav-link):not(.sn-link):not(.pir-footer__group a):not([class*="
   text-shadow: 0 0 10px rgba(0,208,130,0.45);
 }
 
-/* Edition translucency override — body slightly more transparent on content pages */
-body.page-edition { background: rgba(0,10,28,0.72); }
+/* Edition translucency override — more transparent on content pages */
+body.page-edition { background: rgba(0,10,28,0.48); }
 
 a { color: var(--green); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -333,8 +333,21 @@ img { display: block; max-width: 100%; }
   font-size: 0.78rem; color: var(--cyan);
   overflow-x: auto; margin-top: 0.5rem; font-family: monospace; line-height: 1.55;
 }
+.modal-scroll-nav {
+  display: flex; justify-content: flex-end;
+  margin-bottom: 0.5rem; flex-shrink: 0;
+}
+.modal-scroll-btn {
+  background: rgba(74,234,220,0.08); border: 1px solid rgba(74,234,220,0.25);
+  color: var(--cyan); font-size: 0.68rem; font-weight: 700;
+  padding: 0.25rem 0.75rem; border-radius: 9999px; cursor: pointer;
+  font-family: var(--font-body); transition: all 0.15s;
+  letter-spacing: 0.04em;
+}
+.modal-scroll-btn:hover { background: rgba(74,234,220,0.18); border-color: var(--cyan); }
+.modal-scroll-btn--up { margin-right: auto; }
 .modal-actions {
-  display: flex; gap: 0.65rem; flex-wrap: wrap;
+  display: flex; gap: 0.65rem; flex-wrap: wrap; align-items: center;
   flex-shrink: 0; margin-top: 0;
   border-top: 1px solid var(--border);
   padding: 1.1rem 0 1.5rem;
