@@ -259,17 +259,16 @@ The script is in `scripts/apps-script-form.gs` in this repo.
 Copy the entire file contents and paste it into the Apps Script editor,
 replacing the default `myFunction()` stub.
 
-**8c — Set the Sheet ID:**
+**8c — Sheet ID (already set):**
 
-1. Create a new Google Sheet at [sheets.google.com](https://sheets.google.com)
-   signed in as `pir.devine.news@gmail.com` — name it `Devine News Submissions`
-2. Copy the Sheet ID from the URL:
-   `https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit`
-3. In the Apps Script editor, find this line near the top:
-   ```js
-   const SHEET_ID = 'YOUR_SHEET_ID_HERE';
-   ```
-   Replace `YOUR_SHEET_ID_HERE` with your real Sheet ID.
+The **Devine News Submissions** Google Sheet has been created under
+`pir.devine.news@gmail.com`. The Sheet ID is already wired into
+`scripts/apps-script-form.gs` (private — never synced public).
+
+To find it yourself: open the sheet in Google Drive and copy the ID
+from the URL: `https://docs.google.com/spreadsheets/d/SHEET_ID/edit`
+
+No changes needed to the script for this step.
 
 **8d — Deploy as a web app:**
 

@@ -130,6 +130,7 @@
       font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
       color: var(--text-2); cursor: pointer; text-align: center;
       transition: all 0.22s; position: relative; overflow: hidden;
+      animation: pulse-glow-p 3.8s ease-in-out infinite;
     }
     .cat-btn::after {
       content: ''; position: absolute; inset: 0;
@@ -395,6 +396,15 @@
                 <optgroup label="May 2026 — Current Issue">
                   <option value="Steps 6 &amp; 7 — May 2026" selected>✨ Steps 6 &amp; 7 — Spiritual Principle: Willingness (This Month)</option>
                 </optgroup>
+                <optgroup label="Upcoming 2026">
+                  <option value="Steps 8 &amp; 9 — June 2026 (Issue 6)">June 2026 · Issue 6 — Amends · Steps 8 &amp; 9</option>
+                  <option value="Step 10 — July 2026 (Issue 7)">July 2026 · Issue 7 — Perseverance · Step 10</option>
+                  <option value="Step 11 — August 2026 (Issue 8)">August 2026 · Issue 8 — Awareness · Step 11</option>
+                  <option value="Step 12 — September 2026 (Issue 9)">September 2026 · Issue 9 — Service · Step 12</option>
+                  <option value="Traditions — October 2026 (Issue 10)">October 2026 · Issue 10 — Unity · Traditions</option>
+                  <option value="Gratitude — November 2026 (Issue 11)">November 2026 · Issue 11 — Gratitude</option>
+                  <option value="Reflection — December 2026 (Issue 12)">December 2026 · Issue 12 — Reflection &amp; Renewal</option>
+                </optgroup>
                 <optgroup label="Past Issues">
                   <option value="Steps 4 &amp; 5 — April 2026 (Issue 4)">April 2026 · Issue 4 — Courage · Steps 4 &amp; 5</option>
                   <option value="Hope — March 2026 (Issue 3)">March 2026 · Issue 3 — Hope</option>
@@ -536,18 +546,44 @@
         </form>
       </div>
     </div>
+
+    <!-- What Happens Next — shown below submit button -->
+    <div class="sb-card" style="margin-top:1.25rem">
+      <div class="sb-title">What Happens Next</div>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-text"><h4>Instant Receipt</h4><p>A Thank You email arrives with our current meeting schedule attached.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-text"><h4>Committee Review</h4><p>The Literature Committee reviews your piece for the upcoming issue.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-text"><h4>Collaborative Editing</h4><p>If selected, an editor may reach out with minor suggestions via your email.</p></div>
+      </div>
+    </div>
   </div>
 
   <!-- ─ SIDEBAR ─ -->
   <aside class="sidebar">
 
     <div class="sb-card">
-      <div class="sb-title">This Month's Theme</div>
-      <div class="topic-pill">
-        <div class="topic-month">April 2026</div>
-        <div class="topic-name">Steps 4 &amp; 5</div>
-        <div class="topic-desc">Searching and fearless moral inventory — and sharing what we found.</div>
+      <div class="sb-title">Current &amp; Next Issue Themes</div>
+      <div class="topic-pill" style="margin-bottom:0.65rem">
+        <div class="topic-month" style="color:var(--green)">✨ May 2026 — Current</div>
+        <div class="topic-name">Steps 6 &amp; 7 — Willingness</div>
+        <div class="topic-desc">Entirely ready and humbly asked. Deadline: May 30, 2026.</div>
       </div>
+      <div class="topic-pill" style="border-color:rgba(155,81,224,0.2);background:rgba(155,81,224,0.06)">
+        <div class="topic-month" style="color:var(--purple)">⏭ June 2026 — Next</div>
+        <div class="topic-name">Steps 8 &amp; 9 — Amends</div>
+        <div class="topic-desc">Made a list and became willing. Deadline: June 30, 2026.</div>
+      </div>
+      <a href="newsletter-april-2026.html" class="btn btn-ghost btn-sm"
+         style="width:100%;justify-content:center;margin-bottom:0.5rem">
+        📖 Read April Edition →
+      </a>
       <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
          target="_blank" rel="noopener"
          class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;">
@@ -584,21 +620,6 @@
       </button>
     </div>
 
-    <div class="sb-card">
-      <div class="sb-title">What Happens Next</div>
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-text"><h4>Instant Receipt</h4><p>A Thank You email arrives with our current meeting schedule attached.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-text"><h4>Committee Review</h4><p>The Literature Committee reviews your piece for the upcoming issue.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-text"><h4>Collaborative Editing</h4><p>If selected, an editor may reach out with minor suggestions via your email.</p></div>
-      </div>
-    </div>
 
     <div class="sb-card">
       <div class="sb-title">Recent Editions</div>

@@ -233,50 +233,35 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
   }
   updateDriveLinks();
 
-  /* ── Global modal scroll nav — injected into every .modal ── */
+  /* ── Global modal scroll nav — button in every .modal-actions ── */
   function initAllModalScrollNav() {
     document.querySelectorAll('.modal').forEach(function (modal) {
-      const body = modal.querySelector('.modal-body');
+      const body    = modal.querySelector('.modal-body');
       const actions = modal.querySelector('.modal-actions');
-      if (!body) return;
+      if (!body || !actions || modal.querySelector('.modal-scroll-btn')) return;
 
-      /* Inject scroll-nav bar above modal-body if not already present */
-      if (!modal.querySelector('.modal-scroll-nav')) {
-        const nav = document.createElement('div');
-        nav.className = 'modal-scroll-nav';
-        const btn = document.createElement('button');
-        btn.className = 'modal-scroll-btn';
-        btn.setAttribute('title', 'Toggle scroll position');
-        btn.textContent = '↓ Jump to bottom';
-        nav.appendChild(btn);
-        body.parentNode.insertBefore(nav, body);
+      const btn = document.createElement('button');
+      btn.className = 'modal-scroll-btn';
+      btn.title = 'Jump to bottom / back to top';
+      btn.textContent = '↓ Jump to bottom';
 
-        /* Toggle between jump-to-bottom and back-to-top */
-        let atBottom = false;
-        btn.addEventListener('click', function () {
-          if (atBottom) {
-            body.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
-          }
-        });
-        body.addEventListener('scroll', function () {
-          atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 24;
-          btn.textContent = atBottom ? '↑ Back to top' : '↓ Jump to bottom';
-          btn.classList.toggle('modal-scroll-btn--up', atBottom);
-        });
-      }
+      /* Insert as first item in footer actions */
+      actions.insertBefore(btn, actions.firstChild);
 
-      /* Wire ↑ Top button in modal-actions if present (setup modal only) */
-      const toTop = modal.querySelector('#modal-nav-setup-to-top');
-      if (toTop) {
-        toTop.addEventListener('click', function () {
+      let atBottom = false;
+      btn.addEventListener('click', function () {
+        if (atBottom) {
           body.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
+        } else {
+          body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
+        }
+      });
+      body.addEventListener('scroll', function () {
+        atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 24;
+        btn.textContent = atBottom ? '↑ Back to top' : '↓ Jump to bottom';
+      });
     });
   }
-  /* Run after DOM ready — catches both injected and page-native modals */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAllModalScrollNav);
   } else {
