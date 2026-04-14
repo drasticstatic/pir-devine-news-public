@@ -55,13 +55,45 @@ body::after {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 115vmin; height: 115vmin;
-  background: url('assets/logo-white.png') no-repeat center / contain;
+  background: url('assets/pir-logo-vertical-white.png') no-repeat center / contain;
   opacity: 0.07; pointer-events: none; z-index: -1;
   animation: wm-breathe 7s ease-in-out infinite;
 }
 @keyframes wm-breathe {
   0%, 100% { opacity: 0.07; transform: translate(-50%,-50%) scale(1); }
   50%       { opacity: 0.21; transform: translate(-50%,-50%) scale(1.1); }
+}
+/* Shift watermark prime meridian to match content area when sidenav is open */
+@media (min-width: 1025px) {
+  body.has-sidenav::after {
+    left: calc(50% + 110px); /* sidenav = 220px → shift right by half */
+  }
+}
+
+/* ── Hero rainbow text & breathing ────────────────────────── */
+/* Slow hue rotation — cycles the whole visible spectrum over ~14 s */
+@keyframes rainbow-hue {
+  0%   { filter: hue-rotate(0deg)   brightness(1.08); }
+  100% { filter: hue-rotate(360deg) brightness(1.08); }
+}
+/* Hero title gently swells and recedes */
+@keyframes hero-word-breathe {
+  0%, 100% { opacity: 0.88; transform: scale(1)     translateY(0); }
+  50%       { opacity: 1;    transform: scale(1.016) translateY(-2px); }
+}
+/* Colored accent text inside any hero → slow rainbow cycle */
+.nl-hero .nl-edition-label,
+.nl-hero .nl-hero-theme,
+.nl-hero .nl-hero-title em,
+.parallax-hero .hero-eyebrow,
+.page-hero .page-hero-eyebrow {
+  animation: rainbow-hue 14s linear infinite;
+  display: inline-block;
+}
+/* Hero title breathes */
+.nl-hero .nl-hero-title,
+.parallax-hero .hero-title {
+  animation: hero-word-breathe 4.5s ease-in-out infinite;
 }
 
 /* ── Psychedelic motion system ─────────────────────────────── */
@@ -618,14 +650,26 @@ body.has-sidenav { padding-left: 220px; }
 
 /* ── Print / PDF export ─────────────────────────────────────── */
 @media print {
-  /* Print title page — PIR logo centred before content */
   @page { margin: 1.5cm; }
-  .nl-hero::before {
+
+  /* Print header — PIR vertical black logo + wordmark centred above content */
+  .nl-hero::before,
+  .page-hero::before {
     content: '';
     display: block;
-    width: 120px; height: 120px;
-    margin: 0 auto 1rem;
-    background: url('assets/pirlogoforbannerprinting/PIR_A.jpg') center / contain no-repeat;
+    width: 72px; height: 88px;
+    margin: 0 auto 0.5rem;
+    background: url('assets/pir-logo-vertical-black.png') center / contain no-repeat;
+  }
+  /* Decorative double rule beneath logo */
+  .nl-hero::after,
+  .page-hero::after {
+    content: '';
+    display: block;
+    width: 180px; margin: 0 auto 1.25rem;
+    border-top: 2.5px solid #000;
+    padding-top: 3px;
+    border-bottom: 1px solid #555;
   }
 
   /* Nuclear reset — all dark backgrounds gone, all text black */
