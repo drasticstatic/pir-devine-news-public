@@ -40,10 +40,14 @@
         <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" rel="noopener">📚 Member Materials</a>
         <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" rel="noopener">🗓 Find a Meeting</a>
         <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener">📜 The 12 Steps</a>
+        <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener">📘 Facebook</a>
+        <a href="mailto:info@psychedelicsinrecovery.org">✉️ info@psychedelicsinrecovery.org</a>
       </div>
 
       <div class="pir-footer__group">
-        <span class="pir-footer__group-title">Committee</span>
+        <span class="pir-footer__group-title">Media &amp; Committee</span>
+        <a href="https://integrationradioapirpodcast.buzzsprout.com" target="_blank" rel="noopener">🎙 Integration Radio (Podcast)</a>
+        <a href="https://www.youtube.com/@Psychedelicsinrecovery" target="_blank" rel="noopener">▶️ YouTube</a>
         <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener">🔧 Service Subdomain</a>
         <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener">👥 PR Committee</a>
         <a href="https://service.psychedelicsinrecovery.org/literature" target="_blank" rel="noopener">📖 Literature Committee</a>
