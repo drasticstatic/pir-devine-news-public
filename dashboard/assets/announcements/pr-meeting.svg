@@ -108,19 +108,19 @@
   <text x="540" y="262"
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="24" font-weight="700" letter-spacing="5"
-        fill="#00eaff" text-anchor="middle" opacity="0.92">PIR®</text>
+        fill="#00eaff" text-anchor="middle" opacity="0.92">Psychedelics in Recovery™ </text>
 
   <!-- Gold rule above title -->
   <rect x="180" y="276" width="720" height="2" rx="1" fill="url(#gold-bar)" opacity="0.7"/>
 
-  <text x="540" y="330"
+  <text x="540" y="340"
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="58" font-weight="900" letter-spacing="1"
-        fill="#ffffff" text-anchor="middle" filter="url(#text-glow)">PR COMMITTEE</text>
+        fill="#ffffff" text-anchor="middle" filter="url(#text-glow)">PUBLIC REALTIONS</text>
   <text x="540" y="392"
         font-family="'Helvetica Neue', Arial, sans-serif"
-        font-size="52" font-weight="900" letter-spacing="2"
-        fill="#ffffff" text-anchor="middle">MEETING</text>
+        font-size="46" font-weight="900" letter-spacing="2"
+        fill="#ffffff" text-anchor="middle">COMMITTEE MEETING</text>
 
   <!-- Gold rule below title -->
   <rect x="180" y="408" width="720" height="2" rx="1" fill="url(#gold-bar)" opacity="0.7"/>
@@ -153,7 +153,7 @@
         font-family="Georgia, 'Times New Roman', serif"
         font-size="17" font-style="italic"
         fill="#a0c4d8" text-anchor="middle" opacity="0.85">
-    Join us in service — shaping how PIR connects with the world
+    Shaping how our fellowship connects with the world
   </text>
 
   <!-- ── Agenda card ── -->
@@ -223,8 +223,8 @@
   <text x="162" y="902"
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="17" font-weight="700" fill="#ffffff">
-    Interested in service beyond meetings?
-    <tspan fill="#a0c4d8" font-weight="400" font-size="15">  We would love to welcome you.</tspan>
+    Editors needed —
+    <tspan fill="#a0c4d8" font-weight="400" font-size="15">We would love to have your voice</tspan>
   </text>
 
   <!-- ── Footer ── -->
@@ -234,7 +234,7 @@
   <text x="540" y="975"
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="14" font-weight="700" letter-spacing="2.5"
-        fill="#f5d36e" text-anchor="middle">✦  PSYCHEDELICS IN RECOVERY  ✦</text>
+        fill="#f5d36e" text-anchor="middle">✦  Interested in service beyond meetings?  ✦</text>
 
   <text x="540" y="1006"
         font-family="Georgia, 'Times New Roman', serif"
@@ -247,7 +247,7 @@
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="13" letter-spacing="0.5"
         fill="#00eaff" text-anchor="middle" opacity="0.7">
-    psychedelicsinrecovery.org
+    service.psychedelicsinrecovery.org
   </text>
 
   <!-- Corner accent lines -->

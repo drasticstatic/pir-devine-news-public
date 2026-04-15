@@ -108,14 +108,14 @@
   <text x="540" y="262"
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="24" font-weight="700" letter-spacing="5"
-        fill="#00c46a" text-anchor="middle" opacity="0.92">PIR®</text>
+        fill="#00c46a" text-anchor="middle" opacity="0.92">Psychedelics in Recovery™</text>
 
   <!-- Gold rule above title -->
   <rect x="180" y="276" width="720" height="2" rx="1" fill="url(#gold-bar-l)" opacity="0.75"/>
 
-  <text x="540" y="330"
+  <text x="540" y="340"
         font-family="'Helvetica Neue', Arial, sans-serif"
-        font-size="52" font-weight="900" letter-spacing="1"
+        font-size="58" font-weight="900" letter-spacing="1"
         fill="#ffffff" text-anchor="middle" filter="url(#text-glow-l)">LITERATURE</text>
   <text x="540" y="388"
         font-family="'Helvetica Neue', Arial, sans-serif"
@@ -221,7 +221,7 @@
   <text x="540" y="972"
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="14" font-weight="700" letter-spacing="2.5"
-        fill="#f5d36e" text-anchor="middle">✦  PSYCHEDELICS IN RECOVERY  ✦</text>
+        fill="#f5d36e" text-anchor="middle">✦  Interested in service beyond meetings?  ✦</text>
 
   <text x="540" y="1005"
         font-family="Georgia, 'Times New Roman', serif"
@@ -234,7 +234,7 @@
         font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="13" letter-spacing="0.5"
         fill="#00c46a" text-anchor="middle" opacity="0.7">
-    psychedelicsinrecovery.org
+    service.psychedelicsinrecovery.org
   </text>
 
   <!-- Corner accent lines -->
