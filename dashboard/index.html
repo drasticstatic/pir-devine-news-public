@@ -157,6 +157,11 @@
     .sub-snippet { font-size: 0.8rem; color: var(--text-2); margin-top: 0.35rem; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .sub-action { flex-shrink: 0; align-self: center; display:flex; gap:0.45rem; align-items:center; }
 
+    /* Refresh spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-loading { opacity: 0.65; pointer-events: none; }
+    .btn-loading .spin-icon { display: inline-block; animation: spin 0.7s linear infinite; margin-right: 4px; }
+
     /* Admin mode */
     .btn-remove { background:transparent; border:1px solid rgba(239,68,68,0.4); color:#f87171;
                   font-size:0.72rem; font-weight:700; padding:0.3rem 0.65rem; border-radius:6px;
@@ -272,7 +277,7 @@
       <span class="section-label">📋 Submissions</span>
       <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
         <span class="sync-label" id="last-sync-label">Last sync: —</span>
-        <button class="btn btn-ghost btn-sm" onclick="loadData()">↺ Refresh</button>
+        <button class="btn btn-ghost btn-sm" id="refresh-btn" onclick="loadData()">↺ Refresh</button>
         <button class="btn btn-ghost btn-sm" onclick="openModal('modal-sync-info')"
                 style="font-size:0.72rem;padding:0.3rem 0.65rem" data-tooltip="How the sync pipeline works">ⓘ How sync works</button>
         <div class="admin-bar" id="admin-bar">
@@ -415,7 +420,7 @@
 
 <!-- Admin Password Modal -->
 <div class="modal-overlay" id="modal-admin" role="dialog" aria-modal="true" aria-labelledby="admin-title">
-  <div class="modal" style="max-width:400px">
+  <div class="modal" style="max-width:400px" data-no-scroll-btn>
     <button class="modal-close" onclick="closeModal('modal-admin')" aria-label="Close">✕</button>
     <div class="modal-eyebrow">🔒 Committee Only</div>
     <h2 class="modal-title" id="admin-title">Admin Access</h2>
@@ -528,7 +533,6 @@
     return '<span class="badge ' + b.cls + '">' + b.label + '</span>';
   }
 
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwi9uZiep8f-C4xvuV7npF2VlX9EhhPboI3AD-TzjOLjYDZEmePmqHRkNoEt3Zkj34oHg/exec';
   var adminMode     = false;
   var adminPassword = '';
 
@@ -554,10 +558,8 @@
     if (!pw) { err.textContent = 'Please enter the passphrase.'; err.style.display = 'block'; return; }
     err.style.display = 'none';
     try {
-      var fd = new FormData();
-      fd.append('action', 'auth');
-      fd.append('password', pw);
-      var r = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd });
+      var params = new URLSearchParams({ action: 'auth', password: pw });
+      var r = await fetch(window.APPS_SCRIPT_URL, { method: 'POST', body: params });
       var j = await r.json();
       if (j.status === 'ok') {
         adminPassword = pw;
@@ -580,11 +582,8 @@
     if (!confirm('Remove this submission from the dashboard? It will be marked Archived in the Sheet.')) return;
     btn.disabled = true; btn.textContent = '…';
     try {
-      var fd = new FormData();
-      fd.append('action', 'remove');
-      fd.append('id', id);
-      fd.append('password', adminPassword);
-      var r = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd });
+      var params = new URLSearchParams({ action: 'remove', id: id, password: adminPassword });
+      var r = await fetch(window.APPS_SCRIPT_URL, { method: 'POST', body: params });
       var j = await r.json();
       if (j.status === 'ok') {
         // Remove card from DOM immediately; data.json will reflect on next loadData
@@ -630,6 +629,8 @@
 
   /* ── Load data.json ── */
   async function loadData() {
+    var btn = document.getElementById('refresh-btn');
+    if (btn) { btn.innerHTML = '<span class="spin-icon">↺</span> Refreshing…'; btn.classList.add('btn-loading'); }
     try {
       var res  = await fetch('data.json?_=' + Date.now());
       var data = await res.json();
@@ -671,9 +672,11 @@
       renderSubmissions(subs);
 
     } catch(e) { console.error('data.json load failed:', e); }
+    finally { if (btn) { btn.innerHTML = '↺ Refresh'; btn.classList.remove('btn-loading'); } }
   }
   loadData();
 </script>
+<script src="config.js"></script>
 <script src="nav.js"></script>
 <script src="sidenav.js"></script>
 <script src="footer.js"></script>
