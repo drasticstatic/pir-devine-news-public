@@ -43,6 +43,14 @@
       box-shadow: 0 24px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.07);
     }
     .hero-illustration img { width: 100%; height: auto; display: block; max-height: 520px; object-fit: contain; }
+
+    /* Hero button colour variants */
+    .btn-blue   { background: #2874fc; color: #fff; box-shadow: 0 0 12px rgba(40,116,252,0.5); border: none; }
+    .btn-blue:hover   { background: #4a8fff; box-shadow: 0 0 20px rgba(40,116,252,0.7); text-decoration: none; color: #fff; }
+    .btn-purple { background: #9b51e0; color: #fff; box-shadow: 0 0 12px rgba(155,81,224,0.5); border: none; }
+    .btn-purple:hover { background: #b06de8; box-shadow: 0 0 20px rgba(155,81,224,0.7); text-decoration: none; color: #fff; }
+    .btn-pink   { background: #e040fb; color: #fff; box-shadow: 0 0 12px rgba(224,64,251,0.45); border: none; }
+    .btn-pink:hover   { background: #e96cfc; box-shadow: 0 0 20px rgba(224,64,251,0.65); text-decoration: none; color: #fff; }
     @media (max-width: 900px) {
       .hero-inner { flex-direction: column-reverse; gap: 2rem; padding: 2.5rem 1.25rem 2.5rem; }
       .hero-illustration { width: 100%; max-width: 480px; }
@@ -186,9 +194,9 @@
           <br />— LitCom, January 2026
         </p>
         <div class="hero-actions">
-          <button class="btn btn-primary" onclick="openModal('modal-whatis')">💬 What Is This?</button>
-          <button class="btn btn-ghost" onclick="openModal('modal-howto')">🤔 How It Works</button>
-          <button class="btn btn-ghost" onclick="openModal('modal-president')"
+          <button class="btn btn-blue" onclick="openModal('modal-whatis')">💬 What Is This?</button>
+          <button class="btn btn-purple" onclick="openModal('modal-howto')">🤔 How It Works</button>
+          <button class="btn btn-pink" onclick="openModal('modal-president')"
                   data-tooltip="A message from Kevin Franciotti, PIR® Board of Directors">💌 From the Board</button>
         </div>
       </div>
@@ -349,6 +357,15 @@
       </ul>
       <p>Behind the scenes, the committee uses this portal to review, approve, and publish submissions — all through a secure, automated workflow that keeps unpublished content private.</p>
       <p style="font-size:0.82rem;color:var(--text-3);font-style:italic">Built and maintained as committee service by the PIR® Tech &amp; PR Committees. No special expertise required to submit — only a willingness to share.</p>
+      <details style="margin-top:1rem;border-top:1px solid var(--border);padding-top:0.75rem">
+        <summary style="cursor:pointer;font-size:0.82rem;color:var(--text-3);user-select:none">🔧 For the technically curious</summary>
+        <div style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-2);line-height:1.6">
+          <p style="margin-bottom:0.5rem"><strong>Public repo</strong> (<code>pir-devine-news-public</code>)<br>
+          Static dashboard and newsletter archive for the De Vine News committee portal. Served via GitHub Pages. Receives filtered content automatically synced from the private workflow repo on every push to main. No credentials, no raw data, no unpublished submissions.</p>
+          <p style="margin-bottom:0"><strong>Private repo</strong> (<code>pir-devine-news</code>)<br>
+          Full newsletter workflow hub for the Psychedelics In Recovery (PIR®) 12-Step Fellowship newsletter committee. Includes automation scripts, committee data, Google Drive integration via GWS CLI, GitHub Actions sync pipeline, and the full source for all public-facing dashboard content.</p>
+        </div>
+      </details>
     </div>
     <div class="modal-actions">
       <a href="submit.html" class="btn btn-primary">✍️ Submit Work</a>

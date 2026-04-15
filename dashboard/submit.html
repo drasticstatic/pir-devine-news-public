@@ -687,6 +687,7 @@
 <script>
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwi9uZiep8f-C4xvuV7npF2VlX9EhhPboI3AD-TzjOLjYDZEmePmqHRkNoEt3Zkj34oHg/exec';
   var selCat = '';
+  var selectedArtFile = null;
 
   /* Parallax */
   var phbg = document.getElementById('page-hero-bg');
@@ -729,6 +730,7 @@
   function onDrop(e) { e.preventDefault(); document.getElementById('drop-zone').classList.remove('drag-over'); if(e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); }
   function onFileSelect(e){ if(e.target.files[0]) setFile(e.target.files[0]); }
   function setFile(f) {
+    selectedArtFile = f;
     document.getElementById('drop-fname').textContent = f.name+' ('+(f.size/1024/1024).toFixed(2)+' MB)';
     document.getElementById('drop-default').style.display = 'none';
     document.getElementById('drop-selected').style.display = 'block';
@@ -746,7 +748,7 @@
     var cat=document.getElementById('category').value;
     if(!name||!email||!cat){ showErr('Please fill in your name, email, and choose a category.'); return; }
     if((cat==='literature'||cat==='both')&&!document.getElementById('litText').value.trim()){ showErr('Please enter your literature text.'); return; }
-    if((cat==='art'||cat==='both')&&!document.getElementById('artFile').files[0]){ showErr('Please select an artwork file.'); return; }
+    if((cat==='art'||cat==='both')&&!selectedArtFile&&!document.getElementById('artFile').files[0]){ showErr('Please select an artwork file.'); return; }
     if(APPS_SCRIPT_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
       document.getElementById('form-card').style.display='none';
       document.getElementById('success-panel').style.display='block';
@@ -755,7 +757,12 @@
     var btn=document.getElementById('submit-btn');
     btn.disabled=true; btn.textContent='Sending… ⏳';
     try {
-      var r=await fetch(APPS_SCRIPT_URL,{method:'POST',body:new FormData(this)});
+      var fd = new FormData(this);
+      // If file was drag-dropped it's not in the hidden input — append manually
+      if(selectedArtFile && !document.getElementById('artFile').files[0]) {
+        fd.set('artFile', selectedArtFile, selectedArtFile.name);
+      }
+      var r=await fetch(APPS_SCRIPT_URL,{method:'POST',body:fd});
       var j=await r.json();
       if(j.status==='ok'){ document.getElementById('form-card').style.display='none'; document.getElementById('success-panel').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
       else { showErr(j.message||'Something went wrong.'); btn.disabled=false; btn.textContent='Send to the Literature Committee 🌀'; }
@@ -763,7 +770,7 @@
   });
 
   function resetForm(){
-    document.getElementById('submission-form').reset(); selCat='';
+    document.getElementById('submission-form').reset(); selCat=''; selectedArtFile=null;
     document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
     document.getElementById('sec-lit').style.display='none';
     document.getElementById('sec-art').style.display='none';
