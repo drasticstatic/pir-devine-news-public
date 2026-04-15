@@ -238,7 +238,7 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
     document.querySelectorAll('.modal').forEach(function (modal) {
       const body    = modal.querySelector('.modal-body');
       const actions = modal.querySelector('.modal-actions');
-      if (!body || !actions || modal.querySelector('.modal-scroll-btn')) return;
+      if (!body || !actions || modal.querySelector('.modal-scroll-btn') || modal.hasAttribute('data-no-scroll-btn')) return;
 
       const btn = document.createElement('button');
       btn.className = 'modal-scroll-btn';
