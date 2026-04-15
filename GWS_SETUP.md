@@ -236,9 +236,11 @@ on the next GitHub Pages deployment (usually under 2 minutes).
 3. The Drive panel on the index page should now show a live link instead
    of a placeholder
 
-> **Note:** `data.json` is public (synced to the public repo). It contains
-> only the Drive folder URL — never folder IDs from `config.env` or any
-> other private data.
+> **Note:** As of April 2026, `data.json` is **no longer synced** from the
+> private repo to the public repo — it is managed entirely by the Apps Script
+> (see Step 8g below). The Drive URLs are baked into the Apps Script constants
+> so they populate automatically on the first submission. You do not need to
+> manually edit `data.json` to activate the Drive panel.
 
 ---
 
@@ -286,12 +288,68 @@ Open `dashboard/submit.html` and find:
 ```js
 var APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 ```
-Replace the placeholder with the URL from Step 8d. Commit and push.
+Replace the placeholder with the URL from Step 8d. The same URL also appears
+near the top of the `<script>` block in `dashboard/index.html`. Update both.
+Commit and push.
 
-**8f — Test a submission:**
+**8f — Generate a GitHub Personal Access Token:**
 
-Open the live portal → Submit page. Fill out a test submission and hit send.
-Check the Google Sheet — a new row should appear within seconds.
+The Apps Script needs write access to the **public** repo (`pir-devine-news-public`)
+to keep `dashboard/data.json` updated with new submissions.
+
+1. Go to **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
+2. Click **Generate new token (classic)**
+3. Name: `De Vine News — Apps Script`
+4. Expiration: set a reminder to rotate annually
+5. Scope: check **`public_repo` only** — private repo access is NOT required
+6. Click **Generate token** and copy it immediately (it is not shown again)
+
+**8g — Add Script Properties (secrets for the Apps Script):**
+
+Script Properties are the Apps Script equivalent of a `.env` file — stored
+server-side, never in code, never visible in the browser.
+
+1. In the Apps Script editor, click the **gear icon (Project Settings)**
+   in the left sidebar
+2. Scroll to **Script properties** → click **Add script property** for each:
+
+| Property name    | Value                                                         |
+|------------------|---------------------------------------------------------------|
+| `GITHUB_TOKEN`   | The PAT you generated in Step 8f                             |
+| `ADMIN_PASSWORD` | A passphrase for the dashboard removal gate (your choice)    |
+
+3. Click **Save script properties**
+
+> **`ADMIN_PASSWORD`** gates the **🔒 Manage** button on the dashboard.
+> It is validated server-side — a wrong guess never unlocks the UI.
+> Choose something memorable but not trivial. To change it later, just
+> update the Script Property value — no re-deploy needed.
+
+**8h — Re-deploy after adding properties:**
+
+Script Properties take effect immediately, but the web app must be on the
+latest code version. After pasting updated script code or adding properties:
+
+1. Click **Deploy → Manage deployments**
+2. Click the **pencil (edit)** icon on the active deployment
+3. Change **Version** to **New version**
+4. Click **Deploy** — the URL stays the same
+
+**8i — Test the full pipeline:**
+
+1. Open the live portal → Submit page. Fill out a test submission and send.
+2. Check **two places** within ~10 seconds:
+   - The **Google Sheet** — a new row should appear
+   - The **dashboard index page** — click ↺ Refresh; the submission card should appear
+3. Test the removal gate: click **🔒 Manage**, enter the admin passphrase,
+   then click **✕ Remove** on the test card. It should disappear and the
+   Sheet row should show **Archived**.
+
+**Rotating the GitHub token later:**
+
+When the PAT expires (or you rotate it manually), generate a new one with the
+same `public_repo` scope and update the `GITHUB_TOKEN` Script Property.
+No re-deploy is needed — the property is read at runtime.
 
 ---
 
@@ -317,7 +375,14 @@ Or trigger manually from GitHub:
 | `Token expired` | Run `gws auth login` again |
 | `403 Forbidden on Drive` | Ensure Drive API is enabled in the Cloud project |
 | `Actions sync failing` | The `PUBLIC_REPO_TOKEN` secret must be set in repo Settings → Secrets |
+| Submission email arrives but dashboard never updates | `GITHUB_TOKEN` missing or expired — add/renew in Script Properties |
+| `"ADMIN_PASSWORD not set"` error on removal | Add `ADMIN_PASSWORD` to Script Properties (no re-deploy needed) |
+| `"Incorrect password"` on removal | Re-enter carefully; update Script Property value if forgotten |
+| `GitHub PUT failed: 404` | Wrong `GH_OWNER`/`GH_REPO` constants in script, or token lacks `public_repo` scope |
+| `GitHub PUT failed: 409 Conflict` | Two simultaneous submissions (very rare) — refresh and re-submit |
+| Dashboard shows stale data after removal | Click ↺ Refresh; GitHub Pages CDN may cache for up to 60 s |
 
 ---
 
 *This file is intentionally public — it contains no secrets or credentials.*
+*Last updated: April 2026 — added Steps 8f–8i (GitHub PAT, Script Properties, admin removal gate).*

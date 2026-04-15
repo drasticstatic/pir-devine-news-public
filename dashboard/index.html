@@ -273,6 +273,8 @@
       <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
         <span class="sync-label" id="last-sync-label">Last sync: —</span>
         <button class="btn btn-ghost btn-sm" onclick="loadData()">↺ Refresh</button>
+        <button class="btn btn-ghost btn-sm" onclick="openModal('modal-sync-info')"
+                style="font-size:0.72rem;padding:0.3rem 0.65rem" data-tooltip="How the sync pipeline works">ⓘ How it works</button>
         <div class="admin-bar" id="admin-bar">
           <button class="btn btn-ghost btn-sm" id="admin-toggle-btn"
                   onclick="toggleAdmin()" style="font-size:0.72rem;padding:0.3rem 0.65rem">🔒 Manage</button>
@@ -429,6 +431,48 @@
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="submitAdminPassword()">Unlock</button>
       <button class="btn btn-ghost" onclick="closeModal('modal-admin')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sync & Pipeline Info Modal -->
+<div class="modal-overlay" id="modal-sync-info" role="dialog" aria-modal="true" aria-labelledby="sync-info-title">
+  <div class="modal" style="max-width:600px">
+    <button class="modal-close" onclick="closeModal('modal-sync-info')" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">⚙️ How the pipeline works</div>
+    <h2 class="modal-title" id="sync-info-title">Sync &amp; Submissions</h2>
+    <div class="modal-body">
+
+      <h3 style="font-size:0.88rem;font-weight:700;color:var(--green);margin-bottom:0.5rem">Submission flow</h3>
+      <ol style="font-size:0.84rem;color:var(--text-2);line-height:1.75;padding-left:1.25rem;margin-bottom:1.25rem">
+        <li>A member fills out the <a href="submit.html" style="color:var(--cyan)">Submit page</a> and clicks Send.</li>
+        <li>The form POST hits the <strong>Apps Script web app</strong> running on the <code>pir.devine.news@gmail.com</code> Google account.</li>
+        <li>Apps Script writes a row to the <strong>Submissions Google Sheet</strong> and sends a confirmation email to the member and a notification to the committee inbox.</li>
+        <li>Apps Script calls the <strong>GitHub API</strong> to update <code>dashboard/data.json</code> in the public repo with the new submission entry.</li>
+        <li>GitHub Pages serves the updated <code>data.json</code> — the submission appears on this dashboard within seconds of the next page refresh.</li>
+      </ol>
+
+      <h3 style="font-size:0.88rem;font-weight:700;color:var(--cyan);margin-bottom:0.5rem">Removing a submission</h3>
+      <ol style="font-size:0.84rem;color:var(--text-2);line-height:1.75;padding-left:1.25rem;margin-bottom:1.25rem">
+        <li>Click <strong>🔒 Manage</strong> next to this button and enter the committee admin passphrase.</li>
+        <li>Each submission card gains a <strong>✕ Remove</strong> button.</li>
+        <li>Clicking Remove sends a password-authenticated request to the Apps Script, which removes the entry from <code>data.json</code> and marks the row <em>Archived</em> in the Google Sheet.</li>
+        <li>The card disappears from the dashboard immediately.</li>
+      </ol>
+
+      <h3 style="font-size:0.88rem;font-weight:700;color:var(--purple);margin-bottom:0.5rem">The ↺ Refresh button</h3>
+      <p style="font-size:0.84rem;color:var(--text-2);line-height:1.75;margin-bottom:1.25rem">
+        Re-fetches <code>data.json</code> from GitHub Pages on demand. Use this to pull in any submissions that arrived since you opened the page, or after an Apps Script re-deploy.
+      </p>
+
+      <h3 style="font-size:0.88rem;font-weight:700;color:var(--text-3);margin-bottom:0.5rem">Code sync (private → public repo)</h3>
+      <p style="font-size:0.84rem;color:var(--text-2);line-height:1.75;margin-bottom:0">
+        Every push to <code>main</code> on the <em>private</em> repo triggers a GitHub Actions workflow that strips private content (scripts, setup docs, committee data) and force-pushes the filtered result to <code>pir-devine-news-public</code>. <code>data.json</code> is excluded from this sync so live submission data is never overwritten.
+      </p>
+
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-sync-info')">Close</button>
     </div>
   </div>
 </div>
