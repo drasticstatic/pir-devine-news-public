@@ -49,7 +49,7 @@
         <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener">📘 Facebook</a>
         <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener">🔧 Service Subdomain</a>
         <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener">👥 PR Committee</a>
-        <a href="https://service.psychedelicsinrecovery.org/literature" target="_blank" rel="noopener">📖 Literature Committee</a>
+        <a href="https://service.psychedelicsinrecovery.org/literature-committee/" target="_blank" rel="noopener">📖 Literature Committee</a>
         </div>
 
         <div class="pir-footer__group">
