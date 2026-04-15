@@ -349,6 +349,7 @@
       <div class="form-body">
         <form id="submission-form" novalidate>
           <input type="hidden" name="token" value="pir-devine-news" />
+          <input type="hidden" id="artFilenameHidden" name="artFilename" />
 
           <!-- Contact -->
           <div class="form-sec">
@@ -731,6 +732,7 @@
   function onFileSelect(e){ if(e.target.files[0]) setFile(e.target.files[0]); }
   function setFile(f) {
     selectedArtFile = f;
+    document.getElementById('artFilenameHidden').value = f.name;
     document.getElementById('drop-fname').textContent = f.name+' ('+(f.size/1024/1024).toFixed(2)+' MB)';
     document.getElementById('drop-default').style.display = 'none';
     document.getElementById('drop-selected').style.display = 'block';
@@ -771,6 +773,7 @@
 
   function resetForm(){
     document.getElementById('submission-form').reset(); selCat=''; selectedArtFile=null;
+    document.getElementById('artFilenameHidden').value='';
     document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
     document.getElementById('sec-lit').style.display='none';
     document.getElementById('sec-art').style.display='none';
