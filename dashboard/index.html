@@ -186,10 +186,10 @@
           <br />— LitCom, January 2026
         </p>
         <div class="hero-actions">
-          <a href="submit.html" class="btn btn-primary">✍️ Submit Work</a>
+          <button class="btn btn-primary" onclick="openModal('modal-whatis')">💬 What Is This?</button>
           <button class="btn btn-ghost" onclick="openModal('modal-howto')">🤔 How It Works</button>
           <button class="btn btn-ghost" onclick="openModal('modal-president')"
-                  data-tooltip="A message from Kevin Franciotti, PIR® President">💌 From the President</button>
+                  data-tooltip="A message from Kevin Franciotti, PIR® Board of Directors">💌 From the Board</button>
         </div>
       </div>
       <div class="hero-illustration">
@@ -332,12 +332,37 @@
   </div>
 </div>
 
-<!-- President's Message -->
+<!-- What Is This? -->
+<div class="modal-overlay" id="modal-whatis" role="dialog" aria-modal="true" aria-labelledby="whatis-title">
+  <div class="modal" style="max-width:580px">
+    <button class="modal-close" onclick="closeModal('modal-whatis')" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">🌿 Welcome to the Portal</div>
+    <h2 class="modal-title" id="whatis-title">What Is This?</h2>
+    <div class="modal-body">
+      <p>This is the <strong>De Vine News Committee Portal</strong> — an interactive space where PIR® members and the newsletter committee come together each month.</p>
+      <p>Here you can:</p>
+      <ul>
+        <li><strong>Read</strong> past and current newsletter editions</li>
+        <li><strong>Submit</strong> your writing, poetry, artwork, or reflections for an upcoming issue</li>
+        <li><strong>See open service positions</strong> and get involved with the PR or Literature Committee</li>
+        <li><strong>Track themes</strong> — each issue is centered on a spiritual principle from the 12 Steps</li>
+      </ul>
+      <p>Behind the scenes, the committee uses this portal to review, approve, and publish submissions — all through a secure, automated workflow that keeps unpublished content private.</p>
+      <p style="font-size:0.82rem;color:var(--text-3);font-style:italic">Built and maintained as committee service by the PIR® Tech &amp; PR Committees. No special expertise required to submit — only a willingness to share.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="submit.html" class="btn btn-primary">✍️ Submit Work</a>
+      <button class="btn btn-ghost" onclick="closeModal('modal-whatis')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Board Message -->
 <div class="modal-overlay" id="modal-president" role="dialog" aria-modal="true" aria-labelledby="president-title">
   <div class="modal" style="max-width:640px">
     <button class="modal-close" onclick="closeModal('modal-president')" aria-label="Close">✕</button>
     <div class="modal-eyebrow">🌀 Vol. 1 Issue 1 · Jan 2026</div>
-    <h2 class="modal-title" id="president-title">💌 A Message from the President</h2>
+    <h2 class="modal-title" id="president-title">💌 A Message from the Board</h2>
     <div class="modal-body">
       <p>Welcome to <em>de Vine</em>, Psychedelics in Recovery's newsletter. I'm grateful you're here.</p>
       <p>PIR was born from a simple but difficult question: How do we talk honestly about recovery in a world where psychedelics are increasingly visible, medicalized, politicized, and misunderstood — without losing our integrity or one another? Over the years, our fellowship has grown into a diverse, sometimes imperfect, and deeply committed community wrestling with that question together.</p>
@@ -345,7 +370,7 @@
       <p>Growth brings complexity. As PIR expands across geographies, modalities, and viewpoints, we are continually challenged to balance openness with safety, innovation with humility, and individual experience with collective care. These tensions are not signs of failure; they are signs that something alive is being tended. Our task is not to eliminate disagreement, but to remain grounded in respect, transparency, and a shared commitment to recovery.</p>
       <p>Whether you are new to PIR or have been walking with us for years, I invite you to see this publication as a conversation rather than a conclusion. Read closely. Question thoughtfully. Serve where you are able. And remember that none of us carries this work alone.</p>
       <p>Thank you to the PR Committee and all contributors who brought this first issue into being. I look forward to what we will continue to grow — together.</p>
-      <p style="margin-top:1.25rem">In service,<br /><strong>Kevin Franciotti</strong><br /><span style="font-size:0.8em;color:var(--text-3)">President, Psychedelics in Recovery™</span></p>
+      <p style="margin-top:1.25rem">In service,<br /><strong>Kevin Franciotti</strong><br /><span style="font-size:0.8em;color:var(--text-3)">Co-founder, PIR® Board of Directors</span></p>
     </div>
     <div class="modal-actions">
       <a href="bulletin.html" class="btn btn-primary">📋 De Vine Bulletin ↗</a>
