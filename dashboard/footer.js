@@ -56,9 +56,9 @@
         <span class="pir-footer__group-title">Tech &amp; Resources</span>
         <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener">💻 GitHub (Public Repo)</a>
         <a href="#drive" data-footer-drive>☁️ Google Drive</a>
-        <a href="mailto:info@psychedelicsinrecovery.org">💌 General Inquiries</a>
+        <a href="mailto:info@psychedelicsinrecovery.org">ⓘ General Inquiries</a>
         <a href="mailto:tech@psychedelicsinrecovery.org">🧑🏽‍💻 Tech Committee</a>
-        <a href="mailto:newsletter@psychedelicsinrecovery.org">✉️ Contact Newsletter</a>
+        <a href="mailto:newsletter@psychedelicsinrecovery.org">💌 Contact Newsletter</a>
         <a href="mailto:pir.devine.news@gmail.com">🔐 Site Admin</a>
       </div>
 
