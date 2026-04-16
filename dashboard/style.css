@@ -474,6 +474,7 @@ img { display: block; max-width: 100%; }
 .badge-approved  { background: rgba(0,208,130,0.15);   color: var(--green); border: 1px solid rgba(0,208,130,0.25); }
 .badge-published { background: rgba(155,81,224,0.15);  color: #c084fc; border: 1px solid rgba(155,81,224,0.25); }
 .badge-art       { background: rgba(74,234,220,0.10);  color: var(--cyan); border: 1px solid rgba(74,234,220,0.2); }
+.badge-lit       { background: rgba(155,81,224,0.10);  color: #c084fc; border: 1px solid rgba(155,81,224,0.2); }
 
 /* ── Wrap ──────────────────────────────────────────────────── */
 .page-wrap { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
