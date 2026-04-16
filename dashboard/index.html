@@ -740,8 +740,8 @@
         + '</div>';
     }).join('');
 
-    // Show jump buttons + fade indicator when there are more than 5 submissions
-    var hasMany = subs.length > 5;
+    // Show jump buttons + fade indicator when there are more than 2 submissions
+    var hasMany = subs.length > 2;
     var jumpRow = document.getElementById('submissions-jump-row');
     var fade    = document.getElementById('submissions-fade');
     if (jumpRow) jumpRow.style.display = hasMany ? 'flex' : 'none';
