@@ -688,7 +688,7 @@
       var isArt = s.type === 'art'  || s.type === 'both';
       var isLit = s.type === 'literature' || s.type === 'both';
       // Type icon: show both for 'both', otherwise single icon
-      var typeIcon = s.type === 'both' ? '🎨📄' : (isArt ? '🎨' : '📄');
+      var typeIcon = s.type === 'both' ? '🎨 📄' : (isArt ? '🎨' : '📄');
       var artBadge = isArt ? '<span class="badge badge-art">🎨 Art</span>' : '';
       var litBadge = isLit ? '<span class="badge badge-lit">📄 Lit</span>' : '';
       var artFile  = isArt && s.artFilename
