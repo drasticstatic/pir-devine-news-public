@@ -1,5 +1,5 @@
 # Product Roadmap
-### Devine News — PIR® Newsletter Committee Hub
+### De Vine News — PIR® Newsletter Committee Hub
 
 ---
 

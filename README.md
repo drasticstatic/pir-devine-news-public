@@ -1,4 +1,4 @@
-# 🌀 Devine News — Committee Hub
+# 🌀 De Vine News — Committee Hub
 ### Newsletter Workflow Hub · Psychedelics in Recovery™ · PIR® 12-Step Fellowship
 
 ---
@@ -223,7 +223,7 @@ pir-devine-news/
 
 ## Contributing & Service
 
-The Devine News hub is built and maintained as committee service. No special expertise required — only a willingness to collaborate and serve with humility.
+The De Vine News hub is built and maintained as committee service. No special expertise required — only a willingness to collaborate and serve with humility.
 
 Questions, bugs, or suggestions: open an issue on [pir-devine-news-public](https://github.com/drasticstatic/pir-devine-news-public/issues) or email `pir.devine.news@gmail.com`.
 

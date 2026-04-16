@@ -1,5 +1,5 @@
 # Hosting & Sustainability
-### Devine News — PIR® Newsletter Committee Hub
+### De Vine News — PIR® Newsletter Committee Hub
 
 ---
 
@@ -10,7 +10,7 @@
 
 ## Where the Site Lives
 
-The Devine News hub is hosted on **GitHub Pages** — a free, permanent static hosting service run by GitHub (owned by Microsoft). It requires no monthly fees, no server to maintain, and no technical staff to keep online.
+The De Vine News hub is hosted on **GitHub Pages** — a free, permanent static hosting service run by GitHub (owned by Microsoft). It requires no monthly fees, no server to maintain, and no technical staff to keep online.
 
 Every time a committee developer pushes an update, the site automatically rebuilds and publishes within minutes. If no one updates the code, the site simply stays up exactly as it is — indefinitely.
 
