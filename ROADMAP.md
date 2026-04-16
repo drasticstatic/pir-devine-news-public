@@ -30,7 +30,7 @@
 - ✅ **Bulletin board** (`bulletin.html`) — community announcements
 - ✅ **Resources page** (`resources.html`)
 - ✅ **Private → public sync** — auto-publishes on every commit; committee data and credentials never reach the public repo
-- ✅ **Hosting documentation** (`SUSTAINABILITY.md`) — non-technical explainer of who hosts the site and how
+- ✅ **Hosting & sustainability docs** (`SUSTAINABILITY.md`, `ROADMAP.md`) — public explainer of who hosts the site, migration path, and product vision
 
 ---
 
@@ -65,18 +65,12 @@ This is the most ambitious phase, and the one most likely to transform how non-t
 
 ### The Idea
 
-Instead of asking an editor to:
-1. Learn GitHub
-2. Learn HTML
-3. Find a developer
-4. Wait for a deployment
+Instead of asking an editor to learn GitHub, learn HTML, find a developer, and wait for a deployment — they open a chat window and say:
 
-...they open a chat window and say:
-
-> *"Update the May submission deadline to April 30th."*
-> *"The June theme should be 'Letting Go' — add that to the form."*
-> *"Can you show me a preview of the submission form?"*
+> *"Update the June submission deadline to May 15th."*
+> *"The next theme should be 'Humility' — add that to the form."*
 > *"Mark Sarah's April submission as Approved."*
+> *"Draft a welcome paragraph for the May newsletter."*
 
 An AI agent reads those messages, makes the changes, and pushes the update — all without the editor touching a line of code.
 
@@ -102,30 +96,31 @@ The agent would have access only to the `dashboard/` files — not private setup
 
 | Request | What the agent does |
 |---------|-------------------|
-| "Change the June theme to Letting Go" | Edits the dropdown option and sidebar pill in `submit.html` |
+| "Change the June theme to Humility" | Edits the dropdown option and sidebar pill in `submit.html` |
 | "Add a new submission from Maria — poetry, Step 3 theme" | Adds an entry to `data.json` |
-| "Publish the May newsletter" | Renames and links the new `newsletter-may-2026.html` file |
-| "Update the deadline to May 15th" | Finds and replaces the deadline across the relevant HTML |
+| "Publish the May newsletter" | Links the new `newsletter-may-2026.html` file in the portal |
+| "Update the deadline to May 15th" | Finds and replaces the deadline across the relevant pages |
 | "Show me all submissions marked Needs Review" | Queries `data.json` and returns a readable list |
+| "Write a 2-sentence intro for the June issue" | Drafts copy for editor review before publishing |
 
-### Claude API / Claude.ai Integration Options
+### Claude Integration Options
 
-**Option A — Claude.ai Projects (simplest)**
-Use the existing Claude.ai web interface with the repo uploaded as a Project. Editors log in to Claude.ai, open the PIR project, and chat. No new infrastructure required. Best for early trials.
+**Option A — Claude.ai Projects (simplest, available now)**
+Upload the repo to a Claude.ai Project. Editors log in at claude.ai, open the PIR project, and chat. No new infrastructure required. Best for early trials — any committee member with a Claude.ai account can use it today.
 
-**Option B — Embedded chat widget (future)**
-Build a small chat widget into the admin view of `index.html`. The widget calls the Anthropic API (Claude Sonnet or Haiku for cost efficiency) with the current file state as context. Editors stay inside the dashboard — no need to switch to Claude.ai. The backend would be a lightweight Google Cloud Function or Apps Script endpoint that proxies the API call.
+**Option B — Embedded chat widget (Phase 4 build)**
+Build a small chat widget directly into the admin view of `index.html`. The widget calls the Anthropic API (Claude Sonnet or Haiku for cost efficiency) with the current file state as context. Editors stay inside the committee dashboard — no need to switch tabs. The backend would be a lightweight Google Apps Script endpoint that proxies the API call, keeping costs and complexity minimal.
 
-**Option C — Claude Code scheduled agents (advanced)**
-Use Claude's remote trigger / scheduled agent feature to run recurring tasks automatically — e.g., "Every Monday, check if a new submission has been sitting in 'Needs Review' for more than 7 days and send a reminder to the committee Slack/email." This requires the Claude API and a small backend, but adds genuine automation intelligence.
+**Option C — Claude scheduled agents (advanced automation)**
+Use Claude's remote trigger / scheduled agent feature to run recurring tasks automatically — e.g., "Every Monday, check if any submission has been sitting in 'Needs Review' for more than 7 days and send a reminder email to the committee." This adds genuine proactive automation without any human trigger.
 
 ### Governance & Safety
 
 The AI admin assistant would be designed with clear guardrails:
-- **Propose before executing** — the agent always shows a preview of the change and waits for human approval before committing
+- **Propose before executing** — the agent always shows a preview and waits for human approval before committing any change
 - **No credential access** — the agent cannot read `service_account.json`, `.env`, or committee email lists
-- **Audit trail** — every change made through the assistant is a Git commit with a clear message
-- **Rollback** — since everything is in Git, any AI-assisted change can be undone with `git revert`
+- **Audit trail** — every change made through the assistant is a Git commit with a clear, readable message
+- **Rollback** — since everything is in Git, any AI-assisted change can be undone with a single `git revert`
 
 ---
 
@@ -134,7 +129,7 @@ The AI admin assistant would be designed with clear guardrails:
 *Goal: Full ownership transferred to the PIR Fellowship; zero dependency on individual contributors.*
 
 - 💡 **PIR GitHub organization** — repos transferred from `drasticstatic` personal account to a `pir-psychedelics-in-recovery` org
-- 💡 **Custom domain** — `news.psychedelicsinrecovery.org` mapped via DNS (no hosting cost change)
+- 💡 **Custom domain** — `news.psychedelicsinrecovery.org` mapped via DNS (no hosting cost change — see `SUSTAINABILITY.md`)
 - 💡 **Multi-editor access** — multiple committee members with GitHub access can push updates
 - 💡 **Onboarding guide** — a non-technical "how to use this" guide for new committee chairs
 - 💡 **Annual review workflow** — automated prompt at year-end to archive the previous year's issues and reset the submission calendar
@@ -145,7 +140,7 @@ The AI admin assistant would be designed with clear guardrails:
 
 The codebase is plain HTML, CSS, and JavaScript — no build tools required. If you're a developer:
 
-1. Fork `github.com/drasticstatic/pir-devine-news` (or the future PIR org repo)
+1. Request access or fork the repo (contact pir.devine.news@gmail.com)
 2. Make your changes in `dashboard/`
 3. Open a pull request
 
