@@ -305,9 +305,11 @@
   <!-- Submissions -->
   <section>
     <div class="section-row">
-      <span class="section-label">📋 Submissions</span>
+      <div>
+        <span class="section-label">📋 Submissions</span>
+        <div style="margin-top:0.3rem"><span class="sync-label" id="last-sync-label">Last sync: —</span></div>
+      </div>
       <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
-        <span class="sync-label" id="last-sync-label">Last sync: —</span>
         <button class="btn btn-ghost btn-sm" id="refresh-btn" onclick="loadData()"
                 data-tooltip="GitHub Pages CDN can take a few minutes to reflect new data — if cards don't appear right away, wait a moment and try again">↺ Refresh</button>
         <button class="btn btn-ghost btn-sm" onclick="openModal('modal-sync-info')"
@@ -509,8 +511,9 @@
       <h3 style="font-size:0.88rem;font-weight:700;color:var(--cyan);margin-bottom:0.5rem">Removing a submission</h3>
       <ol style="font-size:0.84rem;color:var(--text-2);line-height:1.75;padding-left:1.25rem;margin-bottom:1.25rem">
         <li>Click <strong>🔒 Manage</strong> next to this button and enter the committee admin passphrase.</li>
-        <li>Each submission card gains a <strong>✕ Remove</strong> button.</li>
-        <li>Clicking Remove sends a password-authenticated request to the Apps Script, which removes the entry from <code>data.json</code> and marks the row <em>Archived</em> in the Google Sheet.</li>
+        <li>Each submission card gains a <strong>status dropdown</strong> and an <strong>✕ Archive</strong> button.</li>
+        <li>The dropdown lets you toggle between Incoming, Needs Review, Approved, and Published — each change requires confirmation and updates the Sheet and dashboard immediately.</li>
+        <li>Clicking Archive removes the entry from the dashboard and marks the row <em>Archived</em> in the Sheet.</li>
         <li>The card disappears from the dashboard immediately.</li>
       </ol>
 
@@ -638,7 +641,7 @@
   }
 
   async function removeSubmission(id, btn) {
-    if (!confirm('Remove this submission from the dashboard? It will be marked Archived in the Sheet.')) return;
+    if (!confirm('Archive this submission? It will be removed from the dashboard and marked Archived in the Sheet.')) return;
     btn.disabled = true; btn.textContent = '…';
     try {
       var params = new URLSearchParams({ action: 'remove', id: id, password: adminPassword });
@@ -667,6 +670,20 @@
   function normalizeStatusLabel(key) {
     var map = { incoming:'Incoming', review:'Needs Review', approved:'Approved', published:'Published', archived:'Archived' };
     return map[key] || 'Incoming';
+  }
+
+  function confirmSetStatus(id, selectEl) {
+    var newStatus = selectEl.value;
+    var prev = selectEl.dataset.prev || selectEl.options[0].value;
+    if (!confirm('Change status to "' + newStatus + '"?')) {
+      // Revert the dropdown
+      for (var i = 0; i < selectEl.options.length; i++) {
+        if (selectEl.options[i].value === prev) { selectEl.selectedIndex = i; break; }
+      }
+      return;
+    }
+    selectEl.dataset.prev = newStatus;
+    setStatus(id, selectEl);
   }
 
   async function setStatus(id, selectEl) {
@@ -756,13 +773,13 @@
     document.getElementById('submissions-list').innerHTML = subs.map(function(s){
       var adminControls = '';
       if (adminMode) {
-        var statusOpts = ['Incoming','Needs Review','Approved','Published','Archived'].map(function(v){
+        var statusOpts = ['Incoming','Needs Review','Approved','Published'].map(function(v){
           var sel = (normalizeStatusLabel(s.status) === v) ? ' selected' : '';
           return '<option value="'+v+'"'+sel+'>'+v+'</option>';
         }).join('');
-        adminControls = '<select class="status-select" onchange="setStatus(\''+s.id+'\',this)">'
+        adminControls = '<select class="status-select" data-prev="'+normalizeStatusLabel(s.status)+'" onchange="confirmSetStatus(\''+s.id+'\',this)">'
           + statusOpts + '</select>'
-          + '<button class="btn-remove" onclick="removeSubmission(\''+s.id+'\',this)">✕ Remove</button>';
+          + '<button class="btn-remove" onclick="removeSubmission(\''+s.id+'\',this)">✕ Archive</button>';
       }
       var removeBtn = adminControls; // kept for hasAction check below
       var driveLink = s.driveUrl
