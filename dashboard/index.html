@@ -155,6 +155,7 @@
     .sub-title { font-size: 0.92rem; font-weight: 700; color: var(--text); }
     .sub-meta { font-size: 0.73rem; color: var(--text-3); }
     .sub-snippet { font-size: 0.8rem; color: var(--text-2); margin-top: 0.35rem; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .sub-art-file { font-size: 0.72rem; color: var(--cyan); margin-top: 0.3rem; opacity: 0.85; }
     .sub-action { flex-shrink: 0; align-self: center; display:flex; gap:0.45rem; align-items:center; }
 
     /* Refresh spinner */
@@ -625,10 +626,19 @@
       var r = await fetch(window.APPS_SCRIPT_URL, { method: 'POST', body: params });
       var j = await r.json();
       if (j.status === 'ok') {
-        btn.textContent = '✓ Synced ' + (j.synced || '') + ' entries';
-        setTimeout(function(){ btn.disabled = false; btn.textContent = '↕ Sync from Sheet'; }, 2500);
-        // Wait a moment for GitHub Pages to serve the updated file, then reload
-        setTimeout(loadData, 3000);
+        var n = j.synced || '';
+        btn.textContent = '✓ Synced ' + n + ' — loading…';
+        // GitHub Pages CDN can take ~30s to propagate; retry loadData several times
+        var attempts = [3000, 7000, 13000, 20000];
+        attempts.forEach(function(ms, i) {
+          setTimeout(function() {
+            loadData();
+            if (i === attempts.length - 1) {
+              btn.disabled = false;
+              btn.textContent = '↕ Sync from Sheet';
+            }
+          }, ms);
+        });
       } else {
         alert(j.message || 'Sync failed.');
         btn.disabled = false; btn.textContent = '↕ Sync from Sheet';
@@ -649,13 +659,20 @@
         ? '<a href="'+s.driveUrl+'" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Open in Drive ↗</a>'
         : '';
       var hasAction = removeBtn || driveLink;
+      var isArt  = s.type === 'art'  || s.type === 'both';
+      var isLit  = s.type === 'literature' || s.type === 'both';
+      var typeIcon = isArt ? '🎨' : '📄';
+      var artBadge = isArt ? '<span class="badge badge-art">🎨 Art</span>' : '';
+      var artFile  = isArt && s.artFilename
+        ? '<div class="sub-art-file">🖼 ' + s.artFilename + '</div>'
+        : '';
       return '<div class="sub-card" id="sub-'+s.id+'">'
-        + '<div class="sub-type-icon">'+(s.type==='art'?'🎨':'📄')+'</div>'
+        + '<div class="sub-type-icon">'+typeIcon+'</div>'
         + '<div class="sub-body">'
         +   '<div class="sub-title-row"><span class="sub-title">'+(s.title||'Untitled')+'</span>'
-        +   badge(s.status)+(s.type==='art'?'<span class="badge badge-art">🎨 Art</span>':'')+'</div>'
+        +   badge(s.status)+artBadge+'</div>'
         +   '<div class="sub-meta">'+(s.author?'by '+s.author:'')+(s.author&&s.topic?' · ':'')+(s.topic?'Topic: '+s.topic:'')+'</div>'
-        +   (s.snippet?'<p class="sub-snippet">'+s.snippet+'</p>':'')
+        +   artFile
         + '</div>'
         + (hasAction?'<div class="sub-action">'+driveLink+removeBtn+'</div>':'')
         + '</div>';
@@ -693,10 +710,10 @@
       document.getElementById('stat-total').textContent    = subs.length;
       document.getElementById('stat-review').textContent   = subs.filter(function(s){return s.status==='review';}).length;
       document.getElementById('stat-approved').textContent = subs.filter(function(s){return s.status==='approved';}).length;
-      document.getElementById('stat-art').textContent      = subs.filter(function(s){return s.type==='art';}).length;
+      document.getElementById('stat-art').textContent      = subs.filter(function(s){return s.type==='art'||s.type==='both';}).length;
 
       /* Art gallery */
-      var art = subs.filter(function(s){return s.type==='art' && s.thumbnail;});
+      var art = subs.filter(function(s){return (s.type==='art'||s.type==='both') && s.thumbnail;});
       if (art.length) {
         document.getElementById('gallery-section').classList.remove('hidden');
         document.getElementById('gallery-grid').innerHTML = art.map(function(s){
