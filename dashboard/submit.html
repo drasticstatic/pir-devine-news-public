@@ -365,6 +365,12 @@
                   <span data-tooltip="For your confirmation receipt only — never shared publicly" style="cursor:help;color:var(--text-3);font-size:0.9em">ⓘ</span>
                 </label>
                 <input class="field-input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+                <div class="field-hint">
+                  <button type="button" onclick="openModal('modal-nongmail')"
+                    style="background:none;border:none;padding:0;cursor:pointer;color:var(--text-3);font-size:0.7rem;text-decoration:underline;text-underline-offset:2px;">
+                    Not using Gmail? See what to expect →
+                  </button>
+                </div>
               </div>
             </div>
             <div class="field">
@@ -542,6 +548,13 @@
                 </div>
               </div>
             </div>
+            <div class="field-hint" style="text-align:center;margin-top:0.4rem">
+              <button type="button" onclick="openModal('modal-filesize')"
+                style="background:none;border:none;padding:0;cursor:pointer;color:var(--text-3);font-size:0.7rem;text-decoration:underline;text-underline-offset:2px;">
+                File too large? See size limits &amp; options →
+              </button>
+            </div>
+
             <!-- File size alert — shown dynamically by JS -->
             <div id="file-size-alert" style="display:none;margin-top:0.65rem;padding:0.75rem 1rem;border-radius:9px;font-size:0.8rem;line-height:1.65;border:1px solid;"></div>
 
@@ -696,6 +709,40 @@
     </div>
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="closeModal('modal-guidelines')">Got it ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ File Size Info Modal ═══ -->
+<div class="modal-overlay" id="modal-filesize" role="dialog" aria-modal="true" aria-labelledby="filesize-title">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-filesize')" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">🎨 Artwork Upload</div>
+    <h2 class="modal-title" id="filesize-title">File Size Limits &amp; Options</h2>
+    <div class="modal-body">
+      <h3>Size Limits</h3>
+      <ul>
+        <li><strong>Under 10 MB</strong> — uploads smoothly on any connection.</li>
+        <li><strong>10–25 MB</strong> — accepted, but may time out on slower connections. A warning will appear; if the submission fails, use the email option below.</li>
+        <li><strong>Over 25 MB</strong> — cannot be uploaded through the form. Please compress or email the file directly.</li>
+      </ul>
+      <h3>Free Compression Tools</h3>
+      <p>These tools reduce file size without visible quality loss and take under a minute:</p>
+      <ul>
+        <li><a href="https://tinypng.com" target="_blank" rel="noopener">TinyPNG / TinyJPG</a> — drag &amp; drop, no account needed. Works on PNG and JPG.</li>
+        <li><a href="https://squoosh.app" target="_blank" rel="noopener">Squoosh</a> (by Google) — more control over output quality and format.</li>
+        <li><strong>On iPhone/iPad:</strong> use the Files app to share the photo → Save to Files — iOS often compresses automatically on export.</li>
+        <li><strong>On Android:</strong> use Google Photos → share → choose a lower resolution option before saving.</li>
+      </ul>
+      <h3>Send by Email Instead</h3>
+      <p>If your file is too large or compression isn't an option, email your artwork directly to the committee:</p>
+      <p style="margin:0.5rem 0 0.25rem"><strong>pir.devine.news@gmail.com</strong></p>
+      <p style="font-size:0.78rem;color:var(--text-3)">Include your name, the piece title, which newsletter issue it's for, and any artist's note. We'll handle the rest.</p>
+      <h3>Accepted Formats</h3>
+      <p>JPG, PNG, or WebP. High-resolution originals are preferred — our team resizes everything to fit the newsletter template.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeModal('modal-filesize')">Got it ✓</button>
     </div>
   </div>
 </div>
