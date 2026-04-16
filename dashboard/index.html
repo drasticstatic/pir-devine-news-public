@@ -195,6 +195,9 @@
                   font-size:0.72rem; font-weight:700; padding:0.3rem 0.65rem; border-radius:6px;
                   cursor:pointer; transition:all 0.15s; line-height:1; }
     .btn-remove:hover { background:rgba(239,68,68,0.12); border-color:#f87171; }
+    .status-select { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:var(--text-1);
+                     font-size:0.72rem; padding:0.28rem 0.5rem; border-radius:6px; cursor:pointer; }
+    .status-select:disabled { opacity:0.5; cursor:not-allowed; }
     .admin-bar { display:flex; align-items:center; gap:0.5rem; font-size:0.72rem; color:var(--text-3); }
     .admin-active-label { color:#f87171; font-weight:700; }
 
@@ -660,6 +663,47 @@
     }
   }
 
+  /* Map internal status key → dropdown label */
+  function normalizeStatusLabel(key) {
+    var map = { incoming:'Incoming', review:'Needs Review', approved:'Approved', published:'Published', archived:'Archived' };
+    return map[key] || 'Incoming';
+  }
+
+  async function setStatus(id, selectEl) {
+    var newStatus = selectEl.value;
+    selectEl.disabled = true;
+    try {
+      var params = new URLSearchParams({ action: 'setStatus', id: id, status: newStatus, password: adminPassword });
+      var r = await fetch(window.APPS_SCRIPT_URL, { method: 'POST', body: params });
+      var j = await r.json();
+      if (j.status === 'ok') {
+        // Update in-memory list and re-render
+        window._lastSubs = (window._lastSubs || []).map(function(s) {
+          if (String(s.id) === String(id)) {
+            s.status = newStatus.toLowerCase().replace(' ', '_');
+            // Use same keys as badge() expects
+            if (newStatus === 'Needs Review')  s.status = 'review';
+            else if (newStatus === 'Approved') s.status = 'approved';
+            else if (newStatus === 'Published') s.status = 'published';
+            else if (newStatus === 'Archived') s.status = 'archived';
+            else s.status = 'incoming';
+          }
+          return s;
+        });
+        if (newStatus === 'Archived') {
+          window._lastSubs = (window._lastSubs || []).filter(function(s){ return String(s.id) !== String(id); });
+        }
+        renderSubmissions(window._lastSubs);
+      } else {
+        alert(j.message || 'Status update failed.');
+        selectEl.disabled = false;
+      }
+    } catch(_) {
+      alert('Could not reach the server.');
+      selectEl.disabled = false;
+    }
+  }
+
   async function syncFromSheet() {
     var btn = document.getElementById('sync-sheet-btn');
     btn.disabled = true; btn.textContent = '↕ Syncing…';
@@ -710,9 +754,17 @@
   /* ── Render submission cards ── */
   function renderSubmissions(subs) {
     document.getElementById('submissions-list').innerHTML = subs.map(function(s){
-      var removeBtn = adminMode
-        ? '<button class="btn-remove" onclick="removeSubmission(\''+s.id+'\',this)">✕ Remove</button>'
-        : '';
+      var adminControls = '';
+      if (adminMode) {
+        var statusOpts = ['Incoming','Needs Review','Approved','Published','Archived'].map(function(v){
+          var sel = (normalizeStatusLabel(s.status) === v) ? ' selected' : '';
+          return '<option value="'+v+'"'+sel+'>'+v+'</option>';
+        }).join('');
+        adminControls = '<select class="status-select" onchange="setStatus(\''+s.id+'\',this)">'
+          + statusOpts + '</select>'
+          + '<button class="btn-remove" onclick="removeSubmission(\''+s.id+'\',this)">✕ Remove</button>';
+      }
+      var removeBtn = adminControls; // kept for hasAction check below
       var driveLink = s.driveUrl
         ? '<a href="'+escHtml(s.driveUrl)+'" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Open in Drive ↗</a>'
         : '';
