@@ -414,7 +414,7 @@
                   <option value="Steps 6 &amp; 7 — May 2026" selected>✨ Steps 6 &amp; 7 — Spiritual Principle: Willingness (This Month)</option>
                 </optgroup>
                 <optgroup label="Upcoming 2026">
-                  <option value="Steps 8 &amp; 9 — June 2026 (Issue 6)">June 2026 · Issue 6 — Amends · Steps 8 &amp; 9</option>
+                  <option value="Letting Go — June 2026 (Issue 6)">June 2026 · Issue 6 — Letting Go · Deadline May 15</option>
                   <option value="Step 10 — July 2026 (Issue 7)">July 2026 · Issue 7 — Perseverance · Step 10</option>
                   <option value="Step 11 — August 2026 (Issue 8)">August 2026 · Issue 8 — Awareness · Step 11</option>
                   <option value="Step 12 — September 2026 (Issue 9)">September 2026 · Issue 9 — Service · Step 12</option>
@@ -509,7 +509,7 @@
             <div class="field">
               <label class="field-label" for="litText">Your Text <span class="req">*</span></label>
               <textarea class="field-input" id="litText" name="litText" rows="10"
-                        placeholder="Paste or type your poem, article, Step reflection, or personal story here…&#10;&#10;No word count limit. Please ensure your sharing aligns with the PIR® 12 Traditions."></textarea>
+                        placeholder="Paste or type your poem, article, Step reflection, or personal story here…&#10;&#10;Ideal: 300–800 words (max 1,000). Plain text — no formatting needed. Please ensure your sharing aligns with the PIR® 12 Traditions."></textarea>
             </div>
           </div>
 
@@ -542,6 +542,9 @@
                 </div>
               </div>
             </div>
+            <!-- File size alert — shown dynamically by JS -->
+            <div id="file-size-alert" style="display:none;margin-top:0.65rem;padding:0.75rem 1rem;border-radius:9px;font-size:0.8rem;line-height:1.65;border:1px solid;"></div>
+
             <div class="field">
               <label class="field-label" for="artNotes">Artist's Note <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-3)">(optional)</span></label>
               <textarea class="field-input" id="artNotes" name="artNotes" rows="3"
@@ -600,12 +603,12 @@
       <div class="topic-pill" style="margin-bottom:0.65rem">
         <div class="topic-month" style="color:var(--green)">✨ May 2026 — Current</div>
         <div class="topic-name">Steps 6 &amp; 7 — Willingness</div>
-        <div class="topic-desc">Entirely ready and humbly asked. Deadline: May 30, 2026.</div>
+        <div class="topic-desc">Entirely ready and humbly asked. Submissions still welcome — late entries held for future issues.</div>
       </div>
       <div class="topic-pill" style="border-color:rgba(155,81,224,0.2);background:rgba(155,81,224,0.06)">
         <div class="topic-month" style="color:var(--purple)">⏭ June 2026 — Next</div>
-        <div class="topic-name">Steps 8 &amp; 9 — Amends</div>
-        <div class="topic-desc">Made a list and became willing. Deadline: June 30, 2026.</div>
+        <div class="topic-name">Letting Go</div>
+        <div class="topic-desc">The willingness to set down what no longer serves us. <strong style="color:var(--purple)">Deadline: May 15, 2026.</strong></div>
       </div>
       <a href="newsletter-april-2026.html" class="btn btn-ghost btn-sm"
          style="width:100%;justify-content:center;margin-bottom:0.5rem">
@@ -624,7 +627,7 @@
         <div class="g-icon">✍️</div>
         <div class="g-text">
           <h4>Literature</h4>
-          <p>Poetry, articles, and 12-step reflections. No word count limit. Submissions should align with the PIR® 12 Traditions.</p>
+          <p>Poetry, articles, and 12-step reflections. Ideal 300–800 words (max 1,000). Align with the PIR® 12 Traditions. Plain text — no formatting needed.</p>
         </div>
       </div>
       <div class="guideline">
@@ -669,7 +672,9 @@
     <h2 class="modal-title" id="guide-title">Full Submission Guidelines</h2>
     <div class="modal-body">
       <h3>Literature</h3>
-      <p>Share your poetry, articles, or 12-step reflections. There is no word count limit, but please ensure your sharing aligns with the PIR® 12 Traditions. Pieces that reference specific individuals by name (other than public figures) should be reviewed for anonymity before submission.</p>
+      <p>Share your poetry, articles, or 12-step reflections. <strong>Ideal length: 300–800 words (max 1,000 words).</strong> Submit plain text — no special formatting, fonts, or spacing needed. Pieces that reference specific individuals by name (other than public figures) should be reviewed for anonymity before submission. Submissions should align with the PIR® 12 Traditions.</p>
+      <h3>Deadline</h3>
+      <p>Submissions are due by the <strong>15th of the month preceding publication</strong> — e.g., submissions for the June newsletter are due May 15. Late submissions may be held for a future issue.</p>
       <h3>Art &amp; Photography</h3>
       <p>Please upload high-resolution images (JPG or PNG) that reflect your journey of recovery. Our team will resize and format your artwork to fit the newsletter template. Original files are archived in the committee's Google Drive.</p>
       <h3>Byline Preferences</h3>
@@ -691,6 +696,33 @@
     </div>
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="closeModal('modal-guidelines')">Got it ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Non-Gmail Notice Modal ═══ -->
+<div class="modal-overlay" id="modal-nongmail" role="dialog" aria-modal="true" aria-labelledby="nongmail-title">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-nongmail')" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">📧 Email Notice</div>
+    <h2 class="modal-title" id="nongmail-title">Using a Non-Gmail Address?</h2>
+    <div class="modal-body">
+      <p>We noticed your email address isn't a Gmail account. You're absolutely welcome to submit — your work matters regardless of your email provider. Just a few things to know:</p>
+      <h3>What Works Fine</h3>
+      <ul>
+        <li>Submitting literature, artwork, or both — no Gmail required.</li>
+        <li>Your confirmation receipt email will be sent to the address you provided.</li>
+      </ul>
+      <h3>Potential Limitations</h3>
+      <ul>
+        <li><strong>Confirmation email delivery:</strong> Our automated Thank You email is sent via Google. Some non-Gmail providers (especially school or organization addresses) may filter it as spam — check your junk folder.</li>
+        <li><strong>Committee portal access:</strong> The editorial review dashboard requires a Google / Gmail login. If you ever join the committee, you'd need a Gmail account (or link your address to a Google account at <a href="https://accounts.google.com" target="_blank" rel="noopener">accounts.google.com</a>) to access it.</li>
+        <li><strong>Editor follow-up:</strong> If your piece is selected, an editor may contact you. Gmail-to-Gmail delivery is most reliable; non-Gmail may occasionally be slower.</li>
+      </ul>
+      <p style="margin-top:1rem;font-size:0.82rem;color:var(--text-3)">If you have any trouble receiving a confirmation, email us directly at <strong>pir.devine.news@gmail.com</strong>.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeModal('modal-nongmail')">Understood — Continue ✓</button>
     </div>
   </div>
 </div>
@@ -743,19 +775,61 @@
   function onDragLeave(e) { document.getElementById('drop-zone').classList.remove('drag-over'); }
   function onDrop(e) { e.preventDefault(); document.getElementById('drop-zone').classList.remove('drag-over'); if(e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); }
   function onFileSelect(e){ if(e.target.files[0]) setFile(e.target.files[0]); }
+  var FILE_WARN_MB  = 10;   // show warning above this size
+  var FILE_MAX_MB   = 25;   // block submission above this size
+
   function setFile(f) {
+    var sizeAlert = document.getElementById('file-size-alert');
+    var sizeMB = f.size / 1024 / 1024;
+
+    // Hard block: file exceeds absolute maximum
+    if (sizeMB > FILE_MAX_MB) {
+      sizeAlert.style.display = 'block';
+      sizeAlert.style.background = 'rgba(248,113,113,0.09)';
+      sizeAlert.style.borderColor = 'rgba(248,113,113,0.35)';
+      sizeAlert.style.color = 'var(--red)';
+      sizeAlert.innerHTML =
+        '<strong>File too large (' + sizeMB.toFixed(1) + ' MB) — max is ' + FILE_MAX_MB + ' MB.</strong><br>' +
+        'Please compress your image using a free tool like <a href="https://tinypng.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">TinyPNG</a> or ' +
+        '<a href="https://squoosh.app" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Squoosh</a> and re-upload.<br>' +
+        'Alternatively, email your artwork directly to ' +
+        '<strong>pir.devine.news@gmail.com</strong> with your name and submission details.';
+      // Reset file input but keep drop zone state clear
+      document.getElementById('artFile').value = '';
+      document.getElementById('drop-default').style.display = 'block';
+      document.getElementById('drop-selected').style.display = 'none';
+      selectedArtFile = null;
+      document.getElementById('artFilenameHidden').value = '';
+      document.getElementById('artFileDataHidden').value = '';
+      return;
+    }
+
+    // Soft warning: file is large but within limit
+    if (sizeMB > FILE_WARN_MB) {
+      sizeAlert.style.display = 'block';
+      sizeAlert.style.background = 'rgba(251,191,36,0.08)';
+      sizeAlert.style.borderColor = 'rgba(251,191,36,0.35)';
+      sizeAlert.style.color = '#fbbf24';
+      sizeAlert.innerHTML =
+        '<strong>Large file detected (' + sizeMB.toFixed(1) + ' MB).</strong> We\'ll do our best to process it, but uploads over ' + FILE_WARN_MB + ' MB may time out on slower connections.<br>' +
+        'If the submission doesn\'t go through, please email your artwork to ' +
+        '<strong>pir.devine.news@gmail.com</strong> with your name and submission details, or compress it first at ' +
+        '<a href="https://tinypng.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">TinyPNG</a>.';
+    } else {
+      sizeAlert.style.display = 'none';
+    }
+
     selectedArtFile = f;
     document.getElementById('artFilenameHidden').value = f.name;
-    document.getElementById('drop-fname').textContent = f.name+' ('+(f.size/1024/1024).toFixed(2)+' MB)';
+    document.getElementById('drop-fname').textContent = f.name + ' (' + sizeMB.toFixed(2) + ' MB)';
     document.getElementById('drop-default').style.display = 'none';
     document.getElementById('drop-selected').style.display = 'block';
     // Read as base64 for email attachment (cap at 4 MB to stay within email limits)
     document.getElementById('artFileDataHidden').value = '';
     if (f.size <= 4 * 1024 * 1024) {
       var reader = new FileReader();
-      reader.onload = function(e) {
-        // Strip the data URL prefix (e.g. "data:image/jpeg;base64,")
-        var b64 = e.target.result.split(',')[1];
+      reader.onload = function(ev) {
+        var b64 = ev.target.result.split(',')[1];
         document.getElementById('artFileDataHidden').value = b64 || '';
       };
       reader.readAsDataURL(f);
@@ -821,6 +895,17 @@
     var open = body.classList.toggle('is-open');
     btn.classList.toggle('is-open', open);
   }
+
+  /* Non-Gmail email check */
+  document.getElementById('email').addEventListener('blur', function() {
+    var val = this.value.trim().toLowerCase();
+    if (val && val.indexOf('@') !== -1) {
+      var domain = val.split('@')[1] || '';
+      if (domain && domain !== 'gmail.com') {
+        openModal('modal-nongmail');
+      }
+    }
+  });
 
   /* Drive link in sidebar */
   (async function() {
