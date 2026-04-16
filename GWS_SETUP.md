@@ -1,4 +1,4 @@
-# gws CLI Setup Guide — Devine News
+# gws CLI Setup Guide — De Vine News
 ### Connecting GitHub to Google Workspace for the PIR® Newsletter
 
 ---
@@ -141,7 +141,7 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com
 
 1. Go to [drive.google.com](https://drive.google.com) and sign in as
    `pir.devine.news@gmail.com`
-2. Create a Shared Drive named **"Devine News"** (or use an existing one)
+2. Create a Shared Drive named **"DeVine News"** (or use an existing one)
 3. Inside it, create four folders:
    - `Submissions` — raw incoming member work
    - `Templates` — approved Google Doc templates
@@ -263,7 +263,7 @@ replacing the default `myFunction()` stub.
 
 **8c — Sheet ID (already set):**
 
-The **Devine News Submissions** Google Sheet has been created under
+The **De Vine News Submissions** Google Sheet has been created under
 `pir.devine.news@gmail.com`. The Sheet ID is already wired into
 `scripts/apps-script-form.gs` (private — never synced public).
 

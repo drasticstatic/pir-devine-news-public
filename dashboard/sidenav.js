@@ -1,5 +1,5 @@
 /**
- * sidenav.js — Devine News shared side navigation
+ * sidenav.js — De Vine News shared side navigation
  * Dependency-free. Include at end of <body> after nav.js.
  *
  * Features:

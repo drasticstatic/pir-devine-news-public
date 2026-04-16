@@ -1,5 +1,5 @@
 /**
- * nav.js — Devine News shared navigation
+ * nav.js — De Vine News shared navigation
  * Dependency-free. Include at end of <body> on every dashboard page.
  *
  * Primary links (always visible): Portal · Submit · Setup (modal)

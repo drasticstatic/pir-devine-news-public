@@ -1,5 +1,5 @@
 /**
- * footer.js — Devine News shared footer
+ * footer.js — De Vine News shared footer
  * Dependency-free. Include at end of <body> on every dashboard page,
  * after nav.js. Injects a full-width footer before </body>.
  */
