@@ -155,20 +155,33 @@
     .sub-title { font-size: 0.92rem; font-weight: 700; color: var(--text); }
     .sub-meta { font-size: 0.73rem; color: var(--text-3); }
     .sub-snippet { font-size: 0.8rem; color: var(--text-2); margin-top: 0.3rem; line-height: 1.55; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .sub-art-file { font-size: 0.72rem; color: var(--cyan); margin-top: 0.3rem; opacity: 0.85; }
+    .sub-art-file  { font-size: 0.72rem; color: var(--cyan); margin-top: 0.3rem; opacity: 0.85; }
+    .sub-art-title { font-size: 0.75rem; color: var(--cyan); margin-top: 0.25rem; font-style: italic; }
+    .sub-art-notes { font-size: 0.78rem; color: var(--text-2); margin-top: 0.25rem; font-style: italic; opacity: 0.85; }
 
     /* Scrollable submissions container */
     .submissions-scroll-wrap {
       max-height: 490px; overflow-y: auto; scroll-behavior: smooth;
-      scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.12) transparent;
+      scrollbar-width: thin; scrollbar-color: rgba(155,81,224,0.5) rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius);
+      padding: 0.4rem 0.4rem 0; position: relative;
     }
-    .submissions-scroll-wrap::-webkit-scrollbar { width: 5px; }
-    .submissions-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
-    .submissions-scroll-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+    .submissions-scroll-wrap::-webkit-scrollbar { width: 6px; }
+    .submissions-scroll-wrap::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 3px; }
+    .submissions-scroll-wrap::-webkit-scrollbar-thumb { background: rgba(155,81,224,0.45); border-radius: 3px; }
+    .submissions-scroll-wrap::-webkit-scrollbar-thumb:hover { background: rgba(155,81,224,0.7); }
+    /* Fade at bottom signals more content */
+    .submissions-scroll-fade {
+      height: 36px; margin-top: -36px; position: relative; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, rgba(2,8,23,0.82));
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
     .submissions-jump-row {
-      display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 0.5rem; margin-top: 0.55rem; padding: 0 0.1rem;
     }
-    .submissions-jump-row .btn { font-size: 0.7rem; padding: 0.25rem 0.6rem; opacity: 0.6; transition: opacity 0.15s; }
+    .submissions-jump-hint { font-size: 0.7rem; color: var(--text-3); }
+    .submissions-jump-row .btn { font-size: 0.7rem; padding: 0.25rem 0.6rem; opacity: 0.65; transition: opacity 0.15s; }
     .submissions-jump-row .btn:hover { opacity: 1; }
     .sub-action { flex-shrink: 0; align-self: center; display:flex; gap:0.45rem; align-items:center; }
 
@@ -293,7 +306,7 @@
       <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
         <span class="sync-label" id="last-sync-label">Last sync: —</span>
         <button class="btn btn-ghost btn-sm" id="refresh-btn" onclick="loadData()"
-                data-tooltip="GitHub Pages CDN can take up to ~30s to reflect new data — if cards don't appear right away, give it a moment and refresh again">↺ Refresh</button>
+                data-tooltip="GitHub Pages CDN can take a few minutes to reflect new data — if cards don't appear right away, wait a moment and try again">↺ Refresh</button>
         <button class="btn btn-ghost btn-sm" onclick="openModal('modal-sync-info')"
                 style="font-size:0.72rem;padding:0.3rem 0.65rem" data-tooltip="How the sync pipeline works">ⓘ How sync works</button>
         <div class="admin-bar" id="admin-bar">
@@ -320,9 +333,13 @@
     <div class="submissions-scroll-wrap" id="submissions-scroll">
       <div id="submissions-list"></div>
     </div>
+    <div class="submissions-scroll-fade" id="submissions-fade" style="display:none"></div>
     <div class="submissions-jump-row" id="submissions-jump-row" style="display:none">
-      <button class="btn btn-ghost" onclick="document.getElementById('submissions-scroll').scrollTop=0">↑ Top</button>
-      <button class="btn btn-ghost" onclick="document.getElementById('submissions-scroll').scrollTop=document.getElementById('submissions-scroll').scrollHeight">↓ Bottom</button>
+      <span class="submissions-jump-hint">↕ scroll inside the panel above</span>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn btn-ghost" onclick="document.getElementById('submissions-scroll').scrollTop=0">↑ Top</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('submissions-scroll').scrollTop=document.getElementById('submissions-scroll').scrollHeight">↓ Bottom</button>
+      </div>
     </div>
   </section>
 
@@ -457,6 +474,10 @@
                onkeydown="if(event.key==='Enter')submitAdminPassword()" />
         <div id="admin-error" style="display:none;color:#f87171;font-size:0.78rem;margin-top:0.5rem"></div>
       </div>
+      <div style="margin-top:1rem;font-size:0.75rem;color:#f5a623;background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.22);border-radius:8px;padding:0.55rem 0.8rem;line-height:1.55">
+        ⚠️ <strong>GitHub PAT expires Fri May 15, 2026.</strong><br>
+        Renew at <code>github.com/settings/tokens</code> before that date or submissions will stop syncing to the dashboard.
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="submitAdminPassword()">Unlock</button>
@@ -479,7 +500,7 @@
         <li>The form POST hits the <strong>Apps Script web app</strong> running on the <code>pir.devine.news@gmail.com</code> Google account.</li>
         <li>Apps Script writes a row to the <strong>Submissions Google Sheet</strong> and sends a confirmation email to the member and a notification to the committee inbox.</li>
         <li>Apps Script calls the <strong>GitHub API</strong> to update <code>dashboard/data.json</code> in the public repo with the new submission entry.</li>
-        <li>GitHub Pages serves the updated <code>data.json</code> — the submission appears on this dashboard within seconds of the next page refresh.</li>
+        <li>GitHub Pages serves the updated <code>data.json</code> — the submission appears on this dashboard after the next page refresh. <em>GitHub Pages CDN can take up to a few minutes to propagate — if cards don't appear right away, wait a moment and use ↺ Refresh.</em></li>
       </ol>
 
       <h3 style="font-size:0.88rem;font-weight:700;color:var(--cyan);margin-bottom:0.5rem">Removing a submission</h3>
@@ -687,31 +708,44 @@
       var hasAction = removeBtn || driveLink;
       var isArt = s.type === 'art'  || s.type === 'both';
       var isLit = s.type === 'literature' || s.type === 'both';
-      // Type icon: show both for 'both', otherwise single icon
-      var typeIcon = s.type === 'both' ? '🎨 📄' : (isArt ? '🎨' : '📄');
+      // Stacked small emojis for 'both' so they fit the 36×36 icon box
+      var typeIcon = s.type === 'both'
+        ? '<span style="font-size:0.68rem;line-height:1.2;display:block;text-align:center">🎨<br>📄</span>'
+        : (isArt ? '🎨' : '📄');
       var artBadge = isArt ? '<span class="badge badge-art">🎨 Art</span>' : '';
       var litBadge = isLit ? '<span class="badge badge-lit">📄 Lit</span>' : '';
-      var artFile  = isArt && s.artFilename
+      // Artwork title shown separately only for 'both' (for art-only it IS the main title)
+      var artTitleLine = (s.type === 'both' && s.artTitle)
+        ? '<div class="sub-art-title">🎨 ' + escHtml(s.artTitle) + '</div>'
+        : '';
+      var artFile = isArt && s.artFilename
         ? '<div class="sub-art-file">🖼 ' + escHtml(s.artFilename) + '</div>'
         : '';
-      var snippet  = s.snippet
-        ? '<p class="sub-snippet">' + escHtml(s.snippet) + '</p>'
+      var artNotesLine = isArt && s.artNotes
+        ? '<div class="sub-art-notes">' + escHtml(s.artNotes) + '</div>'
         : '';
+      // Body snippet only for lit/both (art notes handled separately above)
+      var snippet = (isLit && !isArt && s.snippet)
+        ? '<p class="sub-snippet">' + escHtml(s.snippet) + '</p>'
+        : (isArt && !s.artNotes && s.snippet ? '<p class="sub-snippet">' + escHtml(s.snippet) + '</p>' : '');
       return '<div class="sub-card" id="sub-'+s.id+'">'
         + '<div class="sub-type-icon">'+typeIcon+'</div>'
         + '<div class="sub-body">'
         +   '<div class="sub-title-row"><span class="sub-title">'+escHtml(s.title||'Untitled')+'</span>'
         +   badge(s.status)+artBadge+litBadge+'</div>'
         +   '<div class="sub-meta">'+(s.author?'by '+escHtml(s.author):'')+(s.author&&s.topic?' · ':'')+(s.topic?'Topic: '+escHtml(s.topic):'')+'</div>'
-        +   snippet+artFile
+        +   artTitleLine+snippet+artNotesLine+artFile
         + '</div>'
         + (hasAction?'<div class="sub-action">'+driveLink+removeBtn+'</div>':'')
         + '</div>';
     }).join('');
 
-    // Show jump buttons only when there are more than 5 submissions
+    // Show jump buttons + fade indicator when there are more than 5 submissions
+    var hasMany = subs.length > 5;
     var jumpRow = document.getElementById('submissions-jump-row');
-    if (jumpRow) jumpRow.style.display = subs.length > 5 ? 'flex' : 'none';
+    var fade    = document.getElementById('submissions-fade');
+    if (jumpRow) jumpRow.style.display = hasMany ? 'flex' : 'none';
+    if (fade)    fade.style.display    = hasMany ? 'block' : 'none';
   }
 
   /* ── Load data.json ── */
