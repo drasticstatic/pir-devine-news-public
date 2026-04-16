@@ -691,6 +691,17 @@
     }
   }
 
+  /* ── Format ISO timestamp for human display ── */
+  function fmtSync(iso) {
+    if (!iso) return 'Never';
+    try {
+      var d = new Date(iso);
+      return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+           + ' at '
+           + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+    } catch(_) { return iso; }
+  }
+
   /* ── HTML escape helper ── */
   function escHtml(s) {
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -724,10 +735,10 @@
       var artNotesLine = isArt && s.artNotes
         ? '<div class="sub-art-notes">' + escHtml(s.artNotes) + '</div>'
         : '';
-      // Body snippet only for lit/both (art notes handled separately above)
-      var snippet = (isLit && !isArt && s.snippet)
+      // Always show snippet if present (artNotes is displayed separately below it)
+      var snippet = s.snippet
         ? '<p class="sub-snippet">' + escHtml(s.snippet) + '</p>'
-        : (isArt && !s.artNotes && s.snippet ? '<p class="sub-snippet">' + escHtml(s.snippet) + '</p>' : '');
+        : '';
       return '<div class="sub-card" id="sub-'+s.id+'">'
         + '<div class="sub-type-icon">'+typeIcon+'</div>'
         + '<div class="sub-body">'
@@ -756,7 +767,7 @@
       var res  = await fetch('data.json?_=' + Date.now());
       var data = await res.json();
 
-      document.getElementById('last-sync-label').textContent = 'Last sync: ' + (data.lastSync || 'Never');
+      document.getElementById('last-sync-label').textContent = 'Last sync: ' + fmtSync(data.lastSync);
 
       /* Drive panel — update hrefs if data.json has them, otherwise leave hardcoded */
       if (data.driveUrl) {
