@@ -283,7 +283,10 @@
         <div class="admin-bar" id="admin-bar">
           <button class="btn btn-ghost btn-sm" id="admin-toggle-btn"
                   onclick="toggleAdmin()" style="font-size:0.72rem;padding:0.3rem 0.65rem">🔒 Manage</button>
-          <span class="admin-active-label" id="admin-active-label" style="display:none">🔓 Admin mode — click ✕ on a card to remove</span>
+          <span class="admin-active-label" id="admin-active-label" style="display:none">🔓 Admin mode</span>
+          <button class="btn btn-ghost btn-sm" id="sync-sheet-btn" onclick="syncFromSheet()"
+                  style="display:none;font-size:0.72rem;padding:0.3rem 0.65rem"
+                  data-tooltip="Pull all Sheet rows into the dashboard and refresh statuses">↕ Sync from Sheet</button>
         </div>
       </div>
     </div>
@@ -465,6 +468,13 @@
         <li>The card disappears from the dashboard immediately.</li>
       </ol>
 
+      <h3 style="font-size:0.88rem;font-weight:700;color:var(--green);margin-bottom:0.5rem">Updating submission status</h3>
+      <ol style="font-size:0.84rem;color:var(--text-2);line-height:1.75;padding-left:1.25rem;margin-bottom:1.25rem">
+        <li>Open the <a href="https://docs.google.com/spreadsheets/d/1ngfuj44yAtRAteBSOtR1E3m-VcTnqrcwWPUZO5ZWD8Q" target="_blank" rel="noopener" style="color:var(--cyan)">Submissions Sheet ↗</a> and edit the <strong>Status</strong> column for any row.</li>
+        <li>Valid values: <code>Incoming</code> · <code>Needs Review</code> · <code>Approved</code> · <code>Published</code> · <code>Archived</code></li>
+        <li>Click <strong>🔒 Manage → ↕ Sync from Sheet</strong> on this page — the dashboard updates to reflect the new statuses.</li>
+      </ol>
+
       <h3 style="font-size:0.88rem;font-weight:700;color:var(--purple);margin-bottom:0.5rem">The ↺ Refresh button</h3>
       <p style="font-size:0.84rem;color:var(--text-2);line-height:1.75;margin-bottom:1.25rem">
         Re-fetches <code>data.json</code> from GitHub Pages on demand. Use this to pull in any submissions that arrived since you opened the page, or after an Apps Script re-deploy.
@@ -527,6 +537,7 @@
     review:    { label:'🔍 Needs Review',   cls:'badge-review'    },
     approved:  { label:'✅ Approved',        cls:'badge-approved'  },
     published: { label:'🚀 Published',       cls:'badge-published' },
+    archived:  { label:'🗄 Archived',        cls:'badge-incoming'  },
   };
   function badge(s) {
     var b = STATUS[s] || { label: s, cls: 'badge-incoming' };
@@ -543,6 +554,7 @@
       adminPassword = '';
       document.getElementById('admin-toggle-btn').textContent = '🔒 Manage';
       document.getElementById('admin-active-label').style.display = 'none';
+      document.getElementById('sync-sheet-btn').style.display = 'none';
       renderSubmissions(window._lastSubs || []);
     } else {
       document.getElementById('admin-password-input').value = '';
@@ -567,6 +579,7 @@
         closeModal('modal-admin');
         document.getElementById('admin-toggle-btn').textContent = '🔓 Exit Admin';
         document.getElementById('admin-active-label').style.display = 'inline';
+        document.getElementById('sync-sheet-btn').style.display = 'inline-flex';
         renderSubmissions(window._lastSubs || []);
       } else {
         err.textContent = j.message || 'Incorrect passphrase.';
@@ -601,6 +614,28 @@
     } catch(_) {
       alert('Could not reach the server.');
       btn.disabled = false; btn.textContent = '✕ Remove';
+    }
+  }
+
+  async function syncFromSheet() {
+    var btn = document.getElementById('sync-sheet-btn');
+    btn.disabled = true; btn.textContent = '↕ Syncing…';
+    try {
+      var params = new URLSearchParams({ action: 'syncSheet', password: adminPassword });
+      var r = await fetch(window.APPS_SCRIPT_URL, { method: 'POST', body: params });
+      var j = await r.json();
+      if (j.status === 'ok') {
+        btn.textContent = '✓ Synced ' + (j.synced || '') + ' entries';
+        setTimeout(function(){ btn.disabled = false; btn.textContent = '↕ Sync from Sheet'; }, 2500);
+        // Wait a moment for GitHub Pages to serve the updated file, then reload
+        setTimeout(loadData, 3000);
+      } else {
+        alert(j.message || 'Sync failed.');
+        btn.disabled = false; btn.textContent = '↕ Sync from Sheet';
+      }
+    } catch(_) {
+      alert('Could not reach the server.');
+      btn.disabled = false; btn.textContent = '↕ Sync from Sheet';
     }
   }
 
