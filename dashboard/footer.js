@@ -36,26 +36,26 @@
 
       <div class="pir-footer__group">
         <span class="pir-footer__group-title">PIR® Fellowship</span>
-        <a href="https://www.psychedelicsinrecovery.org" target="_blank" rel="noopener">🌐 Main Site</a>
+        <a href="https://www.psychedelicsinrecovery.org" target="_blank" rel="noopener">🌐 PIR® Main Site</a>
         <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" rel="noopener">📚 Member Materials</a>
         <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" rel="noopener">🗓 Find a Meeting</a>
-        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener">📜 The 12 Steps</a>
+        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener">📜 The 12 Steps of PIR®</a>
         </div>
 
         <div class="pir-footer__group">
         <span class="pir-footer__group-title">Media &amp; Committee</span>
-        <a href="https://integrationradioapirpodcast.buzzsprout.com" target="_blank" rel="noopener">🎙 Integration Radio (Podcast)</a>
-        <a href="https://www.youtube.com/@Psychedelicsinrecovery" target="_blank" rel="noopener">▶️ YouTube</a>
-        <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener">📘 Facebook</a>
+        <a href="https://integrationradioapirpodcast.buzzsprout.com" target="_blank" rel="noopener">🎙 Integration Radio a PIR® Podcast</a>
+        <a href="https://www.youtube.com/@Psychedelicsinrecovery" target="_blank" rel="noopener">▶️ YouTube @Psychedelicsinrecovery</a>
+        <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener">📘 Facebook /PIR12and12</a>
         <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener">🔧 Service Subdomain</a>
-        <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener">👥 PR Committee</a>
+        <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener">👥 Public Relations Committee</a>
         <a href="https://service.psychedelicsinrecovery.org/literature-committee/" target="_blank" rel="noopener">📖 Literature Committee</a>
         </div>
 
         <div class="pir-footer__group">
         <span class="pir-footer__group-title">Tech &amp; Resources</span>
-        <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener">💻 GitHub (Public Repo)</a>
-        <a href="#drive" data-footer-drive>☁️ Google Drive</a>
+        <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener">💻 GitHub (Public Repository)</a>
+        <a href="#drive" data-footer-drive>☁️ Google Drive - pir.devine.news</a>
         <a href="mailto:info@psychedelicsinrecovery.org">ⓘ General Inquiries</a>
         <a href="mailto:tech@psychedelicsinrecovery.org">🧑🏽‍💻 Tech Committee</a>
         <a href="mailto:newsletter@psychedelicsinrecovery.org">💌 Contact Newsletter</a>
