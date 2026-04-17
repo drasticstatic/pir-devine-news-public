@@ -7,14 +7,21 @@
  */
 (function () {
 
-  /* ── Primary links ────────────────────────────────────────── */
-  /* Submit lives in pir-nav__actions (always visible) — not in this dropdown.
-     Desktop link order: Portal first, then Setup. Submit CTA precedes these via HTML order. */
-  const NAV_PRIMARY = [
-    { href: 'index.html',  label: 'Portal', icon: '🏠', internal: true },
-    { modal: 'modal-nav-setup', label: 'Setup', icon: '⚙️',
-      tooltip: 'gws CLI setup guide — connect Google Drive to GitHub' },
-  ];
+  /* ── Determine current page ──────────────────────────────── */
+  const page         = (window.CURRENT_PAGE || '').toLowerCase();
+  const isIndexPage  = (page === 'index' || page === '');
+  const isSubmitPage = page === 'submit';
+
+  /* ── Context-aware primary links ─────────────────────────── */
+  /* On the submit page: action slot = Portal CTA, Portal removed from dropdown.
+     On the index page:  action slot = Submit CTA, Portal removed from dropdown.
+     All other pages:    action slot = Submit CTA, Portal appears in dropdown.    */
+  const NAV_PRIMARY = [];
+  if (!isIndexPage && !isSubmitPage) {
+    NAV_PRIMARY.push({ href: 'index.html', label: 'Portal', icon: '🏠', internal: true });
+  }
+  NAV_PRIMARY.push({ modal: 'modal-nav-setup', label: 'Setup', icon: '⚙️',
+    tooltip: 'gws CLI setup guide — connect Google Drive to GitHub' });
 
   /* ── "More" dropdown links ────────────────────────────────── */
   const NAV_MORE = [
@@ -31,9 +38,6 @@
     { href: 'https://github.com/drasticstatic/pir-devine-news-public', label: 'GitHub',     icon: '💻', tooltip: 'Public repo — dashboard source & release notes' },
     { href: '#drive', label: 'Google Drive', icon: '☁️', tooltip: 'Committee Google Drive — set up after gws CLI init', driveLink: true },
   ];
-
-  /* ── Determine current page ──────────────────────────────── */
-  const page = (window.CURRENT_PAGE || '').toLowerCase();
 
   /* ── Build a nav link element ─────────────────────────────── */
   function buildLink(link, inDropdown) {
@@ -61,7 +65,10 @@
   const moreHTML    = NAV_MORE.map(l => buildLink(l, true)).join('\n');
 
   /* ── Nav HTML ─────────────────────────────────────────────── */
-  const submitActive = page === 'submit' ? ' nav-active' : '';
+  /* Action button: Submit on most pages; Portal on the submit page */
+  const actionBtn = isSubmitPage
+    ? `<a href="index.html" class="nav-link nav-cta" id="pir-nav-action-btn">🏠 Portal</a>`
+    : `<a href="submit.html" class="nav-link nav-cta" id="pir-nav-action-btn">✍️ Submit</a>`;
 
   const navHTML = `
 <nav class="pir-nav" id="pir-nav" role="navigation" aria-label="Main navigation">
@@ -82,9 +89,9 @@
       </div>
     </a>
 
-    <!-- Submit CTA — always visible, sits before desktop links -->
+    <!-- Context-aware action CTA — always visible, sits before desktop links -->
     <div class="pir-nav__actions">
-      <a href="submit.html" class="nav-link nav-cta pir-nav__submit-cta${submitActive}" id="pir-nav-submit">✍️ Submit</a>
+      ${actionBtn}
     </div>
 
     <!-- Desktop nav links — hidden on mobile, toggled by hamburger -->
