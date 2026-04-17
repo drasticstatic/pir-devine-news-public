@@ -78,6 +78,13 @@
       const open = sn.classList.toggle('is-open');
       doner.classList.toggle('is-open', open);
       doner.setAttribute('aria-expanded', String(open));
+      /* Close hamburger / desktop dropdown when döner opens */
+      if (open) {
+        const burger = document.getElementById('pir-nav-burger');
+        const links  = document.getElementById('pir-nav-links');
+        if (links)  { links.classList.remove('is-open'); }
+        if (burger) { burger.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); }
+      }
     });
   }
 

@@ -278,14 +278,12 @@ img { display: block; max-width: 100%; }
 .pir-nav__burger.is-open span:nth-child(2) { opacity: 0; }
 .pir-nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── Always-visible right cluster: Submit + Döner ───────────── */
+/* ── Always-visible Submit CTA cluster ──────────────────────── */
+/* Sits between brand and desktop links; margin-left:auto pushes it right of brand */
 .pir-nav__actions {
-  display: flex; align-items: center; gap: 0.25rem;
+  display: flex; align-items: center;
   margin-left: auto; flex-shrink: 0;
 }
-
-/* Submit CTA — regular nav-link on desktop, CTA pill on mobile */
-.pir-nav__submit-cta { /* inherits .nav-link base */ }
 
 /* ── ≡ Döner — RIGHT, editions panel toggle ─────────────────── */
 .pir-nav__doner {
@@ -312,9 +310,12 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 900px) {
-  /* Hamburger appears LEFT */
+  /* Hamburger RIGHT — natural last position in DOM */
   .pir-nav__burger { display: flex; }
-  /* Brand pushed right by burger; actions group auto-pushes right via margin-left:auto on __actions */
+  /* Brand fills the middle; actions (Submit) and burger anchor to the right */
+  .pir-nav__brand { flex: 1; min-width: 0; }
+  /* Actions: drop auto-margin — brand's flex:1 already creates the gap */
+  .pir-nav__actions { margin-left: 0; }
   /* Desktop links collapse into dropdown */
   .pir-nav__links {
     display: none; flex-direction: column; align-items: stretch;
@@ -323,26 +324,11 @@ img { display: block; max-width: 100%; }
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 0.75rem 1rem 1rem;
-    gap: 0.25rem;
+    gap: 0.25rem; margin-left: 0;
   }
   .pir-nav__links.is-open { display: flex; }
-  /* Remove auto-margin from links on mobile — actions handles the right push */
-  .pir-nav__links { margin-left: 0; }
   .nav-link { font-size: 0.9rem; padding: 0.7rem 0.9rem; border-radius: var(--radius); }
   .nav-link.nav-cta { margin-left: 0; margin-top: 0.25rem; text-align: center; border-radius: var(--radius); }
-  /* Submit becomes CTA pill on mobile */
-  .pir-nav__submit-cta {
-    background: var(--green); color: var(--navy) !important;
-    font-weight: 700; padding: 0.38rem 0.8rem;
-    border-radius: 9999px; font-size: 0.8rem;
-    box-shadow: 0 0 10px var(--glow-g);
-    animation: nav-cta-breathe 3.5s ease-in-out infinite;
-  }
-  .pir-nav__submit-cta:hover {
-    background: #00e890; box-shadow: 0 0 18px var(--glow-g);
-    animation: none;
-  }
-  .pir-nav__submit-cta.nav-active { animation: none; }
 }
 
 /* ── Tooltips (CSS-only, data-tooltip attr) ─────────────────── */
