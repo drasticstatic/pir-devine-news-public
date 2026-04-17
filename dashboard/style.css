@@ -393,9 +393,19 @@ img { display: block; max-width: 100%; }
 }
 [data-tooltip]:hover::after { opacity: 1; }
 
-/* nav tooltips open downward */
+/* Nav bar items open downward (nav is at top of viewport) */
 .pir-nav__links [data-tooltip]::after {
   bottom: auto; top: calc(100% + 8px);
+}
+/* Dropdown items: open upward so tooltip doesn't go off the right edge */
+.nav-more-dropdown [data-tooltip]::after {
+  top: auto; bottom: calc(100% + 6px);
+  left: auto; right: 0; transform: none;
+}
+/* Footer tooltips: open upward, centered */
+.pir-footer [data-tooltip]::after {
+  bottom: calc(100% + 8px); top: auto;
+  max-width: 200px;
 }
 @media (max-width: 900px) {
   [data-tooltip]::after { display: none; }
