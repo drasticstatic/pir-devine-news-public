@@ -21,20 +21,20 @@
   const isIndexPage  = (page === 'index' || page === '');
   const isSubmitPage = page === 'submit';
 
-  /* ── "More" dropdown links ────────────────────────────────── */
+  /* ── "Links ▾" dropdown ──────────────────────────────────── */
+  /* Template / Bulletin / Topics & Deadlines live in the sidenav now */
   const NAV_MORE = [
-    { href: 'newsletter-template.html', label: 'Template',         icon: '📰', internal: true, tooltip: 'Web edition template — all content categories' },
-    { href: 'bulletin.html',            label: 'Bulletin',          icon: '📋', internal: true, tooltip: 'Fellowship announcements & open service positions' },
-    { href: 'https://www.psychedelicsinrecovery.org/member-materials/', label: 'Member Materials', icon: '📚', tooltip: 'PIR® member resources & literature' },
-    { href: 'https://www.psychedelicsinrecovery.org',            label: 'PIR® Main',        icon: '🌐', tooltip: 'Main Psychedelics In Recovery website' },
-    { href: 'https://service.psychedelicsinrecovery.org',        label: 'Service',          icon: '🔧', tooltip: 'PIR® Service Subdomain — committee resources' },
-    { href: 'https://service.psychedelicsinrecovery.org/pr-committee/', label: 'PR Committee', icon: '👥', tooltip: 'PR Committee page on the service subdomain' },
-    { href: 'https://service.psychedelicsinrecovery.org/literature', label: 'LitCom',       icon: '📖', tooltip: 'Literature Committee page' },
-    { href: 'https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit', label: 'Topics & Deadlines', icon: '📅', tooltip: 'Monthly topics & submission deadlines' },
-    { href: 'https://www.psychedelicsinrecovery.org/meetings/',  label: 'Meetings',         icon: '🗓', tooltip: 'Find an in-person or online PIR® meeting' },
-    { href: 'https://www.psychedelicsinrecovery.org/12-steps/',  label: '12 Steps',         icon: '📜', tooltip: 'PIR® 12 Steps' },
-    { href: 'https://github.com/drasticstatic/pir-devine-news-public', label: 'GitHub',     icon: '💻', tooltip: 'Public repo — dashboard source & release notes' },
-    { href: '#drive', label: 'Google Drive', icon: '☁️', tooltip: 'Committee Google Drive — set up after gws CLI init', driveLink: true },
+    { href: 'https://www.psychedelicsinrecovery.org',                         label: 'PIR® Main Site',                    icon: '🌐', tooltip: 'Main Psychedelics In Recovery website' },
+    { href: 'https://service.psychedelicsinrecovery.org',                     label: 'Service Subdomain',                 icon: '🔧', tooltip: 'PIR® Service Subdomain — committee resources' },
+    { href: 'https://service.psychedelicsinrecovery.org/pr-committee/',       label: 'Public Relations Committee',        icon: '👥', tooltip: 'PR Committee page on the service subdomain' },
+    { href: 'https://service.psychedelicsinrecovery.org/literature',          label: 'Literature Committee',              icon: '📖', tooltip: 'Literature Committee page' },
+    { href: 'https://www.psychedelicsinrecovery.org/meetings/',               label: 'Find a Meeting',                    icon: '🗓', tooltip: 'Find an in-person or online PIR® meeting' },
+    { href: 'https://www.psychedelicsinrecovery.org/12-steps/',               label: 'The 12 Steps of PIR®',              icon: '📜', tooltip: 'PIR® 12 Steps' },
+    { href: 'https://www.psychedelicsinrecovery.org/podcast/',                label: 'Integration Radio — PIR® Podcast',  icon: '🎙', tooltip: 'Integration Radio: a PIR® Podcast' },
+    { href: 'https://www.youtube.com/@Psychedelicsinrecovery',                label: 'YouTube @Psychedelicsinrecovery',   icon: '▶️', tooltip: 'PIR® YouTube channel' },
+    { href: 'https://www.facebook.com/PIR12and12',                            label: 'Facebook /PIR12and12',              icon: '📘', tooltip: 'PIR® Facebook page' },
+    { href: 'https://github.com/drasticstatic/pir-devine-news-public',        label: 'GitHub (Public Repository)',        icon: '💻', tooltip: 'Public repo — dashboard source & release notes' },
+    { href: '#drive', label: 'Google Drive — pir.devine.news',                                                            icon: '☁️', tooltip: 'Committee Google Drive — set up after gws CLI init', driveLink: true },
   ];
 
   /* ── Build dropdown (NAV_MORE) link element ──────────────── */
@@ -59,8 +59,9 @@
   const moreHTML = NAV_MORE.map(l => buildLink(l, true)).join('\n');
 
   /* ── Desktop CTA — first item in pir-nav__links, hidden on mobile ── */
+  /* Submit = green pill; Portal = blue pill (nav-cta-portal) */
   const desktopCTA = isSubmitPage
-    ? `<a href="index.html" class="nav-link nav-cta nav-desktop-only">🏠 Portal</a>`
+    ? `<a href="index.html" class="nav-link nav-cta-portal nav-desktop-only">🏠 Portal</a>`
     : `<a href="submit.html" class="nav-link nav-cta nav-desktop-only">✍️ Submit</a>`;
 
   /* ── Mobile CTA — pir-nav__actions, hidden on desktop ──────── */
@@ -70,9 +71,10 @@
     : `<a href="submit.html" class="nav-link nav-cta" id="pir-nav-action-btn">✍️ Submit</a>`;
 
   /* ── Portal + Setup paired row in hamburger ─────────────────── */
-  /* Desktop: nav-desktop-hidden hides portal on index/submit (CTA covers it).
-     Mobile:  portal always visible in the pair regardless of page.            */
-  const portalCls  = (isIndexPage || isSubmitPage) ? 'nav-link nav-desktop-hidden' : 'nav-link';
+  /* Desktop: sidebar pages show Portal as blue CTA pill; index/submit hide it
+     (the desktopCTA already covers Portal there). nav-desktop-hidden ensures
+     it's hidden on desktop for those pages but still shows in mobile hamburger. */
+  const portalCls  = (isIndexPage || isSubmitPage) ? 'nav-link nav-desktop-hidden' : 'nav-link nav-cta-portal';
   const portalLink = `<a href="index.html" class="${portalCls}">🏠 Portal</a>`;
   const setupBtn   = `<button class="nav-link nav-setup-btn" onclick="openModal('modal-nav-setup')" data-tooltip="gws CLI setup guide — connect Google Drive to GitHub">⚙️ Setup</button>`;
 

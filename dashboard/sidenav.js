@@ -49,6 +49,8 @@
   <div class="sn-inner">
     <a href="newsletter-template.html" class="sn-link sn-template">📰 Master Template</a>
     <a href="bulletin.html" class="sn-link sn-template">📋 Bulletin</a>
+    <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
+       target="_blank" rel="noopener" class="sn-link">📅 Topics &amp; Deadlines</a>
     <div class="sn-sep"></div>
     <div class="sn-group-title">Editions</div>
     ${editionsHTML}
