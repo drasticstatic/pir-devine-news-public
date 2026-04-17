@@ -366,6 +366,13 @@ img { display: block; max-width: 100%; }
   .nav-link { font-size: 0.9rem; padding: 0.7rem 0.9rem; border-radius: var(--radius); }
   /* Pill CTA scoped to dropdown only — pir-nav__actions pill stays intact */
   .pir-nav__links .nav-link.nav-cta { margin-left: 0; margin-top: 0.25rem; text-align: center; border-radius: var(--radius); }
+  /* Portal in hamburger: suppress blue pill — looks like a tinted nav link instead */
+  .pir-nav__links .nav-link.nav-cta-portal {
+    background: transparent !important; animation: none !important;
+    box-shadow: none !important; border-radius: var(--radius) !important;
+    color: #93c5fd !important; padding: 0.7rem 0.9rem;
+  }
+  .pir-nav__links .nav-link.nav-cta-portal:hover { background: var(--navy-4) !important; color: #fff !important; }
   /* Portal+Setup pair: each button stretches to fill its half */
   .nav-primary-pair .nav-link { flex: 1; text-align: center; }
 }
