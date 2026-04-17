@@ -45,8 +45,8 @@
       <div class="pir-footer__group">
         <span class="pir-footer__group-title">Media &amp; Committee</span>
         <a href="https://integrationradioapirpodcast.buzzsprout.com" target="_blank" rel="noopener" data-tooltip="Integration Radio: a PIR® Podcast on Buzzsprout">🎙 Integration Radio Podcast</a>
-        <a href="https://www.youtube.com/@Psychedelicsinrecovery" target="_blank" rel="noopener" data-tooltip="PIR® YouTube channel">▶️ YouTube</a>
-        <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener" data-tooltip="PIR® Facebook page">📘 Facebook</a>
+        <a href="https://www.youtube.com/@Psychedelicsinrecovery" target="_blank" rel="noopener" data-tooltip="PIR® YouTube channel @Psychedelicsinrecovery">▶️ YouTube</a>
+        <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener" data-tooltip="PIR® Facebook page /PIR12and12">📘 Facebook</a>
         <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener" data-tooltip="PIR® Service Subdomain — committee resources &amp; service calendar">🔧 Service Subdomain</a>
         <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener" data-tooltip="PR Committee page on the service subdomain">👥 Public Relations Committee</a>
         <a href="https://service.psychedelicsinrecovery.org/literature-committee/" target="_blank" rel="noopener" data-tooltip="Literature Committee page on the service subdomain">📖 Literature Committee</a>
