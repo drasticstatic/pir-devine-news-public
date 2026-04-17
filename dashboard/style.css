@@ -166,6 +166,26 @@ body::after {
 /* Nav CTA: breathing green glow */
 .nav-link.nav-cta { animation: nav-cta-breathe 3.5s ease-in-out infinite; }
 
+/* Portal CTA (mobile, submit page): blue pill — distinct from green Submit */
+@keyframes nav-portal-breathe {
+  0%, 100% { box-shadow: 0 0 10px rgba(59,130,246,0.35); background: #3b82f6; }
+  50%       { box-shadow: 0 0 22px rgba(59,130,246,0.65), 0 0 40px rgba(99,179,237,0.2); background: #60a5fa; }
+}
+.nav-link.nav-cta-portal {
+  background: #3b82f6; color: #fff !important;
+  font-weight: 700; padding: 0.4rem 1rem;
+  border-radius: 9999px; flex-shrink: 0;
+  animation: nav-portal-breathe 3.5s ease-in-out infinite;
+}
+.nav-link.nav-cta-portal:hover { background: #60a5fa; box-shadow: 0 0 18px rgba(59,130,246,0.6); }
+
+/* Desktop-only nav elements (hidden on mobile) */
+.nav-desktop-only { display: none; }
+/* Mobile-only nav elements (hidden on desktop, shown in hamburger) */
+.nav-desktop-hidden { display: none; }
+/* Portal + Setup inline pair */
+.nav-primary-pair { display: flex; flex-direction: row; align-items: center; gap: 0.25rem; }
+
 /* Setup nav button: distinctive cyan pulse */
 .nav-link.nav-setup-btn {
   border: 1px solid rgba(74,234,220,0.45) !important;
@@ -309,20 +329,30 @@ img { display: block; max-width: 100%; }
   .pir-nav__doner { display: flex; }
 }
 
+/* Desktop: hide mobile CTA slot; show desktop-only nav items */
+@media (min-width: 901px) {
+  .pir-nav__actions  { display: none; }
+  .nav-desktop-only  { display: inline-flex; align-items: center; }
+}
+
 @media (max-width: 900px) {
   /* Hamburger RIGHT — natural last position in DOM */
   .pir-nav__burger { display: flex; }
-  /* Brand fills the middle; actions and burger anchor to the right */
+  /* Brand fills the middle; actions (mobile CTA) and burger anchor right */
   .pir-nav__brand { flex: 1; min-width: 0; }
   /* Actions: drop auto-margin — brand's flex:1 already creates the gap */
   .pir-nav__actions { margin-left: 0; }
-  /* Shrink logo so döner + brand + actions + burger all fit on one line */
-  .pir-nav__logo { width: 34px; height: 34px; }
-  /* Hide tagline to recover horizontal space */
-  .pir-nav__sub { display: none; }
-  /* Prevent title wrapping — ellipsis if truly narrow */
-  .pir-nav__title { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  /* Desktop links collapse into dropdown */
+  /* Tighten döner padding to recover space for brand text */
+  .pir-nav__doner { padding: 4px 5px; }
+  /* Shrink logo slightly to reclaim horizontal space for title + subtitle */
+  .pir-nav__logo { width: 36px; height: 36px; }
+  /* Compact tagline — keep visible but smaller */
+  .pir-nav__sub { font-size: 0.5rem; }
+  /* Prevent title wrapping — ellipsis only if truly narrow */
+  .pir-nav__title { font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Mobile-only items shown in hamburger dropdown */
+  .nav-desktop-hidden { display: flex; align-items: center; }
+  /* Desktop links collapse into hamburger dropdown */
   .pir-nav__links {
     display: none; flex-direction: column; align-items: stretch;
     position: absolute; top: var(--nav-h); left: 0; right: 0;
@@ -334,8 +364,10 @@ img { display: block; max-width: 100%; }
   }
   .pir-nav__links.is-open { display: flex; }
   .nav-link { font-size: 0.9rem; padding: 0.7rem 0.9rem; border-radius: var(--radius); }
-  /* Pill shape + spacing override scoped to the dropdown — leaves pir-nav__actions pill intact */
+  /* Pill CTA scoped to dropdown only — pir-nav__actions pill stays intact */
   .pir-nav__links .nav-link.nav-cta { margin-left: 0; margin-top: 0.25rem; text-align: center; border-radius: var(--radius); }
+  /* Portal+Setup pair: each button stretches to fill its half */
+  .nav-primary-pair .nav-link { flex: 1; text-align: center; }
 }
 
 /* ── Tooltips (CSS-only, data-tooltip attr) ─────────────────── */
@@ -446,6 +478,8 @@ img { display: block; max-width: 100%; }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-ghost { background: transparent; color: var(--text-2); border: 1px solid var(--border-2); }
 .btn-ghost:hover { color: var(--text); border-color: var(--green); background: var(--navy-3); text-decoration: none; }
+.btn-drive { background: #3b82f6; color: #fff; box-shadow: 0 0 12px rgba(59,130,246,0.3); }
+.btn-drive:hover { background: #60a5fa; box-shadow: 0 0 20px rgba(59,130,246,0.5); text-decoration: none; }
 .btn-sm { font-size: 0.75rem; padding: 0.38rem 0.85rem; }
 
 /* ── Parallax hero ─────────────────────────────────────────── */

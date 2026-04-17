@@ -2,8 +2,17 @@
  * nav.js — De Vine News shared navigation
  * Dependency-free. Include at end of <body> on every dashboard page.
  *
- * Primary links (always visible): Portal · Submit · Setup (modal)
- * "Links ▾" dropdown: all external + internal utility links
+ * Desktop (top-right, all in pir-nav__links):
+ *   sidebar pages → Submit(CTA) · Portal · Setup · Links▾
+ *   index         → Submit(CTA) · Setup · Links▾
+ *   submit        → Portal(CTA) · Setup · Links▾
+ *
+ * Mobile pir-nav__actions (always visible, hidden on desktop):
+ *   most pages → ✍️ Submit (green pill)
+ *   submit     → 🏠 Portal (blue pill — distinct)
+ *
+ * Mobile hamburger (pir-nav__links dropdown):
+ *   Portal + Setup in same row · Links▾
  */
 (function () {
 
@@ -11,17 +20,6 @@
   const page         = (window.CURRENT_PAGE || '').toLowerCase();
   const isIndexPage  = (page === 'index' || page === '');
   const isSubmitPage = page === 'submit';
-
-  /* ── Context-aware primary links ─────────────────────────── */
-  /* On the submit page: action slot = Portal CTA, Portal removed from dropdown.
-     On the index page:  action slot = Submit CTA, Portal removed from dropdown.
-     All other pages:    action slot = Submit CTA, Portal appears in dropdown.    */
-  const NAV_PRIMARY = [];
-  if (!isIndexPage && !isSubmitPage) {
-    NAV_PRIMARY.push({ href: 'index.html', label: 'Portal', icon: '🏠', internal: true });
-  }
-  NAV_PRIMARY.push({ modal: 'modal-nav-setup', label: 'Setup', icon: '⚙️',
-    tooltip: 'gws CLI setup guide — connect Google Drive to GitHub' });
 
   /* ── "More" dropdown links ────────────────────────────────── */
   const NAV_MORE = [
@@ -39,9 +37,8 @@
     { href: '#drive', label: 'Google Drive', icon: '☁️', tooltip: 'Committee Google Drive — set up after gws CLI init', driveLink: true },
   ];
 
-  /* ── Build a nav link element ─────────────────────────────── */
+  /* ── Build dropdown (NAV_MORE) link element ──────────────── */
   function buildLink(link, inDropdown) {
-    /* Modal trigger — render as styled button */
     if (link.modal) {
       const tip = (!inDropdown && link.tooltip) ? ` data-tooltip="${link.tooltip}"` : '';
       const setupCls = link.modal === 'modal-nav-setup' ? ' nav-setup-btn' : '';
@@ -56,20 +53,30 @@
     const ext   = !link.internal ? ' target="_blank" rel="noopener"' : '';
     const tip   = (!inDropdown && link.tooltip) ? ` data-tooltip="${link.tooltip}"` : '';
     const act   = isActive ? ' nav-active' : '';
-    const cta   = link.cta ? ' nav-cta' : '';
     const drive = link.driveLink ? ' data-drive-link' : '';
-    return `<a href="${link.href}" class="nav-link${act}${cta}"${ext}${tip}${drive}>${link.icon} ${link.label}</a>`;
+    return `<a href="${link.href}" class="nav-link${act}"${ext}${tip}${drive}>${link.icon} ${link.label}</a>`;
   }
+  const moreHTML = NAV_MORE.map(l => buildLink(l, true)).join('\n');
 
-  const primaryHTML = NAV_PRIMARY.map(l => buildLink(l, false)).join('\n');
-  const moreHTML    = NAV_MORE.map(l => buildLink(l, true)).join('\n');
+  /* ── Desktop CTA — first item in pir-nav__links, hidden on mobile ── */
+  const desktopCTA = isSubmitPage
+    ? `<a href="index.html" class="nav-link nav-cta nav-desktop-only">🏠 Portal</a>`
+    : `<a href="submit.html" class="nav-link nav-cta nav-desktop-only">✍️ Submit</a>`;
 
-  /* ── Nav HTML ─────────────────────────────────────────────── */
-  /* Action button: Submit on most pages; Portal on the submit page */
-  const actionBtn = isSubmitPage
-    ? `<a href="index.html" class="nav-link nav-cta" id="pir-nav-action-btn">🏠 Portal</a>`
+  /* ── Mobile CTA — pir-nav__actions, hidden on desktop ──────── */
+  /* Portal gets a distinct blue pill (nav-cta-portal) on submit.html  */
+  const mobileCTA = isSubmitPage
+    ? `<a href="index.html" class="nav-link nav-cta-portal" id="pir-nav-action-btn">🏠 Portal</a>`
     : `<a href="submit.html" class="nav-link nav-cta" id="pir-nav-action-btn">✍️ Submit</a>`;
 
+  /* ── Portal + Setup paired row in hamburger ─────────────────── */
+  /* Desktop: nav-desktop-hidden hides portal on index/submit (CTA covers it).
+     Mobile:  portal always visible in the pair regardless of page.            */
+  const portalCls  = (isIndexPage || isSubmitPage) ? 'nav-link nav-desktop-hidden' : 'nav-link';
+  const portalLink = `<a href="index.html" class="${portalCls}">🏠 Portal</a>`;
+  const setupBtn   = `<button class="nav-link nav-setup-btn" onclick="openModal('modal-nav-setup')" data-tooltip="gws CLI setup guide — connect Google Drive to GitHub">⚙️ Setup</button>`;
+
+  /* ── Nav HTML ─────────────────────────────────────────────── */
   const navHTML = `
 <nav class="pir-nav" id="pir-nav" role="navigation" aria-label="Main navigation">
   <div class="pir-nav__inner">
@@ -89,14 +96,18 @@
       </div>
     </a>
 
-    <!-- Context-aware action CTA — always visible, sits before desktop links -->
+    <!-- Mobile CTA — always visible on mobile, hidden on desktop -->
     <div class="pir-nav__actions">
-      ${actionBtn}
+      ${mobileCTA}
     </div>
 
-    <!-- Desktop nav links — hidden on mobile, toggled by hamburger -->
+    <!-- Nav links: desktop = horizontal row all top-right; mobile = hamburger dropdown -->
     <div class="pir-nav__links" id="pir-nav-links">
-      ${primaryHTML}
+      ${desktopCTA}
+      <div class="nav-primary-pair">
+        ${portalLink}
+        ${setupBtn}
+      </div>
       <div class="nav-more-wrap" id="nav-more-wrap">
         <button class="nav-more-btn" id="nav-more-btn"
                 aria-haspopup="true" aria-expanded="false">
