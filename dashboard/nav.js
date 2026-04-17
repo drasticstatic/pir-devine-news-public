@@ -18,19 +18,20 @@
 
   /* ── Determine current page ──────────────────────────────── */
   const page         = (window.CURRENT_PAGE || '').toLowerCase();
-  const isIndexPage  = (page === 'index' || page === '');
+  const isIndexPage  = (page === 'index'); /* empty string = edition page → sidebar rules */
   const isSubmitPage = page === 'submit';
 
   /* ── "Links ▾" dropdown ──────────────────────────────────── */
   /* Template / Bulletin / Topics & Deadlines live in the sidenav now */
   const NAV_MORE = [
     { href: 'https://www.psychedelicsinrecovery.org',                         label: 'PIR® Main Site',                    icon: '🌐', tooltip: 'Main Psychedelics In Recovery website' },
-    { href: 'https://service.psychedelicsinrecovery.org',                     label: 'Service Subdomain',                 icon: '🔧', tooltip: 'PIR® Service Subdomain — committee resources' },
+    { href: 'https://service.psychedelicsinrecovery.org',                     label: 'PIR® Service Subdomain',            icon: '🔧', tooltip: 'PIR® Service Subdomain — committee resources and service calendar' },
     { href: 'https://service.psychedelicsinrecovery.org/pr-committee/',       label: 'Public Relations Committee',        icon: '👥', tooltip: 'PR Committee page on the service subdomain' },
-    { href: 'https://service.psychedelicsinrecovery.org/literature',          label: 'Literature Committee',              icon: '📖', tooltip: 'Literature Committee page' },
+    { href: 'https://service.psychedelicsinrecovery.org/literature',          label: 'Literature Committee',              icon: '📖', tooltip: 'Literature Committee page on the service subdomain' },
     { href: 'https://www.psychedelicsinrecovery.org/meetings/',               label: 'Find a Meeting',                    icon: '🗓', tooltip: 'Find an in-person or online PIR® meeting' },
+    { href: 'https://www.psychedelicsinrecovery.org/member-materials/',       label: 'Member Materials',                  icon: '📚', tooltip: 'PIR® member resources & literature' },
     { href: 'https://www.psychedelicsinrecovery.org/12-steps/',               label: 'The 12 Steps of PIR®',              icon: '📜', tooltip: 'PIR® 12 Steps' },
-    { href: 'https://www.psychedelicsinrecovery.org/podcast/',                label: 'Integration Radio — PIR® Podcast',  icon: '🎙', tooltip: 'Integration Radio: a PIR® Podcast' },
+    { href: 'https://integrationradioapirpodcast.buzzsprout.com',             label: 'Integration Radio — PIR® Podcast',  icon: '🎙', tooltip: 'Integration Radio: a PIR® Podcast' },
     { href: 'https://www.youtube.com/@Psychedelicsinrecovery',                label: 'YouTube @Psychedelicsinrecovery',   icon: '▶️', tooltip: 'PIR® YouTube channel' },
     { href: 'https://www.facebook.com/PIR12and12',                            label: 'Facebook /PIR12and12',              icon: '📘', tooltip: 'PIR® Facebook page' },
     { href: 'https://github.com/drasticstatic/pir-devine-news-public',        label: 'GitHub (Public Repository)',        icon: '💻', tooltip: 'Public repo — dashboard source & release notes' },
@@ -51,7 +52,7 @@
       (link.href === 'bulletin.html'            && page === 'bulletin')
     );
     const ext   = !link.internal ? ' target="_blank" rel="noopener"' : '';
-    const tip   = (!inDropdown && link.tooltip) ? ` data-tooltip="${link.tooltip}"` : '';
+    const tip   = link.tooltip ? ` data-tooltip="${link.tooltip}"` : '';
     const act   = isActive ? ' nav-active' : '';
     const drive = link.driveLink ? ' data-drive-link' : '';
     return `<a href="${link.href}" class="nav-link${act}"${ext}${tip}${drive}>${link.icon} ${link.label}</a>`;
@@ -70,13 +71,14 @@
     ? `<a href="index.html" class="nav-link nav-cta-portal" id="pir-nav-action-btn">🏠 Portal</a>`
     : `<a href="submit.html" class="nav-link nav-cta" id="pir-nav-action-btn">✍️ Submit</a>`;
 
-  /* ── Portal + Setup paired row in hamburger ─────────────────── */
-  /* Desktop: sidebar pages show Portal as blue CTA pill; index/submit hide it
-     (the desktopCTA already covers Portal there). nav-desktop-hidden ensures
-     it's hidden on desktop for those pages but still shows in mobile hamburger. */
-  const portalCls  = (isIndexPage || isSubmitPage) ? 'nav-link nav-desktop-hidden' : 'nav-link nav-cta-portal';
-  const portalLink = `<a href="index.html" class="${portalCls}">🏠 Portal</a>`;
-  const setupBtn   = `<button class="nav-link nav-setup-btn" onclick="openModal('modal-nav-setup')" data-tooltip="gws CLI setup guide — connect Google Drive to GitHub">⚙️ Setup</button>`;
+  /* ── Portal links in primary pair ───────────────────────────── */
+  /* Desktop (nav-desktop-only): blue CTA on sidebar pages; hidden on index/submit.
+     Mobile  (nav-desktop-hidden): always "News Portal" in hamburger, plain link. */
+  const desktopPortal = (!isIndexPage && !isSubmitPage)
+    ? `<a href="index.html" class="nav-link nav-cta-portal nav-desktop-only">🏠 Portal</a>`
+    : '';
+  const mobilePortal = `<a href="index.html" class="nav-link nav-desktop-hidden">🏠 News Portal</a>`;
+  const setupBtn     = `<button class="nav-link nav-setup-btn" onclick="openModal('modal-nav-setup')" data-tooltip="gws CLI setup guide — connect Google Drive to GitHub">⚙️ Setup</button>`;
 
   /* ── Nav HTML ─────────────────────────────────────────────── */
   const navHTML = `
@@ -107,7 +109,8 @@
     <div class="pir-nav__links" id="pir-nav-links">
       ${desktopCTA}
       <div class="nav-primary-pair">
-        ${portalLink}
+        ${desktopPortal}
+        ${mobilePortal}
         ${setupBtn}
       </div>
       <div class="nav-more-wrap" id="nav-more-wrap">

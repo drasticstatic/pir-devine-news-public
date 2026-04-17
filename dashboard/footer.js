@@ -26,40 +26,40 @@
 
       <div class="pir-footer__group">
         <span class="pir-footer__group-title">Portal</span>
-        <a href="index.html">🏠 De Vine News Portal</a>
-        <a href="submit.html">✍️ Submit Work</a>
-        <a href="newsletter-template.html">📰 Newsletter Template</a>
-        <a href="bulletin.html">📋 De Vine Bulletin</a>
+        <a href="index.html" data-tooltip="View all submissions &amp; committee tools">🏠 De Vine News Portal</a>
+        <a href="submit.html" data-tooltip="Submit literature, art, or both for the newsletter">✍️ Submit Work</a>
+        <a href="newsletter-template.html" data-tooltip="Browse all newsletter content categories">📰 Newsletter Template</a>
+        <a href="bulletin.html" data-tooltip="Fellowship announcements &amp; open service positions">📋 De Vine Bulletin</a>
         <a href="https://docs.google.com/document/d/1or5cB7Ij6BHj-GLm-6V-UeFSA0Re6QUfVaIoAT2rAgI/edit"
-           target="_blank" rel="noopener">📅 Topics &amp; Deadlines</a>
+           target="_blank" rel="noopener" data-tooltip="Monthly themes &amp; submission deadlines">📅 Topics &amp; Deadlines</a>
       </div>
 
       <div class="pir-footer__group">
         <span class="pir-footer__group-title">PIR® Fellowship</span>
-        <a href="https://www.psychedelicsinrecovery.org" target="_blank" rel="noopener">🌐 PIR® Main Site</a>
-        <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" rel="noopener">📚 Member Materials</a>
-        <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" rel="noopener">🗓 Find a Meeting</a>
-        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener">📜 The 12 Steps of PIR®</a>
-        </div>
+        <a href="https://www.psychedelicsinrecovery.org" target="_blank" rel="noopener" data-tooltip="Main Psychedelics In Recovery website">🌐 PIR® Main Site</a>
+        <a href="https://www.psychedelicsinrecovery.org/member-materials/" target="_blank" rel="noopener" data-tooltip="PIR® member resources &amp; literature">📚 Member Materials</a>
+        <a href="https://www.psychedelicsinrecovery.org/meetings/" target="_blank" rel="noopener" data-tooltip="Find an in-person or online PIR® meeting">🗓 Find a Meeting</a>
+        <a href="https://www.psychedelicsinrecovery.org/12-steps/" target="_blank" rel="noopener" data-tooltip="PIR® 12 Steps">📜 The 12 Steps of PIR®</a>
+      </div>
 
-        <div class="pir-footer__group">
+      <div class="pir-footer__group">
         <span class="pir-footer__group-title">Media &amp; Committee</span>
-        <a href="https://integrationradioapirpodcast.buzzsprout.com" target="_blank" rel="noopener">🎙 Integration Radio Podcast</a>
-        <a href="https://www.youtube.com/@Psychedelicsinrecovery" target="_blank" rel="noopener">▶️ YouTube</a>
-        <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener">📘 Facebook</a>
-        <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener">🔧 Service Subdomain</a>
-        <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener">👥 Public Relations Committee</a>
-        <a href="https://service.psychedelicsinrecovery.org/literature-committee/" target="_blank" rel="noopener">📖 Literature Committee</a>
-        </div>
+        <a href="https://integrationradioapirpodcast.buzzsprout.com" target="_blank" rel="noopener" data-tooltip="Integration Radio: a PIR® Podcast on Buzzsprout">🎙 Integration Radio Podcast</a>
+        <a href="https://www.youtube.com/@Psychedelicsinrecovery" target="_blank" rel="noopener" data-tooltip="PIR® YouTube channel">▶️ YouTube @Psychedelicsinrecovery</a>
+        <a href="https://www.facebook.com/PIR12and12" target="_blank" rel="noopener" data-tooltip="PIR® Facebook page">📘 Facebook /PIR12and12</a>
+        <a href="https://service.psychedelicsinrecovery.org" target="_blank" rel="noopener" data-tooltip="PIR® Service Subdomain — committee resources &amp; service calendar">🔧 Service Subdomain</a>
+        <a href="https://service.psychedelicsinrecovery.org/pr-committee/" target="_blank" rel="noopener" data-tooltip="PR Committee page on the service subdomain">👥 Public Relations Committee</a>
+        <a href="https://service.psychedelicsinrecovery.org/literature-committee/" target="_blank" rel="noopener" data-tooltip="Literature Committee page on the service subdomain">📖 Literature Committee</a>
+      </div>
 
-        <div class="pir-footer__group">
+      <div class="pir-footer__group">
         <span class="pir-footer__group-title">Tech &amp; Resources</span>
-        <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener">💻 GitHub (Public Repository)</a>
-        <a href="#drive" data-footer-drive>☁️ GoogleDrive pir.devine.news</a>
-        <a href="mailto:info@psychedelicsinrecovery.org">ⓘ General Inquiries</a>
-        <a href="mailto:tech@psychedelicsinrecovery.org">🧑🏽‍💻 Tech Committee</a>
-        <a href="mailto:newsletter@psychedelicsinrecovery.org">💌 Contact Newsletter</a>
-        <a href="mailto:pir.devine.news@gmail.com">🔐 Site Admin</a>
+        <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener" data-tooltip="Public repo — dashboard source &amp; release notes">💻 GitHub (Public Repo)</a>
+        <a href="#drive" data-footer-drive data-tooltip="Committee Google Drive — pir.devine.news">☁️ Google Drive pir.devine.news</a>
+        <a href="mailto:info@psychedelicsinrecovery.org" data-tooltip="General questions about PIR®">ⓘ General Inquiries</a>
+        <a href="mailto:tech@psychedelicsinrecovery.org" data-tooltip="Technical issues with this dashboard">🧑🏽‍💻 Tech Committee</a>
+        <a href="mailto:newsletter@psychedelicsinrecovery.org" data-tooltip="Reach the newsletter committee">💌 Contact Newsletter</a>
+        <a href="mailto:pir.devine.news@gmail.com" data-tooltip="Site administrator email">🔐 Site Admin</a>
       </div>
 
     </nav>
