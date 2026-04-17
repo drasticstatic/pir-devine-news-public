@@ -20,6 +20,7 @@
     @media (max-width: 760px) {
       .submit-wrap { grid-template-columns: 1fr; padding: 1.5rem 1rem 4rem; }
       .sidebar { order: -1; }
+      .mobile-jump-btn { display: flex !important; }
     }
 
     /* Small parallax header */
@@ -246,6 +247,32 @@
       padding: 0.7rem 1rem; margin-bottom: 1rem; display: none;
     }
 
+    /* Agreement checkbox */
+    .agree-wrap {
+      margin-bottom: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-2);
+      background: var(--navy-4);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .agree-wrap:has(input:checked) { border-color: var(--green); background: rgba(0,208,130,0.05); }
+    .agree-wrap.shake { animation: shake 0.35s ease; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-5px); }
+      60%      { transform: translateX(5px); }
+    }
+    .agree-label {
+      display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer;
+    }
+    .agree-label input[type="checkbox"] {
+      accent-color: var(--green); width: 16px; height: 16px;
+      flex-shrink: 0; margin-top: 2px; cursor: pointer;
+    }
+    .agree-text { font-size: 0.8rem; color: var(--text-2); line-height: 1.65; }
+    .agree-text strong { color: var(--text); }
+
     /* Submit btn */
     .submit-btn {
       width: 100%; padding: 0.85rem;
@@ -341,7 +368,7 @@
     </div>
 
     <!-- Form -->
-    <div class="form-card" id="form-card">
+    <div class="form-card" id="form-card" style="scroll-margin-top:1rem">
       <div class="form-card-head">
         <h2 style="font-size:1.3rem;font-weight:800">Submit to the Literature Committee</h2>
         <p class="form-card-desc">Your contributions carry the message to our fellow members. Whether it's a Step reflection, personal story of recovery, or artwork that speaks where words can't — this is your space.</p>
@@ -575,6 +602,19 @@
             </div>
           </div>
 
+          <!-- Agreement -->
+          <div class="agree-wrap" id="agree-wrap">
+            <label class="agree-label">
+              <input type="checkbox" id="agree-check" name="agreeGuidelines" />
+              <span class="agree-text">
+                <strong>I have read and understand the submission guidelines.</strong>
+                My submission is a <strong>complete piece</strong> — not notes, bullet points,
+                or a partial draft. I understand that incomplete submissions may be returned
+                or held for a future issue.
+              </span>
+            </label>
+          </div>
+
           <!-- Error -->
           <div class="form-error" id="form-error"></div>
 
@@ -612,6 +652,47 @@
   <aside class="sidebar">
 
     <div class="sb-card">
+      <div class="sb-title">Submission Guidelines</div>
+      <div class="guideline">
+        <div class="g-icon">✍️</div>
+        <div class="g-text">
+          <h4>Literature</h4>
+          <p>Poetry, articles, and 12-step reflections. Ideal 300–800 words (max 1,000). Plain text — no formatting needed. Align with the PIR® 12 Traditions.</p>
+        </div>
+      </div>
+      <div class="guideline">
+        <div class="g-icon">🎨</div>
+        <div class="g-text">
+          <h4>Art &amp; Photography</h4>
+          <p>High-resolution JPG or PNG reflecting your journey of recovery. Our team resizes for the newsletter template.</p>
+        </div>
+      </div>
+      <div class="guideline">
+        <div class="g-icon">🔏</div>
+        <div class="g-text">
+          <h4>Anonymous or Credited</h4>
+          <p>Choose full name, first name &amp; last initial, or remain completely anonymous in the published newsletter.</p>
+        </div>
+      </div>
+      <div class="guideline">
+        <div class="g-icon">✅</div>
+        <div class="g-text">
+          <h4>What Works Best</h4>
+          <p>First-person, experience-based writing. Clear, specific, honest reflections. <strong>Complete pieces</strong> — not notes, bullet points, or partial drafts. Short, clear submissions (300–800 words) are more likely to be included than longer, unfocused ones.</p>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:0.5rem"
+              onclick="openModal('modal-guidelines')">
+        Full Guidelines ↗
+      </button>
+      <!-- Mobile only: jump down to the form -->
+      <a href="#form-card" class="btn btn-primary btn-sm mobile-jump-btn"
+         style="width:100%;justify-content:center;margin-top:0.5rem;display:none">
+        ↓ Submit Your Work
+      </a>
+    </div>
+
+    <div class="sb-card">
       <div class="sb-title">Current &amp; Next Issue Themes</div>
       <div class="topic-pill" style="margin-bottom:0.65rem">
         <div class="topic-month" style="color:var(--green)">✨ May 2026 — Current</div>
@@ -632,35 +713,6 @@
          class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;">
         Full Topics &amp; Deadlines ↗
       </a>
-    </div>
-
-    <div class="sb-card">
-      <div class="sb-title">Submission Guidelines</div>
-      <div class="guideline">
-        <div class="g-icon">✍️</div>
-        <div class="g-text">
-          <h4>Literature</h4>
-          <p>Poetry, articles, and 12-step reflections. Ideal 300–800 words (max 1,000). Align with the PIR® 12 Traditions. Plain text — no formatting needed.</p>
-        </div>
-      </div>
-      <div class="guideline">
-        <div class="g-icon">🎨</div>
-        <div class="g-text">
-          <h4>Art &amp; Photography</h4>
-          <p>High-resolution JPG or PNG reflecting your journey of recovery. Our team resizes for the newsletter template.</p>
-        </div>
-      </div>
-      <div class="guideline">
-        <div class="g-icon">🔏</div>
-        <div class="g-text">
-          <h4>Anonymous or Credited</h4>
-          <p>Choose full name, first name &amp; last initial, or remain completely anonymous in the published newsletter.</p>
-        </div>
-      </div>
-      <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:0.5rem"
-              onclick="openModal('modal-guidelines')">
-        Full Guidelines ↗
-      </button>
     </div>
 
 
@@ -695,6 +747,13 @@
         <li><strong>Full name:</strong> Published exactly as entered on the form.</li>
         <li><strong>First name &amp; last initial:</strong> e.g. "Written by Sarah M."</li>
         <li><strong>Anonymous:</strong> No name appears anywhere in the published newsletter.</li>
+      </ul>
+      <h3>What Works Best</h3>
+      <ul>
+        <li>First-person, experience-based writing</li>
+        <li>Clear, specific, and honest reflections</li>
+        <li><strong>Complete pieces — not notes, bullet points, or partial drafts.</strong> Please save and finish your work before submitting.</li>
+        <li>Short, clear submissions (300–800 words) are more likely to be included than longer, unfocused ones.</li>
       </ul>
       <h3>Content Standards</h3>
       <p>All submissions are reviewed for alignment with the PIR® 12 Traditions and the spirit of the Fellowship. The Literature Committee reserves the right to suggest minor edits or, in rare cases, decline a submission that falls outside these guidelines — always with a respectful explanation.</p>
@@ -901,6 +960,14 @@
     var name=document.getElementById('fullName').value.trim();
     var email=document.getElementById('email').value.trim();
     var cat=document.getElementById('category').value;
+    if(!document.getElementById('agree-check').checked){
+      var w=document.getElementById('agree-wrap');
+      w.classList.add('shake');
+      w.addEventListener('animationend',function(){w.classList.remove('shake');},{once:true});
+      w.scrollIntoView({behavior:'smooth',block:'center'});
+      showErr('Please read and check the agreement before submitting.');
+      return;
+    }
     if(!name||!email||!cat){ showErr('Please fill in your name, email, and choose a category.'); return; }
     if((cat==='literature'||cat==='both')&&!document.getElementById('litTitle').value.trim()){ showErr('Please enter a title for your writing.'); return; }
     if((cat==='literature'||cat==='both')&&!document.getElementById('litText').value.trim()){ showErr('Please enter your literature text.'); return; }
@@ -927,7 +994,9 @@
   });
 
   function resetForm(){
-    document.getElementById('submission-form').reset(); selCat=''; selectedArtFile=null;
+    document.getElementById('submission-form').reset();
+    document.getElementById('agree-check').checked = false;
+    selCat=''; selectedArtFile=null;
     document.getElementById('artFilenameHidden').value='';
     document.getElementById('artFileDataHidden').value='';
     document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
