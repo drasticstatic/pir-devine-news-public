@@ -124,6 +124,69 @@ The AI admin assistant would be designed with clear guardrails:
 
 ---
 
+## Phase 4b — The Inner Voice Submission Agent
+
+*Goal: Replace the blank-form submission experience with a conversational facilitator that helps members write complete, heartfelt pieces — without AI doing the writing for them.*
+
+### The Vision
+
+The shift from Google Forms to a custom submission form solved the filing problem, but a deeper issue surfaced: the Q&A format of forms encouraged **fragmented, incomplete contributions** — bullet points and partial thoughts instead of finished pieces. Guidelines alone may not fix this.
+
+The Inner Voice Agent reimagines the submission experience as a dialogue. Instead of staring at an empty text box, a member engages with a thoughtful, reflective partner that helps them find the feeling behind their story, clear writer's block, and arrive at a finished piece — one that is unmistakably, fully theirs.
+
+> *"AI as a facilitator, not a creator. It clears the path so authentic messages can flow effortlessly."*
+
+### How It Works
+
+```
+Member opens the "Write with Support" chat
+           ↓
+Agent opens with: "Take a moment — what's the feeling or intention behind
+what you want to share today?" (never suggests a topic first)
+           ↓
+Member shares a rough idea, a feeling, a few bullet points
+           ↓
+Agent uses recursive, Socratic questioning to surface specific
+anecdotes, emotional details, and "human fingerprints"
+           ↓
+Agent mirrors the member's own vocabulary and emotional tone —
+poetic if they're poetic, raw if they're raw
+           ↓
+Heart Check: "Does this capture the spark you felt when we started,
+or did we lose the soul in translation?"
+           ↓
+Only after a yes: structures the final submission as
+Title · Body · Key Takeaway — ready to paste into the form
+```
+
+### Core Design Principles
+
+- **The Silent Start** — the agent never suggests a topic or provides a blank draft. It waits for the member's spark.
+- **Recursive Questioning (The Clarity Engine)** — when a response is thin or generic, the agent asks follow-up questions to pull out specific anecdotes, sensory details, or emotional insights that only the member could know.
+- **Mirror, Don't Polish** — the agent reflects the member's own voice and vocabulary. It avoids "corporate" or "standard AI" smoothing.
+- **The Heart Check** — before structuring the final piece, the agent explicitly asks whether the result still carries the original feeling. It only proceeds with a yes.
+- **No ghostwriting** — if a member asks the agent to "just write it for me," it gently declines and returns to a clarifying question about their specific experience.
+
+### The System Prompt (Socratic Midwife)
+
+The agent's behavior is governed by a specialized system prompt. Key directives:
+
+1. **Role:** Socratic Midwife and Mindful Writing Companion — a facilitator, not a creator.
+2. **Introspective Prompting:** Before details, ask for the feeling or intention behind the piece.
+3. **Clarity Engine:** Identify where "human fingerprints" are missing; ask targeted follow-up questions.
+4. **Mirror:** Match the member's emotional state and vocabulary; avoid generic polish.
+5. **Heart Check:** Ask "Does this capture the spark you felt, or did we lose the soul in translation?" before finalizing.
+6. **Architectural Finish:** Structure only after the Heart Check passes — Title, Body, Key Takeaway.
+7. **Guardrails:** Never invent facts, quotes, or stories. Never write on the member's behalf.
+
+### Implementation Path
+
+- **Option A (pilot):** A standalone Claude.ai Project or custom GPT shared with willing members — no dev work required to test the concept.
+- **Option B (integrated):** A chat widget embedded in `submit.html` alongside the standard form — member chooses "Write with Support" or "Submit directly." Backend: a lightweight Apps Script or Cloud Function proxying the Anthropic API with the system prompt baked in.
+- **Option C (full pipeline):** The conversation output flows directly into the submission pipeline — member reviews, approves, and the structured piece is saved to Drive without re-entering the form.
+
+---
+
 ## Phase 5 — Organization Handoff
 
 *Goal: Full ownership transferred to the PIR Fellowship; zero dependency on individual contributors.*
