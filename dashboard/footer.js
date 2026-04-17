@@ -26,7 +26,7 @@
 
       <div class="pir-footer__group">
         <span class="pir-footer__group-title">Portal</span>
-        <a href="index.html">🏠 Committee Portal</a>
+        <a href="index.html">🏠 De Vine News Portal</a>
         <a href="submit.html">✍️ Submit Work</a>
         <a href="newsletter-template.html">📰 Newsletter Template</a>
         <a href="bulletin.html">📋 De Vine Bulletin</a>
