@@ -370,7 +370,7 @@
     <!-- Form -->
     <div class="form-card" id="form-card" style="scroll-margin-top:1rem">
       <div class="form-card-head">
-        <h2 style="font-size:1.3rem;font-weight:800">Submit to the Literature Committee</h2>
+        <h2 style="font-size:1.3rem;font-weight:800">Submit to De Vine News</h2>
         <p class="form-card-desc">Your contributions carry the message to our fellow members. Whether it's a Step reflection, personal story of recovery, or artwork that speaks where words can't — this is your space.</p>
       </div>
       <div class="form-body">
@@ -989,8 +989,8 @@
       var r=await fetch(window.APPS_SCRIPT_URL,{method:'POST',body:fd});
       var j=await r.json();
       if(j.status==='ok'){ document.getElementById('form-card').style.display='none'; document.getElementById('success-panel').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
-      else { showErr(j.message||'Something went wrong.'); btn.disabled=false; btn.textContent='Send to the Literature Committee 🌀'; }
-    } catch(_){ showErr('Could not reach the server. Check your connection.'); btn.disabled=false; btn.textContent='Send to the Literature Committee 🌀'; }
+      else { showErr(j.message||'Something went wrong.'); btn.disabled=false; btn.textContent='Submit for Review 📫'; }
+    } catch(_){ showErr('Could not reach the server. Check your connection.'); btn.disabled=false; btn.textContent='Submit for Review 📫'; }
   });
 
   function resetForm(){
@@ -1008,7 +1008,7 @@
     clearErr();
     document.getElementById('form-card').style.display='block';
     document.getElementById('success-panel').style.display='none';
-    var btn=document.getElementById('submit-btn'); btn.disabled=false; btn.textContent='Send to the Literature Committee 🌀';
+    var btn=document.getElementById('submit-btn'); btn.disabled=false; btn.textContent='Submit for Review 📫';
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
