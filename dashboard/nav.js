@@ -8,9 +8,9 @@
 (function () {
 
   /* ── Primary links ────────────────────────────────────────── */
+  /* Submit lives in pir-nav__actions (always visible) — not in this dropdown */
   const NAV_PRIMARY = [
-    { href: 'index.html',  label: 'Portal', icon: '🏠', internal: true },
-    { href: 'submit.html', label: 'Submit', icon: '✍️', internal: true, cta: true },
+    { href: 'index.html',  label: 'Portal', icon: '🏠', internal: true, cta: true },
     { modal: 'modal-nav-setup', label: 'Setup', icon: '⚙️',
       tooltip: 'gws CLI setup guide — connect Google Drive to GitHub' },
   ];
@@ -60,9 +60,19 @@
   const moreHTML    = NAV_MORE.map(l => buildLink(l, true)).join('\n');
 
   /* ── Nav HTML ─────────────────────────────────────────────── */
+  const submitActive = page === 'submit' ? ' nav-active' : '';
+
   const navHTML = `
 <nav class="pir-nav" id="pir-nav" role="navigation" aria-label="Main navigation">
   <div class="pir-nav__inner">
+
+    <!-- ☰ Hamburger — LEFT, mobile only. Opens site-pages dropdown. -->
+    <button class="pir-nav__burger" id="pir-nav-burger"
+            aria-label="Toggle navigation" aria-expanded="false" aria-controls="pir-nav-links">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Brand -->
     <a href="index.html" class="pir-nav__brand">
       <img src="assets/logo-white.png" alt="PIR® Logo" class="pir-nav__logo" />
       <div>
@@ -71,6 +81,7 @@
       </div>
     </a>
 
+    <!-- Desktop nav links — hidden on mobile, toggled by hamburger -->
     <div class="pir-nav__links" id="pir-nav-links">
       ${primaryHTML}
       <div class="nav-more-wrap" id="nav-more-wrap">
@@ -84,10 +95,16 @@
       </div>
     </div>
 
-    <button class="pir-nav__burger" id="pir-nav-burger"
-            aria-label="Toggle navigation" aria-expanded="false" aria-controls="pir-nav-links">
-      <span></span><span></span><span></span>
-    </button>
+    <!-- Always-visible right cluster: Submit CTA + Döner editions toggle -->
+    <div class="pir-nav__actions">
+      <a href="submit.html" class="nav-link pir-nav__submit-cta${submitActive}" id="pir-nav-submit">✍️ Submit</a>
+      <!-- ≡ Döner — RIGHT, tablet+mobile only. Opens editions sidenav. -->
+      <button class="pir-nav__doner" id="pir-nav-doner"
+              aria-label="Toggle editions panel" aria-expanded="false" aria-controls="pir-sidenav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
   </div>
 </nav>`;
 

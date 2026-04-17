@@ -263,11 +263,11 @@ img { display: block; max-width: 100%; }
 }
 .nav-link.nav-cta:hover { background: #00e890; box-shadow: 0 0 18px var(--glow-g); }
 
-/* hamburger */
+/* ── ☰ Hamburger — LEFT, site-pages toggle ──────────────────── */
 .pir-nav__burger {
   display: none; flex-direction: column; justify-content: center;
   gap: 5px; background: none; border: none; cursor: pointer;
-  padding: 8px; margin-left: auto;
+  padding: 8px; flex-shrink: 0;
 }
 .pir-nav__burger span {
   display: block; width: 22px; height: 2px;
@@ -278,8 +278,44 @@ img { display: block; max-width: 100%; }
 .pir-nav__burger.is-open span:nth-child(2) { opacity: 0; }
 .pir-nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+/* ── Always-visible right cluster: Submit + Döner ───────────── */
+.pir-nav__actions {
+  display: flex; align-items: center; gap: 0.25rem;
+  margin-left: auto; flex-shrink: 0;
+}
+
+/* Submit CTA — regular nav-link on desktop, CTA pill on mobile */
+.pir-nav__submit-cta { /* inherits .nav-link base */ }
+
+/* ── ≡ Döner — RIGHT, editions panel toggle ─────────────────── */
+.pir-nav__doner {
+  display: none; flex-direction: column; align-items: flex-end;
+  justify-content: center; gap: 5px; background: none; border: none;
+  cursor: pointer; padding: 8px; flex-shrink: 0;
+}
+.pir-nav__doner span {
+  display: block; height: 2px;
+  background: var(--text-2); border-radius: 2px;
+  transition: width 0.22s, background 0.15s;
+}
+.pir-nav__doner span:nth-child(1) { width: 20px; }
+.pir-nav__doner span:nth-child(2) { width: 13px; }
+.pir-nav__doner span:nth-child(3) { width: 7px; }
+/* Flip the taper when open */
+.pir-nav__doner.is-open span:nth-child(1) { width: 7px;  background: var(--green); }
+.pir-nav__doner.is-open span:nth-child(2) { width: 13px; background: var(--green); }
+.pir-nav__doner.is-open span:nth-child(3) { width: 20px; background: var(--green); }
+
+/* Döner visible at tablet + mobile (matches sidenav breakpoint) */
+@media (max-width: 1024px) {
+  .pir-nav__doner { display: flex; }
+}
+
 @media (max-width: 900px) {
+  /* Hamburger appears LEFT */
   .pir-nav__burger { display: flex; }
+  /* Brand pushed right by burger; actions group auto-pushes right via margin-left:auto on __actions */
+  /* Desktop links collapse into dropdown */
   .pir-nav__links {
     display: none; flex-direction: column; align-items: stretch;
     position: absolute; top: var(--nav-h); left: 0; right: 0;
@@ -290,8 +326,23 @@ img { display: block; max-width: 100%; }
     gap: 0.25rem;
   }
   .pir-nav__links.is-open { display: flex; }
+  /* Remove auto-margin from links on mobile — actions handles the right push */
+  .pir-nav__links { margin-left: 0; }
   .nav-link { font-size: 0.9rem; padding: 0.7rem 0.9rem; border-radius: var(--radius); }
   .nav-link.nav-cta { margin-left: 0; margin-top: 0.25rem; text-align: center; border-radius: var(--radius); }
+  /* Submit becomes CTA pill on mobile */
+  .pir-nav__submit-cta {
+    background: var(--green); color: var(--navy) !important;
+    font-weight: 700; padding: 0.38rem 0.8rem;
+    border-radius: 9999px; font-size: 0.8rem;
+    box-shadow: 0 0 10px var(--glow-g);
+    animation: nav-cta-breathe 3.5s ease-in-out infinite;
+  }
+  .pir-nav__submit-cta:hover {
+    background: #00e890; box-shadow: 0 0 18px var(--glow-g);
+    animation: none;
+  }
+  .pir-nav__submit-cta.nav-active { animation: none; }
 }
 
 /* ── Tooltips (CSS-only, data-tooltip attr) ─────────────────── */
@@ -519,21 +570,7 @@ img { display: block; max-width: 100%; }
 .sn-sep { height: 1px; background: var(--border); margin: 0.75rem 0.5rem; }
 .sn-link.sn-template { color: var(--text-3); font-size: 0.72rem; }
 
-/* Sidenav toggle (mobile + collapse button) */
-.pir-sidenav-toggle {
-  display: none;
-  position: fixed; top: calc(var(--nav-h) + 0.6rem); left: 0;
-  z-index: 155;
-  background: rgba(2,8,22,0.90);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border); border-left: none;
-  border-radius: 0 8px 8px 0;
-  color: var(--text-3); font-size: 0.8rem;
-  padding: 0.45rem 0.55rem; cursor: pointer;
-  transition: all 0.15s; line-height: 1;
-}
-.pir-sidenav-toggle:hover { color: var(--green); }
-.pir-sidenav-toggle.is-open { left: 220px; color: var(--text-2); }
+/* pir-sidenav-toggle removed — editions panel now toggled by the döner button in the nav bar */
 
 /* Body modifier — shifts content right when sidenav is visible */
 body.has-sidenav { padding-left: 220px; }
@@ -542,7 +579,6 @@ body.has-sidenav { padding-left: 220px; }
   body.has-sidenav { padding-left: 0; }
   .pir-sidenav { transform: translateX(-100%); }
   .pir-sidenav.is-open { transform: translateX(0); }
-  .pir-sidenav-toggle { display: flex; align-items: center; }
 }
 
 /* ── Nav "More ▾" dropdown ─────────────────────────────────── */
@@ -720,7 +756,7 @@ body.has-sidenav { padding-left: 220px; }
   }
 
   /* Hide chrome */
-  .pir-nav, .pir-sidenav, .pir-sidenav-toggle, .pir-footer,
+  .pir-nav, .pir-sidenav, .pir-footer,
   .modal-overlay, .parallax-bg, .parallax-overlay,
   .nl-hero-bg, .nl-hero-overlay, .nl-hero-art,
   .page-hero-bg, .page-hero-overlay,

@@ -43,6 +43,7 @@
     ${sections.map(s => `<a href="#${s.id}" class="sn-link sn-jump">${s.label}</a>`).join('')}
   ` : '';
 
+  /* Toggle is now the döner button in nav.js (id="pir-nav-doner") */
   const sidenavHTML = `
 <div class="pir-sidenav" id="pir-sidenav" aria-label="Side navigation">
   <div class="sn-inner">
@@ -53,48 +54,46 @@
     ${editionsHTML}
     ${sectionsHTML}
   </div>
-</div>
-<button class="pir-sidenav-toggle" id="pir-sidenav-toggle"
-        aria-label="Toggle side navigation" aria-expanded="false" aria-controls="pir-sidenav"
-        title="Newsletter editions">☰ Editions</button>`;
+</div>`;
 
   /* ── Inject ──────────────────────────────────────────────── */
   document.body.insertAdjacentHTML('afterbegin', sidenavHTML);
   document.body.classList.add('has-sidenav');
 
-  const sn     = document.getElementById('pir-sidenav');
-  const toggle = document.getElementById('pir-sidenav-toggle');
+  const sn    = document.getElementById('pir-sidenav');
+  const doner = document.getElementById('pir-nav-doner'); /* injected by nav.js */
 
-  /* ── Mobile toggle ──────────────────────────────────────── */
-  toggle.addEventListener('click', function (e) {
-    e.stopPropagation();
-    const open = sn.classList.toggle('is-open');
-    toggle.classList.toggle('is-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.textContent = open ? '✕ Close' : '☰ Editions';
-  });
+  function closeSidenav() {
+    sn.classList.remove('is-open');
+    if (doner) {
+      doner.classList.remove('is-open');
+      doner.setAttribute('aria-expanded', 'false');
+    }
+  }
 
-  /* ── Close on outside click (mobile) ───────────────────── */
+  /* ── Döner toggle (tablet + mobile) ────────────────────── */
+  if (doner) {
+    doner.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const open = sn.classList.toggle('is-open');
+      doner.classList.toggle('is-open', open);
+      doner.setAttribute('aria-expanded', String(open));
+    });
+  }
+
+  /* ── Close on outside click (tablet + mobile) ──────────── */
   document.addEventListener('click', function (e) {
     if (window.innerWidth <= 1024
         && !e.target.closest('#pir-sidenav')
-        && !e.target.closest('#pir-sidenav-toggle')) {
-      sn.classList.remove('is-open');
-      toggle.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.textContent = '☰ Editions';
+        && !e.target.closest('#pir-nav-doner')) {
+      closeSidenav();
     }
   });
 
   /* ── Close sidenav on section link click (mobile) ──────── */
   sn.querySelectorAll('.sn-jump').forEach(a => {
     a.addEventListener('click', function () {
-      if (window.innerWidth <= 1024) {
-        sn.classList.remove('is-open');
-        toggle.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.textContent = '☰ Editions';
-      }
+      if (window.innerWidth <= 1024) closeSidenav();
     });
   });
 
