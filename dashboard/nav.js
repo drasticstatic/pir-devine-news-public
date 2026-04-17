@@ -8,9 +8,10 @@
 (function () {
 
   /* ── Primary links ────────────────────────────────────────── */
-  /* Submit lives in pir-nav__actions (always visible) — not in this dropdown */
+  /* Submit lives in pir-nav__actions (always visible) — not in this dropdown.
+     Desktop link order: Portal first, then Setup. Submit CTA precedes these via HTML order. */
   const NAV_PRIMARY = [
-    { href: 'index.html',  label: 'Portal', icon: '🏠', internal: true, cta: true },
+    { href: 'index.html',  label: 'Portal', icon: '🏠', internal: true },
     { modal: 'modal-nav-setup', label: 'Setup', icon: '⚙️',
       tooltip: 'gws CLI setup guide — connect Google Drive to GitHub' },
   ];
@@ -66,9 +67,9 @@
 <nav class="pir-nav" id="pir-nav" role="navigation" aria-label="Main navigation">
   <div class="pir-nav__inner">
 
-    <!-- ☰ Hamburger — LEFT, mobile only. Opens site-pages dropdown. -->
-    <button class="pir-nav__burger" id="pir-nav-burger"
-            aria-label="Toggle navigation" aria-expanded="false" aria-controls="pir-nav-links">
+    <!-- ≡ Döner — LEFT, tablet+mobile only. Opens editions sidenav. -->
+    <button class="pir-nav__doner" id="pir-nav-doner"
+            aria-label="Toggle editions panel" aria-expanded="false" aria-controls="pir-sidenav">
       <span></span><span></span><span></span>
     </button>
 
@@ -80,6 +81,11 @@
         <span class="pir-nav__sub">PIR® Newsletter</span>
       </div>
     </a>
+
+    <!-- Submit CTA — always visible, sits before desktop links -->
+    <div class="pir-nav__actions">
+      <a href="submit.html" class="nav-link nav-cta pir-nav__submit-cta${submitActive}" id="pir-nav-submit">✍️ Submit</a>
+    </div>
 
     <!-- Desktop nav links — hidden on mobile, toggled by hamburger -->
     <div class="pir-nav__links" id="pir-nav-links">
@@ -95,15 +101,11 @@
       </div>
     </div>
 
-    <!-- Always-visible right cluster: Submit CTA + Döner editions toggle -->
-    <div class="pir-nav__actions">
-      <a href="submit.html" class="nav-link pir-nav__submit-cta${submitActive}" id="pir-nav-submit">✍️ Submit</a>
-      <!-- ≡ Döner — RIGHT, tablet+mobile only. Opens editions sidenav. -->
-      <button class="pir-nav__doner" id="pir-nav-doner"
-              aria-label="Toggle editions panel" aria-expanded="false" aria-controls="pir-sidenav">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <!-- ☰ Hamburger — RIGHT, mobile only. Opens site-pages dropdown. -->
+    <button class="pir-nav__burger" id="pir-nav-burger"
+            aria-label="Toggle navigation" aria-expanded="false" aria-controls="pir-nav-links">
+      <span></span><span></span><span></span>
+    </button>
 
   </div>
 </nav>`;
@@ -195,6 +197,13 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com</pre>
     const open = links.classList.toggle('is-open');
     burger.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
+    /* Close döner / sidenav when hamburger opens */
+    if (open) {
+      const sn    = document.getElementById('pir-sidenav');
+      const doner = document.getElementById('pir-nav-doner');
+      if (sn)    { sn.classList.remove('is-open'); }
+      if (doner) { doner.classList.remove('is-open'); doner.setAttribute('aria-expanded','false'); }
+    }
   });
 
   /* ── Close menu on nav-link click (mobile) ────────────────── */
