@@ -312,10 +312,16 @@ img { display: block; max-width: 100%; }
 @media (max-width: 900px) {
   /* Hamburger RIGHT — natural last position in DOM */
   .pir-nav__burger { display: flex; }
-  /* Brand fills the middle; actions (Submit) and burger anchor to the right */
+  /* Brand fills the middle; actions and burger anchor to the right */
   .pir-nav__brand { flex: 1; min-width: 0; }
   /* Actions: drop auto-margin — brand's flex:1 already creates the gap */
   .pir-nav__actions { margin-left: 0; }
+  /* Shrink logo so döner + brand + actions + burger all fit on one line */
+  .pir-nav__logo { width: 34px; height: 34px; }
+  /* Hide tagline to recover horizontal space */
+  .pir-nav__sub { display: none; }
+  /* Prevent title wrapping — ellipsis if truly narrow */
+  .pir-nav__title { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* Desktop links collapse into dropdown */
   .pir-nav__links {
     display: none; flex-direction: column; align-items: stretch;
@@ -328,7 +334,8 @@ img { display: block; max-width: 100%; }
   }
   .pir-nav__links.is-open { display: flex; }
   .nav-link { font-size: 0.9rem; padding: 0.7rem 0.9rem; border-radius: var(--radius); }
-  .nav-link.nav-cta { margin-left: 0; margin-top: 0.25rem; text-align: center; border-radius: var(--radius); }
+  /* Pill shape + spacing override scoped to the dropdown — leaves pir-nav__actions pill intact */
+  .pir-nav__links .nav-link.nav-cta { margin-left: 0; margin-top: 0.25rem; text-align: center; border-radius: var(--radius); }
 }
 
 /* ── Tooltips (CSS-only, data-tooltip attr) ─────────────────── */
