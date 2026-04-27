@@ -61,18 +61,18 @@
 
 ## Phase 4 — AI Admin Dashboard
 
-*Goal: Let the chief editor manage the newsletter through conversation — no CLI, no GitHub, no code required.*
+*Goal: Let any willing committee member manage the newsletter through conversation — no CLI, no GitHub, no code required.*
 
 ### The Idea
 
-Instead of asking an editor to learn GitHub, learn HTML, find a developer, and wait for a deployment — they open a chat window and say:
+Instead of asking a committee member to learn GitHub, learn HTML, find a developer, and wait for a deployment — they open a chat window and say:
 
 > *"Update the June submission deadline to May 15th."*
 > *"The next theme should be 'Humility' — add that to the form."*
 > *"Mark Sarah's April submission as Approved."*
 > *"Draft a welcome paragraph for the May newsletter."*
 
-An AI agent reads those messages, makes the changes, and pushes the update — all without the editor touching a line of code.
+An AI agent reads those messages, makes the changes, and pushes the update — all without touching a line of code.
 
 ### The Admin Dashboard Page (`admin.html`)
 
@@ -124,12 +124,43 @@ AI chat widget built directly into `admin.html`. Calls the Anthropic API (Claude
 **Option C — Scheduled agents (advanced)**
 Recurring tasks run automatically — e.g., "Every Monday, check if any submission has been in 'Needs Review' for more than 7 days and send a reminder." No human trigger needed.
 
-### Governance & Safety
+### DAO Publishing Governance
 
-- **Propose before executing** — agent always shows a preview and waits for approval before committing
+The newsletter committee operates on holacratic, consensus-based principles — no single editor holds authority. The agent respects this by treating publishing as a collective act, not an individual one.
+
+```
+Committee member drafts a change via admin chat
+        ↓
+Agent generates a preview URL (visible to anyone with the link)
+        ↓
+Agent emails all active editors with the preview link + voting window
+        ↓
+If no objection arrives within the voting window
+        ↓
+Agent commits, pushes, and updates the sidenav automatically
+        ↓
+Change is live — audit trail in git history
+```
+
+Any committee member with the passphrase can initiate a change. No single person can publish unilaterally — the consent window ensures collective awareness. Any change can be reverted with `git revert`.
+
+### Agent Safety
+
+- **Propose before executing** — agent always shows a diff preview and waits for confirmation before committing
 - **No credential access** — agent cannot read `.env`, `service_account.json`, or committee email lists
 - **Audit trail** — every AI-assisted change is a Git commit with a clear, readable message
 - **Rollback** — any change can be undone with a single `git revert`
+
+### Two-Agent Architecture
+
+The admin system is composed of two distinct agents with separate contexts and purposes:
+
+| Agent | Purpose | Context |
+|-------|---------|---------|
+| **De Vine Admin Agent** | Site management — submissions, deadlines, themes, publishing | `dashboard/` files only |
+| **Inner Voice Agent** | Writing facilitation — Socratic dialogue to help members find their authentic voice | Member's own words only; no file access |
+
+Over time these coordinators may delegate to cost-efficient skill sub-agents (Claude Haiku for routine tasks, Claude Sonnet for complex reasoning) — keeping the experience powerful without unnecessary cost.
 
 ---
 
@@ -226,7 +257,8 @@ Skills live in `.claude/skills/`. Only the 3-line description header loads at co
 | `/update-deadline` | 📋 Planned | Update submission deadline across all relevant pages |
 | `/sync-report` | 📋 Planned | Summarize current `data.json` state: last sync, pending submissions, status breakdown |
 | `/new-submission` | 📋 Planned | Manually add a submission entry to `data.json` |
-| `/admin-chat` | 💡 Vision | Trigger the Phase 4 AI admin chatbot session (requires `admin.html` + API backend) |
+| `/admin-agent` | 💡 Vision | Trigger the Phase 4 De Vine Admin Agent (site management via chat; requires API backend) |
+| `/inner-voice-agent` | 💡 Vision | Trigger the Phase 4b Inner Voice Agent (Socratic writing facilitator; separate system prompt) |
 
 ### Marp Newsletter Reader View
 
