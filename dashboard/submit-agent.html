@@ -80,7 +80,7 @@
       max-width: 760px; margin: 0 auto 1.5rem; padding: 0 1rem;
     }
     .iva-principles-card {
-      background: var(--navy-3); border: 1px solid rgba(124,58,237,0.22);
+      background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, #091e3a 60%); border: 1px solid rgba(124,58,237,0.22);
       border-radius: var(--radius-lg); padding: 1rem 1.25rem;
       display: flex; overflow-x: auto; gap: 0;
       scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.3) transparent;
@@ -115,7 +115,7 @@
     .iva-ticker-outer::after  { right: 0; background: linear-gradient(to left,  var(--navy), transparent); }
     .iva-ticker-track {
       display: flex; gap: 0.5rem; white-space: nowrap;
-      animation: iva-ticker-run 42s linear infinite; width: max-content;
+      animation: iva-ticker-run 60s linear infinite; width: max-content;
     }
     .iva-ticker-track:hover { animation-play-state: paused; }
     @keyframes iva-ticker-run {
@@ -123,8 +123,8 @@
       100% { transform: translateX(-50%); }
     }
     @keyframes iva-chip-pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
-      50%      { box-shadow: 0 0 0 2.5px rgba(124,58,237,0.2); }
+      0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); border-color: var(--border-2); }
+      50%      { box-shadow: 0 0 0 5px rgba(124,58,237,0.45); border-color: rgba(124,58,237,0.55); }
     }
     .iva-chip {
       display: inline-flex; align-items: center;
@@ -132,7 +132,7 @@
       background: var(--navy-3); border: 1.5px solid var(--border-2);
       border-radius: 999px; padding: 0.3rem 0.85rem;
       cursor: pointer; white-space: nowrap; user-select: none; transition: all 0.15s;
-      animation: iva-chip-pulse 3.5s ease-in-out infinite;
+      animation: iva-chip-pulse 2s ease-in-out infinite;
     }
     .iva-chip:hover {
       background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.55);
@@ -145,7 +145,7 @@
     /* ── Chat — PURPLE identity ───────────────────────────────────── */
     .iva-chat-wrap { max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem; }
     .iva-chat {
-      background: var(--navy-3);
+      background: linear-gradient(135deg, rgba(124,58,237,0.07) 0%, #091e3a 55%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); overflow: hidden;
     }
@@ -274,7 +274,7 @@
     /* ── Journey flow card ───────────────────────────────────────── */
     .iva-flow { max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem; }
     .iva-flow-card {
-      background: var(--navy-3);
+      background: linear-gradient(135deg, rgba(124,58,237,0.07) 0%, #091e3a 60%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
     }
@@ -359,7 +359,7 @@
          target="_blank" rel="noopener" class="iva-meta-link">♻️ Sustainability ↗</a>
     </div>
 
-    <h1>Inner <em>Voice</em> Agent</h1>
+    <h1><em>Inner Voice</em> Agent</h1>
     <p class="iva-hero-desc">A Socratic writing companion that helps PIR® members find and share their authentic story — through conversation, not prompts. The AI facilitates; every word stays yours.</p>
     <div class="iva-badge">
       <span>💡</span> Vision stage
@@ -369,7 +369,7 @@
 
     <!-- Modal trigger buttons — strong CTA -->
     <div class="iva-modal-btns">
-      <button class="iva-modal-btn" onclick="openModal('modal-principles')">🌱 Core Principles</button>
+      <button class="iva-modal-btn" onclick="openModal('modal-principles')">🏗️ Core Design</button>
       <button class="iva-modal-btn" onclick="openModal('modal-dialogue')">💬 How Dialogue Flows</button>
     </div>
   </div>
@@ -377,25 +377,25 @@
   <!-- ── Principles — single scrollable card ───────────────────────── -->
   <div class="iva-principles-wrap">
     <div class="iva-principles-card">
-      <div class="iva-principle">
+      <div class="iva-principle" data-tooltip="The agent never suggests a topic, never offers an opening prompt, and never provides a blank draft. It opens with a single question about feeling or intention — and waits. The spark must come from you.">
         <div class="iva-principle-icon">🤫</div>
         <h4>The Silent Start</h4>
         <p>Never suggests a topic. It waits for your spark — a feeling, a memory, a single word.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle">
+      <div class="iva-principle" data-tooltip="When a response is thin or generic, the agent asks a targeted follow-up to surface specific anecdotes, sensory details, or emotional insights that only you could know. It keeps asking until your 'human fingerprints' appear.">
         <div class="iva-principle-icon">🔍</div>
         <h4>Clarity Engine</h4>
         <p>Asks follow-up questions to surface specific details only you could know.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle">
+      <div class="iva-principle" data-tooltip="The agent reflects your own vocabulary and emotional tone back to you — raw if you're raw, poetic if you're poetic. It avoids AI smoothing, corporate language, or generic spiritual phrases.">
         <div class="iva-principle-icon">🪞</div>
         <h4>Mirror, Don't Polish</h4>
         <p>Reflects your own vocabulary back — raw if you're raw, poetic if you're poetic.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle">
+      <div class="iva-principle" data-tooltip="Before structuring the final piece, the agent asks whether the conversation still carries the original feeling. It only proceeds to a structured output after a genuine yes — never rushing to form.">
         <div class="iva-principle-icon">❤️</div>
         <h4>The Heart Check</h4>
         <p>Asks "Does this still carry the spark you felt when we started?" before structuring anything.</p>
@@ -596,40 +596,38 @@
     </div>
   </div>
 
-  <!-- Core Principles modal -->
+  <!-- Core Design modal -->
   <div class="modal-overlay" id="modal-principles"
        onclick="closeModalOverlay(event,'modal-principles')">
     <div class="modal" style="max-width:640px">
       <button class="modal-close" onclick="window.closeModal('modal-principles')">✕</button>
-      <div class="modal-eyebrow">🌱 Core Design</div>
-      <h2 class="modal-title">Core Principles</h2>
+      <div class="modal-eyebrow">🏗️ Architecture</div>
+      <h2 class="modal-title">Core Design</h2>
       <div class="modal-body">
         <p style="font-size:0.85rem;color:var(--text-2);margin-bottom:1.25rem;line-height:1.7">
-          The Inner Voice Agent is built on five design principles that protect authentic voice above all else.
+          The Inner Voice Agent is built on a deliberate technical and philosophical architecture — designed to keep authentic voice at the center of every session.
         </p>
         <div class="principle-detail">
           <div class="pd-item">
-            <div class="pd-item-header"><span class="pd-item-icon">🤫</span><h4>The Silent Start</h4></div>
-            <p>The agent never suggests a topic, never offers an opening prompt, and never provides a blank draft. It opens with a single question about feeling or intention — and waits. The spark must come from the member.</p>
-            <div class="pd-example">Take a moment — what's the feeling or intention behind what you want to share today?</div>
+            <div class="pd-item-header"><span class="pd-item-icon">🤖</span><h4>Two-Agent System</h4></div>
+            <p>The portal houses two distinct AI agents: the <strong>Inner Voice Agent</strong> (this page — Socratic writing companion for members) and the <strong>Admin Agent</strong> (committee operations). Separate system prompts, separate identities — purple for Inner Voice, crimson for Admin.</p>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header"><span class="pd-item-icon">🔍</span><h4>Clarity Engine (Recursive Questioning)</h4></div>
-            <p>When a response is thin or generic, the agent asks a targeted follow-up to surface specific anecdotes, sensory details, or emotional insights that only the member could know. It keeps asking until "human fingerprints" appear.</p>
-            <div class="pd-example">"Lighter even though I was still scared" — that's the human fingerprint. That tension is what makes this piece yours.</div>
+            <div class="pd-item-header"><span class="pd-item-icon">📋</span><h4>System Prompt Engineering</h4></div>
+            <p>Each agent's personality, rules, and constraints are encoded in a detailed system prompt. For the Inner Voice Agent, this defines the Socratic method, enforces the four-phase session arc, and hard-prohibits ghostwriting — the prompt is the architecture.</p>
+            <div class="pd-example">The system prompt defines who the agent is — not just what it does. Hover the four cards above to see each behavioral constraint.</div>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header"><span class="pd-item-icon">🪞</span><h4>Mirror, Don't Polish</h4></div>
-            <p>The agent reflects the member's own vocabulary and emotional tone back to them — raw if they're raw, poetic if they're poetic. It avoids AI smoothing, corporate language, or generic spiritual phrases.</p>
+            <div class="pd-item-header"><span class="pd-item-icon">🔒</span><h4>Browser-Only Sessions</h4></div>
+            <p>No conversation data is stored server-side. Each session lives only in your browser tab and clears when you leave. The Finalize step uses <code>sessionStorage</code> to bridge to the submission form — zero server round-trips, zero data retention.</p>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header"><span class="pd-item-icon">❤️</span><h4>The Heart Check</h4></div>
-            <p>Before structuring the final piece, the agent asks whether the conversation still carries the original feeling. It only proceeds to a structured output after a genuine yes.</p>
-            <div class="pd-example">Does this still carry the spark you felt when we started, or did we lose the soul somewhere?</div>
+            <div class="pd-item-header"><span class="pd-item-icon">🔄</span><h4>Four-Phase Session Arc</h4></div>
+            <p>Every session moves through four phases: <strong>Opening</strong> (one intention question only) → <strong>Deepening</strong> (recursive follow-ups targeting specifics) → <strong>Mirroring</strong> (your own words reflected back) → <strong>Heart Check</strong> → structured output ready to populate the submission form.</p>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header"><span class="pd-item-icon">🚫</span><h4>No Ghostwriting</h4></div>
-            <p>If a member asks the agent to "just write it for me," it gently declines and returns to a clarifying question. The structured output is always assembled from the member's own words and phrases.</p>
+            <div class="pd-item-header"><span class="pd-item-icon">📫</span><h4>Populate Bridge</h4></div>
+            <p>When you click Finalize, your title and body are stored in <code>sessionStorage('iva_populate')</code>. The submission form reads that key on load and auto-fills your fields — no copy-paste, no lost words between windows.</p>
           </div>
         </div>
       </div>
@@ -669,11 +667,9 @@
             <div class="df-text"><strong>Architectural finish</strong> — The structured output contains <strong>Title</strong>, <strong>Body</strong>, and <strong>Key Takeaway</strong>. One click populates the submission form directly — or the member can ask to revise any part.</div>
           </div>
         </div>
-        <div style="margin-top:1.25rem;background:var(--navy-3);border:1px solid rgba(124,58,237,0.2);border-radius:10px;padding:1rem 1.1rem">
-          <h4 style="font-size:0.85rem;font-weight:700;margin-bottom:0.5rem">On ghostwriting</h4>
-          <p style="font-size:0.78rem;color:var(--text-2);margin:0;line-height:1.55">
-            If a member asks the agent to "just write it for me," it declines gently and returns to a clarifying question. The agent is a Socratic midwife — it clears the path so authentic messages can flow effortlessly. It never holds the pen.
-          </p>
+        <div class="df-step" style="margin-top:0;border-radius:0 0 var(--radius) var(--radius);border-top:none">
+          <div class="df-num" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.35);color:#f87171">🚫</div>
+          <div class="df-text"><strong>No Ghostwriting</strong> — If a member asks the agent to "just write it for me," it declines gently and returns to a clarifying question. The structured output is always assembled from the member's own words and phrases. The agent is a Socratic midwife — it never holds the pen.</div>
         </div>
       </div>
     </div>
