@@ -34,34 +34,34 @@
 
 ---
 
-## Phase 2 — Live Backend (Next Up)
+## Phase 2 — Live Backend (Mostly Complete)
 
 *Goal: Wire the submission form to real storage and make the committee's workflow hands-off.*
 
-- 📋 **Google Apps Script web app** — receives form POSTs, saves text to Google Docs, uploads art to Drive, returns a success/failure response to the submitter
-- 📋 **Confirmation email** — automated "Thank You" email sent immediately on submission; includes the current PIR meeting schedule as an attachment
-- 📋 **Dashboard live sync** — GWS CLI script pulls Drive folder state hourly and updates `dashboard/data.json`; committee portal shows real submissions in real time
-- 📋 **Manual sync trigger** — "Force Sync" button in the admin view (calls a GitHub Actions `workflow_dispatch` endpoint)
+- ✅ **Google Apps Script web app** — receives form POSTs, saves text to Google Docs, uploads art to Drive, returns a success/failure response to the submitter
+- ✅ **Confirmation email** — automated "Thank You" email sent immediately on submission; includes the current PIR meeting schedule as an attachment
+- ✅ **Dashboard live sync** — GWS CLI script pulls Drive folder state hourly and updates `dashboard/data.json`; committee portal shows real submissions in real time
+- ✅ **Manual sync trigger** — "Force Sync" button in the admin view (calls a GitHub Actions `workflow_dispatch` endpoint)
 - 📋 **Art thumbnail pipeline** — art files auto-compressed via `pngquant` when downloaded from Drive; displayed in `temp-gallery/` on the portal
 
 ---
 
 ## Phase 3 — Access Control & Polish
 
-*Goal: Lock down the admin view so only committee members can see submission details.*
+*Goal: Lock down the admin view, polish the experience, and add smart deadline tools.*
 
 - 📋 **Google OAuth login** — committee portal requires a whitelisted Gmail account to view unpublished submission content and admin controls
 - 📋 **Submitter receipt page** — a dedicated post-submission page with a unique confirmation number so members can reference their submission
-- 📋 **Deadline countdown** — live countdown widget showing days remaining until the next issue deadline
+- 📋 **Deadline countdown widget** — live countdown showing days remaining until the next issue deadline; displayed on the portal and submission form
+- 📋 **WhatsApp notification routines** — periodic deadline reminders and announcements pushed to committee WhatsApp threads via the WhatsApp Business API or Twilio; triggered by scheduled GitHub Actions
+- 📋 **Marp newsletter reader view** — each published edition gets a companion Marp slide deck (`newsletter-[month]-[year].marp.html`) that members can open as a presentation; a "📖 Reader View" link appears on the edition page
 - 📋 **Mobile-optimized admin** — committee members can review and approve submissions from their phones
 
 ---
 
-## Phase 4 — LLM-Powered Admin Dashboard
+## Phase 4 — AI Admin Dashboard
 
-*Goal: Let editors interact with the site through conversation instead of code — no CLI required.*
-
-This is the most ambitious phase, and the one most likely to transform how non-technical committee members experience the workflow.
+*Goal: Let the chief editor manage the newsletter through conversation — no CLI, no GitHub, no code required.*
 
 ### The Idea
 
@@ -73,6 +73,16 @@ Instead of asking an editor to learn GitHub, learn HTML, find a developer, and w
 > *"Draft a welcome paragraph for the May newsletter."*
 
 An AI agent reads those messages, makes the changes, and pushes the update — all without the editor touching a line of code.
+
+### The Admin Dashboard Page (`admin.html`)
+
+A dedicated page linked from the navigation and footer. **Publicly viewable** so anyone can understand what it does — changes require a passphrase.
+
+- **Capability showcase** — example conversation transcripts demonstrating what the admin agent can do, so non-technical committee members immediately understand the value
+- **"What can I ask?" prompts** — pre-written sample questions visitors can read to grasp the scope
+- **Password-gated AI chat panel** — the actual agent interface; passphrase required to make any change
+- **Link from hamburger menu + footer** — accessible from any page without navigating through the portal
+- **Link from admin modal** — the existing password-gated "🔒 Manage" modal in the portal includes an "Open Full Admin Dashboard →" button
 
 ### How It Would Work
 
@@ -90,37 +100,36 @@ Editor confirms
 Agent commits and pushes → site updates automatically
 ```
 
-The agent would have access only to the `dashboard/` files — not private setup docs, not credentials, not committee emails.
+The agent has access only to `dashboard/` files — not credentials, not committee emails, not private setup docs.
 
-### What Editors Could Do Via Chat
+### What Editors Can Do Via Chat
 
 | Request | What the agent does |
 |---------|-------------------|
 | "Change the June theme to Humility" | Edits the dropdown option and sidebar pill in `submit.html` |
 | "Add a new submission from Maria — poetry, Step 3 theme" | Adds an entry to `data.json` |
-| "Publish the May newsletter" | Links the new `newsletter-may-2026.html` file in the portal |
+| "Publish the May newsletter" | Links the new edition file in the portal and sidenav |
 | "Update the deadline to May 15th" | Finds and replaces the deadline across the relevant pages |
 | "Show me all submissions marked Needs Review" | Queries `data.json` and returns a readable list |
 | "Write a 2-sentence intro for the June issue" | Drafts copy for editor review before publishing |
 
 ### Claude Integration Options
 
-**Option A — Claude.ai Projects (simplest, available now)**
-Upload the repo to a Claude.ai Project. Editors log in at claude.ai, open the PIR project, and chat. No new infrastructure required. Best for early trials — any committee member with a Claude.ai account can use it today.
+**Option A — Claude.ai Projects (available now)**
+Upload the repo to a Claude.ai Project. Editors log in at claude.ai, open the PIR project, and chat. No new infrastructure required. Best for early trials.
 
 **Option B — Embedded chat widget (Phase 4 build)**
-Build a small chat widget directly into the admin view of `index.html`. The widget calls the Anthropic API (Claude Sonnet or Haiku for cost efficiency) with the current file state as context. Editors stay inside the committee dashboard — no need to switch tabs. The backend would be a lightweight Google Apps Script endpoint that proxies the API call, keeping costs and complexity minimal.
+AI chat widget built directly into `admin.html`. Calls the Anthropic API (Claude Sonnet) with current file state as context. Backend: lightweight Google Apps Script endpoint proxying the API call.
 
-**Option C — Claude scheduled agents (advanced automation)**
-Use Claude's remote trigger / scheduled agent feature to run recurring tasks automatically — e.g., "Every Monday, check if any submission has been sitting in 'Needs Review' for more than 7 days and send a reminder email to the committee." This adds genuine proactive automation without any human trigger.
+**Option C — Scheduled agents (advanced)**
+Recurring tasks run automatically — e.g., "Every Monday, check if any submission has been in 'Needs Review' for more than 7 days and send a reminder." No human trigger needed.
 
 ### Governance & Safety
 
-The AI admin assistant would be designed with clear guardrails:
-- **Propose before executing** — the agent always shows a preview and waits for human approval before committing any change
-- **No credential access** — the agent cannot read `service_account.json`, `.env`, or committee email lists
-- **Audit trail** — every change made through the assistant is a Git commit with a clear, readable message
-- **Rollback** — since everything is in Git, any AI-assisted change can be undone with a single `git revert`
+- **Propose before executing** — agent always shows a preview and waits for approval before committing
+- **No credential access** — agent cannot read `.env`, `service_account.json`, or committee email lists
+- **Audit trail** — every AI-assisted change is a Git commit with a clear, readable message
+- **Rollback** — any change can be undone with a single `git revert`
 
 ---
 
@@ -196,6 +205,38 @@ The agent's behavior is governed by a specialized system prompt. Key directives:
 - 💡 **Multi-editor access** — multiple committee members with GitHub access can push updates
 - 💡 **Onboarding guide** — a non-technical "how to use this" guide for new committee chairs
 - 💡 **Annual review workflow** — automated prompt at year-end to archive the previous year's issues and reset the submission calendar
+
+---
+
+## Skills & Automation Framework
+
+*Tools that let Claude Code act as a specialized assistant for this repo — reducing repetitive tasks to single commands.*
+
+Skills live in `.claude/skills/`. Only the 3-line description header loads at context start; the full skill body loads only when triggered. This keeps context lean while making powerful workflows available on demand.
+
+### Skills Library
+
+| Skill | Status | What It Does |
+|-------|--------|-------------|
+| `/marp-deck` | ✅ Built | Convert a newsletter edition or doc to a PIR-branded Marp slide deck + generate HTML |
+| `/create-skill` | ✅ Built | Design and draft a new Claude Code skill for this repo |
+| `/new-edition` | 📋 Planned | Scaffold a new newsletter HTML file from the master template |
+| `/publish-edition` | 📋 Planned | Wire a completed edition into the portal, sidenav, and archive |
+| `/update-theme` | 📋 Planned | Update the monthly theme in `submit.html` dropdown and sidenav |
+| `/update-deadline` | 📋 Planned | Update submission deadline across all relevant pages |
+| `/sync-report` | 📋 Planned | Summarize current `data.json` state: last sync, pending submissions, status breakdown |
+| `/new-submission` | 📋 Planned | Manually add a submission entry to `data.json` |
+| `/admin-chat` | 💡 Vision | Trigger the Phase 4 AI admin chatbot session (requires `admin.html` + API backend) |
+
+### Marp Newsletter Reader View
+
+Each published edition can have a companion slide deck — a "📖 Reader View" that members open as a presentation in their browser. Built with Marp using the PIR brand theme (navy + green + purple). This gives the newsletter a second life as a shareable, visually polished format perfect for WhatsApp sharing or committee presentations.
+
+**Workflow:**
+1. Run `/marp-deck` pointing at the edition content
+2. Output: `dashboard/newsletter-[month]-[year].marp.html`
+3. Add "📖 Reader View" link to the edition page
+4. Commit and push — available on GitHub Pages immediately
 
 ---
 
