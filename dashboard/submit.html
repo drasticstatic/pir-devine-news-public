@@ -200,18 +200,31 @@
 
     /* Writing prompts accordion */
     .prompts-toggle {
-      width: 100%; background: rgba(155,81,224,0.10);
-      border: 1px solid rgba(155,81,224,0.3); border-radius: 10px;
+      width: 100%; background: rgba(236,72,153,0.08);
+      border: 1px solid rgba(236,72,153,0.28); border-radius: 10px;
       padding: 0.85rem 1.1rem; cursor: pointer;
       display: flex; align-items: center; justify-content: space-between;
       font-family: var(--font-body); font-size: 0.85rem; font-weight: 700;
-      color: var(--purple); margin-bottom: 0.5rem; transition: all 0.2s;
-      animation: pulse-glow-p 3s ease-in-out infinite;
+      color: #ec4899; margin-bottom: 0.5rem; transition: all 0.2s;
+      animation: pulse-pink 3s ease-in-out infinite;
+    }
+    @keyframes pulse-pink {
+      0%,100% { box-shadow: 0 0 0 0 rgba(236,72,153,0); }
+      50%      { box-shadow: 0 0 16px 2px rgba(236,72,153,0.2); }
     }
     .prompts-toggle:hover {
-      background: rgba(155,81,224,0.17);
-      box-shadow: 0 0 22px rgba(155,81,224,0.35);
+      background: rgba(236,72,153,0.14);
+      box-shadow: 0 0 22px rgba(236,72,153,0.3);
       animation: none;
+    }
+    /* IVA CTA sparkle */
+    .iva-cta-inspire {
+      animation: iva-sparkle 2.8s ease-in-out infinite;
+    }
+    @keyframes iva-sparkle {
+      0%,100% { border-color: rgba(124,58,237,0.28) !important; box-shadow: none; }
+      50%      { border-color: rgba(167,139,250,0.65) !important;
+                 box-shadow: 0 0 14px rgba(124,58,237,0.22), 0 0 28px rgba(167,139,250,0.1); }
     }
     .prompts-toggle.is-open { animation: none; }
     .prompts-toggle .arrow { transition: transform 0.2s; }
@@ -506,19 +519,19 @@
             <div class="field">
               <button type="button" class="prompts-toggle" id="prompts-toggle"
                       onclick="togglePrompts()">
-                <span>✨ Need inspiration? See writing prompts ↓</span>
+                <span>💡 Need inspiration? See writing prompts ↓</span>
                 <span class="arrow">▾</span>
               </button>
               <div class="prompts-body" id="prompts-body">
                 <!-- Inner Voice Agent CTA -->
                 <a href="submit-agent.html" target="_blank" rel="noopener"
+                   class="iva-cta-inspire"
                    style="display:flex;align-items:center;gap:0.65rem;
-                          background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.28);
+                          background:rgba(124,58,237,0.08);
+                          border:1.5px solid rgba(124,58,237,0.28);
                           border-radius:10px;padding:0.75rem 1rem;margin-bottom:0.65rem;
                           text-decoration:none;color:var(--text-2);font-size:0.82rem;line-height:1.5;
-                          transition:background 0.15s,border-color 0.15s"
-                   onmouseover="this.style.background='rgba(124,58,237,0.14)';this.style.borderColor='rgba(124,58,237,0.45)'"
-                   onmouseout="this.style.background='rgba(124,58,237,0.08)';this.style.borderColor='rgba(124,58,237,0.28)'">
+                          transition:background 0.15s">
                   <span style="font-size:1.35rem;flex-shrink:0">✨</span>
                   <span>
                     <strong style="color:#a78bfa;display:block;margin-bottom:0.15rem">Write with the Inner Voice Agent →</strong>
