@@ -9,105 +9,145 @@
   <title>Inner Voice Agent — De Vine News</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Hero ────────────────────────────────────────────────────── */
+    /* ── Hero ─────────────────────────────────────────────────────── */
     .iva-hero {
-      text-align: center;
-      padding: 2.5rem 1.5rem 2rem;
+      text-align: center; padding: 2.5rem 1.5rem 1.75rem;
       max-width: 680px; margin: 0 auto;
     }
-    .iva-eyebrow {
+    a.iva-eyebrow, .iva-eyebrow {
       display: inline-block;
       font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: #a78bfa;
       background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3);
-      border-radius: 999px; padding: 0.28rem 0.85rem; margin-bottom: 1rem;
+      border-radius: 999px; padding: 0.28rem 0.85rem; margin-bottom: 0.6rem;
+      text-decoration: none; transition: background 0.15s, border-color 0.15s;
     }
+    a.iva-eyebrow:hover {
+      background: rgba(124,58,237,0.18); border-color: rgba(124,58,237,0.6);
+    }
+    /* Meta-nav row */
+    .iva-meta-nav {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35rem 0.65rem;
+      font-size: 0.72rem; margin-bottom: 1rem;
+    }
+    .iva-meta-link { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .iva-meta-link:hover { color: var(--text-2); }
+    .iva-meta-sep { color: var(--border-2); }
+
     .iva-hero h1 {
       font-size: clamp(1.6rem, 4.5vw, 2.5rem); font-weight: 900;
       letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.7rem;
     }
     .iva-hero h1 em { font-style: normal; color: #a78bfa; }
     .iva-hero-desc {
-      font-size: 0.95rem; color: var(--text-2); line-height: 1.7;
-      margin-bottom: 1.5rem;
+      font-size: 0.95rem; color: var(--text-2); line-height: 1.7; margin-bottom: 1.5rem;
     }
     .iva-badge {
       display: inline-flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
-      justify-content: center;
-      font-size: 0.75rem; color: var(--text-2); font-weight: 500;
+      justify-content: center; font-size: 0.75rem; color: var(--text-2); font-weight: 500;
       border: 1px solid var(--border-2); border-radius: 8px;
       padding: 0.4rem 0.9rem; margin-bottom: 1.75rem; line-height: 1.6;
     }
     .iva-badge span { color: var(--text-3); }
+
+    /* Modal trigger buttons — strong CTA */
     .iva-modal-btns {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
       margin-top: 1.25rem;
     }
-    .iva-modal-btns .btn { font-size: 0.78rem; padding: 0.38rem 0.9rem; }
+    .iva-modal-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.8rem; font-weight: 700; padding: 0.5rem 1.1rem;
+      border-radius: 9px; cursor: pointer; border: 1.5px solid var(--border-2);
+      background: var(--navy-3); color: var(--text-2);
+      transition: all 0.15s; text-decoration: none;
+    }
+    .iva-modal-btn:hover {
+      background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.45);
+      color: #a78bfa; transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(124,58,237,0.12);
+    }
+    .iva-modal-btn:active { transform: translateY(0); box-shadow: none; }
 
-    /* ── Principles strip ────────────────────────────────────────── */
-    .iva-principles {
+    /* ── Principles — single card, horizontal scroll ─────────────── */
+    .iva-principles-wrap {
       max-width: 760px; margin: 0 auto 1.5rem; padding: 0 1rem;
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.75rem;
     }
+    .iva-principles-card {
+      background: var(--navy-3); border: 1px solid rgba(124,58,237,0.22);
+      border-radius: var(--radius-lg); padding: 1rem 1.25rem;
+      display: flex; overflow-x: auto; gap: 0;
+      scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.3) transparent;
+    }
+    .iva-principles-card::-webkit-scrollbar { height: 4px; }
+    .iva-principles-card::-webkit-scrollbar-track { background: transparent; }
+    .iva-principles-card::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 2px; }
     .iva-principle {
-      background: var(--navy-3); border: 1px solid var(--border);
-      border-radius: 10px; padding: 0.85rem 1rem;
+      flex: 1; min-width: 160px; padding: 0.25rem 1rem;
     }
-    .iva-principle-icon { font-size: 1.25rem; margin-bottom: 0.3rem; }
-    .iva-principle h4 {
-      font-size: 0.8rem; font-weight: 700; margin-bottom: 0.25rem;
-      color: var(--text);
+    .iva-principle:first-child { padding-left: 0; }
+    .iva-principle:last-child  { padding-right: 0; }
+    .iva-principle-divider {
+      flex-shrink: 0; width: 1px; background: rgba(124,58,237,0.2); margin: 0.25rem 0;
     }
-    .iva-principle p {
-      font-size: 0.73rem; color: var(--text-3); margin: 0; line-height: 1.55;
-    }
+    .iva-principle-icon { font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .iva-principle h4 { font-size: 0.78rem; font-weight: 700; margin-bottom: 0.2rem; color: var(--text); }
+    .iva-principle p  { font-size: 0.71rem; color: var(--text-3); margin: 0; line-height: 1.5; }
 
-    /* ── Sample prompt chips ─────────────────────────────────────── */
-    .iva-prompts {
-      max-width: 760px; margin: 0 auto 0.5rem; padding: 0 1rem;
-    }
-    .iva-prompts-label {
+    /* ── Scrolling chip ticker ────────────────────────────────────── */
+    .iva-ticker { max-width: 760px; margin: 0 auto 0.75rem; padding: 0 1rem; }
+    .iva-ticker-label {
       font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.5rem;
       font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
     }
-    .iva-prompt-chips {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    .iva-ticker-outer { position: relative; overflow: hidden; }
+    .iva-ticker-outer::before, .iva-ticker-outer::after {
+      content: ''; position: absolute; top: 0; bottom: 0;
+      width: 2.5rem; z-index: 1; pointer-events: none;
+    }
+    .iva-ticker-outer::before { left: 0;  background: linear-gradient(to right, var(--navy), transparent); }
+    .iva-ticker-outer::after  { right: 0; background: linear-gradient(to left,  var(--navy), transparent); }
+    .iva-ticker-track {
+      display: flex; gap: 0.5rem; white-space: nowrap;
+      animation: iva-ticker-run 28s linear infinite; width: max-content;
+    }
+    .iva-ticker-track:hover { animation-play-state: paused; }
+    @keyframes iva-ticker-run {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
     .iva-chip {
-      font-size: 0.75rem; color: var(--text-2);
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 999px; padding: 0.28rem 0.75rem;
-      cursor: pointer; transition: border-color 0.15s, color 0.15s;
-      white-space: nowrap;
+      display: inline-flex; align-items: center;
+      font-size: 0.75rem; font-weight: 500; color: var(--text-2);
+      background: var(--navy-3); border: 1.5px solid var(--border-2);
+      border-radius: 999px; padding: 0.3rem 0.85rem;
+      cursor: pointer; white-space: nowrap; user-select: none; transition: all 0.15s;
     }
     .iva-chip:hover {
-      border-color: rgba(124,58,237,0.5); color: #a78bfa;
+      background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.5);
+      color: #a78bfa; transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(124,58,237,0.14);
     }
+    .iva-chip:active { transform: translateY(0); box-shadow: none; }
 
-    /* ── Chat interface ───────────────────────────────────────────── */
-    .iva-chat-wrap {
-      max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem;
-    }
+    /* ── Chat — PURPLE identity ───────────────────────────────────── */
+    .iva-chat-wrap { max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem; }
     .iva-chat {
-      background: var(--navy-3); border: 1px solid var(--border);
+      background: var(--navy-3);
+      border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); overflow: hidden;
     }
     .iva-chat-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.85rem 1.1rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(0,0,0,0.15);
+      border-bottom: 1px solid rgba(124,58,237,0.18);
+      background: rgba(124,58,237,0.05);
     }
-    .iva-chat-agent {
-      display: flex; align-items: center; gap: 0.7rem;
-    }
+    .iva-chat-agent { display: flex; align-items: center; gap: 0.7rem; }
     .iva-chat-avatar {
       width: 34px; height: 34px; border-radius: 50%;
       background: rgba(124,58,237,0.15); border: 1.5px solid rgba(124,58,237,0.4);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
     }
     .iva-chat-name { font-size: 0.88rem; font-weight: 700; }
     .iva-chat-sub  { font-size: 0.7rem; color: var(--text-3); margin-top: 0.1rem; }
@@ -117,10 +157,8 @@
       color: #a78bfa; background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3);
     }
 
-    /* Message area */
     .iva-chat-messages {
-      padding: 1.25rem 1.1rem;
-      display: flex; flex-direction: column; gap: 0.85rem;
+      padding: 1.25rem 1.1rem; display: flex; flex-direction: column; gap: 0.85rem;
       min-height: 300px; max-height: 520px; overflow-y: auto;
     }
     .iva-msg { display: flex; gap: 0.6rem; align-items: flex-start; }
@@ -131,32 +169,28 @@
       border-radius: 50%; display: flex; align-items: center;
       justify-content: center; font-size: 0.82rem;
     }
-    .iva-msg.agent .iva-msg-avatar {
-      background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3);
-    }
-    .iva-msg.user .iva-msg-avatar {
-      background: rgba(0,208,130,0.12); border: 1px solid rgba(0,208,130,0.25);
-    }
+    .iva-msg.agent .iva-msg-avatar { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); }
+    .iva-msg.user  .iva-msg-avatar { background: var(--navy-4); border: 1px solid var(--border); }
     .iva-msg-bubble {
       max-width: 82%; font-size: 0.85rem; line-height: 1.65;
       padding: 0.65rem 0.9rem; border-radius: 12px;
     }
     .iva-msg.agent .iva-msg-bubble {
-      background: var(--navy-4); border: 1px solid var(--border);
+      background: rgba(124,58,237,0.06); border: 1px solid rgba(124,58,237,0.18);
       border-top-left-radius: 4px; color: var(--text-2);
     }
     .iva-msg.user .iva-msg-bubble {
-      background: rgba(0,208,130,0.1); border: 1px solid rgba(0,208,130,0.2);
+      background: var(--navy-4); border: 1px solid var(--border);
       border-top-right-radius: 4px; color: var(--text);
     }
     .iva-msg-bubble strong { color: var(--text); }
     .iva-msg-bubble em { color: #a78bfa; font-style: italic; }
-    /* Final structured output block */
+
+    /* Structured output block */
     .iva-output {
-      margin-top: 0.65rem;
-      background: rgba(0,0,0,0.25); border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.75rem 0.9rem;
-      font-size: 0.8rem; line-height: 1.7;
+      margin-top: 0.65rem; background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(124,58,237,0.22); border-radius: 8px;
+      padding: 0.75rem 0.9rem; font-size: 0.8rem; line-height: 1.7;
     }
     .iva-output-label {
       font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
@@ -164,27 +198,23 @@
     }
     .iva-output-field { margin-bottom: 0.4rem; }
     .iva-output-field strong { color: var(--text); }
-    .iva-output-actions {
-      display: flex; gap: 0.45rem; margin-top: 0.75rem; flex-wrap: wrap;
-    }
+    .iva-output-actions { display: flex; gap: 0.45rem; margin-top: 0.75rem; flex-wrap: wrap; }
     .iva-output-actions button {
-      font-size: 0.75rem; padding: 0.3rem 0.75rem;
-      border-radius: 7px; border: none; cursor: pointer;
-      font-weight: 600; transition: opacity 0.2s;
+      font-size: 0.78rem; padding: 0.38rem 0.9rem;
+      border-radius: 8px; cursor: pointer; font-weight: 700;
+      transition: all 0.15s;
     }
-    .btn-copy-output {
-      background: rgba(124,58,237,0.2); color: #a78bfa;
-      border: 1px solid rgba(124,58,237,0.4) !important;
+    .btn-populate {
+      background: rgba(0,208,130,0.15); color: var(--green);
+      border: 1.5px solid rgba(0,208,130,0.4) !important;
     }
+    .btn-populate:hover { background: rgba(0,208,130,0.25); transform: translateY(-1px); }
     .btn-revise {
       background: var(--navy-4); color: var(--text-3);
       border: 1px solid var(--border) !important;
     }
-    .iva-demo-note {
-      font-size: 0.7rem; color: var(--text-3); margin-top: 0.5rem;
-      font-style: italic;
-    }
-    /* Divider inside chat */
+    .iva-demo-note { font-size: 0.7rem; color: var(--text-3); margin-top: 0.5rem; font-style: italic; }
+
     .iva-chat-divider {
       display: flex; align-items: center; gap: 0.75rem;
       font-size: 0.68rem; color: var(--text-3);
@@ -193,14 +223,13 @@
     .iva-chat-divider::before, .iva-chat-divider::after {
       content: ''; flex: 1; height: 1px; background: var(--border);
     }
-    /* Typing indicator */
     .iva-typing { display: none; }
     .iva-typing.show { display: flex; }
     .iva-typing .iva-msg-bubble { padding: 0.55rem 0.9rem; }
     .iva-typing-dots { display: flex; gap: 4px; align-items: center; }
     .iva-typing-dots span {
       width: 6px; height: 6px; border-radius: 50%;
-      background: #a78bfa; animation: iva-bounce 1.2s infinite;
+      background: #a78bfa; opacity: 0.5; animation: iva-bounce 1.2s infinite;
     }
     .iva-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
     .iva-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
@@ -209,11 +238,9 @@
       40% { opacity: 1; transform: translateY(-4px); }
     }
 
-    /* Input area */
     .iva-chat-input-area {
-      border-top: 1px solid var(--border);
-      padding: 0.85rem 1.1rem;
-      background: rgba(0,0,0,0.1);
+      border-top: 1px solid rgba(124,58,237,0.15);
+      padding: 0.85rem 1.1rem; background: rgba(124,58,237,0.02);
     }
     .iva-input-row { display: flex; gap: 0.5rem; }
     .iva-input-row input {
@@ -225,88 +252,48 @@
     .iva-input-row input:focus { outline: none; border-color: rgba(124,58,237,0.6); }
     .iva-send-btn {
       padding: 0.6rem 1rem; border-radius: 9px;
-      background: rgba(124,58,237,0.25); border: 1px solid rgba(124,58,237,0.4);
+      background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.4);
       color: #a78bfa; font-weight: 700; font-size: 0.88rem;
       cursor: pointer; transition: background 0.2s; white-space: nowrap;
     }
-    .iva-send-btn:hover { background: rgba(124,58,237,0.4); }
-    .iva-input-hint {
-      font-size: 0.72rem; color: var(--text-3); text-align: center;
-      padding-top: 0.4rem;
-    }
+    .iva-send-btn:hover { background: rgba(124,58,237,0.35); }
+    .iva-input-hint { font-size: 0.72rem; color: var(--text-3); text-align: center; padding-top: 0.4rem; }
 
-    /* ── Flow diagram card ───────────────────────────────────────── */
-    .iva-flow {
-      max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem;
-    }
+    /* ── Journey flow card ───────────────────────────────────────── */
+    .iva-flow { max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem; }
     .iva-flow-card {
-      background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(0,208,130,0.04));
-      border: 1px solid rgba(124,58,237,0.2);
+      background: var(--navy-3);
+      border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
     }
-    .iva-flow-card h3 {
-      font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text);
-    }
+    .iva-flow-card h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text); }
     .iva-flow-card h3 span { color: #a78bfa; }
-    .iva-flow-card p {
-      font-size: 0.82rem; color: var(--text-2); line-height: 1.7; margin-bottom: 0.85rem;
-    }
-    .iva-flow-steps {
-      display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center;
-      font-size: 0.75rem; color: var(--text-2);
-    }
-    .iva-flow-step {
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 6px; padding: 0.28rem 0.65rem; white-space: nowrap;
-    }
+    .iva-flow-card p { font-size: 0.82rem; color: var(--text-2); line-height: 1.7; margin-bottom: 0.85rem; }
+    .iva-flow-steps { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; font-size: 0.75rem; color: var(--text-2); }
+    .iva-flow-step { background: var(--navy-4); border: 1px solid var(--border); border-radius: 6px; padding: 0.28rem 0.65rem; white-space: nowrap; }
     .iva-flow-arrow { color: var(--text-3); font-size: 0.7rem; }
 
-    /* ── Footer nav ──────────────────────────────────────────────── */
-    .iva-footer-nav {
-      max-width: 760px; margin: 0 auto 2rem; padding: 0 1rem;
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
-
     /* ── Modals ──────────────────────────────────────────────────── */
-    .principle-detail {
-      display: flex; flex-direction: column; gap: 0.75rem;
-    }
-    .pd-item {
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 10px; padding: 0.9rem 1rem;
-    }
-    .pd-item-header {
-      display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;
-    }
+    .principle-detail { display: flex; flex-direction: column; gap: 0.75rem; }
+    .pd-item { background: var(--navy-3); border: 1px solid var(--border-2); border-radius: 10px; padding: 0.9rem 1rem; }
+    .pd-item-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem; }
     .pd-item-icon { font-size: 1.1rem; }
     .pd-item h4 { font-size: 0.85rem; font-weight: 700; margin: 0; }
-    .pd-item p  { font-size: 0.78rem; color: var(--text-3); margin: 0; line-height: 1.55; }
+    .pd-item p  { font-size: 0.78rem; color: var(--text-2); margin: 0; line-height: 1.55; }
     .pd-item .pd-example {
-      margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-2);
-      font-style: italic;
-      background: rgba(124,58,237,0.06); border: 1px solid rgba(124,58,237,0.15);
+      margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-2); font-style: italic;
+      background: rgba(124,58,237,0.07); border: 1px solid rgba(124,58,237,0.2);
       border-radius: 6px; padding: 0.4rem 0.6rem;
     }
     .pd-item .pd-example::before { content: '"'; color: #a78bfa; }
     .pd-item .pd-example::after  { content: '"'; color: #a78bfa; }
 
-    /* How dialogue flows */
     .dialogue-flow { display: flex; flex-direction: column; gap: 0; margin-top: 0.5rem; }
-    .df-step {
-      display: flex; align-items: flex-start; gap: 0.9rem;
-      padding: 0.8rem 1rem;
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 0;
-    }
+    .df-step { display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.8rem 1rem; background: var(--navy-3); border: 1px solid var(--border-2); border-radius: 0; }
     .df-step:first-child { border-radius: var(--radius) var(--radius) 0 0; }
     .df-step:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
     .df-step + .df-step  { border-top: none; }
-    .df-num {
-      width: 24px; height: 24px; flex-shrink: 0;
-      background: rgba(124,58,237,0.12); border: 1.5px solid rgba(124,58,237,0.35);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 0.68rem; font-weight: 800; color: #a78bfa;
-    }
+    .df-num { width: 24px; height: 24px; flex-shrink: 0; background: rgba(124,58,237,0.12); border: 1.5px solid rgba(124,58,237,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 800; color: #a78bfa; }
     .df-text { font-size: 0.83rem; color: var(--text-2); line-height: 1.55; padding-top: 0.1rem; }
     .df-text strong { color: var(--text); }
   </style>
@@ -314,9 +301,20 @@
 <body>
 <script>window.CURRENT_PAGE = 'submit-agent';</script>
 
-  <!-- ── Hero ─────────────────────────────────────────────────────── -->
+  <!-- ── Hero ──────────────────────────────────────────────────────── -->
   <div class="iva-hero">
-    <div class="iva-eyebrow">Phase 4b Preview</div>
+    <a class="iva-eyebrow"
+       href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/ROADMAP.md"
+       target="_blank" rel="noopener">Phase 4b — Roadmap ↗</a>
+
+    <!-- Meta-nav: cross-page + docs -->
+    <div class="iva-meta-nav">
+      <a href="admin.html" class="iva-meta-link">🤖 Admin Agent</a>
+      <span class="iva-meta-sep">·</span>
+      <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/SUSTAINABILITY.md"
+         target="_blank" rel="noopener" class="iva-meta-link">♻️ Sustainability ↗</a>
+    </div>
+
     <h1>Inner <em>Voice</em> Agent</h1>
     <p class="iva-hero-desc">A Socratic writing companion that helps PIR® members find and share their authentic story — through conversation, not prompts. The AI facilitates; every word stays yours.</p>
     <div class="iva-badge">
@@ -325,51 +323,66 @@
       <span>·</span> Your words, always
     </div>
 
-    <!-- Modal trigger buttons -->
+    <!-- Modal trigger buttons — strong CTA -->
     <div class="iva-modal-btns">
-      <button class="btn btn-ghost" onclick="openModal('modal-principles')">🌱 Core Principles</button>
-      <button class="btn btn-ghost" onclick="openModal('modal-dialogue')">💬 How Dialogue Flows</button>
-      <a href="admin.html" class="btn btn-ghost">🤖 Admin Agent →</a>
+      <button class="iva-modal-btn" onclick="openModal('modal-principles')">🌱 Core Principles</button>
+      <button class="iva-modal-btn" onclick="openModal('modal-dialogue')">💬 How Dialogue Flows</button>
     </div>
   </div>
 
-  <!-- ── Core principles strip ────────────────────────────────────── -->
-  <div class="iva-principles">
-    <div class="iva-principle">
-      <div class="iva-principle-icon">🤫</div>
-      <h4>The Silent Start</h4>
-      <p>The agent never suggests a topic. It waits for your spark — a feeling, a memory, a single word.</p>
-    </div>
-    <div class="iva-principle">
-      <div class="iva-principle-icon">🪞</div>
-      <h4>Mirror, Don't Polish</h4>
-      <p>The agent reflects your own vocabulary and tone back to you — raw if you're raw, poetic if you're poetic.</p>
-    </div>
-    <div class="iva-principle">
-      <div class="iva-principle-icon">🔍</div>
-      <h4>Clarity Engine</h4>
-      <p>When responses are thin, the agent asks follow-up questions to surface the specific details only you could know.</p>
-    </div>
-    <div class="iva-principle">
-      <div class="iva-principle-icon">❤️</div>
-      <h4>The Heart Check</h4>
-      <p>Before structuring anything, it asks: "Does this still carry the spark you felt when we started?"</p>
-    </div>
-  </div>
-
-  <!-- ── Sample prompt chips ──────────────────────────────────────── -->
-  <div class="iva-prompts">
-    <div class="iva-prompts-label">How a session might begin…</div>
-    <div class="iva-prompt-chips">
-      <span class="iva-chip" onclick="ivaSendChip(this)">I want to share something about Step 3</span>
-      <span class="iva-chip" onclick="ivaSendChip(this)">I have a feeling but I don't know how to say it</span>
-      <span class="iva-chip" onclick="ivaSendChip(this)">Something happened in a meeting last week</span>
-      <span class="iva-chip" onclick="ivaSendChip(this)">I keep thinking about surrender</span>
-      <span class="iva-chip" onclick="ivaSendChip(this)">I drew something and want to describe it</span>
+  <!-- ── Principles — single scrollable card ───────────────────────── -->
+  <div class="iva-principles-wrap">
+    <div class="iva-principles-card">
+      <div class="iva-principle">
+        <div class="iva-principle-icon">🤫</div>
+        <h4>The Silent Start</h4>
+        <p>Never suggests a topic. It waits for your spark — a feeling, a memory, a single word.</p>
+      </div>
+      <div class="iva-principle-divider"></div>
+      <div class="iva-principle">
+        <div class="iva-principle-icon">🔍</div>
+        <h4>Clarity Engine</h4>
+        <p>Asks follow-up questions to surface specific details only you could know.</p>
+      </div>
+      <div class="iva-principle-divider"></div>
+      <div class="iva-principle">
+        <div class="iva-principle-icon">🪞</div>
+        <h4>Mirror, Don't Polish</h4>
+        <p>Reflects your own vocabulary back — raw if you're raw, poetic if you're poetic.</p>
+      </div>
+      <div class="iva-principle-divider"></div>
+      <div class="iva-principle">
+        <div class="iva-principle-icon">❤️</div>
+        <h4>The Heart Check</h4>
+        <p>Asks "Does this still carry the spark you felt when we started?" before structuring anything.</p>
+      </div>
     </div>
   </div>
 
-  <!-- ── Chat interface ───────────────────────────────────────────── -->
+  <!-- ── Scrolling chip ticker (always visible) ─────────────────────── -->
+  <div class="iva-ticker">
+    <div class="iva-ticker-label">How a session might begin…</div>
+    <div class="iva-ticker-outer">
+      <div class="iva-ticker-track">
+        <!-- Set A -->
+        <span class="iva-chip" onclick="ivaSendChip(this)">I want to share something about Step 3</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I have a feeling but I don't know how to say it</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">Something happened in a meeting last week</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I keep thinking about surrender</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I drew something and want to describe it</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I'm not sure what to write about</span>
+        <!-- Set B — duplicate for seamless loop -->
+        <span class="iva-chip" onclick="ivaSendChip(this)">I want to share something about Step 3</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I have a feeling but I don't know how to say it</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">Something happened in a meeting last week</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I keep thinking about surrender</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I drew something and want to describe it</span>
+        <span class="iva-chip" onclick="ivaSendChip(this)">I'm not sure what to write about</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Chat interface ────────────────────────────────────────────── -->
   <div class="iva-chat-wrap">
     <div class="iva-chat">
 
@@ -386,7 +399,6 @@
 
       <div class="iva-chat-messages" id="iva-chat-messages">
 
-        <!-- Pre-loaded demo exchange — a full Socratic dialogue arc -->
         <div class="iva-chat-divider">Example session</div>
 
         <div class="iva-msg agent">
@@ -418,7 +430,7 @@
           <div class="iva-msg-avatar">✍️</div>
           <div class="iva-msg-bubble">
             <em>"I just sort of gave up trying to plan it."</em> — hold that phrase. That's your surrender. Not grand, not dramatic. Just that.<br/><br/>
-            I want to go a little deeper into that moment. <strong>What were you dreading specifically?</strong> And when you "gave up" — what did that feel like in your body, your chest, your mind? Was it relief, or something else?
+            I want to go a little deeper. <strong>When you "gave up" — what did that feel like in your body, your chest, your mind? Was it relief, or something else?</strong>
           </div>
         </div>
 
@@ -430,8 +442,8 @@
         <div class="iva-msg agent">
           <div class="iva-msg-avatar">✍️</div>
           <div class="iva-msg-bubble">
-            "Lighter even though I was still scared" — that's it. That's the human fingerprint. That tension is what makes this piece yours and nobody else's.<br/><br/>
-            Before I suggest any structure: <strong>does this still carry the spark you felt when we started, or did we lose the soul somewhere in the conversation?</strong>
+            <em>"Lighter even though I was still scared"</em> — that's the human fingerprint. That tension is what makes this piece unmistakably yours.<br/><br/>
+            Before I suggest any structure: <strong>does this still carry the spark you felt when we started, or did we lose the soul somewhere?</strong>
           </div>
         </div>
 
@@ -443,35 +455,31 @@
         <div class="iva-msg agent">
           <div class="iva-msg-avatar">✍️</div>
           <div class="iva-msg-bubble">
-            Then let's give it a shape you can paste directly into the submission form.
+            Then let's give it a shape you can take straight to the submission form.
             <div class="iva-output">
-              <div class="iva-output-label">✦ Structured Submission — ready to copy</div>
+              <div class="iva-output-label">✦ Structured Submission — ready for the form</div>
               <div class="iva-output-field"><strong>Title:</strong> Lighter, Even Scared</div>
               <div class="iva-output-field"><strong>Body:</strong> Step 3 used to feel enormous to me — like it required some kind of dramatic moment of letting go. What I found instead was a Tuesday morning where I was exhausted from rehearsing a conversation in my head. I just stopped planning it. The call went fine. Afterward I realized I'd been lighter the whole time, even while I was still scared. That's my surrender. Quiet. Tired. Real.</div>
               <div class="iva-output-field"><strong>Key Takeaway:</strong> Surrender doesn't have to be grand. Sometimes it's just exhaustion finally winning — and finding that lighter was on the other side.</div>
               <div class="iva-output-actions">
-                <button class="btn-copy-output" onclick="ivaCopyOutput(this)">📋 Copy to clipboard</button>
-                <button class="btn-revise" onclick="ivaRevise(this)">↩ Revise with agent</button>
+                <button class="btn-populate" onclick="ivaPopulateForm()">📫 Populate submission form →</button>
+                <button class="btn-revise" onclick="ivaRevise()">↩ Revise</button>
               </div>
-              <div class="iva-demo-note">↳ Demo — in the full build, this flows directly into the submission form.</div>
+              <div class="iva-demo-note">↳ Demo — "Populate form" pre-fills the submission form with this title and body.</div>
             </div>
           </div>
         </div>
 
         <div class="iva-chat-divider" id="iva-live-divider" style="display:none">Your session</div>
 
-        <!-- Typing indicator -->
         <div class="iva-msg agent iva-typing" id="iva-typing">
           <div class="iva-msg-avatar">✍️</div>
           <div class="iva-msg-bubble">
-            <div class="iva-typing-dots">
-              <span></span><span></span><span></span>
-            </div>
+            <div class="iva-typing-dots"><span></span><span></span><span></span></div>
           </div>
         </div>
       </div><!-- /messages -->
 
-      <!-- Input area -->
       <div class="iva-chat-input-area">
         <div class="iva-input-row">
           <input type="text" id="iva-input"
@@ -479,7 +487,7 @@
                  onkeydown="if(event.key==='Enter') ivaSend()" />
           <button class="iva-send-btn" onclick="ivaSend()">Send ↗</button>
         </div>
-        <div class="iva-input-hint">This is a demo — responses are illustrative of how the live agent will feel.</div>
+        <div class="iva-input-hint">This is a demo — responses illustrate how the live agent will feel.</div>
       </div>
 
     </div>
@@ -501,25 +509,18 @@
         <div class="iva-flow-arrow">→</div>
         <div class="iva-flow-step">Title · Body · Key Takeaway</div>
         <div class="iva-flow-arrow">→</div>
-        <div class="iva-flow-step">Paste into submission form</div>
+        <div class="iva-flow-step">📫 Populate submission form</div>
       </div>
     </div>
   </div>
 
-  <!-- ── Footer nav row ────────────────────────────────────────────── -->
-  <div class="iva-footer-nav">
-    <a href="index.html" class="btn btn-ghost" style="font-size:0.78rem">🏠 Portal</a>
-    <a href="submit.html" class="btn btn-ghost" style="font-size:0.78rem">✍️ Submission Form</a>
-    <a href="admin.html" class="btn btn-ghost" style="font-size:0.78rem">🤖 Admin Agent</a>
-    <a href="https://github.com/drasticstatic/pir-devine-news-public/issues" target="_blank" rel="noopener" class="btn btn-ghost" style="font-size:0.78rem">🐛 Report an Issue ↗</a>
-  </div>
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!--  MODALS                                                          -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!--  MODALS                                                        -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-
-  <!-- Modal: Core Principles -->
-  <div class="modal-overlay" id="modal-principles" onclick="closeModalOverlay(event,'modal-principles')">
+  <!-- Core Principles modal -->
+  <div class="modal-overlay" id="modal-principles"
+       onclick="closeModalOverlay(event,'modal-principles')">
     <div class="modal" style="max-width:640px">
       <div class="modal-header">
         <h2 class="modal-title">🌱 Core Principles</h2>
@@ -531,50 +532,36 @@
         </p>
         <div class="principle-detail">
           <div class="pd-item">
-            <div class="pd-item-header">
-              <span class="pd-item-icon">🤫</span>
-              <h4>The Silent Start</h4>
-            </div>
+            <div class="pd-item-header"><span class="pd-item-icon">🤫</span><h4>The Silent Start</h4></div>
             <p>The agent never suggests a topic, never offers an opening prompt, and never provides a blank draft. It opens with a single question about feeling or intention — and waits. The spark must come from the member.</p>
             <div class="pd-example">Take a moment — what's the feeling or intention behind what you want to share today?</div>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header">
-              <span class="pd-item-icon">🔍</span>
-              <h4>Clarity Engine (Recursive Questioning)</h4>
-            </div>
-            <p>When a response is thin or generic, the agent doesn't move forward — it asks a targeted follow-up to surface specific anecdotes, sensory details, or emotional insights that only the member could know. It keeps asking until "human fingerprints" appear.</p>
+            <div class="pd-item-header"><span class="pd-item-icon">🔍</span><h4>Clarity Engine (Recursive Questioning)</h4></div>
+            <p>When a response is thin or generic, the agent asks a targeted follow-up to surface specific anecdotes, sensory details, or emotional insights that only the member could know. It keeps asking until "human fingerprints" appear.</p>
             <div class="pd-example">"Lighter even though I was still scared" — that's the human fingerprint. That tension is what makes this piece yours.</div>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header">
-              <span class="pd-item-icon">🪞</span>
-              <h4>Mirror, Don't Polish</h4>
-            </div>
+            <div class="pd-item-header"><span class="pd-item-icon">🪞</span><h4>Mirror, Don't Polish</h4></div>
             <p>The agent reflects the member's own vocabulary and emotional tone back to them — raw if they're raw, poetic if they're poetic. It avoids AI smoothing, corporate language, or generic spiritual phrases.</p>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header">
-              <span class="pd-item-icon">❤️</span>
-              <h4>The Heart Check</h4>
-            </div>
+            <div class="pd-item-header"><span class="pd-item-icon">❤️</span><h4>The Heart Check</h4></div>
             <p>Before structuring the final piece, the agent asks whether the conversation still carries the original feeling. It only proceeds to a structured output after a genuine yes.</p>
             <div class="pd-example">Does this still carry the spark you felt when we started, or did we lose the soul somewhere?</div>
           </div>
           <div class="pd-item">
-            <div class="pd-item-header">
-              <span class="pd-item-icon">🚫</span>
-              <h4>No Ghostwriting</h4>
-            </div>
-            <p>If a member asks the agent to "just write it for me," it gently declines and returns to a clarifying question about their specific experience. The structured output it provides is always assembled from the member's own words and phrases.</p>
+            <div class="pd-item-header"><span class="pd-item-icon">🚫</span><h4>No Ghostwriting</h4></div>
+            <p>If a member asks the agent to "just write it for me," it gently declines and returns to a clarifying question. The structured output is always assembled from the member's own words and phrases.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal: How Dialogue Flows -->
-  <div class="modal-overlay" id="modal-dialogue" onclick="closeModalOverlay(event,'modal-dialogue')">
+  <!-- How Dialogue Flows modal -->
+  <div class="modal-overlay" id="modal-dialogue"
+       onclick="closeModalOverlay(event,'modal-dialogue')">
     <div class="modal" style="max-width:600px">
       <div class="modal-header">
         <h2 class="modal-title">💬 How Dialogue Flows</h2>
@@ -587,28 +574,28 @@
         <div class="dialogue-flow">
           <div class="df-step">
             <div class="df-num">1</div>
-            <div class="df-text"><strong>Intention question</strong> — The agent opens by asking for the feeling or intention behind what the member wants to share. No topic is suggested. The member's spark is the only starting point.</div>
+            <div class="df-text"><strong>Intention question</strong> — The agent opens by asking for the feeling or intention. No topic is suggested. The member's spark is the only starting point.</div>
           </div>
           <div class="df-step">
             <div class="df-num">2</div>
-            <div class="df-text"><strong>Socratic deepening</strong> — As the member shares, the agent listens for thin or generic language and asks recursive follow-up questions. It targets specific moments, physical sensations, named emotions — the details that make a piece unmistakably human.</div>
+            <div class="df-text"><strong>Socratic deepening</strong> — As the member shares, the agent listens for thin or generic language and asks recursive follow-up questions targeting specific moments, physical sensations, and named emotions.</div>
           </div>
           <div class="df-step">
             <div class="df-num">3</div>
-            <div class="df-text"><strong>Mirroring &amp; reflection</strong> — The agent quotes the member's own phrases back to them, highlighting "human fingerprints" — the moments that are uniquely theirs. It matches the member's voice, not a generic spiritual register.</div>
+            <div class="df-text"><strong>Mirroring &amp; reflection</strong> — The agent quotes the member's own phrases back, highlighting "human fingerprints." It matches the member's voice, not a generic spiritual register.</div>
           </div>
           <div class="df-step">
             <div class="df-num">4</div>
-            <div class="df-text"><strong>Heart Check</strong> — Before any structure is offered, the agent asks whether the conversation still holds the original spark. If the member says no, they return to stage 2. If yes, the agent assembles a final structured piece from the member's words.</div>
+            <div class="df-text"><strong>Heart Check</strong> — Before any structure is offered, the agent asks whether the conversation still holds the original spark. If yes, it assembles a final piece from the member's own words.</div>
           </div>
           <div class="df-step">
             <div class="df-num">5</div>
-            <div class="df-text"><strong>Architectural finish</strong> — The structured output contains three fields: <strong>Title</strong>, <strong>Body</strong>, and <strong>Key Takeaway</strong>. The member reviews, copies, and pastes directly into the submission form — or asks the agent to revise any part.</div>
+            <div class="df-text"><strong>Architectural finish</strong> — The structured output contains <strong>Title</strong>, <strong>Body</strong>, and <strong>Key Takeaway</strong>. One click populates the submission form directly — or the member can ask to revise any part.</div>
           </div>
         </div>
-        <div style="margin-top:1.25rem;background:var(--navy-4);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem">
+        <div style="margin-top:1.25rem;background:var(--navy-3);border:1px solid rgba(124,58,237,0.2);border-radius:10px;padding:1rem 1.1rem">
           <h4 style="font-size:0.85rem;font-weight:700;margin-bottom:0.5rem">On ghostwriting</h4>
-          <p style="font-size:0.78rem;color:var(--text-3);margin:0;line-height:1.55">
+          <p style="font-size:0.78rem;color:var(--text-2);margin:0;line-height:1.55">
             If a member asks the agent to "just write it for me," it declines gently and returns to a clarifying question. The agent is a Socratic midwife — it clears the path so authentic messages can flow effortlessly. It never holds the pen.
           </p>
         </div>
@@ -616,9 +603,9 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!--  SCRIPTS                                                       -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!--  SCRIPTS                                                         -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <script>
     /* ── Modal helpers ─────────────────────────────────────────── */
     function openModal(id)  { document.getElementById(id).classList.add('open'); }
@@ -627,86 +614,76 @@
 
     /* ── Chip click ────────────────────────────────────────────── */
     function ivaSendChip(el) {
-      const inp = document.getElementById('iva-input');
+      var inp = document.getElementById('iva-input');
       inp.value = el.textContent.trim();
       ivaSend();
     }
 
     /* ── Send message ──────────────────────────────────────────── */
     function ivaSend() {
-      const inp = document.getElementById('iva-input');
-      const text = inp.value.trim();
+      var inp = document.getElementById('iva-input');
+      var text = inp.value.trim();
       if (!text) return;
       inp.value = '';
-
-      // Show live divider once
-      const div = document.getElementById('iva-live-divider');
+      var div = document.getElementById('iva-live-divider');
       if (div.style.display === 'none') div.style.display = 'flex';
-
-      appendMsg('user', text);
-      showTyping();
-      setTimeout(() => {
-        hideTyping();
-        appendMsg('agent', ivaRespond(text));
-        scrollChat();
+      ivaAppendMsg('user', text);
+      ivaShowTyping();
+      setTimeout(function() {
+        ivaHideTyping();
+        ivaAppendMsg('agent', ivaRespond(text));
+        ivaScrollChat();
       }, 1100 + Math.random() * 700);
     }
 
     /* ── Keyword response engine ──────────────────────────────── */
     function ivaRespond(text) {
-      const t = text.toLowerCase();
-      if (/step\s*[0-9]|step[s]?|tradition/i.test(t))
-        return "When you say " + JSON.stringify(text.split(' ').slice(0,6).join(' ') + '…') + " — what does that bring up in your body right now? Is it something you've felt before, or is this newer territory?";
+      var t = text.toLowerCase();
+      if (/step\s*[0-9]|steps?|tradition/i.test(t))
+        return "When you say that — <strong>what does it bring up in your body right now?</strong> Is it something you've felt before, or is this newer territory?";
       if (/feel|feeling|emotion|scared|afraid|angry|sad|joy|hope|grief|grateful/i.test(t))
-        return "That feeling is worth staying with for a moment. <strong>Can you trace it back to a specific moment?</strong> Not the idea of the feeling — but the last time you felt it physically, in a real situation?";
+        return "That feeling is worth staying with. <strong>Can you trace it back to a specific moment?</strong> Not the idea of the feeling — but the last time you felt it physically, in a real situation?";
       if (/memory|remember|happened|moment|time when/i.test(t))
-        return "There's something alive in that memory. <strong>What detail stands out the most when you close your eyes and go back there?</strong> A sound, a smell, a word someone said — something that would only be in your version of this story.";
+        return "There's something alive in that memory. <strong>What detail stands out the most when you close your eyes and go back?</strong> A sound, a word someone said, something only you would notice.";
       if (/don't know|not sure|blank|stuck|can't|hard to/i.test(t))
-        return "That's exactly the right place to start — not knowing is honest. Let's not force it. <strong>If you had to guess at the feeling underneath the not-knowing, what would it be?</strong> Even 'heavy' or 'confused' is something real.";
+        return "That's exactly the right place to start — not knowing is honest. <strong>If you had to guess at the feeling underneath the not-knowing, what would it be?</strong> Even 'heavy' or 'confused' is something real.";
       if (/surrender|control|let go|trust|higher power|god|universe/i.test(t))
-        return "Surrender means something different for everyone. <strong>Has there been a moment — even a small, ordinary one — where you stopped trying to control an outcome and something softened?</strong> Not a concept of surrender. A real Tuesday.";
+        return "Surrender means something different for everyone. <strong>Has there been a moment — even a small, ordinary one — where you stopped trying to control an outcome and something softened?</strong> Not a concept. A real Tuesday.";
       if (/art|draw|paint|image|picture|visual|colour|color/i.test(t))
         return "Visual work carries meaning that words sometimes can't hold. <strong>If you had to describe what this piece is saying — not what it shows, but what it's trying to say — what would that be?</strong> One sentence, however rough.";
       if (/write|writing|words|piece|submission|share/i.test(t))
-        return "Before we think about structure: <strong>what's the feeling or intention you want this piece to leave behind in a reader?</strong> Not the message — the feeling. What do you want them to carry after reading it?";
-      return "I'm here. <strong>Can you say more about that?</strong> I'm listening for the detail that only you could have noticed — the part of this that's unmistakably, completely yours.";
+        return "Before we think about structure: <strong>what feeling do you want a reader to carry after they read this?</strong> Not the message — the feeling.";
+      return "I'm here. <strong>Can you say more about that?</strong> I'm listening for the detail that only you could have noticed — the part of this that's unmistakably yours.";
     }
 
     /* ── DOM helpers ───────────────────────────────────────────── */
-    function appendMsg(role, html) {
-      const area = document.getElementById('iva-chat-messages');
-      const avatar = role === 'agent' ? '✍️' : '🌿';
-      const div = document.createElement('div');
+    function ivaAppendMsg(role, html) {
+      var area = document.getElementById('iva-chat-messages');
+      var avatar = role === 'agent' ? '✍️' : '🌿';
+      var div = document.createElement('div');
       div.className = 'iva-msg ' + role;
-      div.innerHTML = `<div class="iva-msg-avatar">${avatar}</div><div class="iva-msg-bubble">${html}</div>`;
+      div.innerHTML = '<div class="iva-msg-avatar">' + avatar + '</div><div class="iva-msg-bubble">' + html + '</div>';
       area.insertBefore(div, document.getElementById('iva-typing'));
-      scrollChat();
+      ivaScrollChat();
     }
-    function showTyping() {
-      const t = document.getElementById('iva-typing');
-      t.classList.add('show');
-      scrollChat();
-    }
-    function hideTyping() {
-      document.getElementById('iva-typing').classList.remove('show');
-    }
-    function scrollChat() {
-      const area = document.getElementById('iva-chat-messages');
-      area.scrollTop = area.scrollHeight;
+    function ivaShowTyping() { document.getElementById('iva-typing').classList.add('show'); ivaScrollChat(); }
+    function ivaHideTyping()  { document.getElementById('iva-typing').classList.remove('show'); }
+    function ivaScrollChat()  { var a = document.getElementById('iva-chat-messages'); a.scrollTop = a.scrollHeight; }
+
+    /* ── Populate form ─────────────────────────────────────────── */
+    function ivaPopulateForm() {
+      try {
+        sessionStorage.setItem('iva_populate', JSON.stringify({
+          title: 'Lighter, Even Scared',
+          body:  'Step 3 used to feel enormous to me — like it required some kind of dramatic moment of letting go. What I found instead was a Tuesday morning where I was exhausted from rehearsing a conversation in my head. I just stopped planning it. The call went fine. Afterward I realized I\'d been lighter the whole time, even while I was still scared. That\'s my surrender. Quiet. Tired. Real.'
+        }));
+      } catch(_) {}
+      window.location.href = 'submit.html';
     }
 
-    /* ── Output actions ────────────────────────────────────────── */
-    function ivaCopyOutput(btn) {
-      const block = btn.closest('.iva-output');
-      const fields = block.querySelectorAll('.iva-output-field');
-      const text = Array.from(fields).map(f => f.textContent.trim()).join('\n\n');
-      navigator.clipboard.writeText(text).then(() => {
-        btn.textContent = '✓ Copied!';
-        setTimeout(() => { btn.textContent = '📋 Copy to clipboard'; }, 2500);
-      });
-    }
-    function ivaRevise(btn) {
-      const inp = document.getElementById('iva-input');
+    /* ── Revise ────────────────────────────────────────────────── */
+    function ivaRevise() {
+      var inp = document.getElementById('iva-input');
       inp.value = "I'd like to revise the piece";
       inp.focus();
     }
