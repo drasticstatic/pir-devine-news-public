@@ -63,11 +63,17 @@
       transition: all 0.15s; text-decoration: none;
     }
     .iva-modal-btn:hover {
-      background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.45);
+      background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.5);
       color: #a78bfa; transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(124,58,237,0.12);
+      box-shadow: 0 3px 10px rgba(124,58,237,0.15);
+      animation: none;
     }
     .iva-modal-btn:active { transform: translateY(0); box-shadow: none; }
+    @keyframes modal-btn-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+      50%      { box-shadow: 0 0 0 3px rgba(124,58,237,0.15); }
+    }
+    .iva-modal-btn { animation: modal-btn-pulse 3s ease-in-out infinite; }
 
     /* ── Principles — single card, horizontal scroll ─────────────── */
     .iva-principles-wrap {
@@ -97,8 +103,8 @@
     /* ── Scrolling chip ticker ────────────────────────────────────── */
     .iva-ticker { max-width: 760px; margin: 0 auto 0.75rem; padding: 0 1rem; }
     .iva-ticker-label {
-      font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.5rem;
-      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+      font-size: 0.73rem; color: var(--text-2); margin-bottom: 0.5rem;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
     }
     .iva-ticker-outer { position: relative; overflow: hidden; }
     .iva-ticker-outer::before, .iva-ticker-outer::after {
@@ -109,12 +115,16 @@
     .iva-ticker-outer::after  { right: 0; background: linear-gradient(to left,  var(--navy), transparent); }
     .iva-ticker-track {
       display: flex; gap: 0.5rem; white-space: nowrap;
-      animation: iva-ticker-run 28s linear infinite; width: max-content;
+      animation: iva-ticker-run 42s linear infinite; width: max-content;
     }
     .iva-ticker-track:hover { animation-play-state: paused; }
     @keyframes iva-ticker-run {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+    @keyframes iva-chip-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+      50%      { box-shadow: 0 0 0 2.5px rgba(124,58,237,0.2); }
     }
     .iva-chip {
       display: inline-flex; align-items: center;
@@ -122,11 +132,13 @@
       background: var(--navy-3); border: 1.5px solid var(--border-2);
       border-radius: 999px; padding: 0.3rem 0.85rem;
       cursor: pointer; white-space: nowrap; user-select: none; transition: all 0.15s;
+      animation: iva-chip-pulse 3.5s ease-in-out infinite;
     }
     .iva-chip:hover {
-      background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.5);
+      background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.55);
       color: #a78bfa; transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(124,58,237,0.14);
+      box-shadow: 0 2px 8px rgba(124,58,237,0.18);
+      animation: none;
     }
     .iva-chip:active { transform: translateY(0); box-shadow: none; }
 
@@ -272,6 +284,38 @@
     .iva-flow-steps { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; font-size: 0.75rem; color: var(--text-2); }
     .iva-flow-step { background: var(--navy-4); border: 1px solid var(--border); border-radius: 6px; padding: 0.28rem 0.65rem; white-space: nowrap; }
     .iva-flow-arrow { color: var(--text-3); font-size: 0.7rem; }
+
+    /* ── Finalize modal ─────────────────────────────────────────── */
+    .finalize-fields { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.25rem; }
+    .finalize-field label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #a78bfa; display: block; margin-bottom: 0.3rem;
+    }
+    .finalize-field input, .finalize-field textarea {
+      width: 100%; padding: 0.6rem 0.8rem;
+      background: var(--navy-4); border: 1.5px solid rgba(124,58,237,0.3);
+      border-radius: 8px; color: var(--text); font-size: 0.85rem;
+      font-family: var(--font-body); line-height: 1.6; resize: vertical;
+      transition: border-color 0.2s; box-sizing: border-box;
+    }
+    .finalize-field input:focus, .finalize-field textarea:focus {
+      outline: none; border-color: rgba(124,58,237,0.6);
+    }
+    .finalize-note {
+      font-size: 0.73rem; color: var(--text-3); line-height: 1.6; margin-top: 0.25rem;
+    }
+    .finalize-actions {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+      margin-top: 0.5rem;
+    }
+    .btn-finalize-populate {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.82rem; font-weight: 700; padding: 0.55rem 1.15rem;
+      border-radius: 9px; cursor: pointer;
+      background: rgba(0,208,130,0.15); border: 1.5px solid rgba(0,208,130,0.4);
+      color: var(--green); transition: all 0.15s;
+    }
+    .btn-finalize-populate:hover { background: rgba(0,208,130,0.25); transform: translateY(-1px); }
 
     /* ── Modals ──────────────────────────────────────────────────── */
     .principle-detail { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -462,10 +506,10 @@
               <div class="iva-output-field"><strong>Body:</strong> Step 3 used to feel enormous to me — like it required some kind of dramatic moment of letting go. What I found instead was a Tuesday morning where I was exhausted from rehearsing a conversation in my head. I just stopped planning it. The call went fine. Afterward I realized I'd been lighter the whole time, even while I was still scared. That's my surrender. Quiet. Tired. Real.</div>
               <div class="iva-output-field"><strong>Key Takeaway:</strong> Surrender doesn't have to be grand. Sometimes it's just exhaustion finally winning — and finding that lighter was on the other side.</div>
               <div class="iva-output-actions">
-                <button class="btn-populate" onclick="ivaPopulateForm()">📫 Populate submission form →</button>
+                <button class="btn-populate" onclick="ivaOpenFinalize()">✍️ Finalize Submission</button>
                 <button class="btn-revise" onclick="ivaRevise()">↩ Revise</button>
               </div>
-              <div class="iva-demo-note">↳ Demo — "Populate form" pre-fills the submission form with this title and body.</div>
+              <div class="iva-demo-note">↳ "Finalize Submission" opens a review step — edit fields, then populate the form or return to chat.</div>
             </div>
           </div>
         </div>
@@ -518,14 +562,47 @@
   <!--  MODALS                                                          -->
   <!-- ════════════════════════════════════════════════════════════════ -->
 
+  <!-- Finalize Submission modal -->
+  <div class="modal-overlay" id="modal-finalize"
+       onclick="closeModalOverlay(event,'modal-finalize')">
+    <div class="modal" style="max-width:580px">
+      <button class="modal-close" onclick="window.closeModal('modal-finalize')">✕</button>
+      <div class="modal-eyebrow">✨ Inner Voice Agent</div>
+      <h2 class="modal-title">Finalize Your Submission</h2>
+      <div class="modal-body">
+        <p style="font-size:0.84rem;color:var(--text-2);margin-bottom:1rem;line-height:1.65">
+          Review and edit your piece below, then populate the form — or close this window to keep refining in the chat.
+        </p>
+        <div class="finalize-fields">
+          <div class="finalize-field">
+            <label for="fin-title">Title</label>
+            <input type="text" id="fin-title" value="Lighter, Even Scared" />
+          </div>
+          <div class="finalize-field">
+            <label for="fin-body">Body</label>
+            <textarea id="fin-body" rows="7">Step 3 used to feel enormous to me — like it required some kind of dramatic moment of letting go. What I found instead was a Tuesday morning where I was exhausted from rehearsing a conversation in my head. I just stopped planning it. The call went fine. Afterward I realized I'd been lighter the whole time, even while I was still scared. That's my surrender. Quiet. Tired. Real.</textarea>
+          </div>
+          <div class="finalize-field">
+            <label for="fin-takeaway">Key Takeaway</label>
+            <textarea id="fin-takeaway" rows="2">Surrender doesn't have to be grand. Sometimes it's just exhaustion finally winning — and finding that lighter was on the other side.</textarea>
+          </div>
+        </div>
+        <p class="finalize-note">Changes you make here won't affect the chat above — you can close this, edit in conversation, and re-open Finalize whenever you're ready.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-finalize-populate" onclick="ivaFinalizePopulate()">📫 Populate submission form →</button>
+        <button class="btn btn-ghost" onclick="window.closeModal('modal-finalize')">← Back to conversation</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Core Principles modal -->
   <div class="modal-overlay" id="modal-principles"
        onclick="closeModalOverlay(event,'modal-principles')">
     <div class="modal" style="max-width:640px">
-      <div class="modal-header">
-        <h2 class="modal-title">🌱 Core Principles</h2>
-        <button class="modal-close" onclick="closeModal('modal-principles')">✕</button>
-      </div>
+      <button class="modal-close" onclick="window.closeModal('modal-principles')">✕</button>
+      <div class="modal-eyebrow">🌱 Core Design</div>
+      <h2 class="modal-title">Core Principles</h2>
       <div class="modal-body">
         <p style="font-size:0.85rem;color:var(--text-2);margin-bottom:1.25rem;line-height:1.7">
           The Inner Voice Agent is built on five design principles that protect authentic voice above all else.
@@ -563,10 +640,9 @@
   <div class="modal-overlay" id="modal-dialogue"
        onclick="closeModalOverlay(event,'modal-dialogue')">
     <div class="modal" style="max-width:600px">
-      <div class="modal-header">
-        <h2 class="modal-title">💬 How Dialogue Flows</h2>
-        <button class="modal-close" onclick="closeModal('modal-dialogue')">✕</button>
-      </div>
+      <button class="modal-close" onclick="window.closeModal('modal-dialogue')">✕</button>
+      <div class="modal-eyebrow">💬 Dialogue Design</div>
+      <h2 class="modal-title">How Dialogue Flows</h2>
       <div class="modal-body">
         <p style="font-size:0.85rem;color:var(--text-2);margin-bottom:1.25rem;line-height:1.7">
           A typical Inner Voice session moves through four stages — not as a rigid script, but as a natural arc.
@@ -607,10 +683,19 @@
   <!--  SCRIPTS                                                         -->
   <!-- ════════════════════════════════════════════════════════════════ -->
   <script>
-    /* ── Modal helpers ─────────────────────────────────────────── */
-    function openModal(id)  { document.getElementById(id).classList.add('open'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-    function closeModalOverlay(e, id) { if (e.target.id === id) closeModal(id); }
+    /* openModal / closeModal supplied by nav.js (uses .is-open class) */
+    function closeModalOverlay(e, id) { if (e.target.id === id) window.closeModal(id); }
+
+    function ivaOpenFinalize() { window.openModal('modal-finalize'); }
+    function ivaFinalizePopulate() {
+      try {
+        sessionStorage.setItem('iva_populate', JSON.stringify({
+          title: document.getElementById('fin-title').value,
+          body:  document.getElementById('fin-body').value
+        }));
+      } catch(_) {}
+      window.location.href = 'submit.html';
+    }
 
     /* ── Chip click ────────────────────────────────────────────── */
     function ivaSendChip(el) {
