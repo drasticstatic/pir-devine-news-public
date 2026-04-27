@@ -27,6 +27,7 @@
       <div class="pir-footer__group">
         <span class="pir-footer__group-title">Portal</span>
         <a href="index.html" data-tooltip="View all submissions &amp; committee tools">🏠 De Vine News Portal</a>
+        <a href="admin.html" data-tooltip="AI-powered admin interface — showcase &amp; committee tools">🤖 AI Admin Dashboard</a>
         <a href="submit.html" data-tooltip="Submit literature, art, or both for the newsletter">✍️ Submit Work</a>
         <a href="newsletter-template.html" data-tooltip="Browse all newsletter content categories">📰 Newsletter Template</a>
         <a href="bulletin.html" data-tooltip="Fellowship announcements &amp; open service positions">📋 De Vine Bulletin</a>
