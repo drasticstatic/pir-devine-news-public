@@ -510,6 +510,21 @@
                 <span class="arrow">▾</span>
               </button>
               <div class="prompts-body" id="prompts-body">
+                <!-- Inner Voice Agent CTA -->
+                <a href="submit-agent.html" target="_blank" rel="noopener"
+                   style="display:flex;align-items:center;gap:0.65rem;
+                          background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.28);
+                          border-radius:10px;padding:0.75rem 1rem;margin-bottom:0.65rem;
+                          text-decoration:none;color:var(--text-2);font-size:0.82rem;line-height:1.5;
+                          transition:background 0.15s,border-color 0.15s"
+                   onmouseover="this.style.background='rgba(124,58,237,0.14)';this.style.borderColor='rgba(124,58,237,0.45)'"
+                   onmouseout="this.style.background='rgba(124,58,237,0.08)';this.style.borderColor='rgba(124,58,237,0.28)'">
+                  <span style="font-size:1.35rem;flex-shrink:0">✨</span>
+                  <span>
+                    <strong style="color:#a78bfa;display:block;margin-bottom:0.15rem">Write with the Inner Voice Agent →</strong>
+                    Not sure where to start? The agent asks questions, you answer — your story finds its shape through conversation.
+                  </span>
+                </a>
                 <div class="prompt-note">
                   <strong style="color:var(--purple)">Write 250–1,250 words, or send a painting, drawing, piece of music, or recorded meditation</strong>
                   Respond to one prompt, several, or all — or write freely from your own experience.
@@ -1014,6 +1029,26 @@
     var btn=document.getElementById('submit-btn'); btn.disabled=false; btn.textContent='Submit for Review 📫';
     window.scrollTo({top:0,behavior:'smooth'});
   }
+
+  /* Inner Voice Agent → auto-fill from sessionStorage */
+  (function() {
+    try {
+      var d = sessionStorage.getItem('iva_populate');
+      if (!d) return;
+      sessionStorage.removeItem('iva_populate');
+      var obj = JSON.parse(d);
+      // Select literature category so the fields appear
+      var litBtn = document.querySelector('.cat-btn[onclick*="literature"]');
+      if (litBtn) selectCat('literature', litBtn);
+      if (obj.title) document.getElementById('litTitle').value = obj.title;
+      if (obj.body)  document.getElementById('litText').value  = obj.body;
+      // Scroll to the writing section
+      setTimeout(function() {
+        var el = document.getElementById('sec-lit');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
+    } catch(_) {}
+  })();
 
   /* Writing prompts accordion */
   function togglePrompts() {

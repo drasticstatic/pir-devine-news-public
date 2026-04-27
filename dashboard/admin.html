@@ -9,32 +9,44 @@
   <title>AI Admin Dashboard — De Vine News</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Hero ────────────────────────────────────────────────────── */
+    /* ── Hero ─────────────────────────────────────────────────────── */
     .adm-hero {
-      text-align: center;
-      padding: 2.5rem 1.5rem 2rem;
+      text-align: center; padding: 2.5rem 1.5rem 1.75rem;
       max-width: 680px; margin: 0 auto;
     }
-    .adm-eyebrow {
+    a.adm-eyebrow, .adm-eyebrow {
       display: inline-block;
       font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--green);
       background: rgba(0,208,130,0.1); border: 1px solid rgba(0,208,130,0.3);
-      border-radius: 999px; padding: 0.28rem 0.85rem; margin-bottom: 1rem;
+      border-radius: 999px; padding: 0.28rem 0.85rem; margin-bottom: 0.6rem;
+      text-decoration: none; transition: background 0.15s, border-color 0.15s;
     }
+    a.adm-eyebrow:hover {
+      background: rgba(0,208,130,0.18); border-color: rgba(0,208,130,0.6);
+    }
+    /* Meta-nav row (cross-page + docs links) */
+    .adm-meta-nav {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35rem 0.65rem;
+      font-size: 0.72rem; margin-bottom: 1rem;
+    }
+    .adm-meta-link {
+      color: var(--text-3); text-decoration: none; transition: color 0.15s;
+    }
+    .adm-meta-link:hover { color: var(--text-2); }
+    .adm-meta-sep { color: var(--border-2); }
+
     .adm-hero h1 {
       font-size: clamp(1.6rem, 4.5vw, 2.5rem); font-weight: 900;
       letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.7rem;
     }
     .adm-hero h1 em { font-style: normal; color: var(--green); }
     .adm-hero-desc {
-      font-size: 0.95rem; color: var(--text-2); line-height: 1.7;
-      margin-bottom: 1.5rem;
+      font-size: 0.95rem; color: var(--text-2); line-height: 1.7; margin-bottom: 1.5rem;
     }
     .adm-badge {
       display: inline-flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
-      justify-content: center;
-      font-size: 0.75rem; color: var(--text-2); font-weight: 500;
+      justify-content: center; font-size: 0.75rem; color: var(--text-2); font-weight: 500;
       border: 1px solid var(--border-2); border-radius: 8px;
       padding: 0.4rem 0.9rem; margin-bottom: 1.75rem; line-height: 1.6;
     }
@@ -56,18 +68,28 @@
       font-size: 0.78rem; color: #f87171; margin: 0.3rem auto 0;
       max-width: 420px; text-align: left; display: none;
     }
-    /* Modal trigger buttons */
+    /* Modal trigger buttons — strong CTA */
     .adm-modal-btns {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
       margin-top: 1.25rem;
     }
-    .adm-modal-btns .btn {
-      font-size: 0.78rem; padding: 0.38rem 0.9rem;
+    .adm-modal-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.8rem; font-weight: 700; padding: 0.5rem 1.1rem;
+      border-radius: 9px; cursor: pointer; border: 1.5px solid var(--border-2);
+      background: var(--navy-3); color: var(--text-2);
+      transition: all 0.15s; text-decoration: none;
     }
+    .adm-modal-btn:hover {
+      background: rgba(0,208,130,0.08); border-color: rgba(0,208,130,0.45);
+      color: var(--green); transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(0,208,130,0.12);
+    }
+    .adm-modal-btn:active { transform: translateY(0); box-shadow: none; }
 
-    /* ── Demo mode banner ─────────────────────────────────────── */
+    /* ── Demo mode banner ─────────────────────────────────────────── */
     .adm-demo-banner {
-      display: none; /* shown on unlock */
+      display: none;
       align-items: center; justify-content: center; gap: 0.5rem;
       font-size: 0.75rem; font-weight: 600; color: #fbbf24;
       background: rgba(251,191,36,0.08); border-top: 1px solid rgba(251,191,36,0.2);
@@ -75,28 +97,68 @@
       padding: 0.4rem 1rem; text-align: center;
     }
 
-    /* ── Chat interface ───────────────────────────────────────── */
+    /* ── Scrolling chip ticker ────────────────────────────────────── */
+    .adm-ticker {
+      max-width: 760px; margin: 0 auto 0.75rem; padding: 0 1rem;
+    }
+    .adm-ticker-label {
+      font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.5rem;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .adm-ticker-outer {
+      position: relative; overflow: hidden;
+    }
+    .adm-ticker-outer::before, .adm-ticker-outer::after {
+      content: ''; position: absolute; top: 0; bottom: 0;
+      width: 2.5rem; z-index: 1; pointer-events: none;
+    }
+    .adm-ticker-outer::before { left: 0;  background: linear-gradient(to right, var(--navy), transparent); }
+    .adm-ticker-outer::after  { right: 0; background: linear-gradient(to left,  var(--navy), transparent); }
+    .adm-ticker-track {
+      display: flex; gap: 0.5rem; white-space: nowrap;
+      animation: ticker-run 30s linear infinite;
+      width: max-content;
+    }
+    .adm-ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker-run {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .adm-chip {
+      display: inline-flex; align-items: center;
+      font-size: 0.75rem; font-weight: 500; color: var(--text-2);
+      background: var(--navy-3); border: 1.5px solid var(--border-2);
+      border-radius: 999px; padding: 0.3rem 0.85rem;
+      cursor: pointer; white-space: nowrap; user-select: none;
+      transition: all 0.15s;
+    }
+    .adm-chip:hover {
+      background: rgba(0,208,130,0.09); border-color: rgba(0,208,130,0.5);
+      color: var(--green); transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,208,130,0.14);
+    }
+    .adm-chip:active { transform: translateY(0); box-shadow: none; }
+
+    /* ── Chat — GREEN identity ────────────────────────────────────── */
     .adm-chat-wrap {
       max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem;
     }
     .adm-chat {
-      background: var(--navy-3); border: 1px solid var(--border);
+      background: var(--navy-3);
+      border: 1px solid rgba(0,208,130,0.22);
       border-radius: var(--radius-lg); overflow: hidden;
     }
     .adm-chat-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.85rem 1.1rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(0,0,0,0.15);
+      border-bottom: 1px solid rgba(0,208,130,0.15);
+      background: rgba(0,208,130,0.04);
     }
-    .adm-chat-agent {
-      display: flex; align-items: center; gap: 0.7rem;
-    }
+    .adm-chat-agent { display: flex; align-items: center; gap: 0.7rem; }
     .adm-chat-avatar {
       width: 34px; height: 34px; border-radius: 50%;
       background: rgba(0,208,130,0.15); border: 1.5px solid rgba(0,208,130,0.4);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
     }
     .adm-chat-name { font-size: 0.88rem; font-weight: 700; }
     .adm-chat-sub  { font-size: 0.7rem; color: var(--text-3); margin-top: 0.1rem; }
@@ -104,22 +166,14 @@
       font-size: 0.7rem; font-weight: 600; padding: 0.22rem 0.6rem;
       border-radius: 6px; transition: all 0.3s;
     }
-    .adm-chat-lock-badge.locked {
-      color: var(--text-3); background: var(--navy-4); border: 1px solid var(--border);
-    }
-    .adm-chat-lock-badge.unlocked {
-      color: #fbbf24; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3);
-    }
+    .adm-chat-lock-badge.locked  { color: var(--text-3); background: var(--navy-4); border: 1px solid var(--border); }
+    .adm-chat-lock-badge.unlocked { color: #fbbf24; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); }
 
-    /* Message area */
     .adm-chat-messages {
-      padding: 1.25rem 1.1rem;
-      display: flex; flex-direction: column; gap: 0.85rem;
+      padding: 1.25rem 1.1rem; display: flex; flex-direction: column; gap: 0.85rem;
       min-height: 300px; max-height: 480px; overflow-y: auto;
     }
-    .adm-msg {
-      display: flex; gap: 0.6rem; align-items: flex-start;
-    }
+    .adm-msg { display: flex; gap: 0.6rem; align-items: flex-start; }
     .adm-msg.agent { flex-direction: row; }
     .adm-msg.user  { flex-direction: row-reverse; }
     .adm-msg-avatar {
@@ -131,57 +185,43 @@
       background: rgba(0,208,130,0.15); border: 1px solid rgba(0,208,130,0.3);
     }
     .adm-msg.user .adm-msg-avatar {
-      background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.35);
+      background: rgba(0,208,130,0.1); border: 1px solid rgba(0,208,130,0.22);
     }
     .adm-msg-bubble {
       max-width: 80%; font-size: 0.85rem; line-height: 1.6;
       padding: 0.65rem 0.9rem; border-radius: 12px;
     }
     .adm-msg.agent .adm-msg-bubble {
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-top-left-radius: 4px;
-      color: var(--text-2);
+      background: rgba(0,208,130,0.05); border: 1px solid rgba(0,208,130,0.15);
+      border-top-left-radius: 4px; color: var(--text-2);
     }
     .adm-msg.user .adm-msg-bubble {
-      background: rgba(124,58,237,0.18); border: 1px solid rgba(124,58,237,0.3);
-      border-top-right-radius: 4px;
-      color: var(--text);
+      background: var(--navy-4); border: 1px solid var(--border);
+      border-top-right-radius: 4px; color: var(--text);
     }
     .adm-msg-bubble strong { color: var(--text); }
     .adm-msg-bubble code {
       background: rgba(0,0,0,0.3); padding: 1px 5px;
       border-radius: 4px; font-size: 0.8rem; color: var(--green);
     }
-    /* Proposal diff block */
     .adm-proposal {
-      margin-top: 0.65rem;
-      background: rgba(0,0,0,0.25); border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.6rem 0.8rem; font-family: monospace;
+      margin-top: 0.65rem; background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.6rem 0.8rem; font-family: monospace;
       font-size: 0.78rem; line-height: 1.7;
     }
     .adm-proposal .del { color: #f87171; }
     .adm-proposal .add { color: #4ade80; }
-    .adm-proposal-actions {
-      display: flex; gap: 0.45rem; margin-top: 0.65rem; flex-wrap: wrap;
-    }
+    .adm-proposal-actions { display: flex; gap: 0.45rem; margin-top: 0.65rem; flex-wrap: wrap; }
     .adm-proposal-actions button {
       font-size: 0.75rem; padding: 0.3rem 0.75rem;
       border-radius: 7px; border: none; cursor: pointer;
       font-weight: 600; transition: opacity 0.2s;
     }
-    .btn-approve {
-      background: rgba(0,208,130,0.2); color: var(--green);
-      border: 1px solid rgba(0,208,130,0.4) !important;
-    }
-    .btn-cancel-chat {
-      background: var(--navy-4); color: var(--text-3);
-      border: 1px solid var(--border) !important;
-    }
-    .adm-demo-note {
-      font-size: 0.7rem; color: var(--text-3); margin-top: 0.5rem;
-      font-style: italic;
-    }
-    /* Divider inside chat */
+    .btn-approve { background: rgba(0,208,130,0.2); color: var(--green); border: 1px solid rgba(0,208,130,0.4) !important; }
+    .btn-cancel-chat { background: var(--navy-4); color: var(--text-3); border: 1px solid var(--border) !important; }
+    .adm-demo-note { font-size: 0.7rem; color: var(--text-3); margin-top: 0.5rem; font-style: italic; }
+
     .adm-chat-divider {
       display: flex; align-items: center; gap: 0.75rem;
       font-size: 0.68rem; color: var(--text-3);
@@ -190,16 +230,13 @@
     .adm-chat-divider::before, .adm-chat-divider::after {
       content: ''; flex: 1; height: 1px; background: var(--border);
     }
-    /* Typing indicator */
     .adm-typing { display: none; }
     .adm-typing.show { display: flex; }
-    .adm-typing .adm-msg-bubble {
-      padding: 0.55rem 0.9rem;
-    }
+    .adm-typing .adm-msg-bubble { padding: 0.55rem 0.9rem; }
     .typing-dots { display: flex; gap: 4px; align-items: center; }
     .typing-dots span {
       width: 6px; height: 6px; border-radius: 50%;
-      background: var(--text-3); animation: bounce-dot 1.2s infinite;
+      background: var(--green); opacity: 0.5; animation: bounce-dot 1.2s infinite;
     }
     .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
     .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
@@ -208,179 +245,101 @@
       40% { opacity: 1; transform: translateY(-4px); }
     }
 
-    /* Input area */
     .adm-chat-input-area {
-      border-top: 1px solid var(--border);
-      padding: 0.85rem 1.1rem;
-      background: rgba(0,0,0,0.1);
+      border-top: 1px solid rgba(0,208,130,0.12);
+      padding: 0.85rem 1.1rem; background: rgba(0,208,130,0.02);
     }
-    .adm-input-row {
-      display: flex; gap: 0.5rem;
-    }
+    .adm-input-row { display: flex; gap: 0.5rem; }
     .adm-input-row input {
       flex: 1; padding: 0.6rem 0.9rem;
       border-radius: 9px; border: 1.5px solid var(--border-2);
       background: var(--navy-4); color: var(--text);
       font-size: 0.88rem; transition: border-color 0.2s;
     }
-    .adm-input-row input:focus { outline: none; border-color: rgba(124,58,237,0.6); }
+    .adm-input-row input:focus { outline: none; border-color: rgba(0,208,130,0.55); }
     .adm-input-row input:disabled { opacity: 0.45; cursor: not-allowed; }
     .adm-send-btn {
       padding: 0.6rem 1rem; border-radius: 9px;
-      background: rgba(124,58,237,0.25); border: 1px solid rgba(124,58,237,0.4);
-      color: #a78bfa; font-weight: 700; font-size: 0.88rem;
-      cursor: pointer; transition: background 0.2s;
-      white-space: nowrap;
+      background: rgba(0,208,130,0.18); border: 1px solid rgba(0,208,130,0.4);
+      color: var(--green); font-weight: 700; font-size: 0.88rem;
+      cursor: pointer; transition: background 0.2s; white-space: nowrap;
     }
-    .adm-send-btn:hover:not(:disabled) { background: rgba(124,58,237,0.4); }
+    .adm-send-btn:hover:not(:disabled) { background: rgba(0,208,130,0.3); }
     .adm-send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-    .adm-locked-hint {
-      font-size: 0.75rem; color: var(--text-3); text-align: center;
-      padding-top: 0.4rem;
-    }
+    .adm-locked-hint { font-size: 0.75rem; color: var(--text-3); text-align: center; padding-top: 0.4rem; }
 
-    /* ── DAO Vision card ─────────────────────────────────────── */
-    .adm-dao {
-      max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem;
-    }
+    /* ── DAO Vision card ─────────────────────────────────────────── */
+    .adm-dao { max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem; }
     .adm-dao-card {
-      background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(6,182,212,0.05));
-      border: 1px solid rgba(124,58,237,0.25);
+      background: var(--navy-3);
+      border: 1px solid rgba(124,58,237,0.3);
       border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
     }
-    .adm-dao-card h3 {
-      font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem;
-      color: var(--text);
-    }
+    .adm-dao-card h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text); }
     .adm-dao-card h3 span { color: #a78bfa; }
-    .adm-dao-card p {
-      font-size: 0.82rem; color: var(--text-2); line-height: 1.7; margin-bottom: 0.85rem;
-    }
-    .dao-flow {
-      display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center;
-      font-size: 0.75rem; color: var(--text-2);
-    }
-    .dao-step {
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 6px; padding: 0.28rem 0.65rem;
-      white-space: nowrap;
-    }
+    .adm-dao-card p { font-size: 0.82rem; color: var(--text-2); line-height: 1.7; margin-bottom: 0.85rem; }
+    .dao-flow { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; font-size: 0.75rem; color: var(--text-2); }
+    .dao-step { background: var(--navy-4); border: 1px solid var(--border); border-radius: 6px; padding: 0.28rem 0.65rem; white-space: nowrap; }
     .dao-arrow { color: var(--text-3); font-size: 0.7rem; }
 
-    /* ── Sample prompts chip strip ────────────────────────────── */
-    .adm-prompts {
-      max-width: 760px; margin: 0 auto 0.5rem; padding: 0 1rem;
-    }
-    .adm-prompts-label {
-      font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.5rem;
-      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
-    }
-    .adm-prompt-chips {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-    }
-    .adm-chip {
-      font-size: 0.75rem; color: var(--text-2);
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 999px; padding: 0.28rem 0.75rem;
-      cursor: pointer; transition: border-color 0.15s, color 0.15s;
-      white-space: nowrap;
-    }
-    .adm-chip:hover {
-      border-color: rgba(124,58,237,0.5); color: #a78bfa;
-    }
-
-    /* ── Footer nav ──────────────────────────────────────────── */
-    .adm-footer-nav {
-      max-width: 760px; margin: 0 auto 2rem; padding: 0 1rem;
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
-
-    /* ── Modals — capabilities, how it works, skills ─────────── */
-    .cap-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem; margin-top: 0.25rem;
-    }
-    .cap-card {
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1rem 1.1rem;
-    }
+    /* ── Modals ──────────────────────────────────────────────────── */
+    .cap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-top: 0.25rem; }
+    .cap-card { background: var(--navy-3); border: 1px solid var(--border-2); border-radius: 10px; padding: 1rem 1.1rem; }
     .cap-card-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
     .cap-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .cap-card p  { font-size: 0.75rem; color: var(--text-3); line-height: 1.55; margin: 0; }
+    .cap-card p  { font-size: 0.75rem; color: var(--text-2); line-height: 1.55; margin: 0; }
     .cap-card .cap-prompt {
-      margin-top: 0.6rem; font-size: 0.72rem; color: var(--text-2);
-      font-style: italic;
-      background: rgba(0,208,130,0.06); border: 1px solid rgba(0,208,130,0.15);
+      margin-top: 0.6rem; font-size: 0.72rem; color: var(--text-2); font-style: italic;
+      background: rgba(0,208,130,0.07); border: 1px solid rgba(0,208,130,0.2);
       border-radius: 6px; padding: 0.4rem 0.6rem;
     }
     .cap-card .cap-prompt::before { content: '"'; color: var(--green); }
     .cap-card .cap-prompt::after  { content: '"'; color: var(--green); }
 
-    /* How it works flow */
     .hiw-steps { display: flex; flex-direction: column; gap: 0; margin-top: 0.5rem; }
-    .hiw-step {
-      display: flex; align-items: flex-start; gap: 0.9rem;
-      padding: 0.8rem 1rem;
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 0;
-    }
+    .hiw-step { display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.8rem 1rem; background: var(--navy-3); border: 1px solid var(--border-2); border-radius: 0; }
     .hiw-step:first-child { border-radius: var(--radius) var(--radius) 0 0; }
     .hiw-step:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
     .hiw-step + .hiw-step { border-top: none; }
-    .hiw-num {
-      width: 24px; height: 24px; flex-shrink: 0;
-      background: rgba(0,208,130,0.12); border: 1.5px solid rgba(0,208,130,0.35);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 0.68rem; font-weight: 800; color: var(--green);
-    }
+    .hiw-num { width: 24px; height: 24px; flex-shrink: 0; background: rgba(0,208,130,0.12); border: 1.5px solid rgba(0,208,130,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 800; color: var(--green); }
     .hiw-text { font-size: 0.83rem; color: var(--text-2); line-height: 1.55; padding-top: 0.1rem; }
     .hiw-text strong { color: var(--text); }
-    .agent-arch {
-      margin-top: 1.25rem;
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1rem 1.1rem;
-    }
+    .agent-arch { margin-top: 1.25rem; background: var(--navy-3); border: 1px solid var(--border-2); border-radius: 10px; padding: 1rem 1.1rem; }
     .agent-arch h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .agent-row {
-      display: flex; gap: 0.75rem; align-items: flex-start;
-      padding: 0.6rem 0; border-bottom: 1px solid var(--border);
-    }
+    .agent-row { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
     .agent-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .agent-icon {
-      font-size: 1.2rem; margin-top: 0.1rem; flex-shrink: 0;
-    }
+    .agent-icon { font-size: 1.2rem; margin-top: 0.1rem; flex-shrink: 0; }
     .agent-info h5 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.15rem; }
     .agent-info p  { font-size: 0.75rem; color: var(--text-3); margin: 0; line-height: 1.5; }
 
-    /* Skills table */
     .skills-table { width: 100%; margin-top: 0.5rem; border-collapse: collapse; font-size: 0.82rem; }
-    .skills-table th {
-      background: var(--navy-4); color: var(--green);
-      padding: 0.5rem 0.75rem; text-align: left; font-size: 0.72rem;
-      font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
-    }
-    .skills-table td {
-      padding: 0.55rem 0.75rem; border-top: 1px solid var(--border);
-      color: var(--text-2); vertical-align: top;
-    }
+    .skills-table th { background: var(--navy-3); color: var(--green); padding: 0.5rem 0.75rem; text-align: left; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .skills-table td { padding: 0.55rem 0.75rem; border-top: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
     .skills-table tr:hover td { background: rgba(255,255,255,0.02); }
     .skill-name { font-weight: 700; color: var(--text); font-family: monospace; }
-    .skill-badge {
-      display: inline-block; font-size: 0.65rem; font-weight: 700;
-      padding: 0.15rem 0.45rem; border-radius: 4px;
-    }
+    .skill-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 4px; }
     .skill-badge.done    { background: rgba(0,208,130,0.15); color: var(--green); }
-    .skill-badge.planned { background: rgba(74,234,220,0.1); color: var(--cyan); }
+    .skill-badge.planned { background: rgba(74,234,220,0.1);  color: var(--cyan); }
     .skill-badge.vision  { background: rgba(124,58,237,0.15); color: #a78bfa; }
   </style>
 </head>
 <body>
 <script>window.CURRENT_PAGE = 'admin';</script>
 
-  <!-- ── Hero ─────────────────────────────────────────────────── -->
+  <!-- ── Hero ──────────────────────────────────────────────────────── -->
   <div class="adm-hero">
-    <div class="adm-eyebrow">Phase 4 Preview</div>
+    <a class="adm-eyebrow"
+       href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/ROADMAP.md"
+       target="_blank" rel="noopener">Phase 4 — Roadmap ↗</a>
+
+    <!-- Meta-nav: cross-page + docs links -->
+    <div class="adm-meta-nav">
+      <a href="submit-agent.html" class="adm-meta-link">✨ Inner Voice Agent</a>
+      <span class="adm-meta-sep">·</span>
+      <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/SUSTAINABILITY.md"
+         target="_blank" rel="noopener" class="adm-meta-link">♻️ Sustainability ↗</a>
+    </div>
+
     <h1>AI <em>Admin</em> Dashboard</h1>
     <p class="adm-hero-desc">A conversational interface for the newsletter committee. Manage submissions, deadlines, themes, and publishing through plain-English chat — no code required.</p>
     <div class="adm-badge">
@@ -397,34 +356,45 @@
     </div>
     <div id="adm-unlock-error"></div>
 
-    <!-- Modal trigger buttons -->
+    <!-- Modal trigger buttons — strong CTA -->
     <div class="adm-modal-btns">
-      <button class="btn btn-ghost" onclick="openModal('modal-capabilities')">🎯 Capabilities</button>
-      <button class="btn btn-ghost" onclick="openModal('modal-howitworks')">⚙️ How It Works</button>
-      <button class="btn btn-ghost" onclick="openModal('modal-skills')">🔧 Skills Library</button>
-      <a href="submit-agent.html" class="btn btn-ghost">✍️ Inner Voice Agent →</a>
+      <button class="adm-modal-btn" onclick="openModal('modal-capabilities')">🎯 Capabilities</button>
+      <button class="adm-modal-btn" onclick="openModal('modal-howitworks')">⚙️ How It Works</button>
+      <button class="adm-modal-btn" onclick="openModal('modal-skills')">🔧 Skills Library</button>
     </div>
   </div>
 
-  <!-- ── Demo mode banner ───────────────────────────────────────── -->
+  <!-- ── Demo mode banner ───────────────────────────────────────────── -->
   <div class="adm-demo-banner" id="adm-demo-banner">
     🟡 DEMO MODE — proposals are fully simulated. No changes will be made until Phase 4 is live.
   </div>
 
-  <!-- ── Sample prompt chips ────────────────────────────────────── -->
-  <div class="adm-prompts" id="adm-prompts" style="display:none">
-    <div class="adm-prompts-label">Try asking…</div>
-    <div class="adm-prompt-chips">
-      <span class="adm-chip" onclick="admSendChip(this)">Show me Needs Review submissions</span>
-      <span class="adm-chip" onclick="admSendChip(this)">Update the June deadline to May 20th</span>
-      <span class="adm-chip" onclick="admSendChip(this)">Change the July theme to Gratitude</span>
-      <span class="adm-chip" onclick="admSendChip(this)">Publish the May newsletter</span>
-      <span class="adm-chip" onclick="admSendChip(this)">Draft a welcome paragraph for June</span>
-      <span class="adm-chip" onclick="admSendChip(this)">Add a bulletin announcement</span>
+  <!-- ── Scrolling chip ticker (always visible) ─────────────────────── -->
+  <div class="adm-ticker">
+    <div class="adm-ticker-label">Try asking…</div>
+    <div class="adm-ticker-outer">
+      <div class="adm-ticker-track" id="adm-ticker-track">
+        <!-- Set A -->
+        <span class="adm-chip" onclick="admChipClick(this)">Show me Needs Review submissions</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Update the June deadline to May 20th</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Change the July theme to Gratitude</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Publish the May newsletter</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Draft a welcome paragraph for June</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Add a bulletin announcement</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Mark all April submissions approved</span>
+        <!-- Set B — duplicate for seamless loop -->
+        <span class="adm-chip" onclick="admChipClick(this)">Show me Needs Review submissions</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Update the June deadline to May 20th</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Change the July theme to Gratitude</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Publish the May newsletter</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Draft a welcome paragraph for June</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Add a bulletin announcement</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Mark all April submissions approved</span>
+      </div>
     </div>
   </div>
 
-  <!-- ── Chat interface ─────────────────────────────────────────── -->
+  <!-- ── Chat interface ────────────────────────────────────────────── -->
   <div class="adm-chat-wrap">
     <div class="adm-chat">
 
@@ -441,7 +411,6 @@
 
       <div class="adm-chat-messages" id="adm-chat-messages">
 
-        <!-- Pre-loaded demo exchange -->
         <div class="adm-chat-divider">Example conversation</div>
 
         <div class="adm-msg agent">
@@ -493,7 +462,6 @@
 
         <div class="adm-chat-divider" id="live-divider" style="display:none">Your session</div>
 
-        <!-- Typing indicator (hidden by default) -->
         <div class="adm-msg agent adm-typing" id="adm-typing">
           <div class="adm-msg-avatar">🤖</div>
           <div class="adm-msg-bubble">
@@ -503,7 +471,6 @@
 
       </div><!-- /messages -->
 
-      <!-- Input area -->
       <div class="adm-chat-input-area">
         <div class="adm-input-row">
           <input type="text" id="adm-chat-input"
@@ -518,7 +485,7 @@
     </div><!-- /adm-chat -->
   </div><!-- /adm-chat-wrap -->
 
-  <!-- ── DAO / Holacratic Governance Vision ──────────────────────── -->
+  <!-- ── DAO / Holacratic Governance Vision ─────────────────────────── -->
   <div class="adm-dao">
     <div class="adm-dao-card">
       <h3>🌀 <span>Holacratic Publishing Governance</span> — The Vision</h3>
@@ -539,21 +506,13 @@
     </div>
   </div>
 
-  <!-- ── Footer nav ─────────────────────────────────────────────── -->
-  <div class="adm-footer-nav">
-    <a href="index.html" class="btn btn-ghost btn-sm">← Portal</a>
-    <a href="submit-agent.html" class="btn btn-ghost btn-sm">✍️ Inner Voice Agent</a>
-    <a href="submit.html" class="btn btn-ghost btn-sm">📫 Submit Form</a>
-    <a href="https://github.com/drasticstatic/pir-devine-news-public/issues"
-       target="_blank" rel="noopener" class="btn btn-ghost btn-sm">💬 Give Feedback ↗</a>
-  </div>
-
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- Modals                                                       -->
-  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- Modals                                                           -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
 
   <!-- Capabilities modal -->
-  <div class="modal-overlay" id="modal-capabilities" role="dialog" aria-modal="true" aria-labelledby="cap-title">
+  <div class="modal-overlay" id="modal-capabilities" role="dialog" aria-modal="true" aria-labelledby="cap-title"
+       onclick="closeModalOverlay(event,'modal-capabilities')">
     <div class="modal" style="max-width:780px">
       <button class="modal-close" onclick="closeModal('modal-capabilities')" aria-label="Close">✕</button>
       <div class="modal-eyebrow">🎯 What the Admin Agent Can Do</div>
@@ -611,7 +570,7 @@
           <div class="cap-card">
             <div class="cap-card-icon">📖</div>
             <h4>Generate Reader View</h4>
-            <p>Convert a newsletter edition into a Marp slide deck for a presentation-style reader view. Uses the /marp-deck skill.</p>
+            <p>Convert a newsletter edition into a Marp slide deck for a presentation-style reader view.</p>
             <div class="cap-prompt">Create a reader view slide deck for the April edition</div>
           </div>
         </div>
@@ -623,7 +582,8 @@
   </div>
 
   <!-- How It Works modal -->
-  <div class="modal-overlay" id="modal-howitworks" role="dialog" aria-modal="true" aria-labelledby="hiw-title">
+  <div class="modal-overlay" id="modal-howitworks" role="dialog" aria-modal="true" aria-labelledby="hiw-title"
+       onclick="closeModalOverlay(event,'modal-howitworks')">
     <div class="modal" style="max-width:600px">
       <button class="modal-close" onclick="closeModal('modal-howitworks')" aria-label="Close">✕</button>
       <div class="modal-eyebrow">⚙️ Architecture</div>
@@ -651,7 +611,6 @@
             <div class="hiw-text"><strong>Agent commits and pushes</strong> — site updates in minutes. Every change has a full Git history and can be reverted instantly.</div>
           </div>
         </div>
-
         <div class="agent-arch">
           <h4>Two-Agent Architecture</h4>
           <div class="agent-row">
@@ -662,7 +621,7 @@
             </div>
           </div>
           <div class="agent-row">
-            <div class="agent-icon">✍️</div>
+            <div class="agent-icon">✨</div>
             <div class="agent-info">
               <h5>Inner Voice Agent — Writing Facilitation</h5>
               <p>Helps members write complete, authentic submissions through Socratic dialogue. Separate system prompt, separate session, no site access. Facilitator — never ghostwriter.</p>
@@ -680,7 +639,8 @@
   </div>
 
   <!-- Skills Library modal -->
-  <div class="modal-overlay" id="modal-skills" role="dialog" aria-modal="true" aria-labelledby="sk-title">
+  <div class="modal-overlay" id="modal-skills" role="dialog" aria-modal="true" aria-labelledby="sk-title"
+       onclick="closeModalOverlay(event,'modal-skills')">
     <div class="modal" style="max-width:700px">
       <button class="modal-close" onclick="closeModal('modal-skills')" aria-label="Close">✕</button>
       <div class="modal-eyebrow">🔧 Claude Code Skills</div>
@@ -691,63 +651,19 @@
         </p>
         <table class="skills-table">
           <thead>
-            <tr>
-              <th>Skill</th>
-              <th>Status</th>
-              <th>What It Does</th>
-            </tr>
+            <tr><th>Skill</th><th>Status</th><th>What It Does</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><span class="skill-name">/marp-deck</span></td>
-              <td><span class="skill-badge done">✅ Built</span></td>
-              <td>Convert a newsletter edition or doc to a PIR-branded Marp slide deck + generate HTML</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/create-skill</span></td>
-              <td><span class="skill-badge done">✅ Built</span></td>
-              <td>Design and draft a new Claude Code skill for this repo following the standard format</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/new-edition</span></td>
-              <td><span class="skill-badge planned">📋 Planned</span></td>
-              <td>Scaffold a new newsletter HTML file from the master template</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/publish-edition</span></td>
-              <td><span class="skill-badge planned">📋 Planned</span></td>
-              <td>Wire a completed edition into the portal, sidenav, and archive</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/update-theme</span></td>
-              <td><span class="skill-badge planned">📋 Planned</span></td>
-              <td>Update the monthly theme across submit.html, sidenav, and relevant pages</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/update-deadline</span></td>
-              <td><span class="skill-badge planned">📋 Planned</span></td>
-              <td>Update submission deadline across all pages and the countdown widget</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/sync-report</span></td>
-              <td><span class="skill-badge planned">📋 Planned</span></td>
-              <td>Summarize data.json: last sync timestamp, submission counts by status</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/new-submission</span></td>
-              <td><span class="skill-badge planned">📋 Planned</span></td>
-              <td>Manually add a submission entry to data.json from the committee portal</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/admin-agent</span></td>
-              <td><span class="skill-badge vision">💡 Vision</span></td>
-              <td>Phase 4 AI admin chatbot — site management via conversation (this page)</td>
-            </tr>
-            <tr>
-              <td><span class="skill-name">/inner-voice-agent</span></td>
-              <td><span class="skill-badge vision">💡 Vision</span></td>
-              <td>Phase 4b Socratic writing facilitator — helps members write complete, heartfelt pieces</td>
-            </tr>
+            <tr><td><span class="skill-name">/marp-deck</span></td><td><span class="skill-badge done">✅ Built</span></td><td>Convert a newsletter edition or doc to a PIR-branded Marp slide deck + generate HTML</td></tr>
+            <tr><td><span class="skill-name">/create-skill</span></td><td><span class="skill-badge done">✅ Built</span></td><td>Design and draft a new Claude Code skill for this repo following the standard format</td></tr>
+            <tr><td><span class="skill-name">/new-edition</span></td><td><span class="skill-badge planned">📋 Planned</span></td><td>Scaffold a new newsletter HTML file from the master template</td></tr>
+            <tr><td><span class="skill-name">/publish-edition</span></td><td><span class="skill-badge planned">📋 Planned</span></td><td>Wire a completed edition into the portal, sidenav, and archive</td></tr>
+            <tr><td><span class="skill-name">/update-theme</span></td><td><span class="skill-badge planned">📋 Planned</span></td><td>Update the monthly theme across submit.html, sidenav, and relevant pages</td></tr>
+            <tr><td><span class="skill-name">/update-deadline</span></td><td><span class="skill-badge planned">📋 Planned</span></td><td>Update submission deadline across all pages and the countdown widget</td></tr>
+            <tr><td><span class="skill-name">/sync-report</span></td><td><span class="skill-badge planned">📋 Planned</span></td><td>Summarize data.json: last sync timestamp, submission counts by status</td></tr>
+            <tr><td><span class="skill-name">/new-submission</span></td><td><span class="skill-badge planned">📋 Planned</span></td><td>Manually add a submission entry to data.json from the committee portal</td></tr>
+            <tr><td><span class="skill-name">/admin-agent</span></td><td><span class="skill-badge vision">💡 Vision</span></td><td>Phase 4 AI admin chatbot — site management via conversation (this page)</td></tr>
+            <tr><td><span class="skill-name">/inner-voice-agent</span></td><td><span class="skill-badge vision">💡 Vision</span></td><td>Phase 4b Socratic writing facilitator — helps members write complete, heartfelt pieces</td></tr>
           </tbody>
         </table>
       </div>
@@ -758,20 +674,22 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- Scripts                                                      -->
-  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- Scripts                                                          -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <script>
-  /* ── Passphrase unlock (demo mode) ─────────────────────────── */
+  /* ── Modal helpers ──────────────────────────────────────────────── */
+  function openModal(id)  { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  function closeModalOverlay(e, id) { if (e.target.id === id) closeModal(id); }
+
+  /* ── Passphrase unlock ──────────────────────────────────────────── */
   var admUnlocked = false;
 
   function admUnlock() {
     var pw  = document.getElementById('adm-pass').value.trim();
     var err = document.getElementById('adm-unlock-error');
-    if (!pw) {
-      err.textContent = 'Please enter the passphrase.';
-      err.style.display = 'block'; return;
-    }
+    if (!pw) { err.textContent = 'Please enter the passphrase.'; err.style.display = 'block'; return; }
     err.style.display = 'none';
     admUnlocked = true;
     document.getElementById('adm-pass').classList.add('unlocked');
@@ -779,7 +697,6 @@
     document.querySelector('.adm-hero .btn-primary').disabled = true;
     document.querySelector('.adm-hero .btn-primary').textContent = '✓ Unlocked';
     document.getElementById('adm-demo-banner').style.display = 'flex';
-    document.getElementById('adm-prompts').style.display = 'block';
     document.getElementById('chat-sub-status').textContent = 'Demo Mode — proposals simulated, no changes made';
     var badge = document.getElementById('chat-lock-badge');
     badge.textContent = '🟡 Demo Active';
@@ -790,12 +707,25 @@
     input.placeholder = 'Ask the admin agent anything…';
     document.getElementById('adm-send-btn').disabled = false;
     document.getElementById('adm-locked-hint').style.display = 'none';
-    /* Welcome message */
-    admAddMsg('agent', 'Demo unlocked. I can simulate any admin action — try the prompt chips above or type your own request.');
+    admAddMsg('agent', 'Demo unlocked. I can simulate any admin action — click a chip in the ticker above or type your own request.');
     input.focus();
   }
 
-  /* ── Demo send ──────────────────────────────────────────────── */
+  /* ── Chip click ─────────────────────────────────────────────────── */
+  function admChipClick(el) {
+    if (!admUnlocked) {
+      /* Highlight passphrase field and hint */
+      var inp = document.getElementById('adm-pass');
+      inp.focus();
+      inp.style.borderColor = 'rgba(0,208,130,0.7)';
+      setTimeout(function(){ inp.style.borderColor = ''; }, 1800);
+      return;
+    }
+    document.getElementById('adm-chat-input').value = el.textContent.trim();
+    admSend();
+  }
+
+  /* ── Demo send ──────────────────────────────────────────────────── */
   function admSend() {
     if (!admUnlocked) return;
     var input = document.getElementById('adm-chat-input');
@@ -807,17 +737,9 @@
     setTimeout(function(){ admHideTyping(); admRespond(text); }, 900 + Math.random()*600);
   }
 
-  function admSendChip(el) {
-    if (!admUnlocked) return;
-    document.getElementById('adm-chat-input').value = el.textContent;
-    admSend();
-  }
-
-  /* ── Demo response engine ───────────────────────────────────── */
-  var admReplied = {};
+  /* ── Demo response engine ───────────────────────────────────────── */
   function admRespond(text) {
     var t = text.toLowerCase();
-
     if (/needs.review|review|pending/.test(t)) {
       admAddMsg('agent', '📋 <strong>3 submissions</strong> are currently flagged <strong>Needs Review</strong>:<div class="adm-proposal" style="font-family:inherit;font-size:0.8rem"><div>① Anon · Literature · Hope · Apr 14</div><div>② J.M. · Art · Courage · Apr 18</div><div>③ Anon · Both · Courage · Apr 20</div></div>Bulk-approve, mark Needs Revision, or review individually?');
       return;
@@ -849,20 +771,16 @@
       admAddMsg('agent', '📋 <strong>Proposed addition to <code>bulletin.html</code>:</strong><div class="adm-proposal" style="font-family:inherit;font-size:0.8rem"><div class="add">+ New service position: [parsed from your message]</div><div class="add">+ Added to Open Service Positions section</div></div><div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only.</div>');
       return;
     }
-    /* Fallback */
-    admAddMsg('agent', 'I can help with that. In Phase 4, I\'d read the current <code>data.json</code> and relevant pages, then propose a specific change for your approval. For now, try one of the prompt chips above to see a simulated response.<div class="adm-demo-note">↳ Full natural-language understanding comes with the Phase 4 API connection.</div>');
+    admAddMsg('agent', 'I can help with that. In Phase 4, I\'d read the current <code>data.json</code> and relevant pages, then propose a specific change for your approval. For now, try one of the chips in the ticker above to see a simulated response.<div class="adm-demo-note">↳ Full natural-language understanding comes with the Phase 4 API connection.</div>');
   }
 
   function admDemoApprove(btn) {
-    var actions = btn.closest('.adm-proposal-actions');
-    actions.innerHTML = '<span style="font-size:0.75rem;color:var(--green)">✓ Logged (demo) — will execute on Phase 4 launch.</span>';
+    btn.closest('.adm-proposal-actions').innerHTML = '<span style="font-size:0.75rem;color:var(--green)">✓ Logged (demo) — will execute on Phase 4 launch.</span>';
   }
   function admDemoCancel(btn) {
-    var actions = btn.closest('.adm-proposal-actions');
-    actions.innerHTML = '<span style="font-size:0.75rem;color:var(--text-3)">✕ Cancelled.</span>';
+    btn.closest('.adm-proposal-actions').innerHTML = '<span style="font-size:0.75rem;color:var(--text-3)">✕ Cancelled.</span>';
   }
 
-  /* ── Helpers ──────────────────────────────────────────────────── */
   function admAddMsg(role, html) {
     var msgs = document.getElementById('adm-chat-messages');
     var typing = document.getElementById('adm-typing');
@@ -873,14 +791,8 @@
     msgs.insertBefore(div, typing);
     msgs.scrollTop = msgs.scrollHeight;
   }
-  function admShowTyping() {
-    document.getElementById('adm-typing').classList.add('show');
-    var msgs = document.getElementById('adm-chat-messages');
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-  function admHideTyping() {
-    document.getElementById('adm-typing').classList.remove('show');
-  }
+  function admShowTyping() { document.getElementById('adm-typing').classList.add('show'); var m = document.getElementById('adm-chat-messages'); m.scrollTop = m.scrollHeight; }
+  function admHideTyping()  { document.getElementById('adm-typing').classList.remove('show'); }
   </script>
 
 <script src="nav.js"></script>
