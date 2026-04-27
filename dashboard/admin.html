@@ -1,272 +1,887 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
+  <link rel="icon" href="assets/favicon.png" type="image/png"/>
+  <link rel="apple-touch-icon" href="assets/favicon.png"/>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Admin Dashboard — De Vine News</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Admin page layout ─────────────────────────────────────── */
-    .admin-hero {
+    /* ── Hero ────────────────────────────────────────────────────── */
+    .adm-hero {
       text-align: center;
-      padding: 3rem 1.5rem 2rem;
+      padding: 2.5rem 1.5rem 2rem;
+      max-width: 680px; margin: 0 auto;
     }
-    .admin-hero-eyebrow {
+    .adm-eyebrow {
       display: inline-block;
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--green);
-      background: rgba(0,208,130,0.1); border: 1px solid rgba(0,208,130,0.25);
-      border-radius: 999px; padding: 0.3rem 0.85rem; margin-bottom: 1rem;
+      background: rgba(0,208,130,0.1); border: 1px solid rgba(0,208,130,0.3);
+      border-radius: 999px; padding: 0.28rem 0.85rem; margin-bottom: 1rem;
     }
-    .admin-hero h1 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
-      letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.75rem;
+    .adm-hero h1 {
+      font-size: clamp(1.6rem, 4.5vw, 2.5rem); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.7rem;
     }
-    .admin-hero h1 em { font-style: normal; color: var(--green); }
-    .admin-hero p {
-      max-width: 560px; margin: 0 auto 1.5rem;
-      color: var(--text-2); font-size: 1rem; line-height: 1.7;
+    .adm-hero h1 em { font-style: normal; color: var(--green); }
+    .adm-hero-desc {
+      font-size: 0.95rem; color: var(--text-2); line-height: 1.7;
+      margin-bottom: 1.5rem;
     }
-    .admin-phase-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 0.78rem; color: var(--text-3);
-      border: 1px solid var(--border); border-radius: 8px;
-      padding: 0.35rem 0.85rem; margin-bottom: 2rem;
+    .adm-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+      justify-content: center;
+      font-size: 0.75rem; color: var(--text-2); font-weight: 500;
+      border: 1px solid var(--border-2); border-radius: 8px;
+      padding: 0.4rem 0.9rem; margin-bottom: 1.75rem; line-height: 1.6;
+    }
+    .adm-badge span { color: var(--text-3); }
+
+    /* Unlock row */
+    .adm-unlock {
+      display: flex; gap: 0.5rem; max-width: 420px; margin: 0 auto 1.25rem;
+    }
+    .adm-unlock input {
+      flex: 1; padding: 0.65rem 0.9rem;
+      border-radius: 10px; border: 1.5px solid var(--border-2);
+      background: var(--navy-4); color: var(--text);
+      font-size: 0.9rem; transition: border-color 0.2s;
+    }
+    .adm-unlock input:focus { outline: none; border-color: var(--green); }
+    .adm-unlock input.unlocked { border-color: var(--green); }
+    #adm-unlock-error {
+      font-size: 0.78rem; color: #f87171; margin: 0.3rem auto 0;
+      max-width: 420px; text-align: left; display: none;
+    }
+    /* Modal trigger buttons */
+    .adm-modal-btns {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .adm-modal-btns .btn {
+      font-size: 0.78rem; padding: 0.38rem 0.9rem;
     }
 
-    /* ── Capability grid ──────────────────────────────────────── */
-    .admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem; padding: 0 1rem 2rem;
-      max-width: 1000px; margin: 0 auto;
+    /* ── Demo mode banner ─────────────────────────────────────── */
+    .adm-demo-banner {
+      display: none; /* shown on unlock */
+      align-items: center; justify-content: center; gap: 0.5rem;
+      font-size: 0.75rem; font-weight: 600; color: #fbbf24;
+      background: rgba(251,191,36,0.08); border-top: 1px solid rgba(251,191,36,0.2);
+      border-bottom: 1px solid rgba(251,191,36,0.2);
+      padding: 0.4rem 1rem; text-align: center;
     }
-    .admin-capability {
+
+    /* ── Chat interface ───────────────────────────────────────── */
+    .adm-chat-wrap {
+      max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem;
+    }
+    .adm-chat {
       background: var(--navy-3); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 1.25rem 1.4rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      border-radius: var(--radius-lg); overflow: hidden;
     }
-    .admin-capability:hover {
-      border-color: rgba(0,208,130,0.35);
-      box-shadow: 0 0 0 1px rgba(0,208,130,0.12), 0 4px 24px rgba(0,0,0,0.25);
+    .adm-chat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.15);
     }
-    .admin-capability-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
-    .admin-capability h3 {
-      font-size: 0.9rem; font-weight: 700; margin-bottom: 0.35rem;
+    .adm-chat-agent {
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .adm-chat-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(0,208,130,0.15); border: 1.5px solid rgba(0,208,130,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .adm-chat-name { font-size: 0.88rem; font-weight: 700; }
+    .adm-chat-sub  { font-size: 0.7rem; color: var(--text-3); margin-top: 0.1rem; }
+    .adm-chat-lock-badge {
+      font-size: 0.7rem; font-weight: 600; padding: 0.22rem 0.6rem;
+      border-radius: 6px; transition: all 0.3s;
+    }
+    .adm-chat-lock-badge.locked {
+      color: var(--text-3); background: var(--navy-4); border: 1px solid var(--border);
+    }
+    .adm-chat-lock-badge.unlocked {
+      color: #fbbf24; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3);
+    }
+
+    /* Message area */
+    .adm-chat-messages {
+      padding: 1.25rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.85rem;
+      min-height: 300px; max-height: 480px; overflow-y: auto;
+    }
+    .adm-msg {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+    }
+    .adm-msg.agent { flex-direction: row; }
+    .adm-msg.user  { flex-direction: row-reverse; }
+    .adm-msg-avatar {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 0.82rem;
+    }
+    .adm-msg.agent .adm-msg-avatar {
+      background: rgba(0,208,130,0.15); border: 1px solid rgba(0,208,130,0.3);
+    }
+    .adm-msg.user .adm-msg-avatar {
+      background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.35);
+    }
+    .adm-msg-bubble {
+      max-width: 80%; font-size: 0.85rem; line-height: 1.6;
+      padding: 0.65rem 0.9rem; border-radius: 12px;
+    }
+    .adm-msg.agent .adm-msg-bubble {
+      background: var(--navy-4); border: 1px solid var(--border);
+      border-top-left-radius: 4px;
+      color: var(--text-2);
+    }
+    .adm-msg.user .adm-msg-bubble {
+      background: rgba(124,58,237,0.18); border: 1px solid rgba(124,58,237,0.3);
+      border-top-right-radius: 4px;
       color: var(--text);
     }
-    .admin-capability p { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; margin: 0; }
-    .admin-capability .sample-prompt {
-      margin-top: 0.75rem;
-      background: rgba(0,208,130,0.06); border: 1px solid rgba(0,208,130,0.15);
-      border-radius: 8px; padding: 0.55rem 0.75rem;
-      font-size: 0.78rem; color: var(--text-2); font-style: italic;
-      line-height: 1.5;
+    .adm-msg-bubble strong { color: var(--text); }
+    .adm-msg-bubble code {
+      background: rgba(0,0,0,0.3); padding: 1px 5px;
+      border-radius: 4px; font-size: 0.8rem; color: var(--green);
     }
-    .admin-capability .sample-prompt::before { content: '"'; color: var(--green); }
-    .admin-capability .sample-prompt::after  { content: '"'; color: var(--green); }
+    /* Proposal diff block */
+    .adm-proposal {
+      margin-top: 0.65rem;
+      background: rgba(0,0,0,0.25); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.6rem 0.8rem; font-family: monospace;
+      font-size: 0.78rem; line-height: 1.7;
+    }
+    .adm-proposal .del { color: #f87171; }
+    .adm-proposal .add { color: #4ade80; }
+    .adm-proposal-actions {
+      display: flex; gap: 0.45rem; margin-top: 0.65rem; flex-wrap: wrap;
+    }
+    .adm-proposal-actions button {
+      font-size: 0.75rem; padding: 0.3rem 0.75rem;
+      border-radius: 7px; border: none; cursor: pointer;
+      font-weight: 600; transition: opacity 0.2s;
+    }
+    .btn-approve {
+      background: rgba(0,208,130,0.2); color: var(--green);
+      border: 1px solid rgba(0,208,130,0.4) !important;
+    }
+    .btn-cancel-chat {
+      background: var(--navy-4); color: var(--text-3);
+      border: 1px solid var(--border) !important;
+    }
+    .adm-demo-note {
+      font-size: 0.7rem; color: var(--text-3); margin-top: 0.5rem;
+      font-style: italic;
+    }
+    /* Divider inside chat */
+    .adm-chat-divider {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.68rem; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.1em; margin: 0.25rem 0;
+    }
+    .adm-chat-divider::before, .adm-chat-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    /* Typing indicator */
+    .adm-typing { display: none; }
+    .adm-typing.show { display: flex; }
+    .adm-typing .adm-msg-bubble {
+      padding: 0.55rem 0.9rem;
+    }
+    .typing-dots { display: flex; gap: 4px; align-items: center; }
+    .typing-dots span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--text-3); animation: bounce-dot 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce-dot {
+      0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-4px); }
+    }
 
-    /* ── How it works ─────────────────────────────────────────── */
-    .admin-flow {
-      max-width: 600px; margin: 0 auto 2.5rem;
-      padding: 0 1.5rem;
+    /* Input area */
+    .adm-chat-input-area {
+      border-top: 1px solid var(--border);
+      padding: 0.85rem 1.1rem;
+      background: rgba(0,0,0,0.1);
     }
-    .admin-flow h2 {
-      font-size: 1.1rem; font-weight: 800; margin-bottom: 1.25rem;
-      color: var(--text); text-align: center;
+    .adm-input-row {
+      display: flex; gap: 0.5rem;
     }
-    .flow-steps {
-      display: flex; flex-direction: column; gap: 0;
-    }
-    .flow-step {
-      display: flex; align-items: flex-start; gap: 1rem;
-      padding: 0.85rem 1rem;
-      background: var(--navy-3); border: 1px solid var(--border);
-      border-radius: 0;
-      transition: background 0.15s;
-    }
-    .flow-step:first-child { border-radius: var(--radius) var(--radius) 0 0; }
-    .flow-step:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
-    .flow-step + .flow-step { border-top: none; }
-    .flow-step:hover { background: var(--navy-4); }
-    .flow-num {
-      width: 26px; height: 26px; flex-shrink: 0;
-      background: rgba(0,208,130,0.15); border: 1.5px solid rgba(0,208,130,0.4);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; font-weight: 800; color: var(--green);
-    }
-    .flow-text { font-size: 0.85rem; color: var(--text-2); line-height: 1.55; padding-top: 0.15rem; }
-    .flow-text strong { color: var(--text); }
-
-    /* ── Access panel ─────────────────────────────────────────── */
-    .admin-access {
-      max-width: 500px; margin: 0 auto 3rem;
-      padding: 0 1.5rem;
-    }
-    .admin-access-card {
-      background: var(--navy-3); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 1.75rem 2rem;
-      text-align: center;
-    }
-    .admin-access-card h2 { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .admin-access-card p { font-size: 0.82rem; color: var(--text-3); margin-bottom: 1.25rem; line-height: 1.6; }
-    .admin-input-row {
-      display: flex; gap: 0.5rem; margin-bottom: 0.75rem;
-    }
-    .admin-input-row input {
-      flex: 1; padding: 0.65rem 0.9rem;
+    .adm-input-row input {
+      flex: 1; padding: 0.6rem 0.9rem;
       border-radius: 9px; border: 1.5px solid var(--border-2);
       background: var(--navy-4); color: var(--text);
-      font-size: 0.9rem;
+      font-size: 0.88rem; transition: border-color 0.2s;
     }
-    .admin-input-row input:focus { outline: none; border-color: var(--green); }
-    .admin-coming-soon {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-size: 0.72rem; color: var(--text-3);
-      background: var(--navy-4); border: 1px solid var(--border);
-      border-radius: 6px; padding: 0.3rem 0.7rem;
-      margin-top: 0.5rem;
+    .adm-input-row input:focus { outline: none; border-color: rgba(124,58,237,0.6); }
+    .adm-input-row input:disabled { opacity: 0.45; cursor: not-allowed; }
+    .adm-send-btn {
+      padding: 0.6rem 1rem; border-radius: 9px;
+      background: rgba(124,58,237,0.25); border: 1px solid rgba(124,58,237,0.4);
+      color: #a78bfa; font-weight: 700; font-size: 0.88rem;
+      cursor: pointer; transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .adm-send-btn:hover:not(:disabled) { background: rgba(124,58,237,0.4); }
+    .adm-send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .adm-locked-hint {
+      font-size: 0.75rem; color: var(--text-3); text-align: center;
+      padding-top: 0.4rem;
     }
 
-    /* ── Section label ────────────────────────────────────────── */
-    .admin-section-label {
-      text-align: center; margin: 2rem auto 1rem;
-      max-width: 600px; padding: 0 1.5rem;
+    /* ── DAO Vision card ─────────────────────────────────────── */
+    .adm-dao {
+      max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem;
     }
-    .admin-section-label h2 { font-size: 1.1rem; font-weight: 800; }
-    .admin-section-label p { font-size: 0.82rem; color: var(--text-3); margin-top: 0.3rem; }
+    .adm-dao-card {
+      background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(6,182,212,0.05));
+      border: 1px solid rgba(124,58,237,0.25);
+      border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
+    }
+    .adm-dao-card h3 {
+      font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .adm-dao-card h3 span { color: #a78bfa; }
+    .adm-dao-card p {
+      font-size: 0.82rem; color: var(--text-2); line-height: 1.7; margin-bottom: 0.85rem;
+    }
+    .dao-flow {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center;
+      font-size: 0.75rem; color: var(--text-2);
+    }
+    .dao-step {
+      background: var(--navy-4); border: 1px solid var(--border);
+      border-radius: 6px; padding: 0.28rem 0.65rem;
+      white-space: nowrap;
+    }
+    .dao-arrow { color: var(--text-3); font-size: 0.7rem; }
+
+    /* ── Sample prompts chip strip ────────────────────────────── */
+    .adm-prompts {
+      max-width: 760px; margin: 0 auto 0.5rem; padding: 0 1rem;
+    }
+    .adm-prompts-label {
+      font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.5rem;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .adm-prompt-chips {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .adm-chip {
+      font-size: 0.75rem; color: var(--text-2);
+      background: var(--navy-4); border: 1px solid var(--border);
+      border-radius: 999px; padding: 0.28rem 0.75rem;
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .adm-chip:hover {
+      border-color: rgba(124,58,237,0.5); color: #a78bfa;
+    }
+
+    /* ── Footer nav ──────────────────────────────────────────── */
+    .adm-footer-nav {
+      max-width: 760px; margin: 0 auto 2rem; padding: 0 1rem;
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    /* ── Modals — capabilities, how it works, skills ─────────── */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem; margin-top: 0.25rem;
+    }
+    .cap-card {
+      background: var(--navy-4); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.1rem;
+    }
+    .cap-card-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+    .cap-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .cap-card p  { font-size: 0.75rem; color: var(--text-3); line-height: 1.55; margin: 0; }
+    .cap-card .cap-prompt {
+      margin-top: 0.6rem; font-size: 0.72rem; color: var(--text-2);
+      font-style: italic;
+      background: rgba(0,208,130,0.06); border: 1px solid rgba(0,208,130,0.15);
+      border-radius: 6px; padding: 0.4rem 0.6rem;
+    }
+    .cap-card .cap-prompt::before { content: '"'; color: var(--green); }
+    .cap-card .cap-prompt::after  { content: '"'; color: var(--green); }
+
+    /* How it works flow */
+    .hiw-steps { display: flex; flex-direction: column; gap: 0; margin-top: 0.5rem; }
+    .hiw-step {
+      display: flex; align-items: flex-start; gap: 0.9rem;
+      padding: 0.8rem 1rem;
+      background: var(--navy-4); border: 1px solid var(--border);
+      border-radius: 0;
+    }
+    .hiw-step:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+    .hiw-step:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
+    .hiw-step + .hiw-step { border-top: none; }
+    .hiw-num {
+      width: 24px; height: 24px; flex-shrink: 0;
+      background: rgba(0,208,130,0.12); border: 1.5px solid rgba(0,208,130,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 800; color: var(--green);
+    }
+    .hiw-text { font-size: 0.83rem; color: var(--text-2); line-height: 1.55; padding-top: 0.1rem; }
+    .hiw-text strong { color: var(--text); }
+    .agent-arch {
+      margin-top: 1.25rem;
+      background: var(--navy-4); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.1rem;
+    }
+    .agent-arch h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .agent-row {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+    }
+    .agent-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .agent-icon {
+      font-size: 1.2rem; margin-top: 0.1rem; flex-shrink: 0;
+    }
+    .agent-info h5 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.15rem; }
+    .agent-info p  { font-size: 0.75rem; color: var(--text-3); margin: 0; line-height: 1.5; }
+
+    /* Skills table */
+    .skills-table { width: 100%; margin-top: 0.5rem; border-collapse: collapse; font-size: 0.82rem; }
+    .skills-table th {
+      background: var(--navy-4); color: var(--green);
+      padding: 0.5rem 0.75rem; text-align: left; font-size: 0.72rem;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .skills-table td {
+      padding: 0.55rem 0.75rem; border-top: 1px solid var(--border);
+      color: var(--text-2); vertical-align: top;
+    }
+    .skills-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .skill-name { font-weight: 700; color: var(--text); font-family: monospace; }
+    .skill-badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      padding: 0.15rem 0.45rem; border-radius: 4px;
+    }
+    .skill-badge.done    { background: rgba(0,208,130,0.15); color: var(--green); }
+    .skill-badge.planned { background: rgba(74,234,220,0.1); color: var(--cyan); }
+    .skill-badge.vision  { background: rgba(124,58,237,0.15); color: #a78bfa; }
   </style>
 </head>
 <body>
 <script>window.CURRENT_PAGE = 'admin';</script>
 
   <!-- ── Hero ─────────────────────────────────────────────────── -->
-  <div class="admin-hero">
-    <div class="admin-hero-eyebrow">Phase 4 Preview</div>
+  <div class="adm-hero">
+    <div class="adm-eyebrow">Phase 4 Preview</div>
     <h1>AI <em>Admin</em> Dashboard</h1>
-    <p>A conversational interface for the newsletter committee. Ask plain-English questions, make changes, and publish updates — no GitHub, no HTML, no code.</p>
-    <div class="admin-phase-badge">
-      🔨 In active development &nbsp;·&nbsp; Publicly viewable &nbsp;·&nbsp; Changes require passphrase
+    <p class="adm-hero-desc">A conversational interface for the newsletter committee. Manage submissions, deadlines, themes, and publishing through plain-English chat — no code required.</p>
+    <div class="adm-badge">
+      <span>🔨</span> In active development
+      <span>·</span> Publicly viewable showcase
+      <span>·</span> Changes require passphrase
+    </div>
+
+    <!-- Passphrase unlock -->
+    <div class="adm-unlock">
+      <input type="password" id="adm-pass" placeholder="Enter committee passphrase to unlock demo…"
+             onkeydown="if(event.key==='Enter') admUnlock()" />
+      <button class="btn btn-primary" onclick="admUnlock()">Unlock</button>
+    </div>
+    <div id="adm-unlock-error"></div>
+
+    <!-- Modal trigger buttons -->
+    <div class="adm-modal-btns">
+      <button class="btn btn-ghost" onclick="openModal('modal-capabilities')">🎯 Capabilities</button>
+      <button class="btn btn-ghost" onclick="openModal('modal-howitworks')">⚙️ How It Works</button>
+      <button class="btn btn-ghost" onclick="openModal('modal-skills')">🔧 Skills Library</button>
+      <a href="submit-agent.html" class="btn btn-ghost">✍️ Inner Voice Agent →</a>
     </div>
   </div>
 
-  <!-- ── Capability showcase ───────────────────────────────────── -->
-  <div class="admin-section-label">
-    <h2>What can the AI Admin do?</h2>
-    <p>Examples of what the committee editor can ask — in plain English.</p>
+  <!-- ── Demo mode banner ───────────────────────────────────────── -->
+  <div class="adm-demo-banner" id="adm-demo-banner">
+    🟡 DEMO MODE — proposals are fully simulated. No changes will be made until Phase 4 is live.
   </div>
 
-  <div class="admin-grid">
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">📅</div>
-      <h3>Update Deadlines</h3>
-      <p>Change the submission deadline for any issue across the entire site in one message.</p>
-      <div class="sample-prompt">Update the June deadline to May 20th</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">🎨</div>
-      <h3>Change the Monthly Theme</h3>
-      <p>Update the theme displayed on the submission form, sidebar, and edition pages.</p>
-      <div class="sample-prompt">The July theme is "Gratitude" — update the form</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">📝</div>
-      <h3>Add a Submission</h3>
-      <p>Manually log a submission received outside the form directly to the portal.</p>
-      <div class="sample-prompt">Add a submission from Maria — poetry, Step 4 theme, April issue</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">✅</div>
-      <h3>Mark Submissions Approved</h3>
-      <p>Update submission status badges in the portal without touching data.json directly.</p>
-      <div class="sample-prompt">Mark all May submissions as Approved</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">📰</div>
-      <h3>Publish a New Edition</h3>
-      <p>Link a completed newsletter edition into the portal and sidenav archive.</p>
-      <div class="sample-prompt">Publish the May newsletter — the file is newsletter-may-2026.html</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">🔍</div>
-      <h3>Query Submissions</h3>
-      <p>Ask about the current state of submissions without opening any files.</p>
-      <div class="sample-prompt">Show me all submissions marked Needs Review</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">✍️</div>
-      <h3>Draft Newsletter Copy</h3>
-      <p>Generate a welcome paragraph, theme intro, or editor's note for review before publishing.</p>
-      <div class="sample-prompt">Write a 2-sentence intro for the June issue on the theme of Letting Go</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">📋</div>
-      <h3>Bulletin Announcements</h3>
-      <p>Add or remove fellowship announcements and open service positions on the bulletin page.</p>
-      <div class="sample-prompt">Add a new service position: Literature Committee Secretary</div>
-    </div>
-
-    <div class="admin-capability">
-      <div class="admin-capability-icon">📖</div>
-      <h3>Generate Reader View</h3>
-      <p>Convert any newsletter edition into a Marp slide deck for a presentation-style reader view.</p>
-      <div class="sample-prompt">Create a reader view slide deck for the April edition</div>
-    </div>
-
-  </div>
-
-  <!-- ── How it works ──────────────────────────────────────────── -->
-  <div class="admin-flow">
-    <h2>How it works</h2>
-    <div class="flow-steps">
-      <div class="flow-step">
-        <div class="flow-num">1</div>
-        <div class="flow-text"><strong>Editor types a request</strong> in plain English — no commands, no file paths.</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">2</div>
-        <div class="flow-text"><strong>AI agent reads the current files</strong> — submission data, edition pages, form settings.</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">3</div>
-        <div class="flow-text"><strong>Agent proposes the change</strong> — "Here's exactly what I'd update. Approve?"</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">4</div>
-        <div class="flow-text"><strong>Editor confirms</strong> — one click or "yes" in chat.</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">5</div>
-        <div class="flow-text"><strong>Agent commits and pushes</strong> — site updates automatically. Full Git history for every change.</div>
-      </div>
+  <!-- ── Sample prompt chips ────────────────────────────────────── -->
+  <div class="adm-prompts" id="adm-prompts" style="display:none">
+    <div class="adm-prompts-label">Try asking…</div>
+    <div class="adm-prompt-chips">
+      <span class="adm-chip" onclick="admSendChip(this)">Show me Needs Review submissions</span>
+      <span class="adm-chip" onclick="admSendChip(this)">Update the June deadline to May 20th</span>
+      <span class="adm-chip" onclick="admSendChip(this)">Change the July theme to Gratitude</span>
+      <span class="adm-chip" onclick="admSendChip(this)">Publish the May newsletter</span>
+      <span class="adm-chip" onclick="admSendChip(this)">Draft a welcome paragraph for June</span>
+      <span class="adm-chip" onclick="admSendChip(this)">Add a bulletin announcement</span>
     </div>
   </div>
 
-  <!-- ── Access panel ───────────────────────────────────────────── -->
-  <div class="admin-access">
-    <div class="admin-access-card">
-      <h2>🔒 Committee Admin Access</h2>
-      <p>The AI chat interface is in development. Once live, committee editors will enter a passphrase to unlock the chat panel and make changes. All changes are logged as Git commits and can be reverted instantly.</p>
-      <div class="admin-input-row">
-        <input type="password" placeholder="Passphrase — coming in Phase 4…" disabled />
-        <button class="btn btn-primary" disabled style="white-space:nowrap">Unlock</button>
+  <!-- ── Chat interface ─────────────────────────────────────────── -->
+  <div class="adm-chat-wrap">
+    <div class="adm-chat">
+
+      <div class="adm-chat-header">
+        <div class="adm-chat-agent">
+          <div class="adm-chat-avatar">🤖</div>
+          <div>
+            <div class="adm-chat-name">De Vine Admin Agent</div>
+            <div class="adm-chat-sub" id="chat-sub-status">Enter passphrase above to activate demo</div>
+          </div>
+        </div>
+        <div class="adm-chat-lock-badge locked" id="chat-lock-badge">🔒 Locked</div>
       </div>
-      <div class="admin-coming-soon">🔨 Chat interface — Phase 4 build</div>
-      <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)">
-        <a href="index.html" class="btn btn-ghost btn-sm" style="margin-right:0.5rem">← Back to Portal</a>
-        <a href="https://github.com/drasticstatic/pir-devine-news-public/issues"
-           target="_blank" rel="noopener" class="btn btn-ghost btn-sm">💬 Give Feedback ↗</a>
+
+      <div class="adm-chat-messages" id="adm-chat-messages">
+
+        <!-- Pre-loaded demo exchange -->
+        <div class="adm-chat-divider">Example conversation</div>
+
+        <div class="adm-msg agent">
+          <div class="adm-msg-avatar">🤖</div>
+          <div class="adm-msg-bubble">
+            Hello! I'm the De Vine Admin Agent. I can help with submissions, deadlines, themes, editions, and bulletin announcements. What would you like to do today?
+          </div>
+        </div>
+
+        <div class="adm-msg user">
+          <div class="adm-msg-avatar">🙋</div>
+          <div class="adm-msg-bubble">Show me all submissions marked Needs Review</div>
+        </div>
+
+        <div class="adm-msg agent">
+          <div class="adm-msg-avatar">🤖</div>
+          <div class="adm-msg-bubble">
+            📋 I found <strong>3 submissions</strong> flagged <strong>Needs Review</strong> in <code>data.json</code>:
+            <div class="adm-proposal" style="font-family:inherit; font-size:0.8rem">
+              <div>① <strong>Anon</strong> · Literature · Theme: Hope · Apr 14</div>
+              <div>② <strong>J.M.</strong> · Art · Theme: Courage · Apr 18</div>
+              <div>③ <strong>Anon</strong> · Both · Theme: Courage · Apr 20</div>
+            </div>
+            Would you like to bulk-approve these, mark any as Needs Revision, or review them individually?
+          </div>
+        </div>
+
+        <div class="adm-msg user">
+          <div class="adm-msg-avatar">🙋</div>
+          <div class="adm-msg-bubble">Update the June submission deadline to May 20th</div>
+        </div>
+
+        <div class="adm-msg agent">
+          <div class="adm-msg-avatar">🤖</div>
+          <div class="adm-msg-bubble">
+            📝 <strong>Proposed change — <code>submit.html</code>:</strong>
+            <div class="adm-proposal">
+              <div class="del">- Deadline: June 1, 2026</div>
+              <div class="add">+ Deadline: May 20, 2026</div>
+            </div>
+            This also updates the deadline countdown widget and sidebar label.
+            <div class="adm-proposal-actions">
+              <button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button>
+              <button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button>
+            </div>
+            <div class="adm-demo-note">↳ Demo — approving will log the action but not write to files until Phase 4 is live.</div>
+          </div>
+        </div>
+
+        <div class="adm-chat-divider" id="live-divider" style="display:none">Your session</div>
+
+        <!-- Typing indicator (hidden by default) -->
+        <div class="adm-msg agent adm-typing" id="adm-typing">
+          <div class="adm-msg-avatar">🤖</div>
+          <div class="adm-msg-bubble">
+            <div class="typing-dots"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+
+      </div><!-- /messages -->
+
+      <!-- Input area -->
+      <div class="adm-chat-input-area">
+        <div class="adm-input-row">
+          <input type="text" id="adm-chat-input"
+                 placeholder="Unlock above to send messages…"
+                 disabled
+                 onkeydown="if(event.key==='Enter')admSend()" />
+          <button class="adm-send-btn" id="adm-send-btn" disabled onclick="admSend()">Send ↑</button>
+        </div>
+        <div class="adm-locked-hint" id="adm-locked-hint">Enter passphrase in the hero to activate the demo chat</div>
+      </div>
+
+    </div><!-- /adm-chat -->
+  </div><!-- /adm-chat-wrap -->
+
+  <!-- ── DAO / Holacratic Governance Vision ──────────────────────── -->
+  <div class="adm-dao">
+    <div class="adm-dao-card">
+      <h3>🌀 <span>Holacratic Publishing Governance</span> — The Vision</h3>
+      <p>Instead of one person controlling what goes live, publishing becomes a lightweight consent process aligned with PIR's holacratic values. The admin agent drafts, the committee reviews, and the site updates itself if no one objects.</p>
+      <div class="dao-flow">
+        <span class="dao-step">📝 Agent stages draft</span>
+        <span class="dao-arrow">→</span>
+        <span class="dao-step">🔗 Preview URL generated</span>
+        <span class="dao-arrow">→</span>
+        <span class="dao-step">📧 Email to all editors</span>
+        <span class="dao-arrow">→</span>
+        <span class="dao-step">🗳 Voting window opens</span>
+        <span class="dao-arrow">→</span>
+        <span class="dao-step">✅ No objection → auto-publish</span>
+        <span class="dao-arrow">→</span>
+        <span class="dao-step">📚 Sidenav updates live</span>
       </div>
     </div>
   </div>
+
+  <!-- ── Footer nav ─────────────────────────────────────────────── -->
+  <div class="adm-footer-nav">
+    <a href="index.html" class="btn btn-ghost btn-sm">← Portal</a>
+    <a href="submit-agent.html" class="btn btn-ghost btn-sm">✍️ Inner Voice Agent</a>
+    <a href="submit.html" class="btn btn-ghost btn-sm">📫 Submit Form</a>
+    <a href="https://github.com/drasticstatic/pir-devine-news-public/issues"
+       target="_blank" rel="noopener" class="btn btn-ghost btn-sm">💬 Give Feedback ↗</a>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- Modals                                                       -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+
+  <!-- Capabilities modal -->
+  <div class="modal-overlay" id="modal-capabilities" role="dialog" aria-modal="true" aria-labelledby="cap-title">
+    <div class="modal" style="max-width:780px">
+      <button class="modal-close" onclick="closeModal('modal-capabilities')" aria-label="Close">✕</button>
+      <div class="modal-eyebrow">🎯 What the Admin Agent Can Do</div>
+      <h2 class="modal-title" id="cap-title">Capabilities</h2>
+      <div class="modal-body">
+        <div class="cap-grid">
+          <div class="cap-card">
+            <div class="cap-card-icon">📅</div>
+            <h4>Update Deadlines</h4>
+            <p>Change any submission deadline across the site in one message. Updates the countdown widget and sidebar automatically.</p>
+            <div class="cap-prompt">Update the June deadline to May 20th</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">🎨</div>
+            <h4>Change Monthly Theme</h4>
+            <p>Update the theme on the submission form, sidebar, and edition pages with a single request.</p>
+            <div class="cap-prompt">The July theme is "Gratitude" — update the form</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">📝</div>
+            <h4>Add a Submission</h4>
+            <p>Manually log a submission received outside the form directly to the committee portal.</p>
+            <div class="cap-prompt">Add a submission from Maria — poetry, Step 4, April issue</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">✅</div>
+            <h4>Manage Statuses</h4>
+            <p>Update submission status badges in the portal. Bulk or individual.</p>
+            <div class="cap-prompt">Mark all May submissions as Approved</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">📰</div>
+            <h4>Publish an Edition</h4>
+            <p>Stage a completed newsletter edition for the holacratic review + auto-publish workflow.</p>
+            <div class="cap-prompt">Publish the May newsletter — file is newsletter-may-2026.html</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">🔍</div>
+            <h4>Query Submissions</h4>
+            <p>Ask about current submission state in plain English without opening any files.</p>
+            <div class="cap-prompt">Show me all submissions marked Needs Review</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">✍️</div>
+            <h4>Draft Newsletter Copy</h4>
+            <p>Generate a welcome paragraph, theme intro, or editor's note for human review before publishing.</p>
+            <div class="cap-prompt">Write a 2-sentence intro for June on "Letting Go"</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">📋</div>
+            <h4>Bulletin Announcements</h4>
+            <p>Add or remove fellowship announcements and open service positions.</p>
+            <div class="cap-prompt">Add a new service position: Literature Committee Secretary</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-card-icon">📖</div>
+            <h4>Generate Reader View</h4>
+            <p>Convert a newsletter edition into a Marp slide deck for a presentation-style reader view. Uses the /marp-deck skill.</p>
+            <div class="cap-prompt">Create a reader view slide deck for the April edition</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-capabilities')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works modal -->
+  <div class="modal-overlay" id="modal-howitworks" role="dialog" aria-modal="true" aria-labelledby="hiw-title">
+    <div class="modal" style="max-width:600px">
+      <button class="modal-close" onclick="closeModal('modal-howitworks')" aria-label="Close">✕</button>
+      <div class="modal-eyebrow">⚙️ Architecture</div>
+      <h2 class="modal-title" id="hiw-title">How It Works</h2>
+      <div class="modal-body">
+        <div class="hiw-steps">
+          <div class="hiw-step">
+            <div class="hiw-num">1</div>
+            <div class="hiw-text"><strong>Committee member types a request</strong> in plain English — no commands, no file paths.</div>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-num">2</div>
+            <div class="hiw-text"><strong>Admin Agent reads current files</strong> — submission data, edition pages, form settings, sidenav.</div>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-num">3</div>
+            <div class="hiw-text"><strong>Agent proposes the change</strong> showing a diff — "Here's exactly what I'd update. Approve?"</div>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-num">4</div>
+            <div class="hiw-text"><strong>Editor confirms</strong> — one click or "yes" in the chat.</div>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-num">5</div>
+            <div class="hiw-text"><strong>Agent commits and pushes</strong> — site updates in minutes. Every change has a full Git history and can be reverted instantly.</div>
+          </div>
+        </div>
+
+        <div class="agent-arch">
+          <h4>Two-Agent Architecture</h4>
+          <div class="agent-row">
+            <div class="agent-icon">🤖</div>
+            <div class="agent-info">
+              <h5>Admin Agent — Site Management</h5>
+              <p>Manages deadlines, themes, submissions, editions, and bulletin. Access limited to <code>dashboard/</code> files. Never reads credentials or member emails.</p>
+            </div>
+          </div>
+          <div class="agent-row">
+            <div class="agent-icon">✍️</div>
+            <div class="agent-info">
+              <h5>Inner Voice Agent — Writing Facilitation</h5>
+              <p>Helps members write complete, authentic submissions through Socratic dialogue. Separate system prompt, separate session, no site access. Facilitator — never ghostwriter.</p>
+            </div>
+          </div>
+          <div style="margin-top:0.75rem; font-size:0.75rem; color:var(--text-3); line-height:1.6">
+            Future: skill-based sub-agents delegated by coordinator agents — Claude Haiku for routine queries, Sonnet for complex drafting. Cost-efficient by design.
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-howitworks')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills Library modal -->
+  <div class="modal-overlay" id="modal-skills" role="dialog" aria-modal="true" aria-labelledby="sk-title">
+    <div class="modal" style="max-width:700px">
+      <button class="modal-close" onclick="closeModal('modal-skills')" aria-label="Close">✕</button>
+      <div class="modal-eyebrow">🔧 Claude Code Skills</div>
+      <h2 class="modal-title" id="sk-title">Skills Library</h2>
+      <div class="modal-body">
+        <p style="font-size:0.83rem; color:var(--text-2); line-height:1.65; margin-bottom:1rem">
+          Skills are specialized Claude Code workflows stored in <code>.claude/skills/</code>. Only the description loads at session start — full instructions load on trigger. This keeps context lean while making powerful workflows available on demand.
+        </p>
+        <table class="skills-table">
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th>Status</th>
+              <th>What It Does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="skill-name">/marp-deck</span></td>
+              <td><span class="skill-badge done">✅ Built</span></td>
+              <td>Convert a newsletter edition or doc to a PIR-branded Marp slide deck + generate HTML</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/create-skill</span></td>
+              <td><span class="skill-badge done">✅ Built</span></td>
+              <td>Design and draft a new Claude Code skill for this repo following the standard format</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/new-edition</span></td>
+              <td><span class="skill-badge planned">📋 Planned</span></td>
+              <td>Scaffold a new newsletter HTML file from the master template</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/publish-edition</span></td>
+              <td><span class="skill-badge planned">📋 Planned</span></td>
+              <td>Wire a completed edition into the portal, sidenav, and archive</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/update-theme</span></td>
+              <td><span class="skill-badge planned">📋 Planned</span></td>
+              <td>Update the monthly theme across submit.html, sidenav, and relevant pages</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/update-deadline</span></td>
+              <td><span class="skill-badge planned">📋 Planned</span></td>
+              <td>Update submission deadline across all pages and the countdown widget</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/sync-report</span></td>
+              <td><span class="skill-badge planned">📋 Planned</span></td>
+              <td>Summarize data.json: last sync timestamp, submission counts by status</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/new-submission</span></td>
+              <td><span class="skill-badge planned">📋 Planned</span></td>
+              <td>Manually add a submission entry to data.json from the committee portal</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/admin-agent</span></td>
+              <td><span class="skill-badge vision">💡 Vision</span></td>
+              <td>Phase 4 AI admin chatbot — site management via conversation (this page)</td>
+            </tr>
+            <tr>
+              <td><span class="skill-name">/inner-voice-agent</span></td>
+              <td><span class="skill-badge vision">💡 Vision</span></td>
+              <td>Phase 4b Socratic writing facilitator — helps members write complete, heartfelt pieces</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-actions">
+        <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener" class="btn btn-primary">💻 View on GitHub ↗</a>
+        <button class="btn btn-ghost" onclick="closeModal('modal-skills')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- Scripts                                                      -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <script>
+  /* ── Passphrase unlock (demo mode) ─────────────────────────── */
+  var admUnlocked = false;
+
+  function admUnlock() {
+    var pw  = document.getElementById('adm-pass').value.trim();
+    var err = document.getElementById('adm-unlock-error');
+    if (!pw) {
+      err.textContent = 'Please enter the passphrase.';
+      err.style.display = 'block'; return;
+    }
+    err.style.display = 'none';
+    admUnlocked = true;
+    document.getElementById('adm-pass').classList.add('unlocked');
+    document.getElementById('adm-pass').disabled = true;
+    document.querySelector('.adm-hero .btn-primary').disabled = true;
+    document.querySelector('.adm-hero .btn-primary').textContent = '✓ Unlocked';
+    document.getElementById('adm-demo-banner').style.display = 'flex';
+    document.getElementById('adm-prompts').style.display = 'block';
+    document.getElementById('chat-sub-status').textContent = 'Demo Mode — proposals simulated, no changes made';
+    var badge = document.getElementById('chat-lock-badge');
+    badge.textContent = '🟡 Demo Active';
+    badge.classList.replace('locked', 'unlocked');
+    document.getElementById('live-divider').style.display = 'flex';
+    var input = document.getElementById('adm-chat-input');
+    input.disabled = false;
+    input.placeholder = 'Ask the admin agent anything…';
+    document.getElementById('adm-send-btn').disabled = false;
+    document.getElementById('adm-locked-hint').style.display = 'none';
+    /* Welcome message */
+    admAddMsg('agent', 'Demo unlocked. I can simulate any admin action — try the prompt chips above or type your own request.');
+    input.focus();
+  }
+
+  /* ── Demo send ──────────────────────────────────────────────── */
+  function admSend() {
+    if (!admUnlocked) return;
+    var input = document.getElementById('adm-chat-input');
+    var text  = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    admAddMsg('user', text);
+    admShowTyping();
+    setTimeout(function(){ admHideTyping(); admRespond(text); }, 900 + Math.random()*600);
+  }
+
+  function admSendChip(el) {
+    if (!admUnlocked) return;
+    document.getElementById('adm-chat-input').value = el.textContent;
+    admSend();
+  }
+
+  /* ── Demo response engine ───────────────────────────────────── */
+  var admReplied = {};
+  function admRespond(text) {
+    var t = text.toLowerCase();
+
+    if (/needs.review|review|pending/.test(t)) {
+      admAddMsg('agent', '📋 <strong>3 submissions</strong> are currently flagged <strong>Needs Review</strong>:<div class="adm-proposal" style="font-family:inherit;font-size:0.8rem"><div>① Anon · Literature · Hope · Apr 14</div><div>② J.M. · Art · Courage · Apr 18</div><div>③ Anon · Both · Courage · Apr 20</div></div>Bulk-approve, mark Needs Revision, or review individually?');
+      return;
+    }
+    if (/deadline|due date|submit.*by|by.*date/.test(t)) {
+      var match = text.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|\d{1,2}[^\d])/i);
+      admAddMsg('agent', '📝 <strong>Proposed change — <code>submit.html</code>:</strong><div class="adm-proposal"><div class="del">- Deadline: [current deadline]</div><div class="add">+ Deadline: ' + (match ? match[0] : 'new date') + '</div></div>This also updates the countdown widget and sidebar label.<div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only until Phase 4 is live.</div>');
+      return;
+    }
+    if (/theme|topic/.test(t)) {
+      var tm = text.match(/["""]([^"""]+)["""]/);
+      var themeName = tm ? tm[1] : 'new theme';
+      admAddMsg('agent', '🎨 <strong>Proposed theme update — <code>submit.html</code> dropdown + sidenav pill:</strong><div class="adm-proposal"><div class="del">- Theme: [current theme]</div><div class="add">+ Theme: ' + themeName + '</div></div><div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only.</div>');
+      return;
+    }
+    if (/publish|edition|newsletter/.test(t)) {
+      admAddMsg('agent', '📰 <strong>Staging new edition for holacratic review:</strong><div class="adm-proposal" style="font-family:inherit;font-size:0.8rem"><div>1. Draft accessible at preview URL</div><div>2. Notification email → all editors</div><div>3. Voting window: 72 hours</div><div>4. No objections → sidenav updates live</div></div><div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Stage &amp; Notify</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only.</div>');
+      return;
+    }
+    if (/draft|write|intro|paragraph|welcome/.test(t)) {
+      admAddMsg('agent', '✍️ <strong>Draft — for your review before publishing:</strong><div class="adm-proposal" style="font-family:inherit;font-size:0.81rem;font-style:italic">"This month we turn toward [theme]. In the spirit of the Steps and the Fellowship, these pages hold the experiences, strength, and hope of our community — offered freely, received with gratitude."</div>Edit as needed, or say <strong>"approve the draft"</strong> to publish it.<div class="adm-demo-note">↳ Demo — no changes made yet.</div>');
+      return;
+    }
+    if (/approve|approve all|bulk/.test(t)) {
+      admAddMsg('agent', '✅ <strong>Proposed — mark all 3 Needs Review submissions as Approved in <code>data.json</code>:</strong><div class="adm-proposal"><div class="add">+ status: "approved" (×3)</div></div><div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only.</div>');
+      return;
+    }
+    if (/bulletin|announce|service|position/.test(t)) {
+      admAddMsg('agent', '📋 <strong>Proposed addition to <code>bulletin.html</code>:</strong><div class="adm-proposal" style="font-family:inherit;font-size:0.8rem"><div class="add">+ New service position: [parsed from your message]</div><div class="add">+ Added to Open Service Positions section</div></div><div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only.</div>');
+      return;
+    }
+    /* Fallback */
+    admAddMsg('agent', 'I can help with that. In Phase 4, I\'d read the current <code>data.json</code> and relevant pages, then propose a specific change for your approval. For now, try one of the prompt chips above to see a simulated response.<div class="adm-demo-note">↳ Full natural-language understanding comes with the Phase 4 API connection.</div>');
+  }
+
+  function admDemoApprove(btn) {
+    var actions = btn.closest('.adm-proposal-actions');
+    actions.innerHTML = '<span style="font-size:0.75rem;color:var(--green)">✓ Logged (demo) — will execute on Phase 4 launch.</span>';
+  }
+  function admDemoCancel(btn) {
+    var actions = btn.closest('.adm-proposal-actions');
+    actions.innerHTML = '<span style="font-size:0.75rem;color:var(--text-3)">✕ Cancelled.</span>';
+  }
+
+  /* ── Helpers ──────────────────────────────────────────────────── */
+  function admAddMsg(role, html) {
+    var msgs = document.getElementById('adm-chat-messages');
+    var typing = document.getElementById('adm-typing');
+    var div = document.createElement('div');
+    div.className = 'adm-msg ' + role;
+    var av = role === 'agent' ? '🤖' : '🙋';
+    div.innerHTML = '<div class="adm-msg-avatar">' + av + '</div><div class="adm-msg-bubble">' + html + '</div>';
+    msgs.insertBefore(div, typing);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function admShowTyping() {
+    document.getElementById('adm-typing').classList.add('show');
+    var msgs = document.getElementById('adm-chat-messages');
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function admHideTyping() {
+    document.getElementById('adm-typing').classList.remove('show');
+  }
+  </script>
 
 <script src="nav.js"></script>
 <script src="sidenav.js"></script>

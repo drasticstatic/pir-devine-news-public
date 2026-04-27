@@ -24,7 +24,8 @@
   /* ── "Links ▾" dropdown ──────────────────────────────────── */
   /* Template / Bulletin / Topics & Deadlines live in the sidenav now */
   const NAV_MORE = [
-    { href: 'admin.html', label: 'AI Admin Dashboard', icon: '🤖', internal: true, tooltip: 'AI-powered admin interface — showcase + committee tools' },
+    { href: 'admin.html',        label: 'AI Admin Dashboard',  icon: '🤖', internal: true, tooltip: 'AI-powered admin interface — showcase + committee tools' },
+    { href: 'submit-agent.html', label: 'Inner Voice Agent',   icon: '✨', internal: true, tooltip: 'Socratic writing companion — helps members find their authentic voice' },
     { href: 'https://www.psychedelicsinrecovery.org',                         label: 'PIR® Main Site',                    icon: '🌐', tooltip: 'Main Psychedelics In Recovery website' },
     { href: 'https://service.psychedelicsinrecovery.org',                     label: 'PIR® Service Subdomain',            icon: '🔧', tooltip: 'PIR® Service Subdomain — committee resources and service calendar' },
     { href: 'https://service.psychedelicsinrecovery.org/pr-committee/',       label: 'Public Relations Committee',        icon: '👥', tooltip: 'PR Committee page on the service subdomain' },
