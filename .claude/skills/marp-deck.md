@@ -160,10 +160,20 @@ Verify in browser: check that blockquotes render in purple, tables are readable 
 ## After Completing
 
 1. Verify HTML opens and all slides render
-2. Add a "📖 Reader View" link to the corresponding newsletter HTML page
-3. Commit both `.marp.md` and `.marp.html`:
+2. **Inject favicon tags** — Marp does not include a favicon link; Safari requires an explicit tag or it shows nothing. Run immediately after generating the HTML:
+   ```bash
+   python3 -c "
+   f = 'dashboard/newsletter-[month]-[year].marp.html'
+   tags = '<link rel=\"icon\" type=\"image/svg+xml\" href=\"assets/favicon.svg\"><link rel=\"icon\" href=\"assets/favicon.png\"><link rel=\"apple-touch-icon\" href=\"assets/favicon.png\">'
+   open(f,'w').write(open(f).read().replace('<head>', '<head>'+tags, 1))
+   print('Favicon injected')
+   "
+   ```
+   SVG tag = modern browsers + Safari 14+. PNG tag = Safari fallback. `apple-touch-icon` = iOS home screen.
+3. Add a "📖 Reader View" link to the corresponding newsletter HTML page
+4. Commit both `.marp.md` and `.marp.html`:
    `"Add Marp reader view for [Month] [Year] edition"`
-4. The HTML is what gets shared — GitHub doesn't render `.marp.md`
+5. The HTML is what gets shared — GitHub doesn't render `.marp.md`
 
 ## Reference
 
