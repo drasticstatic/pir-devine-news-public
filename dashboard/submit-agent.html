@@ -80,7 +80,7 @@
       max-width: 760px; margin: 0 auto 1.5rem; padding: 0 1rem;
     }
     .iva-principles-card {
-      background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, #091e3a 60%); border: 1px solid rgba(124,58,237,0.22);
+      background: linear-gradient(135deg, #150e3f 0%, #091e3a 65%); border: 1px solid rgba(124,58,237,0.22);
       border-radius: var(--radius-lg); padding: 1rem 1.25rem;
       display: flex; overflow-x: auto; gap: 0;
       scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.3) transparent;
@@ -89,16 +89,23 @@
     .iva-principles-card::-webkit-scrollbar-track { background: transparent; }
     .iva-principles-card::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 2px; }
     .iva-principle {
-      flex: 1; min-width: 160px; padding: 0.25rem 1rem;
+      flex: 1; min-width: 160px; padding: 0.35rem 1rem;
+      cursor: pointer; border-radius: 8px; transition: background 0.15s;
     }
-    .iva-principle:first-child { padding-left: 0; }
-    .iva-principle:last-child  { padding-right: 0; }
+    .iva-principle:first-child { padding-left: 0.25rem; }
+    .iva-principle:last-child  { padding-right: 0.25rem; }
+    .iva-principle:hover { background: rgba(124,58,237,0.1); }
     .iva-principle-divider {
       flex-shrink: 0; width: 1px; background: rgba(124,58,237,0.2); margin: 0.25rem 0;
     }
     .iva-principle-icon { font-size: 1.1rem; margin-bottom: 0.3rem; }
     .iva-principle h4 { font-size: 0.78rem; font-weight: 700; margin-bottom: 0.2rem; color: var(--text); }
     .iva-principle p  { font-size: 0.71rem; color: var(--text-3); margin: 0; line-height: 1.5; }
+    .iva-principles-hint {
+      font-size: 0.7rem; color: var(--text-3); text-align: center;
+      margin: 0.45rem 0 0; line-height: 1.4;
+    }
+    .iva-principles-hint span { color: #a78bfa; text-decoration: underline; cursor: pointer; }
 
     /* ── Scrolling chip ticker ────────────────────────────────────── */
     .iva-ticker { max-width: 760px; margin: 0 auto 0.75rem; padding: 0 1rem; }
@@ -123,8 +130,18 @@
       100% { transform: translateX(-50%); }
     }
     @keyframes iva-chip-pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); border-color: var(--border-2); }
-      50%      { box-shadow: 0 0 0 5px rgba(124,58,237,0.45); border-color: rgba(124,58,237,0.55); }
+      0%,100% {
+        box-shadow: 0 0 0 0 rgba(124,58,237,0);
+        border-color: var(--border-2);
+        background: var(--navy-3);
+        color: var(--text-2);
+      }
+      50% {
+        box-shadow: 0 0 0 5px rgba(124,58,237,0.4);
+        border-color: rgba(124,58,237,0.6);
+        background: rgba(124,58,237,0.12);
+        color: #c4b5fd;
+      }
     }
     .iva-chip {
       display: inline-flex; align-items: center;
@@ -145,7 +162,7 @@
     /* ── Chat — PURPLE identity ───────────────────────────────────── */
     .iva-chat-wrap { max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem; }
     .iva-chat {
-      background: linear-gradient(135deg, rgba(124,58,237,0.07) 0%, #091e3a 55%);
+      background: linear-gradient(135deg, #150e3f 0%, #091e3a 60%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); overflow: hidden;
     }
@@ -274,7 +291,7 @@
     /* ── Journey flow card ───────────────────────────────────────── */
     .iva-flow { max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem; }
     .iva-flow-card {
-      background: linear-gradient(135deg, rgba(124,58,237,0.07) 0%, #091e3a 60%);
+      background: linear-gradient(135deg, #150e3f 0%, #091e3a 65%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
     }
@@ -377,35 +394,38 @@
   <!-- ── Principles — single scrollable card ───────────────────────── -->
   <div class="iva-principles-wrap">
     <div class="iva-principles-card">
-      <div class="iva-principle" data-tooltip="The agent never suggests a topic, never offers an opening prompt, and never provides a blank draft. It opens with a single question about feeling or intention — and waits. The spark must come from you.">
+      <div class="iva-principle" title="The agent never suggests a topic or opening prompt. It opens with a single question about feeling or intention — and waits. The spark must come from you." onclick="openModal('modal-principles')">
         <div class="iva-principle-icon">🤫</div>
         <h4>The Silent Start</h4>
         <p>Never suggests a topic. It waits for your spark — a feeling, a memory, a single word.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle" data-tooltip="When a response is thin or generic, the agent asks a targeted follow-up to surface specific anecdotes, sensory details, or emotional insights that only you could know. It keeps asking until your 'human fingerprints' appear.">
+      <div class="iva-principle" title="When a response is thin or generic, the agent asks a targeted follow-up to surface specific anecdotes and details only you could know — until your 'human fingerprints' appear." onclick="openModal('modal-principles')">
         <div class="iva-principle-icon">🔍</div>
         <h4>Clarity Engine</h4>
         <p>Asks follow-up questions to surface specific details only you could know.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle" data-tooltip="The agent reflects your own vocabulary and emotional tone back to you — raw if you're raw, poetic if you're poetic. It avoids AI smoothing, corporate language, or generic spiritual phrases.">
+      <div class="iva-principle" title="The agent reflects your own vocabulary and tone back to you — raw if you're raw, poetic if you're poetic. It avoids AI smoothing, corporate language, or generic spiritual phrases." onclick="openModal('modal-principles')">
         <div class="iva-principle-icon">🪞</div>
         <h4>Mirror, Don't Polish</h4>
         <p>Reflects your own vocabulary back — raw if you're raw, poetic if you're poetic.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle" data-tooltip="Before structuring the final piece, the agent asks whether the conversation still carries the original feeling. It only proceeds to a structured output after a genuine yes — never rushing to form.">
+      <div class="iva-principle" title="Before structuring the final piece, the agent asks whether the conversation still carries the original feeling. It only proceeds after a genuine yes — never rushing to form." onclick="openModal('modal-principles')">
         <div class="iva-principle-icon">❤️</div>
         <h4>The Heart Check</h4>
         <p>Asks "Does this still carry the spark you felt when we started?" before structuring anything.</p>
       </div>
     </div>
+    <p class="iva-principles-hint">
+      ℹ️ Tap any card for full design detail — <span onclick="openModal('modal-principles')">or open 🏗️ Core Design above</span>
+    </p>
   </div>
 
   <!-- ── Scrolling chip ticker (always visible) ─────────────────────── -->
   <div class="iva-ticker">
-    <div class="iva-ticker-label">How a session might begin…</div>
+    <div class="iva-ticker-label">How a session might begin… <span style="font-weight:400;color:var(--text-3);text-transform:none;letter-spacing:0">· click one to try it</span></div>
     <div class="iva-ticker-outer">
       <div class="iva-ticker-track">
         <!-- Set A -->
