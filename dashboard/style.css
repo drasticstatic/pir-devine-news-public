@@ -496,6 +496,11 @@ img { display: block; max-width: 100%; }
   border: none; cursor: pointer; transition: all 0.18s;
   white-space: nowrap; text-decoration: none;
 }
+/* Shared float-bounce for modal CTA buttons */
+@keyframes cta-float-bounce {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-2px); }
+}
 .btn-primary { background: var(--green); color: var(--navy); box-shadow: 0 0 12px var(--glow-g); }
 .btn-primary:hover { background: #00e890; box-shadow: 0 0 20px var(--glow-g); text-decoration: none; }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
