@@ -69,18 +69,18 @@
       animation: none;
     }
     .iva-modal-btn:active { transform: translateY(0); box-shadow: none; }
-    @keyframes modal-btn-pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
-      50%      { box-shadow: 0 0 0 3px rgba(124,58,237,0.15); }
+    @keyframes modal-btn-breathe {
+      0%,100% { opacity: 0.82; box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+      50%      { opacity: 1;    box-shadow: 0 0 12px rgba(124,58,237,0.22); }
     }
-    .iva-modal-btn { animation: modal-btn-pulse 3s ease-in-out infinite; }
+    .iva-modal-btn { animation: modal-btn-breathe 3s ease-in-out infinite; }
 
     /* ── Principles — single card, horizontal scroll ─────────────── */
     .iva-principles-wrap {
       max-width: 760px; margin: 0 auto 1.5rem; padding: 0 1rem;
     }
     .iva-principles-card {
-      background: linear-gradient(135deg, #150e3f 0%, #091e3a 65%); border: 1px solid rgba(124,58,237,0.22);
+      background: linear-gradient(135deg, #200d56 0%, #091e3a 65%); border: 1px solid rgba(124,58,237,0.22);
       border-radius: var(--radius-lg); padding: 1rem 1.25rem;
       display: flex; overflow-x: auto; gap: 0;
       scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.3) transparent;
@@ -102,10 +102,9 @@
     .iva-principle h4 { font-size: 0.78rem; font-weight: 700; margin-bottom: 0.2rem; color: var(--text); }
     .iva-principle p  { font-size: 0.71rem; color: var(--text-3); margin: 0; line-height: 1.5; }
     .iva-principles-hint {
-      font-size: 0.7rem; color: var(--text-3); text-align: center;
-      margin: 0.45rem 0 0; line-height: 1.4;
+      font-size: 0.72rem; color: var(--text-2); text-align: center;
+      margin: 0.5rem 0 0; line-height: 1.4;
     }
-    .iva-principles-hint span { color: #a78bfa; text-decoration: underline; cursor: pointer; }
 
     /* ── Scrolling chip ticker ────────────────────────────────────── */
     .iva-ticker { max-width: 760px; margin: 0 auto 0.75rem; padding: 0 1rem; }
@@ -129,19 +128,9 @@
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    @keyframes iva-chip-pulse {
-      0%,100% {
-        box-shadow: 0 0 0 0 rgba(124,58,237,0);
-        border-color: var(--border-2);
-        background: var(--navy-3);
-        color: var(--text-2);
-      }
-      50% {
-        box-shadow: 0 0 0 5px rgba(124,58,237,0.4);
-        border-color: rgba(124,58,237,0.6);
-        background: rgba(124,58,237,0.12);
-        color: #c4b5fd;
-      }
+    @keyframes iva-chip-breathe {
+      0%,100% { opacity: 0.62; border-color: var(--border-2); }
+      50%      { opacity: 1;    border-color: rgba(124,58,237,0.65); }
     }
     .iva-chip {
       display: inline-flex; align-items: center;
@@ -149,7 +138,7 @@
       background: var(--navy-3); border: 1.5px solid var(--border-2);
       border-radius: 999px; padding: 0.3rem 0.85rem;
       cursor: pointer; white-space: nowrap; user-select: none; transition: all 0.15s;
-      animation: iva-chip-pulse 2s ease-in-out infinite;
+      animation: iva-chip-breathe 2.5s ease-in-out infinite;
     }
     .iva-chip:hover {
       background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.55);
@@ -162,7 +151,7 @@
     /* ── Chat — PURPLE identity ───────────────────────────────────── */
     .iva-chat-wrap { max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem; }
     .iva-chat {
-      background: linear-gradient(135deg, #150e3f 0%, #091e3a 60%);
+      background: linear-gradient(135deg, #200d56 0%, #091e3a 60%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); overflow: hidden;
     }
@@ -291,7 +280,7 @@
     /* ── Journey flow card ───────────────────────────────────────── */
     .iva-flow { max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem; }
     .iva-flow-card {
-      background: linear-gradient(135deg, #150e3f 0%, #091e3a 65%);
+      background: linear-gradient(135deg, #200d56 0%, #091e3a 65%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
     }
@@ -333,6 +322,20 @@
       color: var(--green); transition: all 0.15s;
     }
     .btn-finalize-populate:hover { background: rgba(0,208,130,0.25); transform: translateY(-1px); }
+
+    /* ── Principle mini-modals (sweet-alert style) ──────────────── */
+    .pm-icon { font-size: 2.75rem; display: block; text-align: center; margin: 0.25rem 0 0.75rem; }
+    .principle-modal { max-width: 400px; }
+    .principle-modal .modal-title { text-align: center; margin-bottom: 1rem; }
+    .pm-desc { font-size: 0.86rem; color: var(--text-2); line-height: 1.72; margin: 0; }
+    .pm-example {
+      margin-top: 1rem; font-size: 0.79rem; font-style: italic; color: var(--text-2);
+      line-height: 1.65; background: rgba(124,58,237,0.07);
+      border-left: 2.5px solid rgba(124,58,237,0.45); border-radius: 0 7px 7px 0;
+      padding: 0.6rem 0.85rem;
+    }
+    .pm-example::before { content: '"'; color: #a78bfa; font-style: normal; font-weight: 700; }
+    .pm-example::after  { content: '"'; color: #a78bfa; font-style: normal; font-weight: 700; }
 
     /* ── Modals ──────────────────────────────────────────────────── */
     .principle-detail { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -394,38 +397,36 @@
   <!-- ── Principles — single scrollable card ───────────────────────── -->
   <div class="iva-principles-wrap">
     <div class="iva-principles-card">
-      <div class="iva-principle" title="The agent never suggests a topic or opening prompt. It opens with a single question about feeling or intention — and waits. The spark must come from you." onclick="openModal('modal-principles')">
+      <div class="iva-principle" onclick="openModal('modal-p-silent')">
         <div class="iva-principle-icon">🤫</div>
         <h4>The Silent Start</h4>
         <p>Never suggests a topic. It waits for your spark — a feeling, a memory, a single word.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle" title="When a response is thin or generic, the agent asks a targeted follow-up to surface specific anecdotes and details only you could know — until your 'human fingerprints' appear." onclick="openModal('modal-principles')">
+      <div class="iva-principle" onclick="openModal('modal-p-clarity')">
         <div class="iva-principle-icon">🔍</div>
         <h4>Clarity Engine</h4>
         <p>Asks follow-up questions to surface specific details only you could know.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle" title="The agent reflects your own vocabulary and tone back to you — raw if you're raw, poetic if you're poetic. It avoids AI smoothing, corporate language, or generic spiritual phrases." onclick="openModal('modal-principles')">
+      <div class="iva-principle" onclick="openModal('modal-p-mirror')">
         <div class="iva-principle-icon">🪞</div>
         <h4>Mirror, Don't Polish</h4>
         <p>Reflects your own vocabulary back — raw if you're raw, poetic if you're poetic.</p>
       </div>
       <div class="iva-principle-divider"></div>
-      <div class="iva-principle" title="Before structuring the final piece, the agent asks whether the conversation still carries the original feeling. It only proceeds after a genuine yes — never rushing to form." onclick="openModal('modal-principles')">
+      <div class="iva-principle" onclick="openModal('modal-p-heart')">
         <div class="iva-principle-icon">❤️</div>
         <h4>The Heart Check</h4>
         <p>Asks "Does this still carry the spark you felt when we started?" before structuring anything.</p>
       </div>
     </div>
-    <p class="iva-principles-hint">
-      ℹ️ Tap any card for full design detail — <span onclick="openModal('modal-principles')">or open 🏗️ Core Design above</span>
-    </p>
+    <p class="iva-principles-hint">ℹ️ Tap any card to learn more</p>
   </div>
 
   <!-- ── Scrolling chip ticker (always visible) ─────────────────────── -->
   <div class="iva-ticker">
-    <div class="iva-ticker-label">How a session might begin… <span style="font-weight:400;color:var(--text-3);text-transform:none;letter-spacing:0">· click one to try it</span></div>
+    <div class="iva-ticker-label">How a session might begin… <span style="font-weight:500;color:var(--text-2);text-transform:none;letter-spacing:0;font-size:0.72rem">· tap one to try it</span></div>
     <div class="iva-ticker-outer">
       <div class="iva-ticker-track">
         <!-- Set A -->
@@ -612,6 +613,55 @@
       <div class="modal-actions">
         <button class="btn-finalize-populate" onclick="ivaFinalizePopulate()">📫 Populate submission form →</button>
         <button class="btn btn-ghost" onclick="window.closeModal('modal-finalize')">← Back to conversation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Principle mini-modals ────────────────────────────────────── -->
+  <div class="modal-overlay" id="modal-p-silent" onclick="closeModalOverlay(event,'modal-p-silent')">
+    <div class="modal principle-modal">
+      <button class="modal-close" onclick="window.closeModal('modal-p-silent')">✕</button>
+      <span class="pm-icon">🤫</span>
+      <h2 class="modal-title">The Silent Start</h2>
+      <div class="modal-body">
+        <p class="pm-desc">The agent never suggests a topic, never offers an opening prompt, and never provides a blank draft. It opens with a single question about feeling or intention — and waits. The spark must come from you.</p>
+        <div class="pm-example">Take a moment before we begin. What's the feeling or intention behind what you want to share today? There's no wrong answer — even one word is enough to start.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-p-clarity" onclick="closeModalOverlay(event,'modal-p-clarity')">
+    <div class="modal principle-modal">
+      <button class="modal-close" onclick="window.closeModal('modal-p-clarity')">✕</button>
+      <span class="pm-icon">🔍</span>
+      <h2 class="modal-title">Clarity Engine</h2>
+      <div class="modal-body">
+        <p class="pm-desc">When a response is thin or generic, the agent asks a targeted follow-up to surface specific anecdotes, sensory details, or emotional insights that only you could know. It keeps asking until your "human fingerprints" appear.</p>
+        <div class="pm-example">You said you felt lighter even though you were still scared — that tension is the human fingerprint. That's what makes this piece unmistakably yours.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-p-mirror" onclick="closeModalOverlay(event,'modal-p-mirror')">
+    <div class="modal principle-modal">
+      <button class="modal-close" onclick="window.closeModal('modal-p-mirror')">✕</button>
+      <span class="pm-icon">🪞</span>
+      <h2 class="modal-title">Mirror, Don't Polish</h2>
+      <div class="modal-body">
+        <p class="pm-desc">The agent reflects your own vocabulary and emotional tone back to you — raw if you're raw, poetic if you're poetic. It avoids AI smoothing, corporate language, or generic spiritual phrases. Your voice is the only voice.</p>
+        <div class="pm-example">If you say "I just sort of gave up" — the agent uses that exact phrase, not "I surrendered" or "I released control." Your words, always.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-p-heart" onclick="closeModalOverlay(event,'modal-p-heart')">
+    <div class="modal principle-modal">
+      <button class="modal-close" onclick="window.closeModal('modal-p-heart')">✕</button>
+      <span class="pm-icon">❤️</span>
+      <h2 class="modal-title">The Heart Check</h2>
+      <div class="modal-body">
+        <p class="pm-desc">Before structuring the final piece, the agent pauses and asks whether the conversation still carries the original feeling you came in with. It only proceeds to a structured output after a genuine yes — never rushing to form.</p>
+        <div class="pm-example">Does this still carry the spark you felt when we started, or did we lose the soul somewhere along the way?</div>
       </div>
     </div>
   </div>
