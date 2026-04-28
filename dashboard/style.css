@@ -20,8 +20,8 @@
   --amber:     #f5a623;
   --red:       #f87171;
   --text:      #e2ecf5;
-  --text-2:    #8fafc8;
-  --text-3:    #4a6a84;
+  --text-2:    #a8c4d8;
+  --text-3:    #6b90a8;
   --border:    #112140;
   --border-2:  #1a3050;
   --glow-g:    rgba(0,208,130,0.20);
@@ -33,9 +33,15 @@
   --radius-lg: 18px;
 }
 
-html { font-size: 16px; scroll-behavior: smooth; }
+html {
+  font-size: 16px; scroll-behavior: smooth;
+  /* Subtle dot-grid starfield — adds depth behind the aurora bg */
+  background: #000f2b;
+}
 body {
-  background: rgba(0,10,28,0.62);
+  background:
+    radial-gradient(rgba(160,196,216,0.018) 1px, transparent 1px) 0 0 / 26px 26px,
+    rgba(0,8,24,0.70);
   color: var(--text);
   font-family: var(--font-body);
   min-height: 100vh;
