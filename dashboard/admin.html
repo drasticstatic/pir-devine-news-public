@@ -88,7 +88,7 @@
       display: inline-flex; align-items: center; gap: 0.35rem;
       font-size: 0.8rem; font-weight: 700; padding: 0.5rem 1.1rem;
       border-radius: 9px; cursor: pointer; border: 1.5px solid var(--border-2);
-      background: linear-gradient(135deg, #1e0808 0%, #091e3a 80%); color: var(--text-2);
+      background: linear-gradient(135deg, #2d0808 0%, #4a1a12 85%); color: var(--text-2);
       transition: all 0.15s; text-decoration: none;
     }
     .adm-modal-btn:hover {
@@ -98,8 +98,8 @@
     }
     .adm-modal-btn:active { transform: translateY(0); box-shadow: none; }
     @keyframes adm-modal-btn-breathe {
-      0%,100% { opacity: 0.82; box-shadow: 0 0 0 0 rgba(239,68,68,0); }
-      50%      { opacity: 1;    box-shadow: 0 0 12px rgba(239,68,68,0.22); }
+      0%,100% { opacity: 0.82; box-shadow: 0 0 0 0 rgba(239,68,68,0); transform: translateY(0); }
+      50%      { opacity: 1;    box-shadow: 0 0 12px rgba(239,68,68,0.22); transform: translateY(-2px); }
     }
     .adm-modal-btn { animation: adm-modal-btn-breathe 3s ease-in-out infinite; }
     .adm-modal-btn:hover { animation: none; }
@@ -167,7 +167,7 @@
       max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem;
     }
     .adm-chat {
-      background: linear-gradient(135deg, #280d0d 0%, #091e3a 65%);
+      background: linear-gradient(135deg, #2d0808 0%, #4a1a12 100%);
       border: 1px solid rgba(239,68,68,0.25);
       border-radius: var(--radius-lg); overflow: hidden;
     }
@@ -189,7 +189,7 @@
       font-size: 0.7rem; font-weight: 600; padding: 0.22rem 0.6rem;
       border-radius: 6px; transition: all 0.3s;
     }
-    .adm-chat-lock-badge.locked  { color: var(--text-3); background: var(--navy-4); border: 1px solid var(--border); }
+    .adm-chat-lock-badge.locked  { color: var(--adm); background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); }
     .adm-chat-lock-badge.unlocked { color: #fbbf24; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); }
 
     .adm-chat-messages {
@@ -219,7 +219,7 @@
       border-top-left-radius: 4px; color: var(--text-2);
     }
     .adm-msg.user .adm-msg-bubble {
-      background: var(--navy-4); border: 1px solid var(--border);
+      background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.32);
       border-top-right-radius: 4px; color: var(--text);
     }
     .adm-msg-bubble strong { color: var(--text); }
@@ -294,7 +294,7 @@
     /* ── DAO Vision card ─────────────────────────────────────────── */
     .adm-dao { max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem; }
     .adm-dao-card {
-      background: linear-gradient(135deg, #280d0d 0%, #091e3a 65%);
+      background: linear-gradient(135deg, #2d0808 0%, #4a1a12 100%);
       border: 1px solid rgba(239,68,68,0.3);
       border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
     }

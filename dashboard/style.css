@@ -41,7 +41,7 @@ html {
 body {
   background:
     radial-gradient(rgba(160,196,216,0.018) 1px, transparent 1px) 0 0 / 26px 26px,
-    rgba(0,8,24,0.70);
+    rgba(0,8,24,0.60);
   color: var(--text);
   font-family: var(--font-body);
   min-height: 100vh;
