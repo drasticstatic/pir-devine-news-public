@@ -60,10 +60,12 @@
       display: flex; gap: 0.5rem; max-width: 420px; margin: 0 auto 1.25rem;
     }
     .adm-unlock .btn-primary {
-      background: var(--adm); color: #fff; box-shadow: 0 0 12px rgba(239,68,68,0.35);
+      background: var(--adm); color: #fff;
+      box-shadow: 0 0 0 2px rgba(239,68,68,0.25), 0 0 18px rgba(239,68,68,0.6);
     }
     .adm-unlock .btn-primary:hover {
-      background: #f87171; box-shadow: 0 0 20px rgba(239,68,68,0.5);
+      background: #f87171;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.35), 0 0 26px rgba(239,68,68,0.75);
     }
     .adm-unlock input {
       flex: 1; padding: 0.65rem 0.9rem;
@@ -140,8 +142,18 @@
       100% { transform: translateX(-50%); }
     }
     @keyframes adm-chip-pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); border-color: var(--border-2); }
-      50%      { box-shadow: 0 0 0 5px rgba(239,68,68,0.45); border-color: rgba(239,68,68,0.55); }
+      0%,100% {
+        box-shadow: 0 0 0 0 rgba(239,68,68,0);
+        border-color: var(--border-2);
+        background: var(--navy-3);
+        color: var(--text-2);
+      }
+      50% {
+        box-shadow: 0 0 0 5px rgba(239,68,68,0.4);
+        border-color: rgba(239,68,68,0.6);
+        background: rgba(239,68,68,0.1);
+        color: #fca5a5;
+      }
     }
     .adm-chip {
       display: inline-flex; align-items: center;
@@ -165,7 +177,7 @@
       max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem;
     }
     .adm-chat {
-      background: linear-gradient(135deg, rgba(239,68,68,0.07) 0%, #091e3a 55%);
+      background: linear-gradient(135deg, #280d0d 0%, #091e3a 65%);
       border: 1px solid rgba(239,68,68,0.25);
       border-radius: var(--radius-lg); overflow: hidden;
     }
@@ -392,7 +404,7 @@
 
   <!-- ── Scrolling chip ticker (always visible) ─────────────────────── -->
   <div class="adm-ticker">
-    <div class="adm-ticker-label">Try asking…</div>
+    <div class="adm-ticker-label">Try asking… <span style="font-weight:400;color:var(--text-3);text-transform:none;letter-spacing:0">· click one to test</span></div>
     <div class="adm-ticker-outer">
       <div class="adm-ticker-track" id="adm-ticker-track">
         <!-- Set A -->
