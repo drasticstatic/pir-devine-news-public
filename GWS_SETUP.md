@@ -88,21 +88,38 @@ mv ~/.config/gws/client_secret.json.json ~/.config/gws/client_secret.json
 
 ## Step 5 — Authenticate
 
+Before running the login command, you must add your account as a test user in the GCP
+console — otherwise Google blocks the OAuth flow with Error 403: access_denied.
+
+**Add test user (required — even for the project owner account):**
+1. Go to [console.cloud.google.com](https://console.cloud.google.com) → select your project
+2. **APIs & Services → OAuth consent screen → Audience → Test users → + Add users**
+3. Add `pir.devine.news@gmail.com` → Save
+
+> **Note on scopes:** The **Data Access** tab (APIs & Services → OAuth consent screen → Data Access)
+> is where "Add or remove scopes" lives. You do not need to manually configure scopes here —
+> `gws` requests all required scopes automatically at login time. Leave this section as-is.
+
+> **Testing mode user cap:** While publishing status is set to "Testing", only approved test
+> users can access the app. The allowed user cap is 100, counted over the entire lifetime of
+> the app. See https://support.google.com/cloud/answer/7454865 for more info.
+
+Then run:
+
 ```bash
-gws auth login
+gwspdn auth login
 ```
 
-This opens your browser. Sign in with `pir.devine.news@gmail.com` and
-grant the requested Drive + Gmail permissions. Your token is stored in
-`~/.config/gws/` and never touches the repo.
+This opens your browser. Sign in with `pir.devine.news@gmail.com` and grant the requested
+permissions. Your token is stored in `~/.config/gws/` and never touches the repo.
 
 Verify it worked:
 
 ```bash
-gws auth status
+gwspdn auth status
 ```
 
-You should see the account listed as authenticated.
+You should see `has_refresh_token: true` and `encryption_valid: true`.
 
 ---
 
@@ -384,5 +401,81 @@ Or trigger manually from GitHub:
 
 ---
 
+---
+
+## Multi-Account Setup (Running Multiple gws Profiles)
+
+If you use `gws` across multiple Google accounts or projects, each account gets its own
+isolated config directory and a named shell alias so they never collide. Never rely on
+the bare `gws` binary default — always use a named alias so the account is explicit.
+
+**Naming convention:** `gws<abbrev>` — a short descriptive alias per project.
+For this repo, the alias is `gwspdn` (short for **P**IR-**D**evine-**N**ews).
+
+| Alias | Account | Config Dir | GCP Project |
+|-------|---------|-----------|-------------|
+| `gwspdn` | `pir.devine.news@gmail.com` | `~/.config/gws/` | `devine-news-automation` |
+| `gws<abbrev>` | `your-other-account@gmail.com` | `~/.config/gws-<project>/` | `your-gcp-project` |
+
+**APIs enabled for `devine-news-automation`:** Drive, Docs, Sheets, Slides, Gmail.
+The Drive API alone is sufficient to create and copy Google Docs (via mime type); the
+Docs, Sheets, and Slides APIs enable direct content editing if needed in the future.
+
+To add a profile for another project:
+
+```bash
+# 1. Create a config dir and place the new project's client_secret.json in it
+mkdir -p ~/.config/gws-<project>
+mv ~/Downloads/client_secret_*.json ~/.config/gws-<project>/client_secret.json
+
+# 2. Add a named alias to ~/.zshrc
+echo "alias gws<abbrev>='GOOGLE_WORKSPACE_CLI_CONFIG_DIR=~/.config/gws-<project> gws'" >> ~/.zshrc
+source ~/.zshrc
+
+# 3. Authenticate under the new profile
+gws<abbrev> auth login
+```
+
+Each profile requires its own GCP project with the relevant APIs enabled and its own
+OAuth Desktop client credentials (see Steps 1–5 above, repeated for each account).
+
+> Each `~/.config/gws-*/` directory is local-only and should never be committed.
+
+---
+
+## How Aliases Work in Practice
+
+**Why `~/.config/gws/` instead of `~/.config/gws-pir-devine-news/`?**
+
+When `gws` was first installed on this machine, it created `~/.config/gws/` as its default
+config directory. The existing credentials and tokens live there. Renaming the directory
+would break any scripts or GitHub Actions that reference the path directly. New profiles
+added later get explicit descriptive names (e.g. `~/.config/gws-<project>/`) — but the
+original stays at `~/.config/gws/`. The `gwspdn` alias explicitly points to `~/.config/gws/`,
+so there is never any ambiguity when using the alias.
+
+**Will existing scripts and automation continue to work without the alias?**
+
+Yes. GitHub Actions, cron jobs, and shell scripts that call `gws` directly are unaffected
+by alias setup. An alias only applies to interactive shell sessions. Scripts that need to
+target a specific account set `GOOGLE_WORKSPACE_CLI_CONFIG_DIR` themselves (or run in an
+environment where only one profile exists). The alias is a convenience for humans typing
+commands at the terminal — not a dependency for automation.
+
+**How does an AI assistant (e.g. Claude) know which alias to use?**
+
+Each repo contains a `CLAUDE.md` file — a plain-text instruction file read by Claude Code
+at the start of every session. It documents the repo's account, alias, tools, and
+conventions. When Claude generates a `gws` command for this repo, it uses `gwspdn` because
+`CLAUDE.md` says to. Claude does not run the alias itself — it produces the correct command
+for the operator to run. The alias in your shell (`~/.zshrc`) does the actual account
+routing when you execute that command.
+
+If you are setting up a new machine or onboarding a new team member, add the alias to
+their `~/.zshrc` as shown in Step 6 above. Without it, they would need to pass the full
+`GOOGLE_WORKSPACE_CLI_CONFIG_DIR=...` prefix manually every time.
+
+---
+
 *This file is intentionally public — it contains no secrets or credentials.*
-*Last updated: April 2026 — added Steps 8f–8i (GitHub PAT, Script Properties, admin removal gate).*
+*Last updated: April 2026 — alias gwspdn; gwsdc/gwsds added to multi-account table; all APIs enabled on devine-news-automation.*
