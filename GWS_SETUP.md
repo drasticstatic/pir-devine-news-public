@@ -477,5 +477,28 @@ their `~/.zshrc` as shown in Step 6 above. Without it, they would need to pass t
 
 ---
 
+## Script Redeployment — What Needs Updating After gws-sync.sh Changes
+
+**Does changing `scripts/gws-sync.sh` require any redeployment?**
+
+No. `sync-public.yml` (the GitHub Actions workflow) only syncs dashboard files to the
+public repo — it never calls `gws-sync.sh` at all. That script runs manually from your
+local machine. Since the changes are committed and pushed to the private repo, you only need:
+
+1. `git pull` on any machine where you plan to run the script
+2. `gwspdn auth status` — if it shows `token_error`, run `gwspdn auth login` to
+   re-authenticate before testing the script
+
+**Does changing `gws-sync.sh` affect `apps-script-form.gs`?**
+
+No. `scripts/apps-script-form.gs` is a Google Apps Script that runs in Google's cloud
+environment as a deployed Web App. It talks directly to the GitHub API using a stored PAT —
+it never uses the gws CLI, `gwspdn`, or anything in `scripts/gws-sync.sh`. Changes to the
+local CLI setup have zero effect on the Apps Script. The only time you need to update
+`apps-script-form.gs` is if the GitHub PAT expires (currently set to expire **May 15, 2026**)
+or if the Sheet ID, repo path, or email address changes.
+
+---
+
 *This file is intentionally public — it contains no secrets or credentials.*
 *Last updated: April 2026 — alias gwspdn; gwsdc/gwsds added to multi-account table; all APIs enabled on devine-news-automation.*

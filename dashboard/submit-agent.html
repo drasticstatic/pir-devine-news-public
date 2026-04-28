@@ -59,7 +59,7 @@
       display: inline-flex; align-items: center; gap: 0.35rem;
       font-size: 0.8rem; font-weight: 700; padding: 0.5rem 1.1rem;
       border-radius: 9px; cursor: pointer; border: 1.5px solid var(--border-2);
-      background: var(--navy-3); color: var(--text-2);
+      background: linear-gradient(135deg, #091e3a 0%, #200d56 85%); color: var(--text-2);
       transition: all 0.15s; text-decoration: none;
     }
     .iva-modal-btn:hover {
@@ -70,8 +70,8 @@
     }
     .iva-modal-btn:active { transform: translateY(0); box-shadow: none; }
     @keyframes modal-btn-breathe {
-      0%,100% { opacity: 0.82; box-shadow: 0 0 0 0 rgba(124,58,237,0); }
-      50%      { opacity: 1;    box-shadow: 0 0 12px rgba(124,58,237,0.22); }
+      0%,100% { opacity: 0.82; box-shadow: 0 0 0 0 rgba(124,58,237,0); transform: translateY(0); }
+      50%      { opacity: 1;    box-shadow: 0 0 12px rgba(124,58,237,0.22); transform: translateY(-2px); }
     }
     .iva-modal-btn { animation: modal-btn-breathe 3s ease-in-out infinite; }
 
@@ -80,7 +80,7 @@
       max-width: 760px; margin: 0 auto 1.5rem; padding: 0 1rem;
     }
     .iva-principles-card {
-      background: linear-gradient(135deg, #200d56 0%, #091e3a 65%); border: 1px solid rgba(124,58,237,0.22);
+      background: linear-gradient(135deg, #091e3a 0%, #200d56 100%); border: 1px solid rgba(124,58,237,0.22);
       border-radius: var(--radius-lg); padding: 1rem 1.25rem;
       display: flex; overflow-x: auto; gap: 0;
       scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.3) transparent;
@@ -151,7 +151,7 @@
     /* ── Chat — PURPLE identity ───────────────────────────────────── */
     .iva-chat-wrap { max-width: 760px; margin: 0 auto; padding: 0 1rem 2.5rem; }
     .iva-chat {
-      background: linear-gradient(135deg, #200d56 0%, #091e3a 60%);
+      background: linear-gradient(135deg, #091e3a 0%, #200d56 100%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); overflow: hidden;
     }
@@ -198,7 +198,7 @@
       border-top-left-radius: 4px; color: var(--text-2);
     }
     .iva-msg.user .iva-msg-bubble {
-      background: var(--navy-4); border: 1px solid var(--border);
+      background: rgba(124,58,237,0.14); border: 1px solid rgba(124,58,237,0.35);
       border-top-right-radius: 4px; color: var(--text);
     }
     .iva-msg-bubble strong { color: var(--text); }
@@ -280,7 +280,7 @@
     /* ── Journey flow card ───────────────────────────────────────── */
     .iva-flow { max-width: 760px; margin: 0 auto 2.5rem; padding: 0 1rem; }
     .iva-flow-card {
-      background: linear-gradient(135deg, #200d56 0%, #091e3a 65%);
+      background: linear-gradient(135deg, #091e3a 0%, #200d56 100%);
       border: 1px solid rgba(124,58,237,0.25);
       border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
     }
