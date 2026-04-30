@@ -532,6 +532,42 @@ their `~/.zshrc` as shown in Step 6 above. Without it, they would need to pass t
 
 ---
 
+## Why gws-sync.sh and apps-script-form.gs Rarely Need Code Changes
+
+When configuration changes (new editors, updated folder IDs, a new spreadsheet), neither script usually needs a code edit. They're designed to read their settings from external files at runtime:
+
+| What changed | Where to update | Why no code change needed |
+|---|---|---|
+| Add/remove an editor | `data/committee/emails.txt` | Script loops over the file at runtime |
+| Add a reviewer | `data/committee/reviewers.txt` | Same pattern — file is read fresh every run |
+| New or renamed Drive folder | `data/committee/config.env` | All folder IDs are sourced at startup via `source "$CONFIG_FILE"` |
+| New spreadsheet | `data/committee/config.env` | Same — `SUBMISSIONS_SPREADSHEET_ID` read from config |
+
+`apps-script-form.gs` is a separate pipeline entirely — it runs in Google's cloud, talks directly to the GitHub API via a stored PAT, and has no awareness of `emails.txt`, `config.env`, or `gws-sync.sh`. The two scripts share only the Drive folder as a handoff point: the Apps Script drops files into `Submissions/`, and `gws-sync.sh` picks them up. Neither knows the other exists.
+
+**The only times you'd need to edit the scripts themselves:**
+- `gws-sync.sh` — adding a new processing step (e.g. Phase 4 Staging assembly)
+- `apps-script-form.gs` — PAT expires (May 15, 2026), Sheet ID changes, or repo path changes
+
+---
+
+## Two-Tier Drive Access Model
+
+`gws-sync.sh` manages two levels of Google Drive access automatically:
+
+| Tier | File | Drive role | What they can do |
+|------|------|-----------|-----------------|
+| **Editors** | `data/committee/emails.txt` | `writer` | Full edit access on the entire `pir.devine.news/` folder + all `Approved/` copies |
+| **Reviewers** | `data/committee/reviewers.txt` | `commenter` | Read + comment on the entire `pir.devine.news/` folder — cannot edit |
+
+Both grants happen in **Step 0** of the sync (before processing any submissions), so access is refreshed on every run. Grants are idempotent — re-granting an existing permission is a no-op and does not cause errors.
+
+To **add a reviewer**: add their email to `data/committee/reviewers.txt` (one per line) and run the sync. To **promote a reviewer to editor**: move their email from `reviewers.txt` to `emails.txt`.
+
+> Removing an email does **not** revoke existing Drive permissions retroactively — revocation must be done manually in the Drive sharing UI.
+
+---
+
 ## Script Redeployment — What Needs Updating After gws-sync.sh Changes
 
 **Does changing `scripts/gws-sync.sh` require any redeployment?**

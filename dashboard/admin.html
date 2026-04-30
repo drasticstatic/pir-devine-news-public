@@ -77,7 +77,7 @@
     }
     .adm-unlock input {
       flex: 1; padding: 0.65rem 0.9rem;
-      border-radius: 10px; border: 1.5px solid var(--border-2);
+      border-radius: 10px; border: 1.5px solid rgba(239,68,68,0.35);
       background: linear-gradient(135deg, rgba(30,4,4,0.85) 0%, rgba(190,24,93,0.12) 100%); color: var(--text);
       font-size: 0.9rem; transition: border-color 0.2s;
     }
@@ -95,7 +95,7 @@
     .adm-modal-btn {
       display: inline-flex; align-items: center; gap: 0.35rem;
       font-size: 0.8rem; font-weight: 700; padding: 0.5rem 1.1rem;
-      border-radius: 9px; cursor: pointer; border: 1.5px solid var(--border-2);
+      border-radius: 9px; cursor: pointer; border: 1.5px solid rgba(239,68,68,0.35);
       background: linear-gradient(135deg, #1e0404 0%, rgba(190, 24, 93, 0.5) 50%); color: var(--text-2);
       transition: all 0.15s; text-decoration: none;
     }
@@ -401,6 +401,60 @@
     .email-add-row input:focus { outline: none; border-color: rgba(239,68,68,0.55); }
     .email-add-row input.email-dupe { border-color: rgba(239,68,68,0.7); }
     .email-note { font-size: 0.72rem; color: var(--text-3); margin-top: 0.65rem; line-height: 1.55; font-style: italic; }
+    .email-entry-confirm { background: rgba(239,68,68,0.08) !important; border-color: rgba(239,68,68,0.35) !important; }
+    .email-confirm-label { font-size: 0.75rem; color: #f87171; font-weight: 600; flex-shrink: 0; }
+    .email-confirm-yes {
+      font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.55rem;
+      border-radius: 5px; border: 1px solid rgba(239,68,68,0.5);
+      background: rgba(239,68,68,0.15); color: #f87171; cursor: pointer; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .email-confirm-yes:hover { background: rgba(239,68,68,0.3); }
+    .email-confirm-no {
+      font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.55rem;
+      border-radius: 5px; border: 1px solid rgba(239,68,68,0.25);
+      background: transparent; color: var(--text-3); cursor: pointer; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .email-confirm-no:hover { background: rgba(255,255,255,0.05); color: var(--text-2); }
+    .email-add-error { font-size: 0.75rem; color: #f87171; margin-top: 0.35rem; display: none; padding-left: 0.1rem; }
+    .email-add-row input.email-invalid { border-color: rgba(239,68,68,0.7) !important; }
+    .email-change-hint {
+      font-size: 0.73rem; color: var(--adm); margin-top: 0.55rem;
+      font-weight: 600; display: none; line-height: 1.5;
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.22);
+      border-radius: 6px; padding: 0.4rem 0.65rem;
+    }
+
+    /* ── Admin-scoped modal identity (overrides global .modal) ── */
+    .modal {
+      background: linear-gradient(135deg, #1e0404 0%, rgba(190,24,93,0.52) 100%);
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+    .modal-eyebrow { color: var(--adm); }
+    .modal-close { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.28); }
+    .modal-close:hover { background: rgba(239,68,68,0.16); color: var(--adm); }
+    .modal-actions { border-top-color: rgba(239,68,68,0.18); }
+    .modal-body h3 { color: var(--adm); }
+    .modal-body code { color: var(--adm); border-color: rgba(239,68,68,0.22); background: rgba(239,68,68,0.07); }
+    .modal-body pre  { border-color: rgba(239,68,68,0.18); background: rgba(30,4,4,0.5); color: #fca5a5; }
+    /* Propose-change & primary action buttons — red identity matching unlock */
+    .modal-actions .btn-primary {
+      background: var(--adm) !important; color: #fff !important;
+      box-shadow: 0 0 0 2px rgba(239,68,68,0.25), 0 0 18px rgba(239,68,68,0.6) !important;
+    }
+    .modal-actions .btn-primary:hover {
+      background: #f87171 !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.35), 0 0 26px rgba(239,68,68,0.75) !important;
+    }
+    .cap-card { background: rgba(30,4,4,0.6); border-color: rgba(239,68,68,0.2); }
+    .hiw-step { background: rgba(30,4,4,0.55); border-color: rgba(239,68,68,0.18); }
+    .agent-arch { background: rgba(30,4,4,0.55); border-color: rgba(239,68,68,0.18); }
+    .agent-row { border-bottom-color: rgba(239,68,68,0.12); }
+    .pd-item { background: rgba(30,4,4,0.55); border-color: rgba(239,68,68,0.18); }
+    .skills-table th { background: rgba(30,4,4,0.7); }
+    .skills-table td { border-top-color: rgba(239,68,68,0.12); }
+    .skills-table tr:hover td { background: rgba(239,68,68,0.04); }
   </style>
 </head>
 <body>
@@ -781,7 +835,11 @@
                  onkeydown="if(event.key==='Enter')emailAddEntry()" />
           <button class="adm-modal-btn" style="animation:none;flex-shrink:0" onclick="emailAddEntry()">+ Add</button>
         </div>
-        <div class="email-note">Changes are proposals only — the agent will show a diff for your approval before writing to <code>emails.txt</code>.</div>
+        <div class="email-add-error" id="email-add-error"></div>
+        <div class="email-change-hint" id="email-change-hint">
+          ↳ Click <strong>📝 Propose Change via Agent</strong> below to apply your changes.
+        </div>
+        <div class="email-note">All changes are proposals — the agent shows a diff and waits for your approval before writing to <code>emails.txt</code>. Removing an editor does not revoke existing Drive permissions retroactively.</div>
       </div>
       <div class="modal-actions">
         <button class="btn btn-primary" onclick="emailPropose()">📝 Propose Change via Agent</button>
@@ -908,18 +966,39 @@
   /* ── Committee Emails modal ─────────────────────────────────── */
   var emailsOriginal = [
     'pir.devine.news@gmail.com',
-    'dpnelson@gmail.com',
-    'pr@psychedelicsinrecovery.org'
+    'pr@psychedelicsinrecovery.org',
+    'dpnelson@gmail.com'
   ];
-  var emailsCurrent = emailsOriginal.slice();
+  var emailsCurrent    = emailsOriginal.slice();
+  var emailPendingRemove = -1;
 
-  function emailReset() { emailsCurrent = emailsOriginal.slice(); emailRender(); }
+  function emailReset() {
+    emailsCurrent = emailsOriginal.slice();
+    emailPendingRemove = -1;
+    emailRender();
+    var hint = document.getElementById('email-change-hint');
+    var err  = document.getElementById('email-add-error');
+    if (hint) hint.style.display = 'none';
+    if (err)  { err.style.display = 'none'; err.textContent = ''; }
+    var inp = document.getElementById('email-add-input');
+    if (inp) { inp.value = ''; inp.classList.remove('email-invalid','email-dupe'); }
+  }
 
   function emailRender() {
     var list = document.getElementById('email-list');
     if (!list) return;
     list.innerHTML = emailsCurrent.map(function(em, i) {
-      var isOwner = em === 'pir.devine.news@gmail.com';
+      var isOwner  = em === 'pir.devine.news@gmail.com';
+      var isPending = emailPendingRemove === i;
+      if (isPending) {
+        return '<div class="email-entry email-entry-confirm">' +
+          '<span class="email-role-dot">⚠️</span>' +
+          '<span class="email-entry-addr">' + em + '</span>' +
+          '<span class="email-confirm-label">Remove?</span>' +
+          '<button class="email-confirm-yes" onclick="emailConfirmRemove(' + i + ')">Yes</button>' +
+          '<button class="email-confirm-no"  onclick="emailCancelRemove()">No</button>' +
+          '</div>';
+      }
       return '<div class="email-entry">' +
         '<span class="email-role-dot">' + (isOwner ? '👑' : '✏️') + '</span>' +
         '<span class="email-entry-addr">' + em + '</span>' +
@@ -929,24 +1008,50 @@
     }).join('');
   }
 
-  function emailRemove(i) {
+  function emailRemove(i) { emailPendingRemove = i; emailRender(); }
+
+  function emailConfirmRemove(i) {
     emailsCurrent.splice(i, 1);
+    emailPendingRemove = -1;
     emailRender();
+    emailShowChangeHint();
+  }
+
+  function emailCancelRemove() { emailPendingRemove = -1; emailRender(); }
+
+  function emailShowChangeHint() {
+    var hint = document.getElementById('email-change-hint');
+    if (hint) hint.style.display = 'block';
   }
 
   function emailAddEntry() {
     var input = document.getElementById('email-add-input');
+    var errEl = document.getElementById('email-add-error');
     var val   = (input.value || '').trim().toLowerCase();
-    if (!val || !val.includes('@') || !val.includes('.')) return;
-    if (emailsCurrent.indexOf(val) !== -1) {
-      input.classList.add('email-dupe');
-      setTimeout(function(){ input.classList.remove('email-dupe'); }, 1500);
+    if (!val) return;
+
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!re.test(val)) {
+      errEl.textContent = 'Please enter a complete email address (e.g. name@example.org).';
+      errEl.style.display = 'block';
+      input.classList.add('email-invalid');
+      setTimeout(function(){ input.classList.remove('email-invalid'); errEl.style.display='none'; }, 2500);
       return;
     }
+    if (emailsCurrent.indexOf(val) !== -1) {
+      errEl.textContent = 'That address is already on the list.';
+      errEl.style.display = 'block';
+      input.classList.add('email-dupe');
+      setTimeout(function(){ input.classList.remove('email-dupe'); errEl.style.display='none'; }, 2000);
+      return;
+    }
+    errEl.style.display = 'none';
     emailsCurrent.push(val);
     input.value = '';
     input.focus();
+    emailPendingRemove = -1;
     emailRender();
+    emailShowChangeHint();
   }
 
   function emailPropose() {
