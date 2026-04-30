@@ -355,7 +355,6 @@
     .modal-body h3 { color: #a78bfa; }
     .modal-body code { color: #c4b5fd; border-color: rgba(124,58,237,0.25); background: rgba(124,58,237,0.08); }
     .modal-body pre  { border-color: rgba(124,58,237,0.2); background: rgba(9,30,58,0.6); color: #c4b5fd; }
-    .pd-item { background: rgba(9,30,58,0.65); border-color: rgba(124,58,237,0.2); }
     .modal-actions .btn-primary {
       background: linear-gradient(135deg, #091e3a 0%, rgba(124,58,237,0.85) 100%) !important;
       color: #e9d5ff !important;
@@ -365,11 +364,15 @@
     .modal-actions .btn-primary:hover {
       box-shadow: 0 0 0 3px rgba(124,58,237,0.35), 0 0 24px rgba(124,58,237,0.65) !important;
     }
-    .df-step { background: rgba(9,30,58,0.65); border-color: rgba(124,58,237,0.2); }
     .modal-body { scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.3) rgba(124,58,237,0.04); }
     .modal-body::-webkit-scrollbar { width: 4px; }
     .modal-body::-webkit-scrollbar-track { background: rgba(124,58,237,0.04); }
     .modal-body::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 99px; }
+    /* Ghost btn + scroll btn — purple identity */
+    .modal-actions .btn-ghost { color: rgba(167,139,250,0.7); border-color: rgba(124,58,237,0.22); }
+    .modal-actions .btn-ghost:hover { background: rgba(124,58,237,0.08); color: #a78bfa; border-color: rgba(124,58,237,0.45); }
+    .modal-scroll-btn { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.25); color: #a78bfa; }
+    .modal-scroll-btn:hover { background: rgba(124,58,237,0.18); border-color: rgba(124,58,237,0.55); }
 
     /* ── Principle mini-modals (sweet-alert style) ──────────────── */
     .pm-icon { font-size: 2.75rem; display: block; text-align: center; margin: 0.25rem 0 0.75rem; }
@@ -387,7 +390,7 @@
 
     /* ── Modals ──────────────────────────────────────────────────── */
     .principle-detail { display: flex; flex-direction: column; gap: 0.75rem; }
-    .pd-item { background: var(--navy-3); border: 1px solid var(--border-2); border-radius: 10px; padding: 0.9rem 1rem; }
+    .pd-item { background: rgba(9,30,58,0.65); border: 1px solid rgba(124,58,237,0.2); border-radius: 10px; padding: 0.9rem 1rem; }
     .pd-item-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem; }
     .pd-item-icon { font-size: 1.1rem; }
     .pd-item h4 { font-size: 0.85rem; font-weight: 700; margin: 0; }
@@ -401,7 +404,7 @@
     .pd-item .pd-example::after  { content: '"'; color: #a78bfa; }
 
     .dialogue-flow { display: flex; flex-direction: column; gap: 0; margin-top: 0.5rem; }
-    .df-step { display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.8rem 1rem; background: var(--navy-3); border: 1px solid var(--border-2); border-radius: 0; }
+    .df-step { display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.8rem 1rem; background: rgba(9,30,58,0.65); border: 1px solid rgba(124,58,237,0.2); border-radius: 0; }
     .df-step:first-child { border-radius: var(--radius) var(--radius) 0 0; }
     .df-step:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
     .df-step + .df-step  { border-top: none; }
@@ -752,6 +755,10 @@
           </div>
         </div>
       </div>
+      <div class="modal-actions">
+        <button class="modal-scroll-btn" onclick="document.querySelector('#modal-principles .modal-body').scrollTop=9999">↓ scroll to bottom</button>
+        <button class="btn btn-ghost" onclick="window.closeModal('modal-principles')">Close</button>
+      </div>
     </div>
   </div>
 
@@ -792,6 +799,10 @@
           <div class="df-num" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.35);color:#f87171">🚫</div>
           <div class="df-text"><strong>No Ghostwriting</strong> — If a member asks the agent to "just write it for me," it declines gently and returns to a clarifying question. The structured output is always assembled from the member's own words and phrases. The agent is a Socratic midwife — it never holds the pen.</div>
         </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-scroll-btn" onclick="document.querySelector('#modal-dialogue .modal-body').scrollTop=9999">↓ scroll to bottom</button>
+        <button class="btn btn-ghost" onclick="window.closeModal('modal-dialogue')">Close</button>
       </div>
     </div>
   </div>
