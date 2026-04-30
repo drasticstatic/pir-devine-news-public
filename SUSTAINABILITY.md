@@ -44,7 +44,7 @@ When the time comes, the full site and its history can be transferred to a PIR G
 |-------|----------|---------|------|
 | Static site hosting | GitHub Pages | `drasticstatic` (personal → future PIR org) | Free |
 | Source code | GitHub private repo | `drasticstatic` | Free |
-| Form backend (future) | Google Apps Script | `pir.devine.news@gmail.com` | Free |
+| Form backend | Google Apps Script | `pir.devine.news@gmail.com` | Free |
 | File storage | Google Drive / Gmail | `pir.devine.news@gmail.com` | Free (15 GB) |
 | Automation CI | GitHub Actions | `drasticstatic` | Free (2,000 min/mo) |
 
