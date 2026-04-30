@@ -229,7 +229,22 @@
     .drive-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.2rem; }
     .drive-desc { font-size: 0.78rem; color: var(--text-2); line-height: 1.6; }
     .drive-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-    .tech-details summary:hover { opacity: 1 !important; }
+    @keyframes tech-wiggle {
+      0%, 100% { transform: translateX(0); }
+      15%       { transform: translateX(-3px); }
+      30%       { transform: translateX(3px); }
+      45%       { transform: translateX(-2px); }
+      60%       { transform: translateX(2px); }
+      75%       { transform: translateX(-1px); }
+      90%       { transform: translateX(1px); }
+    }
+    @keyframes tech-pulse {
+      0%, 100% { color: rgba(74,234,220,0.65); text-shadow: none; }
+      50%       { color: rgba(74,234,220,1); text-shadow: 0 0 10px rgba(74,234,220,0.5); }
+    }
+    .tech-details summary { animation: tech-wiggle 4s ease-in-out 1.5s 3, tech-pulse 3s ease-in-out infinite; }
+    .tech-details summary:hover { opacity: 1 !important; color: var(--cyan) !important; text-shadow: 0 0 14px rgba(74,234,220,0.6); animation: none; }
+    .tech-details[open] summary { animation: none; opacity: 1; color: var(--cyan); }
     .tech-details[open] summary .tech-chevron { transform: rotate(90deg); }
   </style>
 </head>
@@ -440,8 +455,8 @@
       <p>Behind the scenes, the committee uses this portal to review, approve, and publish submissions — all through a secure, automated workflow that keeps unpublished content private.</p>
       <p style="font-size:0.82rem;color:var(--text-3);font-style:italic">Built and maintained as committee service by the PIR® Tech &amp; PR Committees. No special expertise required to submit — only a willingness to share.</p>
       <details class="tech-details" style="margin-top:1rem;border-top:1px solid var(--border);padding-top:0.75rem">
-        <summary style="cursor:pointer;font-size:0.82rem;color:var(--cyan);user-select:none;display:flex;align-items:center;gap:0.4rem;opacity:0.75;transition:opacity 0.2s">
-          <span class="tech-chevron" style="display:inline-block;transition:transform 0.25s;font-style:normal;font-size:0.7rem">▸</span>
+        <summary style="cursor:pointer;font-size:0.82rem;color:var(--cyan);user-select:none;display:flex;align-items:center;gap:0.5rem;list-style:none;transition:text-shadow 0.2s">
+          <span class="tech-chevron" style="display:inline-block;transition:transform 0.25s;font-style:normal;font-size:1rem;line-height:1">▸</span>
           🔧 For the technically curious
         </summary>
         <div style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-2);line-height:1.6">
