@@ -50,8 +50,10 @@
     .adm-badge {
       display: inline-flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
       justify-content: center; font-size: 0.75rem; color: var(--text-2); font-weight: 500;
-      border: 1px solid var(--border-2); border-radius: 8px;
+      border: 1px solid rgba(190,24,93,0.55); border-radius: 8px;
       padding: 0.4rem 0.9rem; margin-bottom: 1.75rem; line-height: 1.6;
+      background: linear-gradient(135deg, rgba(30,4,4,0.7) 0%, rgba(190,24,93,0.13) 100%);
+      box-shadow: 0 0 10px rgba(190,24,93,0.12);
     }
     .adm-badge span { color: var(--text-3); }
 
@@ -148,7 +150,8 @@
     .adm-chip {
       display: inline-flex; align-items: center;
       font-size: 0.75rem; font-weight: 500; color: var(--text-2);
-      background: var(--navy-3); border: 1.5px solid var(--border-2);
+      background: linear-gradient(135deg, rgba(30,4,4,0.92) 0%, rgba(190,24,93,0.28) 100%);
+      border: 1.5px solid var(--border-2);
       border-radius: 999px; padding: 0.3rem 0.85rem;
       cursor: pointer; white-space: nowrap; user-select: none;
       transition: all 0.15s;
@@ -209,7 +212,7 @@
       background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
     }
     .adm-msg.user .adm-msg-avatar {
-      background: var(--navy-4); border: 1px solid var(--border);
+      background: rgba(239,68,68,0.16); border: 1px solid rgba(239,68,68,0.42);
     }
     .adm-msg-bubble {
       max-width: 80%; font-size: 0.85rem; line-height: 1.6;
@@ -220,7 +223,7 @@
       border-top-left-radius: 4px; color: var(--text-2);
     }
     .adm-msg.user .adm-msg-bubble {
-      background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.32);
+      background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.45);
       border-top-right-radius: 4px; color: var(--text);
     }
     .adm-msg-bubble strong { color: var(--text); }
@@ -242,8 +245,16 @@
       border-radius: 7px; border: none; cursor: pointer;
       font-weight: 600; transition: opacity 0.2s;
     }
-    .btn-approve { background: rgba(0,208,130,0.2); color: var(--green); border: 1px solid rgba(0,208,130,0.4) !important; }
-    .btn-cancel-chat { background: var(--navy-4); color: var(--text-3); border: 1px solid var(--border) !important; }
+    .btn-approve {
+      background: rgba(0,208,130,0.2); color: var(--green); border: 1px solid rgba(0,208,130,0.4) !important;
+      animation: cta-float-bounce 2.5s ease-in-out infinite; cursor: pointer;
+    }
+    .btn-approve:hover { background: rgba(0,208,130,0.32); animation: none; }
+    .btn-cancel-chat {
+      background: rgba(190,24,93,0.1); color: var(--text-2); border: 1px solid rgba(190,24,93,0.35) !important;
+      animation: cta-float-bounce 2.8s ease-in-out infinite 0.4s; cursor: pointer;
+    }
+    .btn-cancel-chat:hover { background: rgba(190,24,93,0.2); color: var(--adm); animation: none; }
     .adm-demo-note { font-size: 0.7rem; color: var(--text-3); margin-top: 0.5rem; font-style: italic; }
 
     .adm-chat-divider {
@@ -277,18 +288,19 @@
     .adm-input-row input {
       flex: 1; padding: 0.6rem 0.9rem;
       border-radius: 9px; border: 1.5px solid var(--border-2);
-      background: var(--navy-4); color: var(--text);
-      font-size: 0.88rem; transition: border-color 0.2s;
+      background: linear-gradient(135deg, rgba(30,4,4,0.8) 0%, rgba(190,24,93,0.1) 100%);
+      color: var(--text); font-size: 0.88rem; transition: border-color 0.2s;
     }
     .adm-input-row input:focus { outline: none; border-color: rgba(239,68,68,0.55); }
     .adm-input-row input:disabled { opacity: 0.45; cursor: not-allowed; }
     .adm-send-btn {
       padding: 0.6rem 1rem; border-radius: 9px;
-      background: rgba(239,68,68,0.18); border: 1px solid rgba(239,68,68,0.4);
-      color: var(--adm); font-weight: 700; font-size: 0.88rem;
-      cursor: pointer; transition: background 0.2s; white-space: nowrap;
+      background: rgba(239,68,68,0.32); border: 1.5px solid rgba(239,68,68,0.62);
+      color: #f87171; font-weight: 800; font-size: 0.88rem;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      box-shadow: 0 0 8px rgba(239,68,68,0.18);
     }
-    .adm-send-btn:hover:not(:disabled) { background: rgba(239,68,68,0.3); }
+    .adm-send-btn:hover:not(:disabled) { background: rgba(239,68,68,0.48); box-shadow: 0 0 14px rgba(239,68,68,0.3); }
     .adm-send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
     .adm-locked-hint { font-size: 0.75rem; color: var(--text-3); text-align: center; padding-top: 0.4rem; }
 
@@ -304,7 +316,10 @@
     .adm-dao-card h3 span { color: var(--adm); }
     .adm-dao-card p { font-size: 0.82rem; color: var(--text-2); line-height: 1.7; margin-bottom: 0.85rem; }
     .dao-flow { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; font-size: 0.75rem; color: var(--text-2); }
-    .dao-step { background: var(--navy-4); border: 1px solid var(--border); border-radius: 6px; padding: 0.28rem 0.65rem; white-space: nowrap; }
+    .dao-step {
+      background: linear-gradient(135deg, rgba(30,4,4,0.9) 0%, rgba(190,24,93,0.32) 100%);
+      border: 1px solid rgba(190,24,93,0.4); border-radius: 6px; padding: 0.28rem 0.65rem; white-space: nowrap;
+    }
     .dao-arrow { color: var(--text-3); font-size: 0.7rem; }
 
     /* ── Modals ──────────────────────────────────────────────────── */
