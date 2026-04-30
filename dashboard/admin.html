@@ -293,7 +293,7 @@
     .adm-input-row { display: flex; gap: 0.5rem; }
     .adm-input-row input {
       flex: 1; padding: 0.6rem 0.9rem;
-      border-radius: 9px; border: 1.5px solid var(--border-2);
+      border-radius: 9px; border: 1.5px solid rgba(239,68,68,0.35);
       background: linear-gradient(135deg, rgba(30,4,4,0.8) 0%, rgba(190,24,93,0.1) 100%);
       color: var(--text); font-size: 0.88rem; transition: border-color 0.2s;
     }
@@ -376,10 +376,18 @@
     }
     .email-info-box code { background: rgba(0,0,0,0.3); padding: 1px 5px; border-radius: 4px; font-size: 0.78rem; color: var(--adm); }
     .email-info-box p + p { margin-top: 0.55rem; }
-    .email-list { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.85rem; }
+    .email-list {
+      display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.85rem;
+      max-height: 184px; overflow-y: auto;
+      scrollbar-width: thin; scrollbar-color: rgba(239,68,68,0.3) rgba(239,68,68,0.04);
+      padding-right: 2px;
+    }
+    .email-list::-webkit-scrollbar { width: 4px; }
+    .email-list::-webkit-scrollbar-track { background: rgba(239,68,68,0.04); border-radius: 99px; }
+    .email-list::-webkit-scrollbar-thumb { background: rgba(239,68,68,0.3); border-radius: 99px; }
     .email-entry {
       display: flex; align-items: center; gap: 0.6rem;
-      background: var(--navy-3); border: 1px solid var(--border-2);
+      background: rgba(30,4,4,0.55); border: 1px solid rgba(239,68,68,0.18);
       border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.83rem;
     }
     .email-role-dot { font-size: 0.9rem; flex-shrink: 0; }
@@ -394,7 +402,7 @@
     .email-add-row { display: flex; gap: 0.5rem; margin-top: 0.1rem; }
     .email-add-row input {
       flex: 1; padding: 0.55rem 0.8rem; border-radius: 9px;
-      border: 1.5px solid var(--border-2);
+      border: 1.5px solid rgba(239,68,68,0.35);
       background: linear-gradient(135deg, rgba(30,4,4,0.8) 0%, rgba(190,24,93,0.1) 100%);
       color: var(--text); font-size: 0.85rem; transition: border-color 0.2s;
     }
@@ -419,6 +427,7 @@
     .email-confirm-no:hover { background: rgba(255,255,255,0.05); color: var(--text-2); }
     .email-add-error { font-size: 0.75rem; color: #f87171; margin-top: 0.35rem; display: none; padding-left: 0.1rem; }
     .email-add-row input.email-invalid { border-color: rgba(239,68,68,0.7) !important; }
+    .email-masked-hint { font-size: 0.68rem; opacity: 0.5; cursor: default; }
     .email-change-hint {
       font-size: 0.73rem; color: var(--adm); margin-top: 0.55rem;
       font-weight: 600; display: none; line-height: 1.5;
@@ -438,6 +447,10 @@
     .modal-body h3 { color: var(--adm); }
     .modal-body code { color: var(--adm); border-color: rgba(239,68,68,0.22); background: rgba(239,68,68,0.07); }
     .modal-body pre  { border-color: rgba(239,68,68,0.18); background: rgba(30,4,4,0.5); color: #fca5a5; }
+    .modal-body { scrollbar-width: thin; scrollbar-color: rgba(239,68,68,0.28) rgba(239,68,68,0.04); }
+    .modal-body::-webkit-scrollbar { width: 4px; }
+    .modal-body::-webkit-scrollbar-track { background: rgba(239,68,68,0.04); }
+    .modal-body::-webkit-scrollbar-thumb { background: rgba(239,68,68,0.28); border-radius: 99px; }
     /* Propose-change & primary action buttons — red identity matching unlock */
     .modal-actions .btn-primary {
       background: var(--adm) !important; color: #fff !important;
@@ -880,6 +893,7 @@
     document.getElementById('adm-send-btn').disabled = false;
     document.getElementById('adm-locked-hint').style.display = 'none';
     admAddMsg('agent', 'Demo unlocked. I can simulate any admin action — click a chip in the ticker above or type your own request.');
+    emailRender(); // refresh email list — unmask personal addresses now that session is active
     input.focus();
   }
 
@@ -969,8 +983,18 @@
     'pr@psychedelicsinrecovery.org',
     'dpnelson@gmail.com'
   ];
+  // Org/admin accounts shown unmasked always; personal emails masked until unlocked
+  var emailsUnmasked   = ['pir.devine.news@gmail.com', 'pr@psychedelicsinrecovery.org'];
   var emailsCurrent    = emailsOriginal.slice();
   var emailPendingRemove = -1;
+
+  function emailMask(em) {
+    if (admUnlocked || emailsUnmasked.indexOf(em) !== -1) return em;
+    var at = em.indexOf('@');
+    if (at < 0) return em;
+    var shown = em.substring(0, Math.min(5, at));
+    return shown + '·····' + em.substring(at);
+  }
 
   function emailReset() {
     emailsCurrent = emailsOriginal.slice();
@@ -990,10 +1014,12 @@
     list.innerHTML = emailsCurrent.map(function(em, i) {
       var isOwner  = em === 'pir.devine.news@gmail.com';
       var isPending = emailPendingRemove === i;
+      var displayed = emailMask(em);
+      var isMasked  = displayed !== em;
       if (isPending) {
         return '<div class="email-entry email-entry-confirm">' +
           '<span class="email-role-dot">⚠️</span>' +
-          '<span class="email-entry-addr">' + em + '</span>' +
+          '<span class="email-entry-addr">' + displayed + '</span>' +
           '<span class="email-confirm-label">Remove?</span>' +
           '<button class="email-confirm-yes" onclick="emailConfirmRemove(' + i + ')">Yes</button>' +
           '<button class="email-confirm-no"  onclick="emailCancelRemove()">No</button>' +
@@ -1001,7 +1027,7 @@
       }
       return '<div class="email-entry">' +
         '<span class="email-role-dot">' + (isOwner ? '👑' : '✏️') + '</span>' +
-        '<span class="email-entry-addr">' + em + '</span>' +
+        '<span class="email-entry-addr">' + displayed + (isMasked ? ' <span class="email-masked-hint" title="Unlock to reveal">🔒</span>' : '') + '</span>' +
         '<span class="email-entry-role">' + (isOwner ? 'Owner' : 'Editor') + '</span>' +
         (isOwner ? '' : '<button class="email-remove-btn" title="Remove" onclick="emailRemove(' + i + ')">✕</button>') +
         '</div>';
