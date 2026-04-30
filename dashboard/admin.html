@@ -461,7 +461,8 @@
     .modal-close:focus-visible { outline: none !important; box-shadow: 0 0 0 2px rgba(239,68,68,0.28) !important; }
     .modal-actions {
       border-top-color: rgba(239,68,68,0.18);
-      background: linear-gradient(to bottom, transparent 0%, rgba(30,4,4,0.38) 100%);
+      background: rgba(22,4,4,0.55);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
     }
     .modal-body h3 { color: var(--adm); }
     .modal-body code { color: var(--adm); border-color: rgba(239,68,68,0.22); background: rgba(239,68,68,0.07); }
@@ -487,8 +488,8 @@
     .skills-table th { background: rgba(30,4,4,0.7); }
     .skills-table td { border-top-color: rgba(239,68,68,0.12); }
     .skills-table tr:hover td { background: rgba(239,68,68,0.04); }
-    /* Footer actions + ghost btn crimson tint */
-    .modal-actions .btn-ghost { color: rgba(239,68,68,0.65); border-color: rgba(239,68,68,0.22); }
+    /* Footer actions + ghost btn crimson tint (cancel global breathe-g glow) */
+    .modal-actions .btn-ghost { color: rgba(239,68,68,0.65); border-color: rgba(239,68,68,0.22); animation: none !important; box-shadow: none !important; }
     .modal-actions .btn-ghost:hover { background: rgba(239,68,68,0.07); color: var(--adm); border-color: rgba(239,68,68,0.42); }
     /* Jump-to-bottom pill */
     .modal-scroll-btn { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.25); color: var(--adm); }
@@ -599,7 +600,6 @@
       <button class="adm-modal-btn" onclick="openModal('modal-howitworks')">⚙️ How It Works</button>
       <button class="adm-modal-btn" onclick="openModal('modal-skills')">🔧 Skills Library</button>
       <button class="adm-modal-btn" onclick="emailReset();openModal('modal-emails');setTimeout(emailBindScrollListeners,150)">📧 Committee Emails</button>
-      <button class="adm-modal-btn" onclick="openModal('modal-status-info')" style="border-color:rgba(239,68,68,0.2);opacity:0.8">ℹ️ About This Demo</button>
     </div>
   </div>
 
