@@ -22,15 +22,12 @@ When you accept a sharing invite, this folder appears in your **"Shared with me"
 ```
 pir.devine.news/                ← shared top-level folder (share this)
 │
-├── 📁 Submissions/             ← form responses land here automatically
-│   ├── Incoming/               ← new, unreviewed entries
-│   ├── Approved/               ← cleared for the current issue
-│   └── Archive/                ← past issues' submissions
-│
-├── 📁 Assets/                  ← raw artwork, photos, logos
-│   └── (large/binary files not suited for git)
-│
-└── 📁 Committee/               ← internal docs, meeting notes, rosters
+├── 📥 Submissions/             ← form submissions land here automatically
+├── ✅ Approved/                ← reviewed & cleared for layout
+├── 📋 Committee/               ← internal docs, meeting notes, rosters
+├── 🗄️  Resources/               ← layout files, branding, logos
+└── 🗂️  _Archive/                ← historical; contains Published/ subfolder
+    └── Published/              ← Canva-era PDF editions
 
 [Drive root — account login only, not inside the shared folder]
 └── apps-script-form.gs         ← submission form backend (do not move)
