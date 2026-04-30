@@ -454,12 +454,14 @@
       background: rgba(239,68,68,0.06) !important;
       border: 1.5px solid rgba(239,68,68,0.32) !important;
       outline: none !important; box-shadow: none !important;
+      animation: none !important; transition: background 0.15s, color 0.15s !important;
     }
     .modal-close:hover { background: rgba(239,68,68,0.18) !important; color: var(--adm) !important; }
-    .modal-close:focus { outline: none !important; box-shadow: 0 0 0 2px rgba(239,68,68,0.3) !important; }
+    .modal-close:focus,
+    .modal-close:focus-visible { outline: none !important; box-shadow: 0 0 0 2px rgba(239,68,68,0.28) !important; }
     .modal-actions {
       border-top-color: rgba(239,68,68,0.18);
-      background: linear-gradient(to bottom, transparent 0%, rgba(30,4,4,0.82) 100%);
+      background: linear-gradient(to bottom, transparent 0%, rgba(30,4,4,0.38) 100%);
     }
     .modal-body h3 { color: var(--adm); }
     .modal-body code { color: var(--adm); border-color: rgba(239,68,68,0.22); background: rgba(239,68,68,0.07); }
@@ -500,6 +502,53 @@
       margin-bottom: 0.5rem; width: 100%; transition: background 0.15s;
     }
     .email-scroll-hint:hover { background: rgba(239,68,68,0.12); }
+
+    /* ── Tier nav buttons in Emails modal ── */
+    @keyframes tier-btn-sparkle {
+      0%, 100% { transform: translateY(0); box-shadow: 0 0 0 0 rgba(239,68,68,0); opacity: 0.85; }
+      50% { transform: translateY(-2px); box-shadow: 0 0 10px rgba(239,68,68,0.28); opacity: 1; }
+    }
+    .tier-nav-btn {
+      font-size: 0.72rem; font-weight: 700; padding: 0.28rem 0.85rem;
+      border-radius: 999px; cursor: pointer; transition: all 0.15s;
+      animation: tier-btn-sparkle 2.8s ease-in-out infinite;
+      outline: none; border-style: solid; border-width: 1px;
+    }
+    .tier-nav-btn:hover { animation: none; transform: translateY(-2px); }
+    .tier-nav-btn:active { transform: translateY(0); }
+    .tier-nav-btn.tier1 {
+      background: rgba(239,68,68,0.09); border-color: rgba(239,68,68,0.35); color: var(--adm);
+    }
+    .tier-nav-btn.tier1:hover { background: rgba(239,68,68,0.18); box-shadow: 0 0 10px rgba(239,68,68,0.25); }
+    .tier-nav-btn.tier2 {
+      background: rgba(239,68,68,0.04); border-color: rgba(239,68,68,0.22); color: rgba(239,68,68,0.65);
+      animation-delay: 0.5s;
+    }
+    .tier-nav-btn.tier2:hover { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.4); color: var(--adm); box-shadow: 0 0 8px rgba(239,68,68,0.18); }
+
+    /* ── Status banner (clickable) ── */
+    .adm-status-pill {
+      display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+      font-size: 0.72rem; font-weight: 600; cursor: pointer;
+      padding: 0.45rem 1.25rem; text-align: center;
+      border-top-width: 1px; border-top-style: solid;
+      border-bottom-width: 1px; border-bottom-style: solid;
+      transition: all 0.2s; user-select: none;
+    }
+    .adm-status-pill .pill-tap { font-size: 0.65rem; opacity: 0.6; font-weight: 500; }
+    .adm-status-pill.locked-state {
+      color: var(--text-3); background: rgba(255,255,255,0.02);
+      border-color: rgba(255,255,255,0.06);
+    }
+    .adm-status-pill.locked-state:hover { background: rgba(255,255,255,0.04); color: var(--text-2); }
+    .adm-status-pill.demo-mode {
+      color: #fbbf24; background: rgba(251,191,36,0.06); border-color: rgba(251,191,36,0.18);
+    }
+    .adm-status-pill.demo-mode:hover { background: rgba(251,191,36,0.1); }
+    .adm-status-pill.live-mode {
+      color: #4ade80; background: rgba(74,222,128,0.05); border-color: rgba(74,222,128,0.18);
+    }
+    .adm-status-pill.live-mode:hover { background: rgba(74,222,128,0.1); }
   </style>
 </head>
 <body>
@@ -550,11 +599,15 @@
       <button class="adm-modal-btn" onclick="openModal('modal-howitworks')">⚙️ How It Works</button>
       <button class="adm-modal-btn" onclick="openModal('modal-skills')">🔧 Skills Library</button>
       <button class="adm-modal-btn" onclick="emailReset();openModal('modal-emails');setTimeout(emailBindScrollListeners,150)">📧 Committee Emails</button>
+      <button class="adm-modal-btn" onclick="openModal('modal-status-info')" style="border-color:rgba(239,68,68,0.2);opacity:0.8">ℹ️ About This Demo</button>
     </div>
   </div>
 
-  <!-- ── Status banner ────────────────────────────────────────────── -->
-  <div class="adm-demo-banner" id="adm-demo-banner"></div>
+  <!-- ── Status pill (always visible, clickable) ──────────────────── -->
+  <div class="adm-status-pill locked-state" id="adm-status-pill" onclick="openModal('modal-status-info')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openModal('modal-status-info')">
+    <span id="adm-status-text">ℹ️ Phase 4 Preview — what's live, what's demo, what's next</span>
+    <span class="pill-tap">· tap to learn more</span>
+  </div>
 
   <!-- ── Scrolling chip ticker (always visible) ─────────────────────── -->
   <div class="adm-ticker">
@@ -873,9 +926,9 @@
       <div class="modal-eyebrow">📧 Drive Sync Access List</div>
       <h2 class="modal-title" id="em-title">Committee Access — Two Tiers</h2>
       <!-- Tier quick-nav -->
-      <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.85rem">
-        <button onclick="document.querySelector('#modal-emails .modal-body').scrollTop=0" style="font-size:0.7rem;font-weight:700;padding:0.22rem 0.7rem;border-radius:999px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.07);color:var(--adm);cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(239,68,68,0.14)'" onmouseout="this.style.background='rgba(239,68,68,0.07)'">✏️ Tier 1 — Editors ↑</button>
-        <button onclick="document.getElementById('tier2-anchor').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:0.7rem;font-weight:700;padding:0.22rem 0.7rem;border-radius:999px;border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.04);color:rgba(239,68,68,0.6);cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background='rgba(239,68,68,0.04)'">👁️ Tier 2 — Reviewers ↓</button>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:0.9rem">
+        <button class="tier-nav-btn tier1" onclick="document.querySelector('#modal-emails .modal-body').scrollTop=0">✏️ Tier 1 — Editors ↑</button>
+        <button class="tier-nav-btn tier2" onclick="document.getElementById('tier2-anchor').scrollIntoView({behavior:'smooth',block:'start'})">👁️ Tier 2 — Reviewers ↓</button>
       </div>
       <div class="modal-body">
         <!-- Changes toast — appears at top when pending changes exist -->
@@ -930,6 +983,73 @@
     </div>
   </div>
 
+  <!-- Status Info modal -->
+  <div class="modal-overlay" id="modal-status-info" role="dialog" aria-modal="true" aria-labelledby="si-title"
+       onclick="closeModalOverlay(event,'modal-status-info')">
+    <div class="modal" style="max-width:620px">
+      <button class="modal-close" onclick="closeModal('modal-status-info')" aria-label="Close">✕</button>
+      <div class="modal-eyebrow">📊 Phase 4 Build Status</div>
+      <h2 class="modal-title" id="si-title">What You're Looking At</h2>
+      <div class="modal-body">
+
+        <p style="font-size:0.85rem;color:var(--text-2);line-height:1.7;margin-bottom:1.25rem">
+          This is the <strong>De Vine News AI Admin Dashboard</strong> — a newsletter management interface for the PIR fellowship committee. It's designed to let any committee member manage submissions, deadlines, themes, and publishing through plain-English conversation. No code, no GitHub, no CLI required.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.25rem">
+
+          <!-- Fully live -->
+          <div class="cap-card" style="border-color:rgba(74,222,128,0.25);background:rgba(9,30,18,0.6)">
+            <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#4ade80;margin-bottom:0.5rem">✅ Fully live right now</div>
+            <ul style="font-size:0.8rem;color:var(--text-2);line-height:1.7;padding-left:1.1rem;margin:0">
+              <li>Public demo — anyone can explore using passphrase <code>pirdemo</code></li>
+              <li>Real auth gate — the actual committee passphrase calls Google Apps Script and verifies identity before granting admin access</li>
+              <li>Committee email management — two-tier Drive access lists (Editors + Reviewers) manageable from this dashboard</li>
+              <li>Google Drive sync — <code>gws-sync.sh</code> pulls real submission data from Drive into the committee portal</li>
+              <li>Inner Voice Agent UX — conversational writing facilitator for member submissions</li>
+              <li>Submission form, newsletter archive, bulletin board, resources page</li>
+              <li>Private→public auto-publish pipeline via GitHub Actions</li>
+            </ul>
+          </div>
+
+          <!-- Chat simulation -->
+          <div class="cap-card" style="border-color:rgba(251,191,36,0.25);background:rgba(20,15,4,0.6)">
+            <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#fbbf24;margin-bottom:0.5rem">🔨 Chat: UX live, AI responses simulated</div>
+            <p style="font-size:0.8rem;color:var(--text-2);line-height:1.6;margin:0">
+              The chat interface, the chip ticker, the approve/cancel diff preview, the typing indicator — all fully functional. Responses are currently powered by <strong>JavaScript pattern-matching</strong>, not a real AI call. This means the UX is exactly what Phase 4 will feel like — the intelligence just needs to be wired in.
+            </p>
+            <p style="font-size:0.8rem;color:var(--text-2);line-height:1.6;margin:0.55rem 0 0">
+              <strong>What's missing:</strong> a lightweight Apps Script endpoint that proxies messages to the Claude API, reads the current file state as context, and returns real agent responses. Estimated build: ~2–3 hours. The passphrase gate, the UI, and the diff-approval workflow are already built and waiting for it.
+            </p>
+          </div>
+
+          <!-- Planned -->
+          <div class="cap-card" style="border-color:rgba(124,58,237,0.22);background:rgba(9,10,30,0.6)">
+            <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#a78bfa;margin-bottom:0.5rem">📋 Next to build</div>
+            <ul style="font-size:0.8rem;color:var(--text-2);line-height:1.7;padding-left:1.1rem;margin:0">
+              <li><strong>API proxy</strong> — Apps Script endpoint forwarding chat to Claude Sonnet with live file context</li>
+              <li><strong>Holacratic publish flow</strong> — agent stages a draft, emails all editors with a preview link, auto-publishes if no objection arrives in 72 hours</li>
+              <li><strong>Scheduled Drive sync</strong> — hourly GitHub Actions cron pulling new submissions automatically</li>
+              <li><strong>Deadline countdown widget</strong> — live days-remaining display on portal and submission form</li>
+              <li><strong>Google OAuth login</strong> — portal access limited to whitelisted Gmail accounts</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div style="font-size:0.75rem;color:var(--text-3);line-height:1.65;border-top:1px solid rgba(239,68,68,0.1);padding-top:0.85rem">
+          <strong style="color:var(--text-2)">Stack:</strong> GitHub Pages (hosting) · Google Apps Script (form backend + auth) · Google Drive (file storage) · Claude API (coming) · GitHub Actions (auto-publish) · All free at current scale.<br>
+          <strong style="color:var(--text-2)">Security:</strong> No credentials, committee emails, or private Drive IDs ever reach the public repo. The demo passphrase is intentionally public. The real admin passphrase lives in Apps Script Script Properties, not in any file.
+        </div>
+
+      </div>
+      <div class="modal-actions">
+        <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/ROADMAP.md" target="_blank" rel="noopener" class="btn btn-primary">📋 View Roadmap ↗</a>
+        <button class="btn btn-ghost" onclick="closeModal('modal-status-info')">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ════════════════════════════════════════════════════════════════ -->
   <!-- Scripts                                                          -->
   <!-- ════════════════════════════════════════════════════════════════ -->
@@ -976,20 +1096,20 @@
     document.getElementById('adm-pass').disabled = true;
     btn.disabled = true; btn.textContent = '✓ Unlocked';
 
-    var banner = document.getElementById('adm-demo-banner');
-    banner.style.display = 'flex';
+    var pill = document.getElementById('adm-status-pill');
+    var pillText = document.getElementById('adm-status-text');
 
     if (isDemo) {
-      banner.className = 'adm-demo-banner demo-mode';
-      banner.innerHTML = '🟡 DEMO MODE — proposals are fully simulated. No real changes will be made.';
+      pill.className = 'adm-status-pill demo-mode';
+      pillText.textContent = '🟡 Demo Mode active — proposals are fully simulated, no real changes made';
       document.getElementById('chat-sub-status').textContent = 'Demo Mode — proposals simulated, no changes made';
       var badge = document.getElementById('chat-lock-badge');
       badge.textContent = '🟡 Demo Active';
       badge.classList.replace('locked', 'unlocked');
       admAddMsg('agent', 'Demo unlocked! I can simulate any admin action — click a chip in the ticker or type your own request. No changes will actually be made.');
     } else {
-      banner.className = 'adm-demo-banner live-mode';
-      banner.innerHTML = '🟢 PHASE 4 LIVE — this agent has access to commit and push real changes to the site.';
+      pill.className = 'adm-status-pill live-mode';
+      pillText.textContent = '🟢 Phase 4 Live — admin agent active, real changes enabled';
       document.getElementById('chat-sub-status').textContent = '🟢 Admin Mode — Phase 4 live';
       var badge = document.getElementById('chat-lock-badge');
       badge.textContent = '🟢 Admin Live';

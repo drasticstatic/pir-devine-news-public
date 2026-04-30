@@ -349,8 +349,15 @@
       border: 1px solid rgba(124,58,237,0.32);
     }
     .modal-eyebrow { color: #a78bfa; }
-    .modal-close { background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,0.3); }
-    .modal-close:hover { background: rgba(124,58,237,0.16); color: #a78bfa; }
+    .modal-close {
+      background: rgba(124,58,237,0.07) !important;
+      border: 1.5px solid rgba(124,58,237,0.32) !important;
+      outline: none !important; box-shadow: none !important;
+      animation: none !important; transition: background 0.15s, color 0.15s !important;
+    }
+    .modal-close:hover { background: rgba(124,58,237,0.18) !important; color: #a78bfa !important; }
+    .modal-close:focus,
+    .modal-close:focus-visible { outline: none !important; box-shadow: 0 0 0 2px rgba(124,58,237,0.3) !important; }
     .modal-actions { border-top-color: rgba(124,58,237,0.2); }
     .modal-body h3 { color: #a78bfa; }
     .modal-body code { color: #c4b5fd; border-color: rgba(124,58,237,0.25); background: rgba(124,58,237,0.08); }
