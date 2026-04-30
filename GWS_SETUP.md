@@ -389,7 +389,7 @@ Or trigger manually from GitHub:
 |---------|-----|
 | `gws: command not found` | `npm install -g @googleworkspace/cli` |
 | `No credentials found` | Check `~/.config/gws/client_secret.json` exists |
-| `Token expired` | Run `gws auth login` again |
+| `Token expired` or `invalid_grant` | Run `gwspdn auth login` (see Re-authentication below) |
 | `403 Forbidden on Drive` | Ensure Drive API is enabled in the Cloud project |
 | `Actions sync failing` | The `PUBLIC_REPO_TOKEN` secret must be set in repo Settings → Secrets |
 | Submission email arrives but dashboard never updates | `GITHUB_TOKEN` missing or expired — add/renew in Script Properties |
@@ -400,6 +400,31 @@ Or trigger manually from GitHub:
 | Dashboard shows stale data after removal | Click ↺ Refresh; GitHub Pages CDN may cache for up to 60 s |
 
 ---
+
+## Re-authentication
+
+OAuth tokens for `gwspdn` expire periodically (Google may also revoke them if the account is
+inactive or the app is re-authorized). When you see `invalid_grant` or `Token expired`:
+
+```bash
+gwspdn auth login
+```
+
+This opens your browser. Sign in with `pir.devine.news@gmail.com` and re-grant permissions.
+The new token is written to `~/.config/gws/` automatically.
+
+**Never run** `gws auth login` (bare) or
+`GOOGLE_WORKSPACE_CLI_CONFIG_DIR=... gws auth login` in front of `gwspdn` —
+the alias already sets the config dir. Double-setting it is harmless but confusing.
+
+Verify the token is fresh:
+
+```bash
+gwspdn auth status
+```
+
+You should see `has_refresh_token: true` and `encryption_valid: true`.
+No re-deploy of any script is needed after re-authentication — only the CLI token refreshes.
 
 ---
 
