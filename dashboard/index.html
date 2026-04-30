@@ -229,6 +229,8 @@
     .drive-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.2rem; }
     .drive-desc { font-size: 0.78rem; color: var(--text-2); line-height: 1.6; }
     .drive-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .tech-details summary:hover { opacity: 1 !important; }
+    .tech-details[open] summary .tech-chevron { transform: rotate(90deg); }
   </style>
 </head>
 <body>
@@ -437,8 +439,11 @@
       </ul>
       <p>Behind the scenes, the committee uses this portal to review, approve, and publish submissions — all through a secure, automated workflow that keeps unpublished content private.</p>
       <p style="font-size:0.82rem;color:var(--text-3);font-style:italic">Built and maintained as committee service by the PIR® Tech &amp; PR Committees. No special expertise required to submit — only a willingness to share.</p>
-      <details style="margin-top:1rem;border-top:1px solid var(--border);padding-top:0.75rem">
-        <summary style="cursor:pointer;font-size:0.82rem;color:var(--text-3);user-select:none">🔧 For the technically curious</summary>
+      <details class="tech-details" style="margin-top:1rem;border-top:1px solid var(--border);padding-top:0.75rem">
+        <summary style="cursor:pointer;font-size:0.82rem;color:var(--cyan);user-select:none;display:flex;align-items:center;gap:0.4rem;opacity:0.75;transition:opacity 0.2s">
+          <span class="tech-chevron" style="display:inline-block;transition:transform 0.25s;font-style:normal;font-size:0.7rem">▸</span>
+          🔧 For the technically curious
+        </summary>
         <div style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-2);line-height:1.6">
           <p style="margin-bottom:0.5rem"><strong>Public repo</strong> (<code>pir-devine-news-public</code>)<br>
           Static dashboard and newsletter archive for the De Vine News committee portal. Served via GitHub Pages. Receives filtered content automatically synced from the private workflow repo on every push to main. No credentials, no raw data, no unpublished submissions.</p>
