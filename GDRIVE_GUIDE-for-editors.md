@@ -70,10 +70,25 @@ pir.devine.news/                ← shared top-level folder (share this)
 1. A PIR member visits the submission form on the committee portal
 2. They fill out the form — optionally with Inner Voice Agent assistance — and click Submit
 3. A Google Apps Script creates a document in `Submissions/Incoming/` automatically
-4. Editors review it in the Drive, then move it to `Approved/` when ready
-5. Approved content enters the layout workflow; the finished edition is built and published via GitHub
+4. The admin runs `./scripts/gws-sync.sh` — this copies each new submission into `Approved/` and grants all committee editors Write access on the copy
+5. Editors review and refine in `Approved/`; the Phase 4 admin agent will later assemble approved pieces into `Staging/`
+6. After holacratic vote, the agent commits the finished HTML to GitHub → live site
 
 **You do not need to redeploy the Apps Script** unless the GitHub Personal Access Token it uses expires. Current expiry: **May 15, 2026** — rotate the PAT before then (requires repo admin access).
+
+---
+
+## Committee Editors — Access List
+
+The sync script (`gws-sync.sh`) grants Write access to the following committee members automatically whenever a new submission copy is created in `Approved/`. This list is maintained in `data/committee/emails.txt` (private, never synced public).
+
+| Email | Role |
+|-------|------|
+| `pir.devine.news@gmail.com` | Admin account (Drive owner) |
+| `dpnelson@gmail.com` | Editor |
+| `pr@psychedelicsinrecovery.org` | Editor |
+
+To add or remove a committee editor: update `data/committee/emails.txt` in the private repo (one email per line) and contact the repo admin (`@drasticstatic`) to update Drive sharing directly.
 
 ---
 

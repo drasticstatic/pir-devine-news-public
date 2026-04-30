@@ -7,10 +7,15 @@
 
 The `gws` CLI bridges the committee's Google Shared Drive with the GitHub
 automation workflow. Once authenticated, the `gws-sync.sh` script:
-- Checks Drive for new submissions each hour (via GitHub Actions)
-- Creates Google Doc copies for committee review
+- Checks Drive for new submissions (run manually by the committee admin)
+- Copies each new literature submission into `Approved/` for committee review
+- Grants all committee editors Write access on new review copies automatically
 - Downloads compressed art thumbnails to `temp-gallery/`
 - Updates `dashboard/data.json` with the latest submission list
+
+> **Note:** `gws-sync.sh` is a manual admin tool — it is **not** called by
+> `sync-public.yml` (that workflow only mirrors the private repo to the public
+> repo). A scheduled GitHub Actions version is planned (see `ROADMAP.md`).
 
 ---
 
@@ -144,28 +149,45 @@ touch data/committee/config.env
 # e.g. https://drive.google.com/drive/folders/1abc123XYZ
 #                                                ^^^^^^^^^^^ this part
 
+PIR_DEVINE_NEWS_FOLDER_ID=your_top_level_sharing_folder_id_here
 SUBMISSIONS_FOLDER_ID=your_submissions_folder_id_here
-TEMPLATES_FOLDER_ID=your_templates_folder_id_here
 APPROVED_FOLDER_ID=your_approved_folder_id_here
-PUBLISHED_FOLDER_ID=your_published_folder_id_here
+STAGING_FOLDER_ID=your_staging_folder_id_here
+RESOURCES_FOLDER_ID=your_resources_folder_id_here
+COMMITTEE_FOLDER_ID=your_committee_folder_id_here
+ARCHIVE_FOLDER_ID=your_archive_folder_id_here
+GDRIVE_GUIDE_DOC_ID=your_gdrive_guide_doc_id_here
+
+# ── Spreadsheets ────────────────────────────────────────────
+# Structured index of submissions — admin agent reads this
+SUBMISSIONS_SPREADSHEET_ID=your_submissions_spreadsheet_id_here
 
 # ── Committee contacts ──────────────────────────────────────
 COMMITTEE_EMAILS_FILE=data/committee/emails.txt
 GOOGLE_ACCOUNT=pir.devine.news@gmail.com
 ```
 
-**6c — Create the four Drive folders** (if they don't exist yet):
+**6c — Create the Drive folder structure** (if it doesn't exist yet):
 
 1. Go to [drive.google.com](https://drive.google.com) and sign in as
    `pir.devine.news@gmail.com`
-2. Create a Shared Drive named **"DeVine News"** (or use an existing one)
-3. Inside it, create four folders:
-   - `Submissions` — raw incoming member work
-   - `Templates` — approved Google Doc templates
-   - `Approved` — pieces cleared for layout
-   - `Published` — archive of finalized editions
+2. Create a top-level folder named **`pir.devine.news`** — this is the
+   sharing target (Drive root itself cannot be shared directly)
+3. Inside it, create these six folders:
+
+   ```
+   pir.devine.news/
+   ├── 📥 Submissions/   ← form submissions land here automatically
+   ├── ✅ Approved/      ← gws-sync.sh copies new submissions here
+   ├── 🎬 Staging/       ← assembled newsletter awaiting holacratic vote
+   ├── 📋 Committee/     ← internal docs, meeting notes, rosters
+   ├── 🗄️  Resources/    ← layout files, branding, logos
+   └── 🗂️  _Archive/     ← historical storage
+   ```
+
 4. Open each folder, copy the ID from the URL, and paste it into
-   `config.env` above
+   `config.env` above. The `apps-script-form.gs` stays at the Drive
+   root (outside this shared folder) — do not move it.
 
 **6d — Create the committee emails list:**
 
@@ -173,13 +195,21 @@ GOOGLE_ACCOUNT=pir.devine.news@gmail.com
 touch data/committee/emails.txt
 ```
 
-Add one committee member email per line — the sync script uses this to
-send notifications. Example:
+Add one committee member email per line — when `gws-sync.sh` runs, every
+address here receives automatic Writer access on new `Approved/` review
+copies. This same list drives holacratic publishing notifications.
+
+Example:
 
 ```
 pir.devine.news@gmail.com
-editor@example.org
+dpnelson@gmail.com
+pr@psychedelicsinrecovery.org
 ```
+
+You can also manage this list visually using the **📧 Committee Emails**
+button on the Admin Dashboard (`admin.html`) — it shows the current editors
+and lets you propose adds/removes through the agent interface.
 
 **6e — Verify the file is gitignored:**
 

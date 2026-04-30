@@ -367,6 +367,40 @@
     .skill-badge.done    { background: rgba(0,208,130,0.15); color: var(--green); }
     .skill-badge.planned { background: rgba(74,234,220,0.1);  color: var(--cyan); }
     .skill-badge.vision  { background: rgba(124,58,237,0.15); color: #a78bfa; }
+
+    /* ── Committee Emails modal ──────────────────────────────────── */
+    .email-info-box {
+      font-size: 0.82rem; color: var(--text-2); line-height: 1.65;
+      background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.18);
+      border-radius: 8px; padding: 0.75rem 0.9rem; margin-bottom: 1rem;
+    }
+    .email-info-box code { background: rgba(0,0,0,0.3); padding: 1px 5px; border-radius: 4px; font-size: 0.78rem; color: var(--adm); }
+    .email-info-box p + p { margin-top: 0.55rem; }
+    .email-list { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.85rem; }
+    .email-entry {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: var(--navy-3); border: 1px solid var(--border-2);
+      border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.83rem;
+    }
+    .email-role-dot { font-size: 0.9rem; flex-shrink: 0; }
+    .email-entry-addr { flex: 1; color: var(--text); font-weight: 500; word-break: break-all; }
+    .email-entry-role { font-size: 0.7rem; color: var(--text-3); flex-shrink: 0; }
+    .email-remove-btn {
+      background: none; border: none; color: var(--text-3); font-size: 0.78rem;
+      cursor: pointer; padding: 0.15rem 0.35rem; border-radius: 4px;
+      transition: color 0.15s, background 0.15s; flex-shrink: 0;
+    }
+    .email-remove-btn:hover { color: #f87171; background: rgba(239,68,68,0.1); }
+    .email-add-row { display: flex; gap: 0.5rem; margin-top: 0.1rem; }
+    .email-add-row input {
+      flex: 1; padding: 0.55rem 0.8rem; border-radius: 9px;
+      border: 1.5px solid var(--border-2);
+      background: linear-gradient(135deg, rgba(30,4,4,0.8) 0%, rgba(190,24,93,0.1) 100%);
+      color: var(--text); font-size: 0.85rem; transition: border-color 0.2s;
+    }
+    .email-add-row input:focus { outline: none; border-color: rgba(239,68,68,0.55); }
+    .email-add-row input.email-dupe { border-color: rgba(239,68,68,0.7); }
+    .email-note { font-size: 0.72rem; color: var(--text-3); margin-top: 0.65rem; line-height: 1.55; font-style: italic; }
   </style>
 </head>
 <body>
@@ -410,6 +444,7 @@
       <button class="adm-modal-btn" onclick="openModal('modal-capabilities')">🎯 Capabilities</button>
       <button class="adm-modal-btn" onclick="openModal('modal-howitworks')">⚙️ How It Works</button>
       <button class="adm-modal-btn" onclick="openModal('modal-skills')">🔧 Skills Library</button>
+      <button class="adm-modal-btn" onclick="emailReset();openModal('modal-emails')">📧 Committee Emails</button>
     </div>
   </div>
 
@@ -431,6 +466,7 @@
         <span class="adm-chip" onclick="admChipClick(this)">Draft a welcome paragraph for June</span>
         <span class="adm-chip" onclick="admChipClick(this)">Add a bulletin announcement</span>
         <span class="adm-chip" onclick="admChipClick(this)">Mark all April submissions approved</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Add editor@example.org to the committee list</span>
         <!-- Set B — duplicate for seamless loop -->
         <span class="adm-chip" onclick="admChipClick(this)">Show me Needs Review submissions</span>
         <span class="adm-chip" onclick="admChipClick(this)">Update the June deadline to May 20th</span>
@@ -439,6 +475,7 @@
         <span class="adm-chip" onclick="admChipClick(this)">Draft a welcome paragraph for June</span>
         <span class="adm-chip" onclick="admChipClick(this)">Add a bulletin announcement</span>
         <span class="adm-chip" onclick="admChipClick(this)">Mark all April submissions approved</span>
+        <span class="adm-chip" onclick="admChipClick(this)">Add editor@example.org to the committee list</span>
       </div>
     </div>
   </div>
@@ -723,6 +760,36 @@
     </div>
   </div>
 
+  <!-- Committee Emails modal -->
+  <div class="modal-overlay" id="modal-emails" role="dialog" aria-modal="true" aria-labelledby="em-title"
+       onclick="closeModalOverlay(event,'modal-emails')">
+    <div class="modal" style="max-width:540px">
+      <button class="modal-close" onclick="closeModal('modal-emails')" aria-label="Close">✕</button>
+      <div class="modal-eyebrow">📧 Drive Sync Access List</div>
+      <h2 class="modal-title" id="em-title">Committee Editors</h2>
+      <div class="modal-body">
+        <div class="email-info-box">
+          <p>This list lives in <code>data/committee/emails.txt</code> (private — never synced public). Every time <strong>gws-sync.sh</strong> runs, each editor here is automatically granted <strong>Writer access</strong> on newly created submission copies in <code>Approved/</code> on Google Drive.</p>
+          <p>The same list is used by the holacratic publishing workflow to send edition preview notifications to all committee members before a newsletter goes live.</p>
+          <p>Add an editor to give them automatic access to incoming committee review copies. Remove one to stop future access grants (existing Drive permissions are not revoked retroactively).</p>
+        </div>
+        <div class="email-list" id="email-list">
+          <!-- populated by emailRender() -->
+        </div>
+        <div class="email-add-row">
+          <input type="email" id="email-add-input" placeholder="neweditor@example.org"
+                 onkeydown="if(event.key==='Enter')emailAddEntry()" />
+          <button class="adm-modal-btn" style="animation:none;flex-shrink:0" onclick="emailAddEntry()">+ Add</button>
+        </div>
+        <div class="email-note">Changes are proposals only — the agent will show a diff for your approval before writing to <code>emails.txt</code>.</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="emailPropose()">📝 Propose Change via Agent</button>
+        <button class="btn btn-ghost" onclick="closeModal('modal-emails')">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ════════════════════════════════════════════════════════════════ -->
   <!-- Scripts                                                          -->
   <!-- ════════════════════════════════════════════════════════════════ -->
@@ -818,6 +885,16 @@
       admAddMsg('agent', '📋 <strong>Proposed addition to <code>bulletin.html</code>:</strong><div class="adm-proposal" style="font-family:inherit;font-size:0.8rem"><div class="add">+ New service position: [parsed from your message]</div><div class="add">+ Added to Open Service Positions section</div></div><div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only.</div>');
       return;
     }
+    if (/email.*list|emails\.txt|committee.*list|add.*editor|remove.*editor|editor.*email/.test(t)) {
+      var addMatch    = text.match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i);
+      var isRemove    = /remove|delete/.test(t);
+      var emailTarget = addMatch ? addMatch[0] : 'editor@example.org';
+      var diffLine    = isRemove
+        ? '<div class="del">- ' + emailTarget + '</div>'
+        : '<div class="add">+ ' + emailTarget + '</div>';
+      admAddMsg('agent', '📧 <strong>Proposed change — <code>data/committee/emails.txt</code>:</strong><div class="adm-proposal">' + diffLine + '</div>This updates which editors receive automatic Writer access on new <code>Approved/</code> submission copies when <code>gws-sync.sh</code> runs.<div class="adm-proposal-actions"><button class="btn-approve" onclick="admDemoApprove(this)">✓ Approve</button><button class="btn-cancel-chat" onclick="admDemoCancel(this)">✕ Cancel</button></div><div class="adm-demo-note">↳ Demo — logs action only until Phase 4 is live. You can also use the 📧 Committee Emails button above the chat to manage this list visually.</div>');
+      return;
+    }
     admAddMsg('agent', 'I can help with that. In Phase 4, I\'d read the current <code>data.json</code> and relevant pages, then propose a specific change for your approval. For now, try one of the chips in the ticker above to see a simulated response.<div class="adm-demo-note">↳ Full natural-language understanding comes with the Phase 4 API connection.</div>');
   }
 
@@ -826,6 +903,69 @@
   }
   function admDemoCancel(btn) {
     btn.closest('.adm-proposal-actions').innerHTML = '<span style="font-size:0.75rem;color:var(--text-3)">✕ Cancelled.</span>';
+  }
+
+  /* ── Committee Emails modal ─────────────────────────────────── */
+  var emailsOriginal = [
+    'pir.devine.news@gmail.com',
+    'dpnelson@gmail.com',
+    'pr@psychedelicsinrecovery.org'
+  ];
+  var emailsCurrent = emailsOriginal.slice();
+
+  function emailReset() { emailsCurrent = emailsOriginal.slice(); emailRender(); }
+
+  function emailRender() {
+    var list = document.getElementById('email-list');
+    if (!list) return;
+    list.innerHTML = emailsCurrent.map(function(em, i) {
+      var isOwner = em === 'pir.devine.news@gmail.com';
+      return '<div class="email-entry">' +
+        '<span class="email-role-dot">' + (isOwner ? '👑' : '✏️') + '</span>' +
+        '<span class="email-entry-addr">' + em + '</span>' +
+        '<span class="email-entry-role">' + (isOwner ? 'Owner' : 'Editor') + '</span>' +
+        (isOwner ? '' : '<button class="email-remove-btn" title="Remove" onclick="emailRemove(' + i + ')">✕</button>') +
+        '</div>';
+    }).join('');
+  }
+
+  function emailRemove(i) {
+    emailsCurrent.splice(i, 1);
+    emailRender();
+  }
+
+  function emailAddEntry() {
+    var input = document.getElementById('email-add-input');
+    var val   = (input.value || '').trim().toLowerCase();
+    if (!val || !val.includes('@') || !val.includes('.')) return;
+    if (emailsCurrent.indexOf(val) !== -1) {
+      input.classList.add('email-dupe');
+      setTimeout(function(){ input.classList.remove('email-dupe'); }, 1500);
+      return;
+    }
+    emailsCurrent.push(val);
+    input.value = '';
+    input.focus();
+    emailRender();
+  }
+
+  function emailPropose() {
+    var added   = emailsCurrent.filter(function(e){ return emailsOriginal.indexOf(e) === -1; });
+    var removed = emailsOriginal.filter(function(e){ return emailsCurrent.indexOf(e) === -1; });
+    if (!added.length && !removed.length) { closeModal('modal-emails'); return; }
+    closeModal('modal-emails');
+    var parts = [];
+    added.forEach(function(e)  { parts.push('Add ' + e + ' to the committee email list'); });
+    removed.forEach(function(e){ parts.push('Remove ' + e + ' from the committee email list'); });
+    if (!admUnlocked) {
+      var inp = document.getElementById('adm-pass');
+      inp.focus();
+      inp.style.borderColor = 'rgba(0,208,130,0.7)';
+      setTimeout(function(){ inp.style.borderColor = ''; }, 1800);
+      return;
+    }
+    document.getElementById('adm-chat-input').value = parts.join('; ');
+    admSend();
   }
 
   function admAddMsg(role, html) {

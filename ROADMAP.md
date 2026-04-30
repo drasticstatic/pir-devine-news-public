@@ -40,9 +40,10 @@
 
 - ✅ **Google Apps Script web app** — receives form POSTs, saves text to Google Docs, uploads art to Drive, returns a success/failure response to the submitter
 - ✅ **Confirmation email** — automated "Thank You" email sent immediately on submission; includes the current PIR meeting schedule as an attachment
-- ✅ **Dashboard live sync** — GWS CLI script pulls Drive folder state hourly and updates `dashboard/data.json`; committee portal shows real submissions in real time
+- ✅ **Dashboard live sync** — `gws-sync.sh` pulls Drive folder state and updates `dashboard/data.json`; committee portal shows real submissions in real time. Runs as a manual admin tool (not scheduled).
 - ✅ **Manual sync trigger** — "Force Sync" button in the admin view (calls a GitHub Actions `workflow_dispatch` endpoint)
 - 📋 **Art thumbnail pipeline** — art files auto-compressed via `pngquant` when downloaded from Drive; displayed in `temp-gallery/` on the portal
+- 📋 **Scheduled Drive sync** — run `gws-sync.sh` automatically via a dedicated GitHub Actions workflow on a cron schedule (e.g. hourly); requires GWS OAuth token stored as an encrypted GitHub Secret. Currently runs on-demand only.
 
 ---
 
