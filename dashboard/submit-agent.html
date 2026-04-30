@@ -343,6 +343,29 @@
     }
     .btn-finalize-populate:hover { background: rgba(0,208,130,0.28); transform: translateY(-1px); animation: none; }
 
+    /* ── IVA-scoped modal identity (overrides global .modal) ────── */
+    .modal {
+      background: linear-gradient(135deg, #091e3a 0%, rgba(32,13,86,0.75) 100%);
+      border: 1px solid rgba(124,58,237,0.32);
+    }
+    .modal-eyebrow { color: #a78bfa; }
+    .modal-close { background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,0.3); }
+    .modal-close:hover { background: rgba(124,58,237,0.16); color: #a78bfa; }
+    .modal-actions { border-top-color: rgba(124,58,237,0.2); }
+    .modal-body h3 { color: #a78bfa; }
+    .modal-body code { color: #c4b5fd; border-color: rgba(124,58,237,0.25); background: rgba(124,58,237,0.08); }
+    .modal-body pre  { border-color: rgba(124,58,237,0.2); background: rgba(9,30,58,0.6); color: #c4b5fd; }
+    .pd-item { background: rgba(9,30,58,0.65); border-color: rgba(124,58,237,0.2); }
+    .modal-actions .btn-primary {
+      background: linear-gradient(135deg, #091e3a 0%, rgba(124,58,237,0.85) 100%) !important;
+      color: #e9d5ff !important;
+      box-shadow: 0 0 0 2px rgba(124,58,237,0.25), 0 0 16px rgba(124,58,237,0.5) !important;
+      border-color: rgba(124,58,237,0.6) !important;
+    }
+    .modal-actions .btn-primary:hover {
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.35), 0 0 24px rgba(124,58,237,0.65) !important;
+    }
+
     /* ── Principle mini-modals (sweet-alert style) ──────────────── */
     .pm-icon { font-size: 2.75rem; display: block; text-align: center; margin: 0.25rem 0 0.75rem; }
     .principle-modal { max-width: 400px; }
