@@ -21,17 +21,25 @@
       background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3);
       border-radius: 999px; padding: 0.28rem 0.85rem; margin-bottom: 0.6rem;
       text-decoration: none; transition: background 0.15s, border-color 0.15s;
+      animation: cta-float-bounce 3.5s ease-in-out infinite;
     }
     a.iva-eyebrow:hover {
       background: rgba(124,58,237,0.18); border-color: rgba(124,58,237,0.6);
+      animation: none;
     }
     /* Meta-nav row */
     .iva-meta-nav {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35rem 0.65rem;
       font-size: 0.72rem; margin-bottom: 1rem;
     }
-    .iva-meta-link { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
-    .iva-meta-link:hover { color: var(--text-2); }
+    .iva-meta-link {
+      display: inline-block; color: var(--text-3); text-decoration: none;
+      transition: color 0.15s; animation: cta-float-bounce 4s ease-in-out infinite;
+    }
+    .iva-meta-link:nth-child(1) { animation-delay: 0s; }
+    .iva-meta-link:nth-child(3) { animation-delay: 0.5s; }
+    .iva-meta-link:nth-child(5) { animation-delay: 1s; }
+    .iva-meta-link:hover { color: var(--text-2); animation: none; }
     .iva-meta-sep { color: var(--border-2); }
 
     .iva-hero h1 {
@@ -270,7 +278,7 @@
     .iva-input-row input {
       flex: 1; padding: 0.6rem 0.9rem;
       border-radius: 9px; border: 1.5px solid var(--border-2);
-      background: var(--navy-4); color: var(--text);
+      background: linear-gradient(135deg, rgba(9,30,58,0.88) 0%, rgba(32,13,86,0.45) 100%); color: var(--text);
       font-size: 0.88rem; transition: border-color 0.2s;
     }
     .iva-input-row input:focus { outline: none; border-color: rgba(124,58,237,0.6); }
@@ -389,6 +397,9 @@
       <span class="iva-meta-sep">·</span>
       <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/SUSTAINABILITY.md"
          target="_blank" rel="noopener" class="iva-meta-link">♻️ Sustainability ↗</a>
+      <span class="iva-meta-sep">·</span>
+      <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/GDRIVE_GUIDE-for-editors.md"
+         target="_blank" rel="noopener" class="iva-meta-link">📁 GDrive Guide ↗</a>
     </div>
 
     <h1><em>Inner Voice</em> Agent</h1>

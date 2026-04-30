@@ -24,9 +24,11 @@
       background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.35);
       border-radius: 999px; padding: 0.28rem 0.85rem; margin-bottom: 0.6rem;
       text-decoration: none; transition: background 0.15s, border-color 0.15s;
+      animation: cta-float-bounce 3.5s ease-in-out infinite;
     }
     a.adm-eyebrow:hover {
       background: rgba(239,68,68,0.18); border-color: rgba(239,68,68,0.6);
+      animation: none;
     }
     /* Meta-nav row (cross-page + docs links) */
     .adm-meta-nav {
@@ -34,9 +36,13 @@
       font-size: 0.72rem; margin-bottom: 1rem;
     }
     .adm-meta-link {
-      color: var(--text-3); text-decoration: none; transition: color 0.15s;
+      display: inline-block; color: var(--text-3); text-decoration: none;
+      transition: color 0.15s; animation: cta-float-bounce 4s ease-in-out infinite;
     }
-    .adm-meta-link:hover { color: var(--text-2); }
+    .adm-meta-link:nth-child(1) { animation-delay: 0s; }
+    .adm-meta-link:nth-child(3) { animation-delay: 0.5s; }
+    .adm-meta-link:nth-child(5) { animation-delay: 1s; }
+    .adm-meta-link:hover { color: var(--text-2); animation: none; }
     .adm-meta-sep { color: var(--border-2); }
 
     .adm-hero h1 {
@@ -72,7 +78,7 @@
     .adm-unlock input {
       flex: 1; padding: 0.65rem 0.9rem;
       border-radius: 10px; border: 1.5px solid var(--border-2);
-      background: var(--navy-4); color: var(--text);
+      background: linear-gradient(135deg, rgba(30,4,4,0.85) 0%, rgba(190,24,93,0.12) 100%); color: var(--text);
       font-size: 0.9rem; transition: border-color 0.2s;
     }
     .adm-unlock input:focus { outline: none; border-color: var(--adm); }
@@ -378,6 +384,9 @@
       <span class="adm-meta-sep">·</span>
       <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/SUSTAINABILITY.md"
          target="_blank" rel="noopener" class="adm-meta-link">♻️ Sustainability ↗</a>
+      <span class="adm-meta-sep">·</span>
+      <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/GDRIVE_GUIDE-for-editors.md"
+         target="_blank" rel="noopener" class="adm-meta-link">📁 GDrive Guide ↗</a>
     </div>
 
     <h1>AI <em>Admin</em> Dashboard</h1>
