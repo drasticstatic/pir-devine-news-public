@@ -468,6 +468,21 @@
     .skills-table th { background: rgba(30,4,4,0.7); }
     .skills-table td { border-top-color: rgba(239,68,68,0.12); }
     .skills-table tr:hover td { background: rgba(239,68,68,0.04); }
+    /* Footer actions + ghost btn crimson tint */
+    .modal-actions .btn-ghost { color: rgba(239,68,68,0.65); border-color: rgba(239,68,68,0.22); }
+    .modal-actions .btn-ghost:hover { background: rgba(239,68,68,0.07); color: var(--adm); border-color: rgba(239,68,68,0.42); }
+    /* Jump-to-bottom pill */
+    .modal-scroll-btn { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.25); color: var(--adm); }
+    .modal-scroll-btn:hover { background: rgba(239,68,68,0.18); border-color: var(--adm); }
+    /* Email list scroll-hint button */
+    .email-scroll-hint {
+      display: none; align-items: center; justify-content: center; gap: 0.35rem;
+      font-size: 0.7rem; color: var(--adm); cursor: pointer;
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.22);
+      border-radius: 6px; padding: 0.28rem 0.65rem; margin-top: -0.1rem;
+      margin-bottom: 0.5rem; width: 100%; transition: background 0.15s;
+    }
+    .email-scroll-hint:hover { background: rgba(239,68,68,0.12); }
   </style>
 </head>
 <body>
@@ -498,9 +513,15 @@
       <span>·</span> Changes require passphrase
     </div>
 
+    <!-- Demo hint -->
+    <div style="font-size:0.75rem;color:var(--text-3);margin-bottom:0.55rem;line-height:1.6">
+      Try the demo — passphrase: <code style="background:rgba(239,68,68,0.09);color:var(--adm);padding:1px 6px;border-radius:4px;border:1px solid rgba(239,68,68,0.25)">pirdemo</code>
+      <span style="opacity:0.6"> · Demo proposals are fully simulated — no changes made</span>
+    </div>
+
     <!-- Passphrase unlock -->
     <div class="adm-unlock">
-      <input type="password" id="adm-pass" placeholder="Enter committee passphrase to unlock demo…"
+      <input type="password" id="adm-pass" placeholder="Enter passphrase to unlock…"
              onkeydown="if(event.key==='Enter') admUnlock()" />
       <button class="btn btn-primary" onclick="admUnlock()">Unlock</button>
     </div>
@@ -729,6 +750,7 @@
         </div>
       </div>
       <div class="modal-actions">
+        <button class="modal-scroll-btn" onclick="document.querySelector('#modal-capabilities .modal-body').scrollTop=9999">↓ scroll to bottom</button>
         <button class="btn btn-ghost" onclick="closeModal('modal-capabilities')">Close</button>
       </div>
     </div>
@@ -821,6 +843,7 @@
         </table>
       </div>
       <div class="modal-actions">
+        <button class="modal-scroll-btn" onclick="document.querySelector('#modal-skills .modal-body').scrollTop=9999">↓ scroll to bottom</button>
         <a href="https://github.com/drasticstatic/pir-devine-news-public" target="_blank" rel="noopener" class="btn btn-primary">💻 View on GitHub ↗</a>
         <button class="btn btn-ghost" onclick="closeModal('modal-skills')">Close</button>
       </div>
@@ -830,31 +853,55 @@
   <!-- Committee Emails modal -->
   <div class="modal-overlay" id="modal-emails" role="dialog" aria-modal="true" aria-labelledby="em-title"
        onclick="closeModalOverlay(event,'modal-emails')">
-    <div class="modal" style="max-width:540px">
+    <div class="modal" style="max-width:560px">
       <button class="modal-close" onclick="closeModal('modal-emails')" aria-label="Close">✕</button>
       <div class="modal-eyebrow">📧 Drive Sync Access List</div>
-      <h2 class="modal-title" id="em-title">Committee Editors</h2>
+      <h2 class="modal-title" id="em-title">Committee Access — Two Tiers</h2>
       <div class="modal-body">
-        <div class="email-info-box">
-          <p>This list lives in <code>data/committee/emails.txt</code> (private — never synced public). Every time <strong>gws-sync.sh</strong> runs, each editor here is automatically granted <strong>Writer access</strong> on newly created submission copies in <code>Approved/</code> on Google Drive.</p>
-          <p>The same list is used by the holacratic publishing workflow to send edition preview notifications to all committee members before a newsletter goes live.</p>
-          <p>Add an editor to give them automatic access to incoming committee review copies. Remove one to stop future access grants (existing Drive permissions are not revoked retroactively).</p>
+
+        <!-- Tier 1 — Editors -->
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--adm);margin-bottom:0.45rem">
+          ✏️ Tier 1 — Editors <span style="font-weight:500;color:var(--text-3);text-transform:none;letter-spacing:0">(Writer access on Google Drive)</span>
+        </div>
+        <div class="email-info-box" style="margin-bottom:0.55rem">
+          <p>Lives in <code>data/committee/emails.txt</code> (private). Every <strong>gws-sync.sh</strong> run grants these editors <strong>Writer access</strong> on the <code>pir.devine.news</code> Drive folder and all <code>Approved/</code> review copies. Also used for holacratic edition preview notifications.</p>
         </div>
         <div class="email-list" id="email-list">
           <!-- populated by emailRender() -->
         </div>
+        <button class="email-scroll-hint" id="email-scroll-hint" onclick="document.getElementById('email-list').scrollTop=9999">↓ more editors below</button>
         <div class="email-add-row">
           <input type="email" id="email-add-input" placeholder="neweditor@example.org"
                  onkeydown="if(event.key==='Enter')emailAddEntry()" />
           <button class="adm-modal-btn" style="animation:none;flex-shrink:0" onclick="emailAddEntry()">+ Add</button>
         </div>
         <div class="email-add-error" id="email-add-error"></div>
+
+        <!-- Tier 2 — Reviewers -->
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(239,68,68,0.6);margin:1rem 0 0.45rem">
+          👁️ Tier 2 — Reviewers <span style="font-weight:500;color:var(--text-3);text-transform:none;letter-spacing:0">(Commenter access — read + comment only)</span>
+        </div>
+        <div class="email-info-box" style="margin-bottom:0.55rem">
+          <p>Lives in <code>data/committee/reviewers.txt</code> (private). These members can read and comment on Drive content but cannot edit. Add advisors, readers, or guests who should follow along without editing access.</p>
+        </div>
+        <div class="email-list" id="reviewer-list">
+          <!-- populated by reviewerRender() -->
+        </div>
+        <button class="email-scroll-hint" id="reviewer-scroll-hint" onclick="document.getElementById('reviewer-list').scrollTop=9999">↓ more reviewers below</button>
+        <div class="email-add-row">
+          <input type="email" id="reviewer-add-input" placeholder="newreviewer@example.org"
+                 onkeydown="if(event.key==='Enter')reviewerAddEntry()" />
+          <button class="adm-modal-btn" style="animation:none;flex-shrink:0" onclick="reviewerAddEntry()">+ Add</button>
+        </div>
+        <div class="email-add-error" id="reviewer-add-error"></div>
+
         <div class="email-change-hint" id="email-change-hint">
           ↳ Click <strong>📝 Propose Change via Agent</strong> below to apply your changes.
         </div>
-        <div class="email-note">All changes are proposals — the agent shows a diff and waits for your approval before writing to <code>emails.txt</code>. Removing an editor does not revoke existing Drive permissions retroactively.</div>
+        <div class="email-note">All changes are proposals — the agent shows a diff and waits for approval before writing to <code>emails.txt</code> or <code>reviewers.txt</code>. Removing an address does not revoke existing Drive permissions retroactively.</div>
       </div>
       <div class="modal-actions">
+        <button class="modal-scroll-btn" onclick="document.querySelector('#modal-emails .modal-body').scrollTop=9999">↓ scroll to bottom</button>
         <button class="btn btn-primary" onclick="emailPropose()">📝 Propose Change via Agent</button>
         <button class="btn btn-ghost" onclick="closeModal('modal-emails')">Close</button>
       </div>
@@ -871,29 +918,67 @@
   /* ── Passphrase unlock ──────────────────────────────────────────── */
   var admUnlocked = false;
 
-  function admUnlock() {
+  var DEMO_PW = 'pirdemo';
+
+  async function admUnlock() {
     var pw  = document.getElementById('adm-pass').value.trim();
     var err = document.getElementById('adm-unlock-error');
     if (!pw) { err.textContent = 'Please enter the passphrase.'; err.style.display = 'block'; return; }
     err.style.display = 'none';
+    var btn = document.querySelector('.adm-hero .btn-primary');
+    var isDemo = (pw === DEMO_PW);
+
+    if (!isDemo) {
+      // Real admin password — call Apps Script auth
+      btn.disabled = true; btn.textContent = 'Checking…';
+      try {
+        var params = new URLSearchParams({ action: 'auth', password: pw });
+        var r = await fetch(window.APPS_SCRIPT_URL, { method: 'POST', body: params });
+        var j = await r.json();
+        if (j.status !== 'ok') {
+          err.textContent = j.message || 'Incorrect passphrase.';
+          err.style.display = 'block';
+          btn.disabled = false; btn.textContent = 'Unlock';
+          return;
+        }
+      } catch(_) {
+        err.textContent = 'Could not reach the server. Check your connection.';
+        err.style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Unlock';
+        return;
+      }
+    }
+
     admUnlocked = true;
     document.getElementById('adm-pass').classList.add('unlocked');
     document.getElementById('adm-pass').disabled = true;
-    document.querySelector('.adm-hero .btn-primary').disabled = true;
-    document.querySelector('.adm-hero .btn-primary').textContent = '✓ Unlocked';
+    btn.disabled = true; btn.textContent = '✓ Unlocked';
     document.getElementById('adm-demo-banner').style.display = 'flex';
-    document.getElementById('chat-sub-status').textContent = 'Demo Mode — proposals simulated, no changes made';
-    var badge = document.getElementById('chat-lock-badge');
-    badge.textContent = '🟡 Demo Active';
-    badge.classList.replace('locked', 'unlocked');
+
+    if (isDemo) {
+      document.getElementById('chat-sub-status').textContent = 'Demo Mode — proposals simulated, no changes made';
+      var badge = document.getElementById('chat-lock-badge');
+      badge.textContent = '🟡 Demo Active';
+      badge.classList.replace('locked', 'unlocked');
+      admAddMsg('agent', 'Demo unlocked! I can simulate any admin action — click a chip in the ticker or type your own request. No changes will actually be made.');
+    } else {
+      document.getElementById('chat-sub-status').textContent = '🔴 Admin Mode — Phase 4 live';
+      var badge = document.getElementById('chat-lock-badge');
+      badge.textContent = '🔴 Admin Live';
+      badge.classList.replace('locked', 'unlocked');
+      badge.style.background = 'rgba(239,68,68,0.12)';
+      badge.style.borderColor = 'rgba(239,68,68,0.45)';
+      badge.style.color = 'var(--adm)';
+      admAddMsg('agent', '🔴 Admin mode active. I have access to make real changes. What would you like to do?');
+    }
+
     document.getElementById('live-divider').style.display = 'flex';
     var input = document.getElementById('adm-chat-input');
     input.disabled = false;
     input.placeholder = 'Ask the admin agent anything…';
     document.getElementById('adm-send-btn').disabled = false;
     document.getElementById('adm-locked-hint').style.display = 'none';
-    admAddMsg('agent', 'Demo unlocked. I can simulate any admin action — click a chip in the ticker above or type your own request.');
-    emailRender(); // refresh email list — unmask personal addresses now that session is active
+    emailRender();
     input.focus();
   }
 
@@ -999,19 +1084,27 @@
   function emailReset() {
     emailsCurrent = emailsOriginal.slice();
     emailPendingRemove = -1;
+    reviewersCurrent = reviewersOriginal.slice();
+    reviewerPendingRemove = -1;
     emailRender();
+    reviewerRender();
     var hint = document.getElementById('email-change-hint');
     var err  = document.getElementById('email-add-error');
+    var rerr = document.getElementById('reviewer-add-error');
     if (hint) hint.style.display = 'none';
     if (err)  { err.style.display = 'none'; err.textContent = ''; }
+    if (rerr) { rerr.style.display = 'none'; rerr.textContent = ''; }
     var inp = document.getElementById('email-add-input');
     if (inp) { inp.value = ''; inp.classList.remove('email-invalid','email-dupe'); }
+    var rinp = document.getElementById('reviewer-add-input');
+    if (rinp) { rinp.value = ''; rinp.classList.remove('email-invalid','email-dupe'); }
   }
 
   function emailRender() {
     var list = document.getElementById('email-list');
     if (!list) return;
     list.innerHTML = emailsCurrent.map(function(em, i) {
+
       var isOwner  = em === 'pir.devine.news@gmail.com';
       var isPending = emailPendingRemove === i;
       var displayed = emailMask(em);
@@ -1032,6 +1125,7 @@
         (isOwner ? '' : '<button class="email-remove-btn" title="Remove" onclick="emailRemove(' + i + ')">✕</button>') +
         '</div>';
     }).join('');
+    setTimeout(emailUpdateScrollHint, 50);
   }
 
   function emailRemove(i) { emailPendingRemove = i; emailRender(); }
@@ -1081,13 +1175,17 @@
   }
 
   function emailPropose() {
-    var added   = emailsCurrent.filter(function(e){ return emailsOriginal.indexOf(e) === -1; });
-    var removed = emailsOriginal.filter(function(e){ return emailsCurrent.indexOf(e) === -1; });
-    if (!added.length && !removed.length) { closeModal('modal-emails'); return; }
+    var addedE   = emailsCurrent.filter(function(e){ return emailsOriginal.indexOf(e) === -1; });
+    var removedE = emailsOriginal.filter(function(e){ return emailsCurrent.indexOf(e) === -1; });
+    var addedR   = reviewersCurrent.filter(function(e){ return reviewersOriginal.indexOf(e) === -1; });
+    var removedR = reviewersOriginal.filter(function(e){ return reviewersCurrent.indexOf(e) === -1; });
+    if (!addedE.length && !removedE.length && !addedR.length && !removedR.length) { closeModal('modal-emails'); return; }
     closeModal('modal-emails');
     var parts = [];
-    added.forEach(function(e)  { parts.push('Add ' + e + ' to the committee email list'); });
-    removed.forEach(function(e){ parts.push('Remove ' + e + ' from the committee email list'); });
+    addedE.forEach(function(e)   { parts.push('Add ' + e + ' to the committee editors list (emails.txt)'); });
+    removedE.forEach(function(e) { parts.push('Remove ' + e + ' from the committee editors list (emails.txt)'); });
+    addedR.forEach(function(e)   { parts.push('Add ' + e + ' to the reviewers list (reviewers.txt)'); });
+    removedR.forEach(function(e) { parts.push('Remove ' + e + ' from the reviewers list (reviewers.txt)'); });
     if (!admUnlocked) {
       var inp = document.getElementById('adm-pass');
       inp.focus();
@@ -1097,6 +1195,92 @@
     }
     document.getElementById('adm-chat-input').value = parts.join('; ');
     admSend();
+  }
+
+  /* ── Email list scroll hint ─────────────────────────────────── */
+  function emailUpdateScrollHint() {
+    var list = document.getElementById('email-list');
+    var hint = document.getElementById('email-scroll-hint');
+    if (!list || !hint) return;
+    hint.style.display = (list.scrollHeight > list.clientHeight + 8) ? 'flex' : 'none';
+  }
+
+  /* ── Reviewer Tier 2 ────────────────────────────────────────── */
+  var reviewersOriginal = [];
+  var reviewersCurrent  = reviewersOriginal.slice();
+  var reviewerPendingRemove = -1;
+
+  function reviewerRender() {
+    var list = document.getElementById('reviewer-list');
+    if (!list) return;
+    if (!reviewersCurrent.length) {
+      list.innerHTML = '<div style="font-size:0.78rem;color:var(--text-3);padding:0.5rem 0.1rem;font-style:italic">No reviewers yet — add one below.</div>';
+      document.getElementById('reviewer-scroll-hint').style.display = 'none';
+      return;
+    }
+    list.innerHTML = reviewersCurrent.map(function(em, i) {
+      var isPending = reviewerPendingRemove === i;
+      var displayed = emailMask(em);
+      var isMasked  = displayed !== em;
+      if (isPending) {
+        return '<div class="email-entry email-entry-confirm">' +
+          '<span class="email-role-dot">⚠️</span>' +
+          '<span class="email-entry-addr">' + displayed + '</span>' +
+          '<span class="email-confirm-label">Remove?</span>' +
+          '<button class="email-confirm-yes" onclick="reviewerConfirmRemove(' + i + ')">Yes</button>' +
+          '<button class="email-confirm-no"  onclick="reviewerCancelRemove()">No</button>' +
+          '</div>';
+      }
+      return '<div class="email-entry">' +
+        '<span class="email-role-dot">👁️</span>' +
+        '<span class="email-entry-addr">' + displayed + (isMasked ? ' <span class="email-masked-hint" title="Unlock to reveal">🔒</span>' : '') + '</span>' +
+        '<span class="email-entry-role">Reviewer</span>' +
+        '<button class="email-remove-btn" title="Remove" onclick="reviewerRemove(' + i + ')">✕</button>' +
+        '</div>';
+    }).join('');
+    setTimeout(function(){
+      var list2 = document.getElementById('reviewer-list');
+      var hint  = document.getElementById('reviewer-scroll-hint');
+      if (list2 && hint) hint.style.display = (list2.scrollHeight > list2.clientHeight + 8) ? 'flex' : 'none';
+    }, 50);
+  }
+
+  function reviewerRemove(i)        { reviewerPendingRemove = i; reviewerRender(); }
+  function reviewerCancelRemove()   { reviewerPendingRemove = -1; reviewerRender(); }
+  function reviewerConfirmRemove(i) {
+    reviewersCurrent.splice(i, 1);
+    reviewerPendingRemove = -1;
+    reviewerRender();
+    emailShowChangeHint();
+  }
+
+  function reviewerAddEntry() {
+    var input = document.getElementById('reviewer-add-input');
+    var errEl = document.getElementById('reviewer-add-error');
+    var val   = (input.value || '').trim().toLowerCase();
+    if (!val) return;
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!re.test(val)) {
+      errEl.textContent = 'Please enter a complete email address (e.g. name@example.org).';
+      errEl.style.display = 'block';
+      input.classList.add('email-invalid');
+      setTimeout(function(){ input.classList.remove('email-invalid'); errEl.style.display='none'; }, 2500);
+      return;
+    }
+    if (reviewersCurrent.indexOf(val) !== -1 || emailsCurrent.indexOf(val) !== -1) {
+      errEl.textContent = 'That address is already on a list.';
+      errEl.style.display = 'block';
+      input.classList.add('email-dupe');
+      setTimeout(function(){ input.classList.remove('email-dupe'); errEl.style.display='none'; }, 2000);
+      return;
+    }
+    errEl.style.display = 'none';
+    reviewersCurrent.push(val);
+    input.value = '';
+    input.focus();
+    reviewerPendingRemove = -1;
+    reviewerRender();
+    emailShowChangeHint();
   }
 
   function admAddMsg(role, html) {
@@ -1113,6 +1297,7 @@
   function admHideTyping()  { document.getElementById('adm-typing').classList.remove('show'); }
   </script>
 
+<script src="config.js"></script>
 <script src="nav.js"></script>
 <script src="sidenav.js"></script>
 <script src="footer.js"></script>

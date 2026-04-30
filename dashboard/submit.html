@@ -407,7 +407,10 @@
                 <label class="field-label" for="email">Email <span class="req">*</span>
                   <span data-tooltip="For your confirmation receipt only — never shared publicly" style="cursor:help;color:var(--text-3);font-size:0.9em">ⓘ</span>
                 </label>
-                <input class="field-input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+                <input class="field-input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required
+                       oninvalid="this.setCustomValidity('Please enter a complete email address (e.g. name@example.org).')"
+                       oninput="this.setCustomValidity('')" />
+                <div id="email-inline-error" style="font-size:0.75rem;color:#f87171;margin-top:0.3rem;display:none"></div>
                 <div class="field-hint">
                   <button type="button" onclick="openModal('modal-nongmail')"
                     style="background:none;border:none;padding:0;cursor:pointer;color:var(--text-3);font-size:0.7rem;text-decoration:underline;text-underline-offset:2px;">
