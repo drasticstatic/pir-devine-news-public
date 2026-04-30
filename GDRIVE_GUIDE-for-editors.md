@@ -23,15 +23,18 @@ When you accept a sharing invite, this folder appears in your **"Shared with me"
 pir.devine.news/                ← shared top-level folder (share this)
 │
 ├── 📥 Submissions/             ← form submissions land here automatically
-├── ✅ Approved/                ← reviewed & cleared for layout
+├── ✅ Approved/                ← committee-approved pieces, ready for layout
+├── 🎬 Staging/                 ← assembled newsletter awaiting holacratic review
 ├── 📋 Committee/               ← internal docs, meeting notes, rosters
 ├── 🗄️  Resources/               ← layout files, branding, logos
-└── 🗂️  _Archive/                ← historical; contains Published/ subfolder
-    └── Published/              ← Canva-era PDF editions
+└── 🗂️  _Archive/                ← historical storage
 
 [Drive root — account login only, not inside the shared folder]
 └── apps-script-form.gs         ← submission form backend (do not move)
 ```
+
+**Workflow path:**
+`Submissions/` → committee reviews → `Approved/` → admin agent assembles → `Staging/` → holacratic vote → agent commits HTML to GitHub → live site
 
 > **Newsletter editions and HTML templates live in the GitHub repo** (`dashboard/`), not in the Drive. They are served directly from GitHub Pages. If you need to review or recover a past edition, use `git log` — the full history is there.
 
@@ -53,7 +56,7 @@ pir.devine.news/                ← shared top-level folder (share this)
 
 | Change | Impact |
 |--------|--------|
-| Deleting or renaming `Submissions/Incoming/` | Form submissions fail silently — script targets it by folder ID |
+| Deleting or renaming `Submissions/` | Form submissions fail silently — script targets it by folder ID |
 | Moving `apps-script-form.gs` into the shared folder | No functional break, but it would become visible to all editors |
 | Deleting the Apps Script web app | New form submissions stop arriving entirely |
 | Revoking service account Drive access | GitHub sync operations would fail |
