@@ -60,7 +60,7 @@
 
 ---
 
-## Phase 4 — AI Admin Dashboard
+## Phase 4 — AI Admin Dashboard ✅ Live (Demo + Admin Gate)
 
 *Goal: Let any willing committee member manage the newsletter through conversation — no CLI, no GitHub, no code required.*
 
@@ -75,15 +75,16 @@ Instead of asking a committee member to learn GitHub, learn HTML, find a develop
 
 An AI agent reads those messages, makes the changes, and pushes the update — all without touching a line of code.
 
-### The Admin Dashboard Page (`admin.html`)
+### The Admin Dashboard Page (`admin.html`) — Live
 
 A dedicated page linked from the navigation and footer. **Publicly viewable** so anyone can understand what it does — changes require a passphrase.
 
-- **Capability showcase** — example conversation transcripts demonstrating what the admin agent can do, so non-technical committee members immediately understand the value
-- **"What can I ask?" prompts** — pre-written sample questions visitors can read to grasp the scope
-- **Password-gated AI chat panel** — the actual agent interface; passphrase required to make any change
-- **Link from hamburger menu + footer** — accessible from any page without navigating through the portal
-- **Link from admin modal** — the existing password-gated "🔒 Manage" modal in the portal includes an "Open Full Admin Dashboard →" button
+- ✅ **Capability showcase** — example conversation transcripts demonstrating what the admin agent can do
+- ✅ **"What can I ask?" chips** — scrolling ticker of pre-written sample prompts; click one to test
+- ✅ **Demo mode** (`pirdemo` passphrase) — fully simulated proposals, no changes made; visible to anyone
+- ✅ **Admin mode** (committee passphrase) — Phase 4 live gate via Apps Script auth; real changes enabled
+- ✅ **Committee Emails modal** — two-tier access list (Editors / Reviewers) manageable from the dashboard
+- ✅ **Link from hamburger menu + footer** — accessible from any page
 
 ### How It Would Work
 

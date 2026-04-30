@@ -112,14 +112,23 @@
     .adm-modal-btn { animation: adm-modal-btn-breathe 3s ease-in-out infinite; }
     .adm-modal-btn:hover { animation: none; }
 
-    /* ── Demo mode banner ─────────────────────────────────────────── */
+    /* ── Status banner (demo / live) ─────────────────────────────── */
     .adm-demo-banner {
       display: none;
       align-items: center; justify-content: center; gap: 0.5rem;
-      font-size: 0.75rem; font-weight: 600; color: #fbbf24;
-      background: rgba(251,191,36,0.08); border-top: 1px solid rgba(251,191,36,0.2);
-      border-bottom: 1px solid rgba(251,191,36,0.2);
+      font-size: 0.75rem; font-weight: 600;
+      border-top-width: 1px; border-top-style: solid;
+      border-bottom-width: 1px; border-bottom-style: solid;
       padding: 0.4rem 1rem; text-align: center;
+      transition: all 0.3s;
+    }
+    .adm-demo-banner.demo-mode {
+      color: #fbbf24; background: rgba(251,191,36,0.08);
+      border-color: rgba(251,191,36,0.2);
+    }
+    .adm-demo-banner.live-mode {
+      color: #4ade80; background: rgba(74,222,128,0.06);
+      border-color: rgba(74,222,128,0.22);
     }
 
     /* ── Scrolling chip ticker ────────────────────────────────────── */
@@ -441,9 +450,17 @@
       border: 1px solid rgba(239,68,68,0.3);
     }
     .modal-eyebrow { color: var(--adm); }
-    .modal-close { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.28); }
-    .modal-close:hover { background: rgba(239,68,68,0.16); color: var(--adm); }
-    .modal-actions { border-top-color: rgba(239,68,68,0.18); }
+    .modal-close {
+      background: rgba(239,68,68,0.06) !important;
+      border: 1.5px solid rgba(239,68,68,0.32) !important;
+      outline: none !important; box-shadow: none !important;
+    }
+    .modal-close:hover { background: rgba(239,68,68,0.18) !important; color: var(--adm) !important; }
+    .modal-close:focus { outline: none !important; box-shadow: 0 0 0 2px rgba(239,68,68,0.3) !important; }
+    .modal-actions {
+      border-top-color: rgba(239,68,68,0.18);
+      background: linear-gradient(to bottom, transparent 0%, rgba(30,4,4,0.82) 100%);
+    }
     .modal-body h3 { color: var(--adm); }
     .modal-body code { color: var(--adm); border-color: rgba(239,68,68,0.22); background: rgba(239,68,68,0.07); }
     .modal-body pre  { border-color: rgba(239,68,68,0.18); background: rgba(30,4,4,0.5); color: #fca5a5; }
@@ -532,14 +549,12 @@
       <button class="adm-modal-btn" onclick="openModal('modal-capabilities')">🎯 Capabilities</button>
       <button class="adm-modal-btn" onclick="openModal('modal-howitworks')">⚙️ How It Works</button>
       <button class="adm-modal-btn" onclick="openModal('modal-skills')">🔧 Skills Library</button>
-      <button class="adm-modal-btn" onclick="emailReset();openModal('modal-emails')">📧 Committee Emails</button>
+      <button class="adm-modal-btn" onclick="emailReset();openModal('modal-emails');setTimeout(emailBindScrollListeners,150)">📧 Committee Emails</button>
     </div>
   </div>
 
-  <!-- ── Demo mode banner ───────────────────────────────────────────── -->
-  <div class="adm-demo-banner" id="adm-demo-banner">
-    🟡 DEMO MODE — proposals are fully simulated. No changes will be made until Phase 4 is live.
-  </div>
+  <!-- ── Status banner ────────────────────────────────────────────── -->
+  <div class="adm-demo-banner" id="adm-demo-banner"></div>
 
   <!-- ── Scrolling chip ticker (always visible) ─────────────────────── -->
   <div class="adm-ticker">
@@ -857,7 +872,17 @@
       <button class="modal-close" onclick="closeModal('modal-emails')" aria-label="Close">✕</button>
       <div class="modal-eyebrow">📧 Drive Sync Access List</div>
       <h2 class="modal-title" id="em-title">Committee Access — Two Tiers</h2>
+      <!-- Tier quick-nav -->
+      <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.85rem">
+        <button onclick="document.querySelector('#modal-emails .modal-body').scrollTop=0" style="font-size:0.7rem;font-weight:700;padding:0.22rem 0.7rem;border-radius:999px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.07);color:var(--adm);cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(239,68,68,0.14)'" onmouseout="this.style.background='rgba(239,68,68,0.07)'">✏️ Tier 1 — Editors ↑</button>
+        <button onclick="document.getElementById('tier2-anchor').scrollIntoView({behavior:'smooth',block:'start'})" style="font-size:0.7rem;font-weight:700;padding:0.22rem 0.7rem;border-radius:999px;border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.04);color:rgba(239,68,68,0.6);cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background='rgba(239,68,68,0.04)'">👁️ Tier 2 — Reviewers ↓</button>
+      </div>
       <div class="modal-body">
+        <!-- Changes toast — appears at top when pending changes exist -->
+        <div id="email-changes-toast" style="display:none;margin-bottom:0.75rem;font-size:0.78rem;font-weight:600;color:var(--adm);background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.28);border-radius:8px;padding:0.6rem 0.85rem;line-height:1.55">
+          📋 You have pending changes — click <strong>📝 Propose Change via Agent</strong> in the footer to apply them.
+          <div style="font-size:0.7rem;font-weight:400;color:var(--text-3);margin-top:0.35rem">All changes are proposals — the agent shows a diff and waits for your approval. Removing an address does not revoke existing Drive permissions retroactively.</div>
+        </div>
 
         <!-- Tier 1 — Editors -->
         <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--adm);margin-bottom:0.45rem">
@@ -878,7 +903,7 @@
         <div class="email-add-error" id="email-add-error"></div>
 
         <!-- Tier 2 — Reviewers -->
-        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(239,68,68,0.6);margin:1rem 0 0.45rem">
+        <div id="tier2-anchor" style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(239,68,68,0.6);margin:1rem 0 0.45rem">
           👁️ Tier 2 — Reviewers <span style="font-weight:500;color:var(--text-3);text-transform:none;letter-spacing:0">(Commenter access — read + comment only)</span>
         </div>
         <div class="email-info-box" style="margin-bottom:0.55rem">
@@ -895,10 +920,7 @@
         </div>
         <div class="email-add-error" id="reviewer-add-error"></div>
 
-        <div class="email-change-hint" id="email-change-hint">
-          ↳ Click <strong>📝 Propose Change via Agent</strong> below to apply your changes.
-        </div>
-        <div class="email-note">All changes are proposals — the agent shows a diff and waits for approval before writing to <code>emails.txt</code> or <code>reviewers.txt</code>. Removing an address does not revoke existing Drive permissions retroactively.</div>
+        <div class="email-note" style="margin-top:0.65rem">Removing an address stops future Drive access grants — existing permissions are not revoked retroactively.</div>
       </div>
       <div class="modal-actions">
         <button class="modal-scroll-btn" onclick="document.querySelector('#modal-emails .modal-body').scrollTop=9999">↓ scroll to bottom</button>
@@ -953,23 +975,27 @@
     document.getElementById('adm-pass').classList.add('unlocked');
     document.getElementById('adm-pass').disabled = true;
     btn.disabled = true; btn.textContent = '✓ Unlocked';
-    document.getElementById('adm-demo-banner').style.display = 'flex';
+
+    var banner = document.getElementById('adm-demo-banner');
+    banner.style.display = 'flex';
 
     if (isDemo) {
+      banner.className = 'adm-demo-banner demo-mode';
+      banner.innerHTML = '🟡 DEMO MODE — proposals are fully simulated. No real changes will be made.';
       document.getElementById('chat-sub-status').textContent = 'Demo Mode — proposals simulated, no changes made';
       var badge = document.getElementById('chat-lock-badge');
       badge.textContent = '🟡 Demo Active';
       badge.classList.replace('locked', 'unlocked');
       admAddMsg('agent', 'Demo unlocked! I can simulate any admin action — click a chip in the ticker or type your own request. No changes will actually be made.');
     } else {
-      document.getElementById('chat-sub-status').textContent = '🔴 Admin Mode — Phase 4 live';
+      banner.className = 'adm-demo-banner live-mode';
+      banner.innerHTML = '🟢 PHASE 4 LIVE — this agent has access to commit and push real changes to the site.';
+      document.getElementById('chat-sub-status').textContent = '🟢 Admin Mode — Phase 4 live';
       var badge = document.getElementById('chat-lock-badge');
-      badge.textContent = '🔴 Admin Live';
+      badge.textContent = '🟢 Admin Live';
       badge.classList.replace('locked', 'unlocked');
-      badge.style.background = 'rgba(239,68,68,0.12)';
-      badge.style.borderColor = 'rgba(239,68,68,0.45)';
-      badge.style.color = 'var(--adm)';
-      admAddMsg('agent', '🔴 Admin mode active. I have access to make real changes. What would you like to do?');
+      badge.style.cssText = 'background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.35);color:#4ade80;font-size:0.7rem;font-weight:600;padding:0.22rem 0.6rem;border-radius:6px;transition:all 0.3s';
+      admAddMsg('agent', '🟢 Admin mode active — Phase 4 live. I can read files, propose changes, and commit to the repo. What would you like to do?');
     }
 
     document.getElementById('live-divider').style.display = 'flex';
@@ -1137,11 +1163,26 @@
     emailShowChangeHint();
   }
 
-  function emailCancelRemove() { emailPendingRemove = -1; emailRender(); }
+  function emailCancelRemove() { emailPendingRemove = -1; emailRender(); emailHideToastIfClean(); }
 
   function emailShowChangeHint() {
-    var hint = document.getElementById('email-change-hint');
-    if (hint) hint.style.display = 'block';
+    var toast = document.getElementById('email-changes-toast');
+    if (toast) {
+      toast.style.display = 'block';
+      // Scroll toast into view within modal-body
+      setTimeout(function(){ toast.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+    }
+  }
+
+  function emailHideToastIfClean() {
+    var addedE   = emailsCurrent.filter(function(e){ return emailsOriginal.indexOf(e) === -1; });
+    var removedE = emailsOriginal.filter(function(e){ return emailsCurrent.indexOf(e) === -1; });
+    var addedR   = reviewersCurrent.filter(function(e){ return reviewersOriginal.indexOf(e) === -1; });
+    var removedR = reviewersOriginal.filter(function(e){ return reviewersCurrent.indexOf(e) === -1; });
+    var toast = document.getElementById('email-changes-toast');
+    if (toast && !addedE.length && !removedE.length && !addedR.length && !removedR.length) {
+      toast.style.display = 'none';
+    }
   }
 
   function emailAddEntry() {
@@ -1197,12 +1238,41 @@
     admSend();
   }
 
-  /* ── Email list scroll hint ─────────────────────────────────── */
+  /* ── Email / Reviewer list scroll hints ─────────────────────── */
+  function updateListScrollBtn(listId, btnId) {
+    var list = document.getElementById(listId);
+    var btn  = document.getElementById(btnId);
+    if (!list || !btn) return;
+    var scrollable = list.scrollHeight > list.clientHeight + 8;
+    if (!scrollable) { btn.style.display = 'none'; return; }
+    btn.style.display = 'flex';
+    var atBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 8;
+    if (atBottom) {
+      btn.textContent = '↑ back to top of list';
+      btn.onclick = function(){ list.scrollTop = 0; };
+    } else {
+      btn.textContent = '↓ more below';
+      btn.onclick = function(){ list.scrollTop = list.scrollHeight; };
+    }
+  }
+
   function emailUpdateScrollHint() {
-    var list = document.getElementById('email-list');
-    var hint = document.getElementById('email-scroll-hint');
-    if (!list || !hint) return;
-    hint.style.display = (list.scrollHeight > list.clientHeight + 8) ? 'flex' : 'none';
+    updateListScrollBtn('email-list', 'email-scroll-hint');
+    updateListScrollBtn('reviewer-list', 'reviewer-scroll-hint');
+  }
+
+  /* Wire scroll listeners after modal opens */
+  function emailBindScrollListeners() {
+    var el = document.getElementById('email-list');
+    var rl = document.getElementById('reviewer-list');
+    if (el && !el._scrollBound) {
+      el._scrollBound = true;
+      el.addEventListener('scroll', function(){ updateListScrollBtn('email-list','email-scroll-hint'); });
+    }
+    if (rl && !rl._scrollBound) {
+      rl._scrollBound = true;
+      rl.addEventListener('scroll', function(){ updateListScrollBtn('reviewer-list','reviewer-scroll-hint'); });
+    }
   }
 
   /* ── Reviewer Tier 2 ────────────────────────────────────────── */

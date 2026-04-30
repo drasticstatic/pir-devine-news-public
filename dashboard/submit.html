@@ -1083,15 +1083,30 @@
     btn.classList.toggle('is-open', open);
   }
 
-  /* Non-Gmail email check */
+  /* Email validation + non-Gmail check on blur */
   document.getElementById('email').addEventListener('blur', function() {
-    var val = this.value.trim().toLowerCase();
+    var val    = this.value.trim().toLowerCase();
+    var errEl  = document.getElementById('email-inline-error');
+    var re     = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (val && !re.test(val)) {
+      errEl.textContent = 'Please enter a complete email address (e.g. name@example.org).';
+      errEl.style.display = 'block';
+      this.style.borderColor = 'rgba(239,68,68,0.7)';
+      return; // don't trigger non-Gmail modal if address is incomplete
+    }
+    errEl.style.display = 'none';
+    this.style.borderColor = '';
     if (val && val.indexOf('@') !== -1) {
       var domain = val.split('@')[1] || '';
       if (domain && domain !== 'gmail.com') {
         openModal('modal-nongmail');
       }
     }
+  });
+  document.getElementById('email').addEventListener('input', function() {
+    var errEl = document.getElementById('email-inline-error');
+    if (errEl) errEl.style.display = 'none';
+    this.style.borderColor = '';
   });
 
   /* Drive link in sidebar */

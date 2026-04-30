@@ -103,10 +103,68 @@ The LLM Admin Dashboard (planned — see `ROADMAP.md`) would let committee membe
 
 | Risk | Trigger | Fix |
 |------|---------|-----|
-| Sync stops working | `PUBLIC_REPO_TOKEN` PAT expires | Regenerate PAT, update repo secret |
+| Sync stops working | `PUBLIC_REPO_TOKEN` PAT expires | Regenerate PAT, update repo secret (see below) |
 | Form submissions stop | Apps Script quota hit or URL changed | Redeploy Apps Script, update `dashboard/config.js` |
 | Drive storage fills | High-res art accumulates | Archive old issues to local drive; run `pngquant` on thumbnails |
 | GitHub account suspended | Policy violation or inactivity | Transfer repos to PIR org before this happens |
+
+---
+
+## Managing GitHub Access Tokens (PAT Security & Recovery)
+
+The `PUBLIC_REPO_TOKEN` secret stored in the private repo's GitHub Settings powers the sync workflow that publishes changes to the public site. Here's what every caretaker needs to know.
+
+### How PATs Work
+
+A Personal Access Token (PAT) is a unique random string generated once — it cannot be reused. If you click **Regenerate**, GitHub creates a completely new string and invalidates the old one. You must update the GitHub Actions secret (`PUBLIC_REPO_TOKEN`) with the new value every time you regenerate.
+
+**PAT types:**
+| Type | Non-expiring option | Best for |
+|------|--------------------|----|
+| PAT (Classic) | ✅ Select "No expiration" | This project — simple, personal-account based |
+| Fine-grained PAT | ❌ Max ~1 year (org policy) | More locked-down setups |
+
+For this project, use a **Classic PAT** scoped to `repo` (or just `public_repo`). Select **No expiration** to avoid disrupting the sync workflow unexpectedly. GitHub may auto-revoke it if unused for more than one year — use the sync workflow at least occasionally to keep it alive.
+
+### How to Regenerate (step by step)
+
+1. Go to `github.com` → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Find the token used for `PUBLIC_REPO_TOKEN` (note its name)
+3. Click **Regenerate token** → set expiration to **No expiration** → confirm
+4. Copy the new token string immediately (shown only once)
+5. Go to the **private repo** → Settings → Secrets and variables → Actions → `PUBLIC_REPO_TOKEN` → Update
+6. Paste the new token → Save
+7. Trigger a test sync (push a small change or use the manual dispatch button on the portal)
+
+The scripts never need to change — they reference the secret name, not the token value.
+
+### Recovery Plan — What If Someone Loses Access?
+
+**If a PAT expires or a token is lost:**
+- Christopher (or any repo admin) goes to GitHub → the private repo Settings → Secrets → regenerates and updates `PUBLIC_REPO_TOKEN`
+- No code changes needed. The sync workflow resumes on the next push.
+
+**If Christopher's GitHub password is lost:**
+- Use GitHub's account recovery (recovery codes, linked email, or SMS 2FA)
+- Recovery codes should be stored in a shared password manager (e.g. Bitwarden, 1Password) accessible to PIR's board or tech lead
+
+**If the account needs to be handed off to PIR:**
+- Transfer both repos to a PIR GitHub organization (see Migration Plan above)
+- Generate a new Classic PAT under the org's machine account
+- Store the PAT and org credentials in a shared password manager accessible to ≥2 board members
+
+### Best Practice: Separation of Ownership and Execution
+
+The most resilient setup separates who *runs* the project from who *owns* the credentials:
+
+1. **You own the repo** (Christopher, or PIR org)
+2. **The PAT lives in GitHub Secrets** — scripts never see the token directly
+3. **Anyone with repo admin access** can update the secret without touching code
+4. **Store recovery credentials** (GitHub password + recovery codes) in a shared vault — not in a personal app only one person can access
+
+> If users are prone to "locking themselves out," the fail-safe is: they only interact with the chat interface and submission form — they never touch the token itself. Only a repo admin needs to manage the PAT.
+
+For a production-grade setup (when the committee is ready), a **GitHub App** is the gold standard — it's owned by the organization, not a person, and survives any individual leaving. But a well-managed Classic PAT with a shared vault is entirely sufficient for this project's current scale.
 
 ---
 
