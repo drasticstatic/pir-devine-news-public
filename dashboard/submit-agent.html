@@ -375,11 +375,17 @@
     .modal-body::-webkit-scrollbar { width: 4px; }
     .modal-body::-webkit-scrollbar-track { background: rgba(124,58,237,0.04); }
     .modal-body::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 99px; }
-    /* Ghost btn + scroll btn — purple identity */
-    .modal-actions .btn-ghost { color: rgba(167,139,250,0.7); border-color: rgba(124,58,237,0.22); }
+    /* Ghost btn + scroll btn — purple identity (cancel global breathe-g glow) */
+    .modal-actions .btn-ghost { color: rgba(167,139,250,0.7); border-color: rgba(124,58,237,0.22); animation: none !important; box-shadow: none !important; }
     .modal-actions .btn-ghost:hover { background: rgba(124,58,237,0.08); color: #a78bfa; border-color: rgba(124,58,237,0.45); }
     .modal-scroll-btn { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.25); color: #a78bfa; }
     .modal-scroll-btn:hover { background: rgba(124,58,237,0.18); border-color: rgba(124,58,237,0.55); }
+    /* Footer background — frosted dark purple, no gradient layer */
+    .modal-actions {
+      border-top-color: rgba(124,58,237,0.2);
+      background: rgba(9,8,28,0.6);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
 
     /* ── Principle mini-modals (sweet-alert style) ──────────────── */
     .pm-icon { font-size: 2.75rem; display: block; text-align: center; margin: 0.25rem 0 0.75rem; }
@@ -452,6 +458,7 @@
     <div class="iva-modal-btns">
       <button class="iva-modal-btn" onclick="openModal('modal-principles')">🏗️ Core Design</button>
       <button class="iva-modal-btn" onclick="openModal('modal-dialogue')">💬 How Dialogue Flows</button>
+      <button class="iva-modal-btn" onclick="openModal('modal-iva-about')" style="border-color:rgba(124,58,237,0.22);opacity:0.85">ℹ️ About the Agent</button>
     </div>
   </div>
 
@@ -810,6 +817,69 @@
       <div class="modal-actions">
         <button class="modal-scroll-btn" onclick="document.querySelector('#modal-dialogue .modal-body').scrollTop=9999">↓ scroll to bottom</button>
         <button class="btn btn-ghost" onclick="window.closeModal('modal-dialogue')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About the Inner Voice Agent modal -->
+  <div class="modal-overlay" id="modal-iva-about" role="dialog" aria-modal="true" aria-labelledby="iva-about-title"
+       onclick="closeModalOverlay(event,'modal-iva-about')">
+    <div class="modal" style="max-width:620px">
+      <button class="modal-close" onclick="window.closeModal('modal-iva-about')" aria-label="Close">✕</button>
+      <div class="modal-eyebrow">✨ Inner Voice Agent</div>
+      <h2 class="modal-title" id="iva-about-title">What You're Looking At</h2>
+      <div class="modal-body">
+
+        <p style="font-size:0.85rem;color:var(--text-2);line-height:1.7;margin-bottom:1.25rem">
+          The <strong>Inner Voice Agent</strong> is a Socratic writing facilitator for PIR fellowship members. Instead of staring at a blank form, members have a thoughtful conversation that surfaces the feeling behind their story — and arrives at a finished piece that is unmistakably, fully their own.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.25rem">
+
+          <!-- Fully live -->
+          <div style="background:rgba(9,30,18,0.6);border:1px solid rgba(74,222,128,0.22);border-radius:10px;padding:1rem 1.1rem">
+            <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#4ade80;margin-bottom:0.5rem">✅ Fully live right now</div>
+            <ul style="font-size:0.8rem;color:var(--text-2);line-height:1.7;padding-left:1.1rem;margin:0">
+              <li>Complete four-phase session UX — Intention → Deepening → Mirroring → Heart Check</li>
+              <li>Finalize step with title, body, and key takeaway fields</li>
+              <li><strong>Populate bridge</strong> — one click stores your draft in <code>sessionStorage</code> and auto-fills the submission form, no copy-paste needed</li>
+              <li>Hard no-ghostwriting guardrail — agent declines if asked to write for you and returns to a clarifying question</li>
+              <li>Session data never stored server-side — clears when you leave the tab</li>
+            </ul>
+          </div>
+
+          <!-- Simulated -->
+          <div style="background:rgba(20,15,4,0.6);border:1px solid rgba(251,191,36,0.22);border-radius:10px;padding:1rem 1.1rem">
+            <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#fbbf24;margin-bottom:0.5rem">🔨 Conversation: UX live, AI responses simulated</div>
+            <p style="font-size:0.8rem;color:var(--text-2);line-height:1.6;margin:0">
+              The chat flow, typing indicators, phase transitions, and Finalize step are all fully functional. Responses are currently powered by <strong>JavaScript pattern-matching</strong> — a carefully scripted simulation of how a real Socratic session would unfold. The actual Claude API call (Option B in the roadmap) is the next build step.
+            </p>
+            <p style="font-size:0.8rem;color:var(--text-2);line-height:1.6;margin:0.55rem 0 0">
+              When the API proxy is connected, the same passphrase gate used on the Admin Dashboard will activate real Claude Sonnet responses — no change to the UI needed.
+            </p>
+          </div>
+
+          <!-- Planned -->
+          <div style="background:rgba(9,10,30,0.6);border:1px solid rgba(124,58,237,0.22);border-radius:10px;padding:1rem 1.1rem">
+            <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#a78bfa;margin-bottom:0.5rem">📋 Next to build</div>
+            <ul style="font-size:0.8rem;color:var(--text-2);line-height:1.7;padding-left:1.1rem;margin:0">
+              <li><strong>Real Claude API responses</strong> — lightweight Apps Script proxy forwards session messages to Claude Sonnet with the IVA system prompt as context</li>
+              <li><strong>Session memory within tab</strong> — agent references earlier parts of the conversation naturally (partial scaffolding already in place)</li>
+              <li><strong>Voice input option</strong> — Web Speech API for members who prefer speaking to typing</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div style="font-size:0.75rem;color:var(--text-3);line-height:1.65;border-top:1px solid rgba(124,58,237,0.12);padding-top:0.85rem">
+          <strong style="color:var(--text-2)">Design principle:</strong> AI as facilitator, not creator. The agent clears the path so authentic messages can flow effortlessly — it never holds the pen.<br>
+          <strong style="color:var(--text-2)">Privacy:</strong> No conversation data is stored server-side. Each session lives only in your browser tab and clears when you leave.
+        </div>
+
+      </div>
+      <div class="modal-actions">
+        <a href="https://github.com/drasticstatic/pir-devine-news-public/blob/main/ROADMAP.md" target="_blank" rel="noopener" class="btn btn-primary">📋 View Roadmap ↗</a>
+        <button class="btn btn-ghost" onclick="window.closeModal('modal-iva-about')">Close</button>
       </div>
     </div>
   </div>
