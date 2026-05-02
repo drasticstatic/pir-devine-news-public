@@ -1,6 +1,8 @@
 # 🌀 De Vine News — Committee Hub
 ### Newsletter Workflow Hub · Psychedelics in Recovery™ · PIR® 12-Step Fellowship
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey?style=flat)](https://github.com/drasticstatic/.github)
+
 ---
 
 ## What Is This?
