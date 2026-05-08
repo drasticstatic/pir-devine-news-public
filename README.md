@@ -6,7 +6,7 @@
 
 ---
 
-**🌐 [Explore the Public Preview →](https://drasticstatic.github.io/pir-devine-news-public-preview/)** &nbsp;&nbsp;<big>·&nbsp;&amp;&nbsp;·</big>&nbsp;&nbsp; [👀 View Sample Marp Deck 📰](https://drasticstatic.github.io/pir-devine-news-public/dashboard/pir-palette-sample.marp.html)
+**🌐 [Explore the Public Preview →](https://drasticstatic.github.io/pir-devine-news-public/dashboard/index.html)** &nbsp;&nbsp;<big>·&nbsp;&amp;&nbsp;·</big>&nbsp;&nbsp; [👀 View Sample Marp Deck 📰](https://drasticstatic.github.io/pir-devine-news-public/dashboard/pir-palette-sample.marp.html)
 
 ---
 
