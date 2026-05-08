@@ -126,6 +126,9 @@ AI chat widget built directly into `admin.html`. Calls the Anthropic API (Claude
 **Option C — Scheduled agents (advanced)**
 Recurring tasks run automatically — e.g., "Every Monday, check if any submission has been in 'Needs Review' for more than 7 days and send a reminder." No human trigger needed.
 
+**Option D — NVIDIA NIM (fellowship treasury savings)**
+For admin and content-generation tasks that don't require full Claude quality, route through the NVIDIA NIM free-tier proxy (same `free-claude-code` infrastructure Alfred uses). Admin Q&A drafts, content suggestions, and submission triage are good candidates. Fall back to Anthropic (Option B) for errors or quality-sensitive outputs. If NIM proves reliable for this repo's workload, it could substantially reduce per-committee-session API costs — worth testing before committing to paid API infrastructure.
+
 ### DAO Publishing Governance
 
 The newsletter committee operates on holacratic, consensus-based principles — no single editor holds authority. The agent respects this by treating publishing as a collective act, not an individual one.
