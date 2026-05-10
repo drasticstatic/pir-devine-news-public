@@ -14,7 +14,7 @@
 
 ---
 
-## What Is This?
+## What Is This? 📦
 
 This is the internal workflow system for the **Devine News** newsletter, produced by the PR & Literature Committee of [Psychedelics in Recovery™](https://www.psychedelicsinrecovery.org).
 
