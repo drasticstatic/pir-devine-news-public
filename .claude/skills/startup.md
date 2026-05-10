@@ -58,6 +58,17 @@ If auth fails: `gwspdn auth login` (PIR committee Google account).
 
 ---
 
+## Step 3.5 — Graph Orientation (if graphify installed)
+
+If `graphify-out/GRAPH_REPORT.md` exists, read it before opening any content files — community structure shows how files relate at a glance without opening each one.
+
+```bash
+# Ask a structural question without opening files
+graphify query "What are the most connected documents in this repo?"
+```
+
+---
+
 ## Step 4 — Choose Backend
 
 ### Alfred-Anthropic (default)
