@@ -20,7 +20,7 @@ Every time a committee developer pushes an update, the site automatically rebuil
 
 ## Who Currently Owns It
 
-The site was built by **Christopher Wilson** as a proof of concept under his personal GitHub account (`drasticstatic`). This is intentional — it's easier to build and test under a personal account, then transfer ownership to the organization when the committee is ready.
+The site was built as a fellowship service project under a personal GitHub account (`drasticstatic`). This is intentional — it's easier to build and test under a personal account, then transfer ownership to the organization when the committee is ready.
 
 When the time comes, the full site and its history can be transferred to a PIR GitHub organization (like `pir-psychedelics-in-recovery`) in a few clicks — with no data loss and no downtime.
 
@@ -34,7 +34,7 @@ When the time comes, the full site and its history can be transferred to a PIR G
 | **What if Christopher moves on?** | The repos can be transferred to a PIR org GitHub account. Any developer or tech-savvy volunteer can pick up the work — all instructions are inside the repo. |
 | **What if GitHub goes down?** | GitHub has 99.9%+ uptime. In a worst-case scenario, the static files can be hosted on any web server or even Netlify/Vercel at no cost. |
 | **What if the PIR website changes?** | The newsletter hub is independent of `psychedelicsinrecovery.org`. It can remain on its current URL, or be moved to a subdomain like `news.psychedelicsinrecovery.org` at any time. |
-| **What if AI tools change pricing?** | The site itself doesn't depend on AI. Claude Code is used only by the developer to build features. The published site is plain HTML — it runs without any AI subscription. |
+| **What if AI tools change pricing?** | The published site is plain HTML — it runs without any AI subscription. Build and maintenance uses Claude Code CLI (Anthropic). For eligible admin and content-generation tasks, NVIDIA NIM (free tier) is being tested as a cost-saving alternative — keeping per-session costs near zero for the fellowship treasury. See `ROADMAP.md` Phase 4. |
 
 ---
 
@@ -206,4 +206,4 @@ Questions about hosting, access, or the technical setup:
 ---
 
 *This document is public and intentionally written for both non-technical readers and developers.*
-*Last updated: April 2026*
+*Last updated: May 2026*
