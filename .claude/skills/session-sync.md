@@ -15,7 +15,17 @@ Commit outstanding changes with a meaningful message and push. The git history I
 
 ---
 
-## Step 1 — See What Changed
+## Step 1 — Update Knowledge Graph (if repo files changed)
+
+```bash
+graphify update .
+```
+
+`graphify update` is AST-only — **no API call, no cost, always safe to run.**
+
+`graphify extract .` (full re-extraction) requires an LLM API key. Only needed if the graph doesn't exist yet or the repo structure has changed significantly. If extraction hits the Gemini free-tier rate limit (429), **stop and ask Christopher** before switching to a paid API key — do not auto-run with a paid key.
+
+## Step 2 — See What Changed (git status)
 
 ```bash
 git status
@@ -26,7 +36,7 @@ Read the diff to understand what actually changed before writing the commit mess
 
 ---
 
-## Step 2 — Draft the Commit Message
+## Step 3 — Draft the Commit Message
 
 Write a message that captures **what + why + context**, not just "update content". Good PIR commits are useful to future committee members who may have no memory of this session.
 
@@ -53,7 +63,7 @@ Write a message that captures **what + why + context**, not just "update content
 
 ---
 
-## Step 3 — Stage and Commit
+## Step 4 — Stage and Commit
 
 Stage only relevant files:
 
@@ -80,7 +90,7 @@ Replace `[model]` with the model currently in use. Examples:
 
 ---
 
-## Step 4 — Push
+## Step 5 — Push
 
 ```bash
 git push origin main
@@ -93,7 +103,7 @@ git pull --rebase origin main && git push origin main
 
 ---
 
-## Step 5 — Confirm
+## Step 6 — Confirm
 
 Output the commit hash and a one-line summary:
 
