@@ -79,14 +79,15 @@ Then commit:
 git commit -m "$(cat <<'EOF'
 [Your drafted message here]
 
-Co-Authored-By: Alfred · Claude · [model]
+Co-Authored-By: Alfred · Claude · [model] <noreply@anthropic.com>
 EOF
 )"
-
-Replace `[model]` with the model currently in use. Examples:
-- Anthropic: `Sonnet 4.6` / `Opus 4.7`
-- NIM: `NVIDIA NIM Z-AI GLM-4.7`
 ```
+
+Replace `[model]` with the model currently in use:
+- Alfred-Anthropic (Sonnet): `Alfred · Claude · claude-sonnet-4-6 <noreply@anthropic.com>`
+- Alfred-Anthropic (Opus): `Alfred · Claude · claude-opus-4-7 <noreply@anthropic.com>`
+- Alfred-NIM: `Alfred · Claude · NVIDIA NIM Z-AI GLM-4.7 <noreply@anthropic.com>`
 
 ---
 
