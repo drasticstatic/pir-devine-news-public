@@ -79,7 +79,8 @@ Then commit:
 git commit -m "$(cat <<'EOF'
 [Your drafted message here]
 
-Co-Authored-By: Alfred · Claude · [model] <noreply@anthropic.com>
+Co-Authored-By: Alfred · ClaudeCodeCLI · Anthropic [model]
+Claude-Session: https://claude.ai/code/session_<full session id>
 EOF
 )"
 ```
@@ -115,3 +116,17 @@ Output the commit hash and a one-line summary:
 ## Philosophy
 
 The git log is the shared memory here. A well-written commit can answer "what changed and why" for anyone — committee members, the next agent session, or anyone picking this up months from now. Treat every commit message as a brief note to your future self.
+
+> **Corrected 2026-09-11.** This section previously documented a three-field footer
+> (`Agent · Engine · Model`), a near-miss of the canonical four-field
+> `Agent · Engine · Provider [Model]`. A fleet audit found 36/204 commits in
+> `anthropas-argus-alfred` and 183/856 in `trading-assistant` with no attribution trailer at all,
+> plus 15+ competing variants — the skills were a real source of that drift, so correcting
+> `CLAUDE.md` alone would not have held. Canonical form:
+> [`my-template/AGENT-SYNC/README.md`](https://github.com/drasticstatic/my-template/blob/main/AGENT-SYNC/README.md).
+> `.githooks/commit-msg` now rejects non-conforming commits — activate once per clone with
+> `sh scripts/install-hooks.sh`.
+>
+> The session trailer is a **separate** line (`Claude-Session:` / `Cosmos-Session:`). Never fold it
+> onto the `Co-Authored-By:` line — git parses one `Key: Value` trailer per line. Use the full
+> session URL, never a truncated prefix.
