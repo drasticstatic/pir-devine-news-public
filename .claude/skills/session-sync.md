@@ -85,10 +85,11 @@ EOF
 )"
 ```
 
-Replace `[model]` with the model currently in use:
-- Alfred-Anthropic (Sonnet): `Alfred · Claude · claude-sonnet-4-6 <noreply@anthropic.com>`
-- Alfred-Anthropic (Opus): `Alfred · Claude · claude-opus-4-7 <noreply@anthropic.com>`
-- Alfred-NIM: `Alfred · Claude · NVIDIA NIM Z-AI GLM-4.7 <noreply@anthropic.com>`
+Footer format is `Agent · Engine · Model` — see this repo's own `CLAUDE.md` ("Commit footer" line) for
+the current values (Alfred and, per that file, Kavanah/Mystarch depending on which application
+launched the session). Don't hardcode examples here; a stale duplicate is exactly what let this file
+drift out of the `<noreply@anthropic.com>`-dropped, `Claude`→`ClaudeCodeCLI` redesign (2026-09-02)
+unnoticed until now.
 
 ---
 
