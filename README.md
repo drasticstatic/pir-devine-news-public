@@ -264,7 +264,7 @@ copy to run with their own tooling rather than inheriting this account's operati
 
 Two consequences worth stating plainly:
 
-- **Fleet-internal coordination does not travel.** `agent-notes/` and `logs/` exist to coordinate
+- **Fleet-internal coordination does not travel.** The agent-notes folder and `logs/` exist to coordinate
   *this* fleet's agents and carry no meaning in someone else's. They are not part of the handover
   and are absent from the published site by construction — the sync workflow deploys built output
   and a short list of named documents, never the source tree.
