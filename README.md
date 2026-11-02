@@ -1,10 +1,25 @@
-# 🌀 De Vine News — Committee Hub
-### Newsletter Workflow Hub · Psychedelics in Recovery™ · PIR® 12-Step Fellowship
+<!-- readme-standard: 2026-11-02 -->
+<div align="center">
 
+<img src="dashboard/assets/banner.svg" width="100%" alt="De Vine News: a road from a member's submission to the published newsletter, each stop lighting in turn.">
+
+# 🌀 De Vine News — Committee Hub
+
+*Newsletter Workflow Hub · Psychedelics in Recovery™ · PIR® 12-Step Fellowship*
+
+![For](https://img.shields.io/badge/For-The_newsletter_committee-64748b?style=flat-square)
 [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey?style=flat)](https://github.com/drasticstatic/.github)
 [![Public Preview](https://img.shields.io/badge/%F0%9F%8C%90%20Public%20Preview-Available-brightgreen)](https://drasticstatic.github.io/pir-devine-news-public/) [![Synced via GitHub Actions](https://img.shields.io/badge/Synced%20via-GitHub%20Actions-blue)](https://github.com/open-condo-software/gitexporter) [![Built with Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code%20CLI-blueviolet)](https://code.claude.com/docs/en/overview) [![NVIDIA NIM](https://img.shields.io/badge/Powered%20by-NVIDIA%20NIM-76b900)](https://build.nvidia.com/) [![Status](https://img.shields.io/badge/Status-%F0%9F%94%A7%20In%20Development-orange)](https://code.claude.com/docs/en/cli-reference) [![Sync](https://github.com/drasticstatic/pir-devine-news/actions/workflows/sync-public.yml/badge.svg)](https://github.com/drasticstatic/pir-devine-news/actions/workflows/sync-public.yml)
 
----
+<img src="dashboard/assets/icons/map-pin.svg" width="16" height="16" alt=""> **You are here:** drasticstatic lab (for PIR) › `pir-devine-news` · private source · `main` is the working branch · public twin `pir-devine-news-public`
+
+</div>
+
+## <img src="dashboard/assets/icons/compass.svg" width="24" height="24" alt=""> TL;DR
+
+1. <img src="dashboard/assets/icons/sprout.svg" width="16" height="16" alt=""> **What this is.** The internal workflow system for the De Vine News newsletter, from member submission to published issue.
+2. <img src="dashboard/assets/icons/users-round.svg" width="16" height="16" alt=""> **Who it is for.** Committee members (no GitHub needed) and the tech chair who maintains it.
+3. <img src="dashboard/assets/icons/footprints.svg" width="16" height="16" alt=""> **Do this first.** [Open the public dashboard](https://drasticstatic.github.io/pir-devine-news-public/dashboard/index.html).
 
 **🌐 [Explore the Public Preview →](https://drasticstatic.github.io/pir-devine-news-public/dashboard/index.html)** &nbsp;&nbsp;<big>·&nbsp;&amp;&nbsp;·</big>&nbsp;&nbsp; [👀 View Sample Marp Deck 📰](https://drasticstatic.github.io/pir-devine-news-public/dashboard/pir-palette-sample.marp.html)
 
@@ -259,3 +274,9 @@ Two consequences worth stating plainly:
 ---
 
 *©2026 Psychedelics in Recovery™ · PIR® · All Rights Reserved*
+
+## <img src="dashboard/assets/icons/git-pull-request.svg" width="24" height="24" alt=""> Suggest a change
+
+Noticed something? Open an [issue](../../issues) or a pull request against `main`; the tech chair reads them and a person with the role merges. Not on GitHub? Reach the committee through [PIR's service page](https://www.psychedelicsinrecovery.org/service/).
+
+<sub>The front door follows the living [README standard](https://github.com/drasticstatic/my-template/blob/main/README-STANDARD.md). Copy it, improve it.</sub>
