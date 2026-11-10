@@ -17,6 +17,10 @@ automation workflow. Once authenticated, the `gws-sync.sh` script:
 > `sync-public.yml` (that workflow only mirrors the private repo to the public
 > repo). A scheduled GitHub Actions version is planned (see `ROADMAP.md`).
 
+**See also:**
+- [Give an agent its own Google account profile](https://github.com/drasticstatic/my-template/blob/main/walkthroughs/GOOGLE-WORKSPACE-CLI-NEW-PROFILE.md) — the general, public walkthrough this guide is one worked example of: one account, one folder, one Cloud project, one read-only login
+- [Gemini CLI for a Workspace account](https://github.com/drasticstatic/my-template/blob/main/walkthroughs/GEMINI-CLI-ACCESS.md) — its sibling walkthrough, for running Gemini in the terminal under the same kind of isolated profile
+
 ---
 
 ## Prerequisites
